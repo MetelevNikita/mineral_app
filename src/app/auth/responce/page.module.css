@@ -1,0 +1,86 @@
+
+.button_container {
+
+    width: 382px;
+
+}
+
+.title {
+
+    width: 382px;
+
+    /*  */
+
+    color: #000;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 130%; /* 39px */
+    letter-spacing: -0.3px;
+
+    /*  */
+
+    margin-bottom: 20px;
+}
+
+
+.subtitle {
+    width: 382px;
+
+    /*  */
+
+    color: rgba(0, 0, 0, 0.70);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 125%; /* 20px */
+}
+
+.input_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.num {
+    width: 63px;
+    height: 72px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    border: 1px solid #D8DADC;
+
+    /*  */
+
+    font-size: 27px;
+
+    text-align: center;
+    margin-left: 3px;
+    margin-right: 3px;
+
+}
+
+/*  */
+
+.repeat {
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 125%; /* 20px */
+}
+
+
+/*  */
+
+.btn {
+    display: flex;
+    width: 353px;
+    height: 56px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #FFBC41;
+}

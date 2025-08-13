@@ -1,0 +1,119 @@
+.title {
+    width: 354px;
+    color: #000;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 125%; /* 31.25px */
+}
+
+.total_container {
+    display: flex;
+    width: 353px;
+    height: 71px;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #7D22C9 0%, #FFBC41 100%);
+}
+
+.total_title {
+    color: #FFF;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 111%; /* 26.64px */
+}
+
+
+/* collection */
+
+.collection_title {
+    color: #ffffff;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 125%; /* 25px */
+
+    /*  */
+    margin-top: 20px;
+    margin-bottom: 19px;
+
+    /*  */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.collection_container {
+    width: 354px;
+    height: 291px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: #7D22C9;
+    background-image: url('../../../../public/ModalStatus/modal_status_bg.svg');
+
+    
+}
+
+.collection_item_box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15;
+}
+
+.collection_item_container {
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.collection_item_image_box {
+    display: flex;
+    width: 69.198px;
+    height: 69px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 13px;
+    border: 1px solid #FFF;
+}
+
+.collection_item_title {
+    color: #FFF;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 125%; /* 12.5px */
+}
+
+
+
+
+
+
+
+
+
+.btn {
+    display: flex;
+    width: 350px;
+    height: 56px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: #FFBC41;
+    margin-bottom: 10px;
+    color: black
+}

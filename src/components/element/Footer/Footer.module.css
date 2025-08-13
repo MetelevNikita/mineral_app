@@ -1,0 +1,58 @@
+.menu_container {
+    padding-bottom: 0px;
+    display: flex;
+    width: 100vw;
+    height: 78px;
+
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+
+    /*  */
+
+    border: 1px solid #3C1160;
+    background: #3C1160;
+}
+
+
+.menu_title {
+
+    position: relative;
+    color: white;
+}
+
+.menu_title:hover {
+    opacity: 0.3;
+}
+
+
+.menu_title_active {
+
+    position: absolute;
+    height: 20px;
+    bottom: 43px;
+    color: white;
+    background-color: rgb(255, 9, 9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+
+    height: 38px;
+    width: max-content;
+    padding: 10px;
+
+    
+}
+
+
+.menu_btn:hover {
+    opacity: 0.6;
+
+}
+
+
+
+
+
+

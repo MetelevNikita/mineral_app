@@ -1,0 +1,28 @@
+.btn_osnova {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border: 1px solid #000;
+    background: none;
+
+    /*  */
+
+    transition: 0.1s all ease;
+}
+
+
+.btn_osnova:hover {
+
+    background: #FFBC41;
+    border: none;
+    color: white
+
+}
+
+
+.btn_osnova:active {
+
+    transform: scale(1.05);
+}

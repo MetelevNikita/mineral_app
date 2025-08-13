@@ -1,0 +1,26 @@
+.card_video {
+    border-radius: 32px;
+}
+
+.btn {
+    display: flex;
+    width: 352px;
+    height: 56px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+
+    /*  */
+
+    color: black;
+    border-radius: 20px;
+    border: 1px solid #000;
+
+    /*  */
+
+    margin-bottom: 90px;
+
+} 
+
+

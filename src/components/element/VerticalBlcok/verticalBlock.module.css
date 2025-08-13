@@ -1,0 +1,45 @@
+.block_container {
+    display: flex;
+    flex-direction: column;
+    width: 170px;
+    height: 218px;
+    padding: 17px 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+
+    /*  */
+
+    border-radius: 20px;
+    background: linear-gradient(180deg, #F1EEE8 0%, #F9F8F5 100%); 
+}
+
+/*  */
+
+.top_block {}
+
+/*  */
+
+.bottom_block {}
+
+.bottom_bottom_text {
+    width: 90px;
+    height: 29.494px;
+    flex-shrink: 0;
+    text-align: center;
+
+    /*  */
+
+    margin-bottom: 15px;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 600;
+
+
+}
+
+
+/* animation */
+
+

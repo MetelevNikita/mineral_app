@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  password String
+  total Int
+  mineralPassed MineralPassed[]
+  collection Collection[]
+  status String
+  createAt DateTime @default(now())
+  updateAr DateTime @default(now())
+  isAdmin Boolean
+  firstVisit Boolean @default(false)
+
+  profile Profile?
+}
+
+
+
+
+model Profile {
+  id Int @id @default(autoincrement())
+  avatar String
+  age String
+  profession String
+  bio String?
+  phone String?
+  telegram String?
+  userId Int @unique
+  user User @relation(fields: [userId], references: [id])
+}
+
+
+
+model Collection {
+  id Int @id @default(autoincrement())
+  title String
+  img String
+  active Boolean
+
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+}
+
+model MineralPassed {
+  id Int @id @default(autoincrement())
+  title String
+  isPassed Boolean
+  createAt DateTime @default(now())
+  updateAе DateTime @default(now())
+
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  
+}
+
+
+
+// minerale
+
+model Mineral {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  video String
+  image String
+  isPassed Boolean @default(false)
+  createAt DateTime @default(now())
+  updateAt DateTime @default(now())
+
+  question Question[]
+
+}
+
+
+model Question {
+  id Int @id @default(autoincrement())
+  title String
+  image String?
+  mineral Mineral @relation(fields: [mineralId], references: [id], onDelete: Cascade)
+  mineralId Int
+
+  answers Answer[]
+
+  createAt DateTime @default(now())
+  updateAt DateTime @default(now())
+}
+
+
+
+model Answer {
+  id Int @id @default(autoincrement())
+  text String
+  correct Boolean
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId Int
+
+  createAt DateTime @default(now())
+  updateAt DateTime @default(now())
+
+
+}
+
+
+

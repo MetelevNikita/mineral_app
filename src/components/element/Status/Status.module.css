@@ -1,0 +1,84 @@
+.bottom_container {
+    display: flex;
+    width: 342px;
+    height: 193px;
+    padding: 17px 152px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+
+    /*  */
+
+    border-radius: 20px;
+    background: linear-gradient(111deg, #7D22C9 10.06%, #007AFF 114.82%);
+}
+
+/*  */
+
+.top_container {
+
+    width: 344px;
+    height: 189px;
+    flex-shrink: 0;
+    margin-top: 10px;
+    margin-left: 20px;
+
+    /*  */
+
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.41);
+    background: linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%);
+    backdrop-filter: blur(20.799999237060547px);
+    background-image: url('../../../../public/ModalStatus/modal_status_bg.svg');
+
+}
+
+.top_content {
+    width: 344px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /*  */
+
+    margin-top: 20px;
+}
+
+.top_title {
+    margin-left: 10px;
+    width: 196px;
+    color: #FFF;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 126%; /* 25.2px */
+}
+
+.top_btn_container {
+
+    margin-top: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.btn {
+
+    display: flex;
+    width: 303px;
+    height: 47px;
+
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    border-color: white !important;
+    color: white;
+
+}

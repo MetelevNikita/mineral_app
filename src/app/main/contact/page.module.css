@@ -1,0 +1,25 @@
+.title {
+    width: 354px;
+    color: #000;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 125%; /* 31.25px */
+}
+
+
+
+
+.btn {
+    display: flex;
+    width: 350px;
+    height: 56px;
+    padding: 17px 152px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: #FFBC41;
+    margin-bottom: 10px;
+}

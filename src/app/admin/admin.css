@@ -1,0 +1,9 @@
+@import './../reset.css';
+
+
+body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    height: 100%;
+    margin: 0;
+}

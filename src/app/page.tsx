@@ -1,95 +1,123 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
 
-export default function Home() {
+
+import { FC, useState } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { motion } from 'framer-motion'
+
+// 
+
+import { Container, Row, Col } from 'react-bootstrap'
+
+// style
+
+import styles from './page.module.css'
+
+// img
+
+import logo_icon from '@/../public/bg/open_minerale.png'
+import logoOne from '@/../public/logo_open/logo 1.svg'
+import logoTwo from '@/../public/logo_open/logo_dark_ru 1.svg'
+import logoThree from '@/../public/logo_open/zjqm1geowap7jnxgsnh4mhoodtx38w4x 1.svg'
+
+
+// components
+
+import MyButton from '@/components/ui/MyButton/MyButton'
+
+// types
+
+import { partnersArrType } from '@/types/type'
+
+// 
+
+
+
+const partnersArr: partnersArrType[] = [
+    {
+        id: 1,
+        title: 'logoOne',
+        img: logoOne,
+        url: ''
+    },
+
+    {
+        id: 2,
+        title: 'logoTwo',
+        img: logoTwo,
+        url: ''
+    },
+
+    {
+        id: 3,
+        title: 'logoThree',
+        img: logoThree,
+        url: ''
+    }
+]
+
+
+
+const page: FC = () => {
+
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    
+    <Container>
+      <Row>
+        <Col className='d-flex flex-column justify-content-center align-items-center'>
+      <div className={styles.container}>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+        <div className={styles.image_background}>
+
+
+                <Row className="mb-4 mt-4">
+                    {
+                        partnersArr.map((item: partnersArrType, index: number): React.ReactNode => {
+                            return <Col key={item.id} className="d-flex justify-content-center align-items-center"><Link href={item.url}><Image src={item.img} alt={item.title} /></Link></Col>
+                        })
+                    }
+                </Row>
+
+                <div onDragEnter={() => {}} className={styles.glass_background}>
+
+                  <Col className='d-flex flex-column justify-content-center align-items-center'>
+
+
+                  <motion.div initial={{opacity: 0, scale: 0.5}} animate={{opacity: 1, scale: 1}} transition={{duration: 2}} className={styles.image_box}>
+                  <Image src={logo_icon} width={247} height={247} alt={'logo_icon'}/>
+                  </motion.div>
+
+                  </Col>
+
+                <Col className='d-flex flex-column justify-content-center align-items-center'>
+
+                    <div className={styles.title}>Geoмузей <br /> в кармане</div>
+                    <div className={styles.subtitle}>Цифровой видеогид</div>
+                  
+                </Col>
+
+
+                <Col className='d-flex flex-column mt-4'>
+
+                      <Link style={{textDecoration: 'none'}} href={'/auth/login'}><MyButton text={'Войти'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>
+                      <Link style={{textDecoration: 'none'}} href={'/auth/registration'}><MyButton text={'Регистрация'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>
+
+                </Col>
+ 
+
+
+                </div>
+
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+
+      </div>
+      </Col>
+      </Row>
+    </Container>
+  )
 }
+
+export default page
+

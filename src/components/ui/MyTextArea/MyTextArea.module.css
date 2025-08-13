@@ -1,0 +1,30 @@
+.textarea_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.textarea_span {
+    color: #000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 125%; /* 17.5px */
+
+    /*  */
+
+    margin-bottom: 5;
+}
+
+.textarea {
+    display: flex;
+    width: 353px;
+    padding: 18px 16px;
+    align-items: center;
+    gap: 10px;
+
+    /*  */
+
+    border-radius: 10px;
+    border: 1px solid #D8DADC;
+    background: #FFF;
+}   

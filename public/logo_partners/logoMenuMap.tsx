@@ -1,0 +1,26 @@
+import React from 'react'
+
+export const logoMenuMap = (props: React.SVGProps<SVGSVGElement>) => {
+  return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none" {...props}>
+        <g clip-path="url(#clip0_264_1819)">
+            <path d="M6 10.3594V18.6394" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 10.3594V18.6394" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 12.1406V16.8606" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 10.3594V18.6394" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M18 12.1406V16.8606" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1 8V3C1 2.46957 1.21071 1.96086 1.58579 1.58579C1.96086 1.21071 2.46957 1 3 1H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M27 8V3C27 2.46957 26.7893 1.96086 26.4142 1.58579C26.0391 1.21071 25.5304 1 25 1H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1 20V25C1 25.5304 1.21071 26.0391 1.58579 26.4142C1.96086 26.7893 2.46957 27 3 27H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M27 20V25C27 25.5304 26.7893 26.0391 26.4142 26.4142C26.0391 26.7893 25.5304 27 25 27H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <defs>
+            <clipPath id="clip0_264_1819">
+            <rect width="28" height="28" fill="white"/>
+            </clipPath>
+        </defs>
+        </svg>
+  )
+}
+
+

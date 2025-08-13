@@ -1,0 +1,10 @@
+/* loading */
+
+
+.loading {
+    color: #000;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 125%; /* 31.25px */
+}

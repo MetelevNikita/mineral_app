@@ -1,0 +1,124 @@
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+.image_background {
+
+  background: url('/bg/start_bg.png') center / cover no-repeat;
+  width: 100%;
+  height: 100%;
+
+  max-width: 430px; /* ограничение по ширине, чуть больше чем iPhone 14 Pro Max (430px) */
+  aspect-ratio: 430 / 932; /* пропорции iPhone 14 Pro Max */
+  flex-shrink: 0;
+  position: relative;
+
+  /*  */
+
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+.image_box {
+  width: 353px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+
+
+}
+
+
+.glass_background {
+  width: 383px;
+  height: 736px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+
+
+  /*  */
+
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.41);
+  background: linear-gradient(168deg, rgba(255, 255, 255, 0.28) -9.85%, rgba(255, 255, 255, 0.28) 83.15%);
+  backdrop-filter: blur(20.799999237060547px);
+}
+
+
+.title {
+
+    margin-top: 17px;
+
+    /*  */
+
+    color: #FFF;
+    text-align: center;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 108%; /* 34.56px */
+    letter-spacing: -0.32px;
+    text-transform: uppercase;
+
+    /*  */
+
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    color: #FFF;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 25px;
+    letter-spacing: -0.17px;
+
+    /*  */
+
+    margin-bottom: 20px;
+}
+
+.info {
+    margin-top: 42px;
+    width: 300px;
+    color: #FFF;
+    text-align: center;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%; /* 19.5px */
+    letter-spacing: -0.15px; 
+}
+
+
+.btn {
+    display: flex;
+    width: 303px;
+    height: 56px;
+    padding: 17px 152px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: #FFBC41;
+    margin-bottom: 10px;
+    border-color: white !important;
+    color: white
+}
