@@ -39,7 +39,7 @@ const MineralCard: FC<MineralCardProps> = ({id, image, title }) => {
 
 
         <div className={styles.card_btn_wrapper}>
-            <Link href={`minerale/${id}`}><MyButton text={'Посмотреть'} btn={styles.card_btn} onClick={() => {}} type={'button'} /></Link>
+            <Link href={`minerale/${id}`}><MyButton text={'Посмотреть'} btn={styles.card_btn} onClick={() => {}} type={'button'} imgActive={true}/></Link>
         </div>
 
       

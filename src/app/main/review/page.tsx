@@ -161,8 +161,8 @@ const page: FC = () => {
         </Row>
 
 
-        <Row>
-            <Col className='d-flex flex-column justify-content-center align-items-center mb-4'>
+        <Row className='mb-5'>
+            <Col className='d-flex flex-column justify-content-center align-items-center mb-5'>
 
 
                     <MyInput name={'name'} title={'ФИО*'} type={'text'} placeholder={'ваше имя'} style={{ marginBottom: '10px' }} required={true} value={messageEmail.name} onChange={(e) => {setMessageEmail({...messageEmail, name: e.target.value})}}/>

@@ -2,7 +2,6 @@
 
 import { FC, ReactNode } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 
 // styles
 
@@ -10,7 +9,7 @@ import styles from './page.module.css'
 
 // 
 
-import { Container, Row, Col, Accordion } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 
 // components
 
@@ -24,7 +23,6 @@ import map from '@/../public/contacts/map.png'
 // types
 
 import { contactsArrType } from '@/types/type'
-import { div } from 'motion/react-client'
 
 
 const page: FC = () => {

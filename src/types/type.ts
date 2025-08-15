@@ -66,6 +66,18 @@ export type UserType = {
     isAdmin: boolean
     profile: any | null
     firstVisit: boolean
+    mineralPassed: mineralPassedType[] | []
+}
+
+
+
+
+export type mineralPassedType = {
+    id: number,
+    title: string,
+    isPassed: boolean,
+    createdAt: string | Date,
+    updatedAt: string | Date
 }
 
 

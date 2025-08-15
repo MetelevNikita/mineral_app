@@ -19,7 +19,7 @@ import Loading from '@/components/element/Loading/Loading'
 // modal
 
 import ModalResult from '@/components/modals/ModalResult/ModalResult'
-import ModalStatus from '@/components/modals/ModalStatus/ModalStatus'
+
 
 // image modal
 
@@ -43,6 +43,12 @@ import { getUsers } from '@/functions/reduxAsync/users/getUsers'
 import newIcon from '@/../public/uploads/status/newbie_icon.svg'
 
 
+// database status
+
+import { statusList } from '@/database/status'
+import { redirect } from 'next/navigation'
+
+
 
 
 const page = ({ params }: { params: { id: string } }) => {
@@ -51,10 +57,10 @@ const page = ({ params }: { params: { id: string } }) => {
   const [userId, setUserId] = useState<string>('')
   const [mineralId, setMineralId] = useState<string>('');
   const [answers, setAnswers] = useState<any>([])
-  const [total, setTotal] = useState<number>(0)
   const [questionId, setQuestioId]= useState<number>(0)
   const [buttonText, setButtonText] = useState<string>('Тест начался')
   const [questionNumber, setQuestionNumber] = useState<number>(1)
+  const [price, setPrice] = useState<number>(0)
 
 
   const [newStatusText, setNewStatusText] = useState<string>('')
@@ -92,7 +98,7 @@ const page = ({ params }: { params: { id: string } }) => {
 
   //  get Id User
 
-  useEffect(() => {
+useEffect(() => {
 
     const userId = sessionStorage.getItem('userID')
 
@@ -106,12 +112,19 @@ const page = ({ params }: { params: { id: string } }) => {
 
   // get USER
 
-  useEffect(() => {
+useEffect(() => {
     if (userId || mineralId) {
         dispatch(getUsers());
         dispatch(fetchGetAsyncMineral()) 
     }
 }, [userId, dispatch]);
+
+
+useEffect(() => {
+      if (newStatusText !== '') {
+      redirect(`/main/status/${newStatusText}`)
+    } 
+  }, [])
 
 
 
@@ -157,17 +170,40 @@ const page = ({ params }: { params: { id: string } }) => {
 
   const handleFinalSubmit = (mineral: any) => {
 
-    console.log(mineral)
+    console.log('Answers:', answers)
+
+    const correctAnswer = answers.filter((item: any) => {
+            return item.correct === true
+    })
+
+
+    const passed = correctAnswer.length === mineral.question.length;
+
 
     if (questionId + 1 >= mineral.question.length) {
       console.log("Тест завершён");
+
+      const isPassed = currentUser?.mineralPassed.filter((item: any) => item.title === mineral.title).length > 0;
+
+
+      if (passed) {
+
+        if (!isPassed) {
+          setPrice(100);
+        } else {
+          setPrice(10);
+        }
+
+      } else {
+        setPrice(0);
+      }
+
       setModal(true)
     } else {
       alert('Вы не закончили отвечать на вопросы')
     }
 
   }
-
 
 
   // 
@@ -248,24 +284,29 @@ const page = ({ params }: { params: { id: string } }) => {
           status = 'Геолог-съёмщик'
           break; 
         case 1000:
-          await dispatch(fetchUsersChangeStatus({userId, status: 'Геолог-эксперт'})).unwrap()
-          console.log('Геолог-эксперт')
-          status = 'Геолог-эксперт'
+          await dispatch(fetchUsersChangeStatus({userId, status: 'Старший геолог'})).unwrap()
+          console.log('Старший геолог')
+          status = 'Старший геолог'
+          break;
+        case 1400:
+          await dispatch(fetchUsersChangeStatus({userId, status: 'Главный геолог'})).unwrap()
+          console.log('Главный геолог')
+          status = 'Главный геолог'
           break;
         case 2000:
           console.log()
-          await dispatch(fetchUsersChangeStatus({userId, status: 'Геолог-профессионал'})).unwrap()
-          console.log('Геолог-профессионал')
-          status = 'Геолог-профессионал'
+          await dispatch(fetchUsersChangeStatus({userId, status: 'Начальник геолого-съемочной партии'})).unwrap()
+          console.log('Начальник геолого-съемочной партии')
+          status = 'Начальник геолого-съемочной партии'
           break;
         case 2600:
-          await dispatch(fetchUsersChangeStatus({userId, status: 'Геолог-профессионал'})).unwrap()
-          console.log('Геолог-профессионал')
-          status = 'Геолог-профессионал'
+          await dispatch(fetchUsersChangeStatus({userId, status: 'Министр природных ресурсов 2 600 15% скидка'})).unwrap()
+          console.log('Министр природных ресурсов 2 600 15% скидка')
+          status = 'Министр природных ресурсов 2 600 15% скидка'
           break;
         default:
           console.log('не хватает баллов для получения статуса')
-          status = null
+          status = ''
       }
 
 
@@ -297,42 +338,48 @@ const page = ({ params }: { params: { id: string } }) => {
             return item.title === minerale.title
           })
 
+          console.log('Passed:', passed)
+          console.log('Correct Answers:', correctAnswer)
+          console.log('Total:', total)
+
 
           if (passed.length >= 1) {
               console.log('Вы уже прошли этот квиз')
               const newTotal = await secondPlaythrough(correctAnswer, minerale, total, user, 10)
-              
               const newStatus = await newStatusUser(newTotal as number)
-              console.log(newStatus)
 
-              if (newStatus !== null) {
 
-                setModal(false)
-                setNewStatusText(newStatus as string)
-                return
 
-              }
+
               setModal(false)
-              return
+
+              if (newStatus !== '') {
+                window.location.href = `/main/status/${newStatus}`
+              } else {
+                window.location.href = '/main/minerale'
+              }
+
+              setNewStatusText(newStatus as string)
+
 
             } else {
               const newTotal = await firstPlaythrough(correctAnswer, minerale, total, user, 100)
-              console.log(newTotal)
-
               const newStatus = await newStatusUser(newTotal as number)
-              console.log(newStatus)
-              
-              if (newStatus !== null) {
 
-                setModal(false)
-                setNewStatusText(newStatus as string)
-                return
-
-              }
-
+   
               setModal(false)
-              return
+
+              if (newStatus !== '') {
+                window.location.href = `/main/status/${newStatus}`
+              } else {
+                window.location.href = '/main/minerale'
+              }
+              
+              setNewStatusText(newStatus as string)
+
           }
+
+
         
 
     } catch (error) {
@@ -344,27 +391,20 @@ const page = ({ params }: { params: { id: string } }) => {
 
 
 
-  console.log(currentUser)
 
-    
 
+  
+
+  if (currentMineral === null || currentUser === null) {
+    return <Loading text={'Loading...'} />
+  }
+
+  
   return (
 
   <>
 
 
-    {
-      (newStatusText) && (
-        <Row>
-          <Col className='d-flex justify-content-center align-items-center mb-3'>
-          
-            <ModalStatus statusText={newStatusText} statusImg={newIcon} onClick={() => {}} bgButtonColor={''} bgButtonTop={''} />
-          
-          </Col>
-        </Row>
-      )
-    }
-    
       {
         (modal) && (
 
@@ -373,10 +413,10 @@ const page = ({ params }: { params: { id: string } }) => {
 
                   <ModalResult 
                     imgTop={IconWin}
-                    onClickLink={() => {window.location.href = '/main/profile'}}
+                    onClickLink={() => {closeModal(currentMineral, currentUser)}}
                     imgClose={IconClose}
-                    onClickClose={() => {setModal(false)}}
-                    text={'Поздравляем вы получили'}
+                    onClickClose={() => {window.location.href = '/main/profile'}}
+                    text={`Поздравляем вы получили ${price} баллов`}
                     textBtn={'Подробнее'}
                     colorBackground={{background: 'linear-gradient(125deg, #7D22C9 0.49%, #FFBF00 73.51%, #FFBC41 99.11%)'}}
                     colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}} 
@@ -409,7 +449,7 @@ const page = ({ params }: { params: { id: string } }) => {
                   <div className={styles.question_top_title}>{currentMineral.title}</div>
 
                   <div className={styles.question_number}>Вопрос {questionNumber}</div>
-                  <progress className={styles.question_progress} value={questionNumber} max={currentMineral.question.length}></progress>
+                  <progress className={styles.question_progress} value={questionNumber} max={currentMineral?.question.length}></progress>
 
                   <div className={styles.question_top_question}>{currentMineral.question[questionId].title}</div>
 

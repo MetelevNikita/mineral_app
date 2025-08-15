@@ -33,11 +33,13 @@ const page: FC = () => {
 
     <Container>
       <Row className='mt-3'>
-        <Col className='d-flex justify-content-center align-items-center mb-3'>
 
-            <HorizontalBlock path='/main/welcome' imgSrc={imgBuild} imgWidth={138} imgHeight={110} text={'Приветственное видео музея'} btnText={'Смотреть'} onClick={() => {}} />
+      <Col className='d-flex justify-content-center align-items-center mb-3'>
 
-        </Col>
+          <HorizontalBlock path={'/main/minerale'} imgSrc={imgMinerale} imgWidth={129} imgHeight={116} text={'Пройти тестирование по минералам'} btnText={'Начать'} onClick={() => {}} />
+
+      </Col>
+
 
 
         {/*  */}
@@ -57,10 +59,9 @@ const page: FC = () => {
 
         {/*  */}
 
-
         <Col className='d-flex justify-content-center align-items-center mb-3'>
 
-          <HorizontalBlock path={'/main/minerale'} imgSrc={imgMinerale} imgWidth={129} imgHeight={116} text={'Пройти тестирование по минералам'} btnText={'Начать'} onClick={() => {}} />
+            <HorizontalBlock path='/main/welcome' imgSrc={imgBuild} imgWidth={138} imgHeight={110} text={'Приветственное видео музея'} btnText={'Смотреть'} onClick={() => {}} />
 
         </Col>
 

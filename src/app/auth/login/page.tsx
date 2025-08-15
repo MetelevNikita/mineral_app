@@ -143,7 +143,7 @@ const Login: FC = () => {
                 <MyButton style={{marginBottom: '20px'}} text={'Войти'} btn={styles.btn} onClick={() => {
                   userIn()
                   }} type={'button'} />
-                <Link style={{textDecoration: 'none'}} href={'/auth/registration'}><MyButton style={{marginBottom: '20px'}} text={'Регсистрация'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>
+                <Link style={{textDecoration: 'none'}} href={'/auth/registration'}><MyButton style={{marginBottom: '20px'}} text={'Регистрация'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>
                 
           </Col>
 

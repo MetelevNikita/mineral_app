@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // fonts
 
-const OpenSansFont = Open_Sans({
+const OpenSans = Open_Sans({
   subsets: ["latin"],
   variable: "--font-open-sans",
   display: "swap",
@@ -55,7 +55,7 @@ export default function RootLayout({
 
 
     <html lang="en">
-        <body className={`${OpenSansFont.className}, ${InterFont.className}`}>
+        <body className={`${OpenSans.className}, ${InterFont.className}`}>
 
           <Container style={{padding: 0}}>
             <ReduxProvider>

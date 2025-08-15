@@ -183,14 +183,14 @@ if (!currentUser) {
 
         <Row className='d-flex flex-row justify-content-center align-items-center'>
 
-            <Col className='d-flex justify-content-start align-items-center'>
+            <Col className='d-flex justify-content-start align-items-center' xs={2}>
 
                 <Image src={(isOn) ? menuClose : menuOpen} width={30} height={30} onClick={() => setIsOn(!isOn)} alt='menu_icon'/>
 
             </Col>
 
 
-            <Col className='d-flex justify-content-center align-items-center'>
+            <Col className='d-flex justify-content-start align-items-center'>
 
                 <Link href={'/main/profile'} style={{textDecoration: 'none', color: '#7D22C9'}}>
 
@@ -201,7 +201,16 @@ if (!currentUser) {
 
                         </div>
 
-                        <div className={styles.middle_text}>{currentUser.status}</div>
+                        <div className={styles.middle_text_wrapper}>
+
+                            <div className={styles.middle_title}>Звание:</div>
+
+                            <div className={styles.middle_text}>{currentUser.status}</div>
+
+
+                        </div>
+
+  
                     </div>
 
                 </Link>
@@ -229,7 +238,7 @@ if (!currentUser) {
 
             {
                 isOn && (
-                    <motion.div initial={{opacity: 1, y: -1000}} animate={{opacity: 1, y: 60}} exit={{opacity: 1, y: -1000}} transition={{duration: 1}} className={styles.menu_container}>
+                    <motion.div initial={{opacity: 1, y: -1000}} animate={{opacity: 1, y: 60}} exit={{opacity: 1, y: -1000}} transition={{duration: 1, delayChildren: 1}} className={styles.menu_container}>
                         {
                             menuArr.map((item) => (
                                 <div key={item.id} className={styles.menu_item_container}>

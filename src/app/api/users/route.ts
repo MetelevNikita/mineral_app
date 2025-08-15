@@ -80,7 +80,7 @@ export const POST = async (req: Request | any, res: Response | any): Promise<any
                 email,
                 password: hashPassword,
                 total: 0,
-                status: 'Новичек',
+                status: 'Студент-геолог',
                 isAdmin: false
             },
             include: {

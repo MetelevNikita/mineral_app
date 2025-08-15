@@ -193,8 +193,8 @@ const page: FC = () => {
         </Row>
 
 
-        <Row>
-            <Col className='d-flex justify-content-center align-items-center mb-4'>
+        <Row className='mb-5'>
+            <Col className='d-flex justify-content-center align-items-center mb-5'>
                 <Link href={'/main/profile/account'} style={{textDecoration: 'none'}}><MyButton text={'Личные данные'} btn={styles.btn} onClick={() => {''}} type={'button'} /></Link>    
             </Col>
         </Row>
