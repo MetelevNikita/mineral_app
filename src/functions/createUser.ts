@@ -9,22 +9,30 @@ export const createUser = async (user: any) => {
         const { name, email, password, confirmPassword, politic } = user
 
         if (name == '' || email == '' || password == '') {
-            alert('Поля должны быть заполнены')
-            throw new Error('Поля должны быть заполнены')
+            return {
+                message: 'empty field',
+                succes: false,
+                status: 400
+            }
         }
 
-        console.log(politic)
     
 
         if (!politic) {
-            alert('Вы должны согласиться с политикой конфиденциальности')
-            throw new Error('Вы должны согласиться с политикой конфиденциальности')
+            return {
+                message: 'politic',
+                succes: false,
+                status: 400
+            }
         }
 
 
         if (password !== confirmPassword) {
-            alert('Пароли не совпадают')
-            throw new Error('Пароли не совпадают')
+            return {
+                message: 'password repeat',
+                succes: false,
+                status: 400
+            }
         }
 
 
@@ -52,7 +60,11 @@ export const createUser = async (user: any) => {
 
         const data = await responce.json()
         console.log(data)
-        window.location.href = '/auth/responce'
+        return {
+            message: data.message,
+            success: true,
+            status: 200
+        }
 
 
 

@@ -130,3 +130,32 @@ export type Answers = {
     createAt: string | Date,
     updateAt: string | Date
 }
+
+
+// statuses
+
+export type StatusesType = {
+    id: number | any,
+    title: string,
+    icon: string,
+    price: string | null,
+    createAt: string | Date,
+    updateAt: string | Date
+}
+
+
+
+// collection user
+
+
+
+// collection_mineral
+
+
+export type CollectionMineralType = {
+    id: number,
+    title: string,
+    image: string | StaticImageData,
+    createAt: string | Date,
+    updateAt: string | Date,
+}

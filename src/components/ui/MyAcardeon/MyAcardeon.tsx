@@ -17,11 +17,10 @@ interface MyAcardeonProps {
     title: string,
     content: string
     image: string | StaticImageData
-    layoutId: string
 
 }
 
-const MyAcardeon: FC<MyAcardeonProps> = ({ title, content, image, layoutId }) => {
+const MyAcardeon: FC<MyAcardeonProps> = ({ title, content, image }) => {
 
 const [isOn, setIsOn] = useState(false)
 
@@ -34,7 +33,7 @@ console.log(isOn)
         <div className={styles.acarderon_top}>
             <div className={styles.acarderon_top_text}>{title}</div>
             
-            <motion.div layoutId={layoutId} className={(!isOn) ? styles.acarderon_top_icon : styles.acarderon_top_anim_icon} >
+            <motion.div animate={isOn ? {rotate: 90} : {rotate: 0}}>
                 <Image onClick={() => {setIsOn(prev => !prev)}} src={arrIcon} width={48} height={48} alt='arrow_icon'/>
             </motion.div>
         </div>
@@ -44,7 +43,6 @@ console.log(isOn)
         {
                 isOn ? 
                     <motion.div
-                        layoutId='active'
                         className={styles.acarderon_bottom_text}
                         initial={{ opacity: 0, border: 'none' }}   // Начальное состояние
                         animate={{ opacity: 1 }}  // Конечное состояние

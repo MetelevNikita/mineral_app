@@ -1,6 +1,7 @@
 'use client'
 
 import { FC, useState, useEffect } from 'react'
+import { motion } from "motion/react"
 
 // style
 
@@ -38,20 +39,27 @@ import { fetchUsersChangeTotal } from '@/functions/reduxAsync/users/fetchUsersCh
 import { fetchUsersChangeStatus } from '@/functions/reduxAsync/users/fetchUsersChangeStatus'
 import { getUsers } from '@/functions/reduxAsync/users/getUsers'
 
-// img
-
-import newIcon from '@/../public/uploads/status/newbie_icon.svg'
-
 
 // database status
 
-import { statusList } from '@/database/status'
 import { redirect } from 'next/navigation'
 
 
 
 
 const page = ({ params }: { params: { id: string } }) => {
+
+
+const STATUS_THRESHOLDS = [
+  { min: 2600, status: 'Министр природных ресурсов 2 600 15% скидка' },
+  { min: 2000, status: 'Начальник геолого-съемочной партии' },
+  { min: 1400, status: 'Главный геолог' },
+  { min: 1000, status: 'Старший геолог' },
+  { min: 600,  status: 'Геолог-съёмщик' },
+  { min: 200,  status: 'Инженер-геолог' },
+  { min: 100,  status: 'Стажер-геолог' },
+] as const;
+
 
 
   const [userId, setUserId] = useState<string>('')
@@ -64,6 +72,9 @@ const page = ({ params }: { params: { id: string } }) => {
 
 
   const [newStatusText, setNewStatusText] = useState<string>('')
+
+
+  console.log(newStatusText)
 
 
   // 
@@ -125,6 +136,13 @@ useEffect(() => {
       redirect(`/main/status/${newStatusText}`)
     } 
   }, [])
+
+
+  // useEffect(() => {
+  //   if (newStatusText !== '') {
+  //     redirect(`/main/status/${newStatusText}`)
+  //   }
+  // }, [newStatusText])
 
 
 
@@ -210,190 +228,222 @@ useEffect(() => {
 
 
 
-  const firstPlaythrough = async (answers: any, mineral: any, total: number, user: any, points: any): Promise<number | undefined> => {
-    try {
+  // const firstPlaythrough = async (answers: any, mineral: any, total: number, user: any, points: any): Promise<number | undefined> => {
+  //   try {
 
-      const passed = answers.length === mineral.question.length;
-      const newTotal = user.total + (passed ? points : 0);
+  //     const passed = answers.length === mineral.question.length;
+  //     const newTotal = user.total + (passed ? points : 0);
 
-      if (passed) {
-        await dispatch(fetchUsersChangeTotal({ userId: userId, total: newTotal })).unwrap();
-        await dispatch(fetchUsersChangePassedMineral({
-          userId: userId,
-          passed: { title: mineral.title, isPassed: true }
-        })).unwrap();
-        await dispatch(getUsers()).unwrap();
-      }
-      return newTotal;
+  //     if (passed) {
+  //       await dispatch(fetchUsersChangeTotal({ userId: userId, total: newTotal })).unwrap();
+  //       await dispatch(fetchUsersChangePassedMineral({
+  //         userId: userId,
+  //         passed: { title: mineral.title, isPassed: true }
+  //       })).unwrap();
+  //       await dispatch(getUsers()).unwrap();
+  //     }
+  //     return newTotal;
       
-    } catch (error: Error | unknown) {
-        if (error instanceof Error) {
-            console.log(`Ошибка получения балов за квиз ${error.message}`)
-            throw new Error(
-              `Ошибка получения балов за квиз ${error.message}`
-            )
-        }
-    }
-  }
+  //   } catch (error: Error | unknown) {
+  //       if (error instanceof Error) {
+  //           console.log(`Ошибка получения балов за квиз ${error.message}`)
+  //           throw new Error(
+  //             `Ошибка получения балов за квиз ${error.message}`
+  //           )
+  //       }
+  //   }
+  // }
 
 
-  const secondPlaythrough = async (answers: any, mineral: any, total: number, user: any, points: any): Promise<number | undefined> => {
-    try {
+  // const secondPlaythrough = async (answers: any, mineral: any, total: number, user: any, points: any): Promise<number | undefined> => {
+  //   try {
 
-      const passed = answers.length === mineral.question.length;
-      const newTotal = user.total + (passed ? points : 0);
+  //     const passed = answers.length === mineral.question.length;
+  //     const newTotal = user.total + (passed ? points : 0);
 
-      if (passed) {
-        await dispatch(fetchUsersChangeTotal({ userId: userId, total: newTotal })).unwrap();
-        await dispatch(getUsers()).unwrap();
-      }
-      return newTotal;
+  //     if (passed) {
+  //       await dispatch(fetchUsersChangeTotal({ userId: userId, total: newTotal })).unwrap();
+  //       await dispatch(getUsers()).unwrap();
+  //     }
+  //     return newTotal;
       
-    } catch (error: Error | unknown) {
-        if (error instanceof Error) {
-            console.log(`Ошибка получения балов за квиз ${error.message}`)
-            throw new Error(
-              `Ошибка получения балов за квиз ${error.message}`
-            )
-        }
-    }
-  }
+  //   } catch (error: Error | unknown) {
+  //       if (error instanceof Error) {
+  //           console.log(`Ошибка получения балов за квиз ${error.message}`)
+  //           throw new Error(
+  //             `Ошибка получения балов за квиз ${error.message}`
+  //           )
+  //       }
+  //   }
+  // }
 
-  // 
+  //
 
 
-  const newStatusUser = async (total: number) => {
+  const calcStatusByTotal = (total: number): string => {
+    const found = STATUS_THRESHOLDS.find(t => total >= t.min);
+    return found ? found.status : '';
+  };
+
+
+
+  const applyStatusIfUpgraded = async (total: number, currentStatus: string) => {
+    const nextStatus = calcStatusByTotal(total);
+
+    // если порог не достигнут — ничего не делаем
+    if (!nextStatus) return '';
+
+    // если статус не изменился — не дергаем API повторно
+    if (nextStatus === currentStatus) return nextStatus;
+
+    // апгрейд статуса
+    await dispatch(fetchUsersChangeStatus({ userId, status: nextStatus })).unwrap();
+    await dispatch(getUsers()).unwrap();
+    return nextStatus;
+  };
+
+
+
+  const newStatusUser = async (total: number, currentStatus: string) => {
     try {
-
-      let status: string | null = null
-
-      switch (total) {
-        case 100:
-          await dispatch(fetchUsersChangeStatus({userId, status: 'Стажер-геолог'})).unwrap()
-          console.log('Стажер-геолог')
-          status = 'Стажер-геолог'
-          break;
-        case 200:
-          await dispatch(fetchUsersChangeStatus({userId, status: 'Инженер-геолог'})).unwrap()
-          console.log('Инженер-геолог')
-          status = 'Инженер-геолог'
-          break;
-        case 600:
-          await dispatch(fetchUsersChangeStatus({userId, status: 'Геолог-съёмщик'})).unwrap()
-          console.log('Геолог-съёмщик')
-          status = 'Геолог-съёмщик'
-          break; 
-        case 1000:
-          await dispatch(fetchUsersChangeStatus({userId, status: 'Старший геолог'})).unwrap()
-          console.log('Старший геолог')
-          status = 'Старший геолог'
-          break;
-        case 1400:
-          await dispatch(fetchUsersChangeStatus({userId, status: 'Главный геолог'})).unwrap()
-          console.log('Главный геолог')
-          status = 'Главный геолог'
-          break;
-        case 2000:
-          console.log()
-          await dispatch(fetchUsersChangeStatus({userId, status: 'Начальник геолого-съемочной партии'})).unwrap()
-          console.log('Начальник геолого-съемочной партии')
-          status = 'Начальник геолого-съемочной партии'
-          break;
-        case 2600:
-          await dispatch(fetchUsersChangeStatus({userId, status: 'Министр природных ресурсов 2 600 15% скидка'})).unwrap()
-          console.log('Министр природных ресурсов 2 600 15% скидка')
-          status = 'Министр природных ресурсов 2 600 15% скидка'
-          break;
-        default:
-          console.log('не хватает баллов для получения статуса')
-          status = ''
-      }
-
-
-      await dispatch(getUsers()).unwrap()
-      return status
-
+      return await applyStatusIfUpgraded(total, currentStatus);
     } catch (error: Error | unknown) {
-        if (error instanceof Error) {
-            console.log(`Ошибка получения статуса ${error.message}`)
-            throw new Error(
-              `Ошибка получения статуса ${error.message}`
-            )
-        }
+      if (error instanceof Error) {
+        console.log(`Ошибка получения статуса ${error.message ?? error}`);
+        throw new Error(`Ошибка получения статуса ${error.message ?? error}`);
+      }
+      throw new Error(`Ошибка получения статуса ${error}`)
     }
-  }
+  };
 
 
+
+
+
+  // const closeModal = async (minerale: any, user: any) => {
+  //   try {
+
+  //         const correctAnswer = answers.filter((item: any) => {
+  //           return item.correct === true
+  //         })
+
+  //         let total = user.total // получаем стратовый баланс
+  //         const passed = user.mineralPassed.filter((item: any) => {
+  //           return item.title === minerale.title
+  //         })
+
+  //         console.log('Passed:', passed)
+  //         console.log('Correct Answers:', correctAnswer)
+  //         console.log('Total:', total)
+
+
+  //         if (passed.length >= 1) {
+  //             console.log('Вы уже прошли этот квиз')
+  //             const newTotal = await secondPlaythrough(correctAnswer, minerale, total, user, 10)
+  //             const newStatus = await newStatusUser(newTotal as number)
+
+
+  //             setModal(false)
+  //             setNewStatusText(newStatus as string)
+
+  //             if (newStatus !== '') {
+  //               if (newStatus === currentUser.status) {
+  //                 window.location.href = '/main/minerale'
+  //                 return
+  //               }
+  //               window.location.href = `/main/status/${newStatus}`
+  //             } else {
+  //               window.location.href = '/main/minerale'
+  //             }
+
+
+
+  //           } else {
+  //             const newTotal = await firstPlaythrough(correctAnswer, minerale, total, user, 100)
+  //             const newStatus = await newStatusUser(newTotal as number)
+
+   
+  //             setModal(false)
+  //             setNewStatusText(newStatus as string)
+
+  //             if (newStatus !== '') {
+  //               if (newStatus === currentUser.status) {
+  //                 window.location.href = '/main/minerale'
+  //                 return
+  //               }
+  //               window.location.href = `/main/status/${newStatus}`
+  //             } else {
+  //               window.location.href = '/main/minerale'
+  //             }
+
+  //         }
+
+
+        
+
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
 
   const closeModal = async (minerale: any, user: any) => {
     try {
 
-          const correctAnswer = answers.filter((item: any) => {
-            return item.correct === true
-          })
+      let total = user.total;
 
-          let total = user.total // получаем стратовый баланс
-          const passed = user.mineralPassed.filter((item: any) => {
-            return item.title === minerale.title
-          })
+      // проверили правильность ответов
 
-          console.log('Passed:', passed)
-          console.log('Correct Answers:', correctAnswer)
-          console.log('Total:', total)
+      const correctAnswer = answers.filter((item: any) => item.correct === true);
+      const passedAllCorrect = correctAnswer.length === minerale.question.length;
 
+      // проверили проходили ли мы квиз
 
-          if (passed.length >= 1) {
-              console.log('Вы уже прошли этот квиз')
-              const newTotal = await secondPlaythrough(correctAnswer, minerale, total, user, 10)
-              const newStatus = await newStatusUser(newTotal as number)
+      const alreadyPassed = user.mineralPassed.some((i: any) => i.title === minerale.title);
 
+      // Считаем очки
 
+      let pointsToAdd = 0;
+      if (passedAllCorrect) {
+        pointsToAdd = alreadyPassed ? 10 : 100;
+      }
 
+      const newTotal = total + pointsToAdd;
 
-              setModal(false)
+      // Если это первое прохождение и всё верно — фиксируем «пройдено»
+      if (passedAllCorrect && !alreadyPassed) {
+        await dispatch(fetchUsersChangePassedMineral({
+          userId,
+          passed: { title: minerale.title, isPassed: true }
+        })).unwrap();
+      }
 
-              if (newStatus !== '') {
-                window.location.href = `/main/status/${newStatus}`
-              } else {
-                window.location.href = '/main/minerale'
-              }
+      // Если есть очки — фиксируем новый total (даже при повторном прохождении)
+      if (pointsToAdd > 0) {
+        await dispatch(fetchUsersChangeTotal({ userId, total: newTotal })).unwrap();
+      }
 
-              setNewStatusText(newStatus as string)
+      // Обновляем пользователя после записи total/пасса
+      await dispatch(getUsers()).unwrap();
 
+      // Пробуем апгрейдить статус (один раз до следующего порога)
+      const newStatus = await newStatusUser(newTotal, currentUser.status);
 
-            } else {
-              const newTotal = await firstPlaythrough(correctAnswer, minerale, total, user, 100)
-              const newStatus = await newStatusUser(newTotal as number)
+      setModal(false);
+      setNewStatusText(newStatus);
 
-   
-              setModal(false)
-
-              if (newStatus !== '') {
-                window.location.href = `/main/status/${newStatus}`
-              } else {
-                window.location.href = '/main/minerale'
-              }
-              
-              setNewStatusText(newStatus as string)
-
-          }
-
-
-        
-
+      if (newStatus && newStatus !== currentUser.status) {
+        window.location.href = `/main/status/${newStatus}`;
+      } else {
+        window.location.href = '/main/minerale';
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
 
 
-
-
-
-
-  
 
   if (currentMineral === null || currentUser === null) {
     return <Loading text={'Loading...'} />
@@ -485,7 +535,7 @@ useEffect(() => {
         <Row>
           <Col className='d-flex flex-column justify-content-center align-items-center mb-3'>
 
-            <MyButton text={buttonText} btn={styles.btn} onClick={() => {handleFinalSubmit(currentMineral)}} type={'button'} disabled={resultDisabled}/>
+            <motion.div animate={answerDisabled ? {scale: [1,1.2,1]} : {scale: [1]}} transition={{duration: 0.4}}><MyButton style={answerDisabled ? {background: '#FFBC41', color: 'white', border: 'none'} : {}} text={buttonText} btn={styles.btn} onClick={() => {handleFinalSubmit(currentMineral)}} type={'button'} disabled={resultDisabled}/></motion.div>
           
           </Col>
         </Row>

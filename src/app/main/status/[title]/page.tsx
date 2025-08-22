@@ -15,7 +15,15 @@ import MyButton from '@/components/ui/MyButton/MyButton'
 
 // status
 
-import { statusList } from '@/database/status'
+import { statusColor } from '@/database/statusColor'
+
+// redux
+
+import { useAppDispatch } from '@/types/hooks'
+import { useAppSelector } from '@/types/hooks'
+import { fetchGetStatus } from '@/functions/reduxAsync/status/fetchGetStatus'
+
+// 
 
 interface ModalStatusProps {
   statusText: string,
@@ -33,6 +41,8 @@ interface ModalStatusProps {
 
 const page: FC<{ params: { title: string } }> =  ({ params }) => {
 
+  const dispatch = useAppDispatch()
+
   const [currentStatus, setCurrentStatus] = useState<any>(null)
   const [decodedTitle, setDecodedTitle] = useState('')
 
@@ -41,35 +51,51 @@ const page: FC<{ params: { title: string } }> =  ({ params }) => {
         const resolvedParams = await params
         const title = decodeURIComponent(resolvedParams.title)
         setDecodedTitle(title)
-
-        const status = statusList.find(status => status.title === title)
-        setCurrentStatus(status)
       }
 
       fetchData()
     }, [params])
 
 
-    console.log('Current Status:', currentStatus)
+  useEffect(() =>{
+      dispatch(fetchGetStatus())
+  }, [dispatch])
 
-    if (!currentStatus) {
+
+
+
+
+    const status = useAppSelector((state) => state.status.status).filter((item: any) => {
+        return item.title === decodedTitle
+    })[0]
+
+    console.log('Status:', status)
+
+    const currentStatusColor = statusColor.filter((item: any) => {
+      return item.title === decodedTitle
+    })[0]
+
+    if (!status) {
       return <div className={styles.modal_container}>Статус не найден</div>
     }
+
+
+
 
 
     return (
     <div className={styles.container}>
 
-          <motion.div className={styles.bottom_container} animate={{scale: 1, opacity: 1, y: 0}} initial={{scale: 0.8, opacity: 0, y: -20}} transition={{duration: 0.4, scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 }}} style={{background: currentStatus?.colorBottom}}>
+          <motion.div className={styles.bottom_container} animate={{scale: 1, opacity: 1, y: 0}} initial={{scale: 0.8, opacity: 0, y: -20}} transition={{duration: 0.4, scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 }}} style={{background: currentStatusColor?.colorBottom}}>
 
                 <div className={styles.top_container}>
 
                     <div className={styles.status_icon_wrapper}>
-                      <Image src={currentStatus?.icon} width={125} height={203} alt='status_icon'/>
+                      <Image src={status.icon} width={175} height={203} alt='status_icon'/>
                     </div>
 
                     <div className={styles.status_text}>Поздравляем! <br/> Вы достигли уровня</div>
-                    <div className={styles.status_title}>{currentStatus?.title}</div>
+                    <div className={styles.status_title}>{status.title}</div>
 
                       <div className={styles.status_btn_container}>
 

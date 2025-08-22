@@ -18,6 +18,11 @@ import { Container, Row, Col } from 'react-bootstrap'
 import MyInput from '@/components/ui/MyInput/MyInput'
 import MyButton from '@/components/ui/MyButton/MyButton'
 
+// modal
+
+
+import ModalResult from '@/components/modals/ModalResult/ModalResult'
+
 // image
 
 import emptyAvatar from '@/../public/account/emptyAvatar.svg'
@@ -39,9 +44,11 @@ import { UserType, ProfileType } from '@/types/type'
 import { updateProfile } from '@/functions/updateProfile'
 import { deleteUser } from '@/functions/deleteUser'
 
+// img
 
+import modalIcon from '@/../public/ModalResult/Done.svg'
 
-
+// 
 
 const page: FC = () => {
 
@@ -57,6 +64,7 @@ const page: FC = () => {
     })
 
     const [previweAvatar, setPreviewAvatar] = useState<string | null>(null);
+    const [isUpdate, setIsUpdate] = useState<boolean>(false)
     
     const dispatch = useAppDispatch()
     
@@ -110,6 +118,18 @@ const userProfile = currentUser[0].profile || {}
 
 
     <Container>
+
+
+        {
+
+            isUpdate && (
+
+            <ModalResult imgTop={modalIcon} onClickLink={() => {setIsUpdate(false)}} text={'Аккаунт обновлен'} textBtn={'Продолжить'} colorBackground={{}} colorTop={{}} />
+            )
+
+        }
+
+
 
         <Row>
             <Col className='d-flex justify-content-center align-items-center mb-4'>
@@ -185,7 +205,11 @@ const userProfile = currentUser[0].profile || {}
                 <MyInput value={profile.telegram} onChange={(e) => {setProfile({...profile, telegram: e.target.value})}} image={editAvatar} name={'telegram'} title={'Телеграм'} type={'tel'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.telegram : 'Ваш аккаунт телеграмма'} style={{marginBottom: '15px'}} />
 
                  <Col className='d-flex justify-content-center align-items-center'>
-                    <MyButton text={'Сохранить'} btn={styles.btn} onClick={() => {updateProfile(profile)}} type={'button'} />
+                    <MyButton text={'Сохранить'} btn={styles.btn} onClick={() => {
+                    updateProfile(profile)
+                    setIsUpdate(true)
+
+                    }} type={'button'} />
                     <Link href={'/main/profile'} style={{textDecoration: 'none'}}><MyButton text={'Назад'} btn={styles.btn} onClick={() => {''}} type={'button'}/></Link>
                 </Col>
 

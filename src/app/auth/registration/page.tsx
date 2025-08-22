@@ -17,11 +17,24 @@ import MyInput from '@/components/ui/MyInput/MyInput'
 import MyButton from '@/components/ui/MyButton/MyButton'
 import MyCheckBox from '@/components/ui/MyCheckBox/MyCheckBox'
 
+// modal
+
+import ModalResult from '@/components/modals/ModalResult/ModalResult'
+
+// img
+
+import ModalIcon from '@/../public/ModalResult/Done.svg'
+
 // function
 
 import { createUser } from '@/functions/createUser'
 
 const Registration: FC = () => {
+
+  const [isAuth, setIsAuth] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
+  const [modalMessage, setModalMessage] = useState<string>('')
+
 
   const [check, setCheck] = useState<boolean>(false)
   const [user, setUser] = useState<any>({
@@ -40,12 +53,76 @@ const Registration: FC = () => {
       politic: !check // Обновляем политик с учетом нового состояния
     }));
   }
+
+
+
+  const registrationUser = async (user: any) => {
+    const registration = await createUser(user)
+    console.log(registration)
+
+    if (registration?.message === 'empty field') {
+      setError(true)
+      setModalMessage('Заполните все поля')
+    } else if (registration?.message === 'password repeat') {
+      setError(true)
+      setModalMessage('Пароли не совпадают')
+    } else if (registration?.message === 'politic') {
+      setError(true)
+      setModalMessage('Необходимо согласиться с политикой')
+    } else if (registration?.success === true) {
+      setIsAuth(true)
+      setModalMessage('Успешная регистрация')
+    }
+
+  }
   
 
 
   return (
 
     <Container>
+
+
+      {
+        <Row>
+              <Col>
+
+              {
+                isAuth &&
+                  <ModalResult
+                    imgTop={ModalIcon}
+                    onClickLink={() => {
+                      setIsAuth(false)
+                      window.location.href = '/auth/responce'
+                    }}
+                    text={modalMessage}
+                    textBtn={'Перейти'}
+                    colorBackground={{background: 'linear-gradient(262deg, #7D22C9 3.49%, #FFBC41 121.77%)'}}
+                    colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}                  
+                  />
+              }
+
+              {
+                error &&
+                  <ModalResult
+                    imgTop={ModalIcon}
+                    onClickLink={() => {
+                      setError(false)
+                      return
+                    }}
+                    text={modalMessage}
+                    textBtn={'Назад'}
+                    colorBackground={{background: 'linear-gradient(262deg, #C92225 3.49%, #FF8041 121.77%)'}}
+                    colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}                  
+                />
+              }
+              
+              
+              </Col>
+          </Row>
+      }
+
+
 
       <Row className='h-100 d-flex flex-column justify-content-center align-items-center'>
 
@@ -72,7 +149,7 @@ const Registration: FC = () => {
                 {/*  */}
 
 
-                <MyButton style={{marginBottom: '20px'}} text={'Регистрация'} btn={styles.btn} onClick={() => {createUser(user)}} type={'button'} />
+                <MyButton style={{marginBottom: '20px'}} text={'Регистрация'} btn={styles.btn} onClick={() => {registrationUser(user)}} type={'button'} />
                 <Link style={{textDecoration: 'none'}} href={'/auth'}><MyButton style={{marginBottom: '20px'}} text={'Назад'} btn={styles.btn} onClick={() => {createUser(user)}} type={'button'} /></Link>
 
  

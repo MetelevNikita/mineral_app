@@ -221,10 +221,18 @@ if (!currentUser) {
 
             <Col className='d-flex justify-content-end align-items-center'>
 
-                <div className={styles.right_container}>
+            <AnimatePresence initial={true}>
+
+
+                <motion.div key={currentUser.total} initial={{scale: 1}} animate={{ scale: [1, 1.4, 1], rotate: [0, 10, 0] }} transition={{duration: 0.3, delay: 0.5}} className={styles.right_container}>
                     <Image src={headerStar} width={17} height={16} alt='avatar'/>
                     <div className={styles.right_text}>{currentUser.total}</div>
-                </div>
+                </motion.div>
+
+
+
+            </AnimatePresence>
+
 
             </Col>
 

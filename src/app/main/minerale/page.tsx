@@ -66,8 +66,6 @@ const page: FC = () => {
     }
   })[0]
 
-  console.log(userId)
-  console.log(currentUsers)
 
 
   useEffect(() => {
@@ -94,9 +92,6 @@ const page: FC = () => {
         </Row>
     )
   }
-
-  console.log(modalVisible)
-
 
 
 

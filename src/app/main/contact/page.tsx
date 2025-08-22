@@ -98,7 +98,7 @@ const page: FC = () => {
 
                     (contactsArr.length < 1 || !contactsArr) ? <div>Нет данных</div> : contactsArr.map((item: contactsArrType, index: number): ReactNode => {
                         return (
-                            <Col key={index+1} className='mb-3'><MyAcardeon layoutId={item.title} key={index+1} title={item.title} content={item.content} image={item.img}/></Col>
+                            <Col key={index+1} className='mb-3'><MyAcardeon key={index+1} title={item.title} content={item.content} image={item.img}/></Col>
                         )
                     })
                     

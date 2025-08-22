@@ -37,6 +37,7 @@ const page: FC = () => {
     const [isAuth, setIsAuth] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
     const [errorText, setErrorText] = useState<string>('')
+    const [errorFiled, setErrorFiled] = useState<boolean>(false)
     const inputsRef = useRef<any>([])
 
 
@@ -70,7 +71,6 @@ const page: FC = () => {
 
     let newCode: number | string = ''
     const email = Cookies.get('email')
-    console.log(email)
  
 
 
@@ -107,6 +107,7 @@ const page: FC = () => {
         if (code.length < 6) {
             setErrorText('Необходимо ввести 6 цифр')
             setError(true)
+            setErrorFiled(true)
             return
         }
 
@@ -116,6 +117,7 @@ const page: FC = () => {
             if (code.join('') !== repeatCode.toString()) {
                 setErrorText('Неверный код')
                 setError(true)
+                setErrorFiled(true)
                 return
             } else {
                 if (code.join('') === repeatCode.toString()) {
@@ -135,13 +137,14 @@ const page: FC = () => {
         } else {
             setErrorText('Неверный код')
             setError(true)
+            setErrorFiled(true)
             return
         }
     }
 
 
 
-
+    console.log(errorFiled)
 
 
 
@@ -221,7 +224,9 @@ const page: FC = () => {
 
                             arr.map((item: number, index: number) => {
                                return (
-                                <input key={index} className={styles.num} type="text" min={0} max={9} step={1} maxLength={1} inputMode='numeric'
+                                <input style={(errorFiled) ? {borderColor: 'red'} : {borderColor: ''}} key={index} className={styles.num} type="text" min={0} max={9} step={1} maxLength={1} inputMode='numeric' onFocus={() => {
+                                    setErrorFiled(false)
+                                }}
                                     ref={(el) => {
                                         inputsRef.current[index] = el
                                     }}

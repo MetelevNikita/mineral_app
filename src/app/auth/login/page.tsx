@@ -34,6 +34,7 @@ const Login: FC = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const [errorText, setErrorText] = useState<string>('')
+  const [errorField, setErrorField] = useState<boolean>(false)
 
 
   const [check, setCheck] = useState<boolean>(false)
@@ -46,11 +47,11 @@ const Login: FC = () => {
 
   const userIn = async () => {
         const data = await authUser(user)
-        console.log(data)
 
-        if (data?.message === 'Bad Request' || data?.message === 'Not Found') {
+        if (data?.message === 'Bad Request' || data?.message === 'Not Found' || data?.message === "Unauthorized") {
           setErrorText('Неверный логин или пароль')
           setError(true)
+          setErrorField(true)
         } else if (data?.message === 'success') {
           setIsAuth(true)
         }
@@ -59,6 +60,8 @@ const Login: FC = () => {
 
   }
 
+
+  console.log(errorField)
 
   return (
 
@@ -90,7 +93,9 @@ const Login: FC = () => {
                   <ModalResult
                     imgTop={ModalIcon}
                     onClickLink={() => {
-                    setError(false)
+                      setError(false)
+                      setErrorField(true)
+                      return
                     }}
                     text={errorText}
                     textBtn={'Назад'}
@@ -115,7 +120,10 @@ const Login: FC = () => {
                   name={'email'}
                   title={'Ваша почта'}
                   type={'text'}
-                  placeholder={'email'} style={{marginBottom: '15px'}} borderColor={(error) ? {borderColor: 'red'} : {borderColor: '#D8DADC'}}/>
+                  placeholder={'email'} style={{marginBottom: '15px'}}
+                  borderColor={(errorField) ? {borderColor: 'red !important'} : {}}
+                  />
+                  
                 <MyInput
                   value={user.password}
                   onChange={(e) => {setUser({...user, password: e.target.value})}}

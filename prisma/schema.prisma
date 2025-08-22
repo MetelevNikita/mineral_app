@@ -49,19 +49,31 @@ model Profile {
 model Collection {
   id Int @id @default(autoincrement())
   title String
-  img String
-  active Boolean
-
+  received Boolean @default(false)
+  
   userId Int
   user User @relation(fields: [userId], references: [id])
 }
+
+
+
+model CollectionMineral {
+  id Int @id @default(autoincrement())
+  title String
+  image String
+
+  createAt DateTime @default(now())
+  updateAt DateTime @default(now())
+
+}
+
 
 model MineralPassed {
   id Int @id @default(autoincrement())
   title String
   isPassed Boolean
   createAt DateTime @default(now())
-  updateAе DateTime @default(now())
+  updateAt DateTime @default(now())
 
   userId Int
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -114,6 +126,18 @@ model Answer {
   createAt DateTime @default(now())
   updateAt DateTime @default(now())
 
+
+}
+
+
+model Statuses {
+  id Int @id @default(autoincrement())
+  title String
+  icon String
+  price String?
+
+  createAt DateTime @default(now())
+  updateAt DateTime @default(now())
 
 }
 
