@@ -90,7 +90,7 @@ const userSlice = createSlice({
             // change first visit
 
             .addCase(fetchUsersChangeFirstVisible.fulfilled, (state, action) => {
-                                state.user = state.user.map((user) => {
+                state.user = state.user.map((user) => {
                     if (user.id === action.payload.id) {
                         return {
                             ...user,

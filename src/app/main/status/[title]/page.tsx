@@ -23,7 +23,9 @@ import { useAppDispatch } from '@/types/hooks'
 import { useAppSelector } from '@/types/hooks'
 import { fetchGetStatus } from '@/functions/reduxAsync/status/fetchGetStatus'
 
-// 
+// components
+
+import Loading from '@/components/element/Loading/Loading'
 
 interface ModalStatusProps {
   statusText: string,
@@ -76,7 +78,7 @@ const page: FC<{ params: { title: string } }> =  ({ params }) => {
     })[0]
 
     if (!status) {
-      return <div className={styles.modal_container}>Статус не найден</div>
+      return <Loading text={'Загрузка...'} />
     }
 
 

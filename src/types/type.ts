@@ -156,6 +156,7 @@ export type CollectionMineralType = {
     id: number,
     title: string,
     image: string | StaticImageData,
+    received: boolean,
     createAt: string | Date,
     updateAt: string | Date,
 }

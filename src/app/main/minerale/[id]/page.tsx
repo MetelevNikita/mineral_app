@@ -111,7 +111,7 @@ const parseDescription = currentMinerale.description.split('\n').map((line: stri
 
             <Row>
                 <Col className='d-flex justify-content-center align-items-center mb-3'>
-                  <MyAcardeon title={currentMinerale.title} content={parseDescription} image={''} layoutId={'acardeon'} />
+                  <MyAcardeon title={currentMinerale.title} content={parseDescription} image={''} />
                 </Col>
             </Row>
 

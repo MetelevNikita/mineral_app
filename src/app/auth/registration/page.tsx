@@ -20,6 +20,7 @@ import MyCheckBox from '@/components/ui/MyCheckBox/MyCheckBox'
 // modal
 
 import ModalResult from '@/components/modals/ModalResult/ModalResult'
+import ModalIconError from '@/../public/ModalResult/error.svg'
 
 // img
 
@@ -105,7 +106,7 @@ const Registration: FC = () => {
               {
                 error &&
                   <ModalResult
-                    imgTop={ModalIcon}
+                    imgTop={ModalIconError}
                     onClickLink={() => {
                       setError(false)
                       return

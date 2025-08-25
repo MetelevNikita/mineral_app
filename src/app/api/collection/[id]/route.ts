@@ -69,3 +69,64 @@ export const DELETE = async (request: Request, context: {params: {id: string}}) 
     
   }
 }
+
+
+export const PATCH = async (request: Request, context: {params: {id: string}}) => {
+  try {
+
+    const { id } = await context.params
+    console.log(id)
+
+
+    const body = await request.json()
+    console.log(body)
+
+
+    const getMineral = await prisma.collectionMineral.findFirst({
+      where: {
+        id: Number(id)
+      }
+    })
+
+    console.log(getMineral)
+
+    if (!getMineral) {
+      NextResponse.json({
+        message: `Минерал для обновления с id ${id} не найден`
+      })
+    }
+
+
+    const updateMineral = await prisma.collectionMineral.update({
+      where: {
+        id: Number(id)
+      },
+      data: {
+        received: true
+      }
+    })
+
+    if (!updateMineral) {
+      NextResponse.json({
+        message: `Не удалось обновить статус в коллекции минералов`
+      })
+    }
+
+
+
+    return NextResponse.json({
+      message: 'done'
+    })
+
+
+
+
+    
+  } catch (error: Error | unknown) {
+    if (error instanceof Error) {
+      NextResponse.json({message: `Не удалось обновить статус в коллекции минералов ${error.message}`})
+    }
+
+    return NextResponse.json(error)
+  }
+}

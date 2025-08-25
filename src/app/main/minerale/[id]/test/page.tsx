@@ -25,6 +25,7 @@ import ModalResult from '@/components/modals/ModalResult/ModalResult'
 // image modal
 
 import IconWin from '@/../public/ModalResult/star.svg'
+import IconNotWin from '@/../public/ModalResult/error.svg'
 import IconClose from '@/../public/ModalResult/close.svg'
 
 
@@ -74,8 +75,6 @@ const STATUS_THRESHOLDS = [
   const [newStatusText, setNewStatusText] = useState<string>('')
 
 
-  console.log(newStatusText)
-
 
   // 
 
@@ -85,7 +84,8 @@ const STATUS_THRESHOLDS = [
   // redux
   
 
-  const [modal, setModal] = useState<boolean>(false)
+  const [winKviz, setWinKviz] = useState<boolean>(false)
+  const [notWinKviz, setNotWinKviz] = useState<boolean>(false)
 
   // redux
 
@@ -138,12 +138,6 @@ useEffect(() => {
   }, [])
 
 
-  // useEffect(() => {
-  //   if (newStatusText !== '') {
-  //     redirect(`/main/status/${newStatusText}`)
-  //   }
-  // }, [newStatusText])
-
 
 
   if (!currentMineral || !currentUser) {
@@ -167,9 +161,9 @@ useEffect(() => {
 
 
 
-  const handleSubmit = (item: any, user: any) => {
+  const handleSubmit = (question: string, item: any, user: any) => {
 
-      setAnswers([...answers, item]);    // добавляем ответ в массив
+      setAnswers([...answers, {question: question, ...item}]);    // добавляем ответ в массив
       setQuestionNumber(questionNumber + 1)  // добавляем номер вопроса
 
       // проверяем ответы
@@ -208,74 +202,23 @@ useEffect(() => {
 
         if (!isPassed) {
           setPrice(100);
+          setWinKviz(true)
         } else {
           setPrice(10);
+          setWinKviz(true)
         }
 
       } else {
         setPrice(0);
+        setNotWinKviz(true)
       }
 
-      setModal(true)
+
     } else {
       alert('Вы не закончили отвечать на вопросы')
     }
 
   }
-
-
-  // 
-
-
-
-  // const firstPlaythrough = async (answers: any, mineral: any, total: number, user: any, points: any): Promise<number | undefined> => {
-  //   try {
-
-  //     const passed = answers.length === mineral.question.length;
-  //     const newTotal = user.total + (passed ? points : 0);
-
-  //     if (passed) {
-  //       await dispatch(fetchUsersChangeTotal({ userId: userId, total: newTotal })).unwrap();
-  //       await dispatch(fetchUsersChangePassedMineral({
-  //         userId: userId,
-  //         passed: { title: mineral.title, isPassed: true }
-  //       })).unwrap();
-  //       await dispatch(getUsers()).unwrap();
-  //     }
-  //     return newTotal;
-      
-  //   } catch (error: Error | unknown) {
-  //       if (error instanceof Error) {
-  //           console.log(`Ошибка получения балов за квиз ${error.message}`)
-  //           throw new Error(
-  //             `Ошибка получения балов за квиз ${error.message}`
-  //           )
-  //       }
-  //   }
-  // }
-
-
-  // const secondPlaythrough = async (answers: any, mineral: any, total: number, user: any, points: any): Promise<number | undefined> => {
-  //   try {
-
-  //     const passed = answers.length === mineral.question.length;
-  //     const newTotal = user.total + (passed ? points : 0);
-
-  //     if (passed) {
-  //       await dispatch(fetchUsersChangeTotal({ userId: userId, total: newTotal })).unwrap();
-  //       await dispatch(getUsers()).unwrap();
-  //     }
-  //     return newTotal;
-      
-  //   } catch (error: Error | unknown) {
-  //       if (error instanceof Error) {
-  //           console.log(`Ошибка получения балов за квиз ${error.message}`)
-  //           throw new Error(
-  //             `Ошибка получения балов за квиз ${error.message}`
-  //           )
-  //       }
-  //   }
-  // }
 
   //
 
@@ -318,75 +261,6 @@ useEffect(() => {
 
 
 
-
-
-  // const closeModal = async (minerale: any, user: any) => {
-  //   try {
-
-  //         const correctAnswer = answers.filter((item: any) => {
-  //           return item.correct === true
-  //         })
-
-  //         let total = user.total // получаем стратовый баланс
-  //         const passed = user.mineralPassed.filter((item: any) => {
-  //           return item.title === minerale.title
-  //         })
-
-  //         console.log('Passed:', passed)
-  //         console.log('Correct Answers:', correctAnswer)
-  //         console.log('Total:', total)
-
-
-  //         if (passed.length >= 1) {
-  //             console.log('Вы уже прошли этот квиз')
-  //             const newTotal = await secondPlaythrough(correctAnswer, minerale, total, user, 10)
-  //             const newStatus = await newStatusUser(newTotal as number)
-
-
-  //             setModal(false)
-  //             setNewStatusText(newStatus as string)
-
-  //             if (newStatus !== '') {
-  //               if (newStatus === currentUser.status) {
-  //                 window.location.href = '/main/minerale'
-  //                 return
-  //               }
-  //               window.location.href = `/main/status/${newStatus}`
-  //             } else {
-  //               window.location.href = '/main/minerale'
-  //             }
-
-
-
-  //           } else {
-  //             const newTotal = await firstPlaythrough(correctAnswer, minerale, total, user, 100)
-  //             const newStatus = await newStatusUser(newTotal as number)
-
-   
-  //             setModal(false)
-  //             setNewStatusText(newStatus as string)
-
-  //             if (newStatus !== '') {
-  //               if (newStatus === currentUser.status) {
-  //                 window.location.href = '/main/minerale'
-  //                 return
-  //               }
-  //               window.location.href = `/main/status/${newStatus}`
-  //             } else {
-  //               window.location.href = '/main/minerale'
-  //             }
-
-  //         }
-
-
-        
-
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-
   const closeModal = async (minerale: any, user: any) => {
     try {
 
@@ -405,42 +279,47 @@ useEffect(() => {
 
       let pointsToAdd = 0;
       if (passedAllCorrect) {
-        pointsToAdd = alreadyPassed ? 10 : 100;
-      }
+          pointsToAdd = alreadyPassed ? 10 : 100;
 
-      const newTotal = total + pointsToAdd;
+          const newTotal = total + pointsToAdd;
 
-      // Если это первое прохождение и всё верно — фиксируем «пройдено»
-      if (passedAllCorrect && !alreadyPassed) {
-        await dispatch(fetchUsersChangePassedMineral({
-          userId,
-          passed: { title: minerale.title, isPassed: true }
-        })).unwrap();
-      }
+          // Если это первое прохождение и всё верно — фиксируем «пройдено»
+          if (passedAllCorrect && !alreadyPassed) {
+            await dispatch(fetchUsersChangePassedMineral({
+              userId,
+              passed: { title: minerale.title, isPassed: true }
+            })).unwrap();
+          }
 
-      // Если есть очки — фиксируем новый total (даже при повторном прохождении)
-      if (pointsToAdd > 0) {
-        await dispatch(fetchUsersChangeTotal({ userId, total: newTotal })).unwrap();
-      }
+          // Если есть очки — фиксируем новый total (даже при повторном прохождении)
+          if (pointsToAdd > 0) {
+            await dispatch(fetchUsersChangeTotal({ userId, total: newTotal })).unwrap();
+          }
 
-      // Обновляем пользователя после записи total/пасса
-      await dispatch(getUsers()).unwrap();
+          // Обновляем пользователя после записи total/пасса
+          await dispatch(getUsers()).unwrap();
 
-      // Пробуем апгрейдить статус (один раз до следующего порога)
-      const newStatus = await newStatusUser(newTotal, currentUser.status);
+          // Пробуем апгрейдить статус (один раз до следующего порога)
+          const newStatus = await newStatusUser(newTotal, currentUser.status);
 
-      setModal(false);
-      setNewStatusText(newStatus);
+          setWinKviz(false);
+          setNewStatusText(newStatus);
 
-      if (newStatus && newStatus !== currentUser.status) {
-        window.location.href = `/main/status/${newStatus}`;
-      } else {
-        window.location.href = '/main/minerale';
+          if (newStatus && newStatus !== currentUser.status) {
+            window.location.href = `/main/status/${newStatus}`;
+          } else {
+            window.location.href = '/main/minerale';
+          }
+
+      } else if (!passedAllCorrect) {
+          setNotWinKviz(false)
+          sessionStorage.setItem('answers', encodeURIComponent(JSON.stringify(answers)))
+          window.location.href = `/main/minerale/${mineralId}/test/result`
       }
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
 
 
@@ -456,7 +335,7 @@ useEffect(() => {
 
 
       {
-        (modal) && (
+        (winKviz) && (
 
             <Row>
                 <Col className='d-flex align-items-cente'>
@@ -466,9 +345,35 @@ useEffect(() => {
                     onClickLink={() => {closeModal(currentMineral, currentUser)}}
                     imgClose={IconClose}
                     onClickClose={() => {window.location.href = '/main/profile'}}
-                    text={`Поздравляем вы получили ${price} баллов`}
+                    text={`Вы получаете ${price} баллов`}
                     textBtn={'Подробнее'}
                     colorBackground={{background: 'linear-gradient(125deg, #7D22C9 0.49%, #FFBF00 73.51%, #FFBC41 99.11%)'}}
+                    colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}} 
+                    />
+                
+                </Col>
+            </Row>
+
+        )
+      }
+
+
+
+      {
+
+        (notWinKviz) && (
+
+           <Row>
+                <Col className='d-flex align-items-cente'>
+
+                  <ModalResult 
+                    imgTop={IconNotWin}
+                    onClickLink={() => {closeModal(currentMineral, currentUser)}}
+                    imgClose={IconClose}
+                    onClickClose={() => {window.location.href = `/main/minerale/${mineralId}/test/result`}}
+                    text={`Геоквиз не пройден`}
+                    textBtn={'Подробнее'}
+                    colorBackground={{background: 'linear-gradient(262deg, #C92225 3.49%, #FF8041 121.77%)'}}
                     colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}} 
                     />
                 
@@ -520,8 +425,14 @@ useEffect(() => {
 
               (currentMineral.question[questionId].answers) && currentMineral.question[questionId].answers.map((item: any, index: number) => {
 
+                if (!currentMineral.question) {
+                  return
+                }
+
+                const questionTitle = currentMineral.question[questionId].title as string
+
                 return (
-                  <AnswerBlock disabled={answerDisabled} onClick={() => {handleSubmit(item, currentMineral)}} key={index+1} num={index + 1} text={item.text} />
+                  <AnswerBlock disabled={answerDisabled} onClick={() => {handleSubmit(questionTitle, item, currentMineral)}} key={index+1} num={index + 1} text={item.text} />
                 )
 
               })

@@ -141,8 +141,8 @@ const page: FC = () => {
             </Col>
         </Row>
 
-        <Row>
-          <Col className='d-flex flex-wrap justify-content-around gap-y-px'>
+        <Row className='mb-5'>
+          <Col className='d-flex flex-wrap justify-content-around gap-y-px mb-5'>
 
 
           {minerals.map((item: any, index: number): React.ReactNode => {

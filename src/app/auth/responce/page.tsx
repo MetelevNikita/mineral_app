@@ -14,6 +14,7 @@ import Link from 'next/link'
 // img
 
 import modalIcon from '@/../public/ModalResult/Done.svg'
+import modalIconError from '@/../public/ModalResult/error.svg'
 
 // style
 
@@ -144,10 +145,6 @@ const page: FC = () => {
 
 
 
-    console.log(errorFiled)
-
-
-
   return (
 
     <Container>
@@ -175,7 +172,7 @@ const page: FC = () => {
             {
               (error) &&
                 <ModalResult
-                    imgTop={modalIcon}
+                    imgTop={modalIconError}
                     onClickLink={() => {
                     setError(false)
                     }}

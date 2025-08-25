@@ -36,7 +36,7 @@ const page: FC = () => {
 
       <Col className='d-flex justify-content-center align-items-center mb-3'>
 
-          <HorizontalBlock path={'/main/minerale'} imgSrc={imgMinerale} imgWidth={129} imgHeight={116} text={'Пройти тестирование по минералам'} btnText={'Начать'} onClick={() => {}} />
+          <HorizontalBlock path={'/main/minerale'} imgSrc={imgMinerale} imgWidth={129} imgHeight={116} text={'Пройти видеогид по минералам'} btnText={'Начать'} onClick={() => {}} />
 
       </Col>
 

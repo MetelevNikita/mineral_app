@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, ReactNode, useEffect, useState } from 'react'
+import { FC, ReactNode, useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'motion/react'
@@ -17,6 +17,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 
 import MyButton from '@/components/ui/MyButton/MyButton'
 import Status from '@/components/element/Status/Status'
+import ModalResult from '@/components/modals/ModalResult/ModalResult'
 
 // img
 
@@ -34,9 +35,14 @@ import { useAppSelector } from '@/types/hooks'
 import { useAppDispatch } from '@/types/hooks'
 import { fetchGetStatus } from '@/functions/reduxAsync/status/fetchGetStatus'
 import { getUsers } from '@/functions/reduxAsync/users/getUsers'
-import { fetchGetCollectionMineral } from '@/functions/reduxAsync/collectionMineral/fetchGetCollectionMineral'
 
 // 
+import { fetchGetCollectionMineral } from '@/functions/reduxAsync/collectionMineral/fetchGetCollectionMineral'
+import { fetchChangeReceivedCollectionMineeral } from '@/functions/reduxAsync/collectionMineral/fetchChangeReceivedCollectionMineeral'
+
+// components
+
+import Loading from '@/components/element/Loading/Loading'
 
 
 
@@ -60,8 +66,6 @@ const page: FC = () => {
   }, [dispatch])
 
 
-
-
   useEffect(() => {
     dispatch(fetchGetCollectionMineral())
   }, [dispatch])
@@ -69,37 +73,54 @@ const page: FC = () => {
 
   const currentUser = useAppSelector((state) => state.user.user).filter((item) => item.id === parseInt(userId));
   const collectionMineral = useAppSelector((state) => state.collection.collection)
-  console.log(collectionMineral)
-
-
-  if (!currentUser || currentUser.length < 1) {
-    <Container>
-        <Row className='h-100 d-flex flex-column justify-content-center align-items-center'>
-          <Col className='d-flex flex-column justify-content-center align-items-center'>
-            <div className={styles.title}>Загрузка...</div>
-          </Col>
-        </Row>
-      </Container>
-  }
 
 
   const statuses = useAppSelector((state) => state.status.status).filter((item) => item.title == currentUser[0]?.status)
 
+  const sentMineralIdsRef = useRef<Set<string>>(new Set());
+  const playsAnimationRecevied = useRef<Set<string>>(new Set());
+
+
+  useEffect(() => {
+
+
+    if (currentUser.length < 1) {
+      return
+    }
+
+
+      const newCollectionMineral = collectionMineral.filter((item: any) => {
+        return currentUser[0].mineralPassed.some((item2: any) => item.title === item2.title)
+      })
+
+      const toSend = newCollectionMineral.filter((item: any) => {
+        return !item.received && !sentMineralIdsRef.current.has(item.id)
+      })
+
+
+      if (toSend.length === 0) {
+        return
+      }
+
+      for (const mineral of toSend) {
+        const id = mineral.id.toString()
+
+        sentMineralIdsRef.current.add(id)
+        console.log('mark received', id, mineral.title)
+
+        dispatch(fetchChangeReceivedCollectionMineeral({id: id, received: true})).unwrap()
+        dispatch(fetchGetCollectionMineral()).unwrap()
+
+      }
+
+
+
+  }, [currentUser, collectionMineral])
+
 
   if (!currentUser || currentUser.length < 1 && !statuses || statuses.length < 1) {
-    return (
-      <Container>
-        <Row className='h-100 d-flex flex-column justify-content-center align-items-center'>
-          <Col className='d-flex flex-column justify-content-center align-items-center'>
-            <div className={styles.title}>Загрузка...</div>
-          </Col>
-        </Row>
-      </Container>
-    );
+    return <Loading text={'Загрузка...'} />
   }
-
-
-
 
 
 
@@ -179,33 +200,26 @@ const page: FC = () => {
 
                         {
                           collectionMineral.map((item: CollectionMineralType, index: number): ReactNode => {
-                            console.log(item)
+
+                            const id = item.id.toString()
+                            const firstTime = item.received && !playsAnimationRecevied.current.has(id)
+
                             return (
                               <div key={index+1} className={styles.collection_item_container}>
-                                <div className={styles.collection_item_image_box}>
-                                    <motion.div style={{filter: 'grayscale(100%)'}} animate={ isActive ? {scale: [1, 1.2, 1], filter: ['grayscale(100%)', 'grayscale(0)']} : {filter: 'grayscale(100%)'}}>
-                                      <Image src={item.image} width={65} height={45} alt={'collection_img'}/>
-                                      </motion.div>
-                                </div>
+                                  <div className={styles.collection_item_image_box}>
+                                      <motion.div style={{filter: 'grayscale(100%)'}} animate={ firstTime ? {scale: [1, 1.2, 1], filter: ['grayscale(100%)', 'grayscale(0)']} : { filter: item.received ? 'grayscale(0)' : 'grayscale(100%)' }} transition={{duration: 2}} onAnimationComplete={() => {
+                                        if (item.received) {
+                                          playsAnimationRecevied.current.add(id)
+                                        }
+                                      }}>
+                                        <Image src={item.image} width={65} height={45} alt={'collection_img'}/>
+                                        </motion.div>
+                                  </div>
                                 </div>
                                 )
                           })
                         }
 
-
-                        
-                        {/* {
-                          (!currentUser[0].collection) ? <div>Нет данных</div> : collection.map((item: collectionType, index: number): ReactNode => {
-                            return (
-                              <div key={index+1} className={styles.collection_item_container}>
-                                <div className={styles.collection_item_image_box}>
-                                    <Image style={{filter: 'grayscale(100%)'}} src={statusIcon} width={42} height={45} alt={'collection_img'}/>
-                                </div>
-                                <div className={styles.collection_item_title}>{item.title}</div>
-                              </div>
-                            )
-                          })
-                        } */}
                     </div>
                 </div>
 

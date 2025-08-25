@@ -196,6 +196,21 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                 return NextResponse.json({
                     message: "Статус первого посещения обновлен"
                 })
+        } else if (data.collection) {
+            
+            const { collection } = data
+
+            const newCollection = await prisma.user.update({
+                where: {
+                    id: parseInt(id)
+                },
+
+                data: {
+                    collection: {
+                        create: collection
+                    }
+                }
+            })
         }
 
 

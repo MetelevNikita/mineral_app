@@ -61,6 +61,7 @@ model CollectionMineral {
   id Int @id @default(autoincrement())
   title String
   image String
+  received Boolean @default(false)
 
   createAt DateTime @default(now())
   updateAt DateTime @default(now())

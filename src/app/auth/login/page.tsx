@@ -23,6 +23,7 @@ import ModalResult from '@/components/modals/ModalResult/ModalResult'
 // img
 
 import ModalIcon from '@/../public/ModalResult/Done.svg'
+import modelIconError from '@/../public/ModalResult/error.svg'
 
 // functions
 
@@ -91,7 +92,7 @@ const Login: FC = () => {
               {
                 error &&
                   <ModalResult
-                    imgTop={ModalIcon}
+                    imgTop={modelIconError}
                     onClickLink={() => {
                       setError(false)
                       setErrorField(true)
