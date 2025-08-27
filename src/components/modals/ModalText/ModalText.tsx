@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import Image from 'next/image'
+import { motion } from 'motion/react'
 
 // css
 
 import styles from './ModalText.module.css'
-import { style } from 'motion/react-client'
 
 // img
 
@@ -26,7 +26,7 @@ interface ModalTextProps {
 
 const ModalText:FC<ModalTextProps> = ({ title, text, btnText, onClickClose, onClickBtn }) => {
   return (
-    <div className={styles.modal_container}>
+    <motion.div className={styles.modal_container} animate={{opacity: [0.5, 1]}}>
 
       <div className={styles.bottom_container}>
         <div className={styles.top_container}>
@@ -54,7 +54,7 @@ const ModalText:FC<ModalTextProps> = ({ title, text, btnText, onClickClose, onCl
         </div>
       </div>
       
-    </div>
+    </motion.div>
   )
 }
 

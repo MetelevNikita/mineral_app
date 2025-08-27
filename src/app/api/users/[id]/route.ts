@@ -196,22 +196,70 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                 return NextResponse.json({
                     message: "Статус первого посещения обновлен"
                 })
-        } else if (data.collection) {
-            
-            const { collection } = data
+                
+        }  else if (data.mineral) {
 
-            const newCollection = await prisma.user.update({
+            const updateCollection = await prisma.user.update({
                 where: {
                     id: parseInt(id)
                 },
 
                 data: {
                     collection: {
-                        create: collection
+                            create: [
+                                data.mineral
+                            ]
                     }
                 }
+                
             })
-        }
+            console.log(updateCollection, "updateStatus")
+            if (!updateCollection) {
+                NextResponse.json({
+                    message: "Ошибка обновления статуса минерала в коллекции"
+                })
+            }
+            return NextResponse.json({
+                message: "Обновление статуса в коллекции минералов",
+            })
+
+        } else if (data.received) {
+
+                const { idMineral, received } = data
+
+                console.log(received)
+                console.log(idMineral)
+
+                const updateCollection = await prisma.user.update({
+                    where: {
+                        id: parseInt(id)
+                    },
+                    data: {
+                        collection: {
+                            updateMany: {
+                                where: {
+                                    id: parseInt(idMineral)
+                                },
+                                data: {
+                                    received: true
+                                }
+                            }
+                        }
+                    }
+                })
+
+                if (!updateCollection) {
+                    return NextResponse.json({
+                        message: "Ошибка обновления статуса минерала в коллекции"
+                    })
+                }
+
+                return NextResponse.json({
+                    message: `Статус минерала обновлен ${idMineral}`,
+                })
+            }
+           
+        
 
 
     } catch (error: Error | unknown) {

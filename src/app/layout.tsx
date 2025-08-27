@@ -11,6 +11,10 @@ import { Open_Sans, Inter } from "next/font/google";
 import { Container } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// components
+
+import InstalPrompts from "./InstalPrompts"
+
 // fonts
 
 const OpenSans = Open_Sans({
@@ -55,11 +59,20 @@ export default function RootLayout({
 
 
     <html lang="en">
+        <head>
+        {/* iOS PWA */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        {/* Манифест подключается автоматически, т.к. есть app/manifest.ts */}
+        </head>
         <body className={`${OpenSans.className}, ${InterFont.className}`}>
 
           <Container style={{padding: 0}}>
             <ReduxProvider>
                 {children}
+                {/* <InstalPrompts /> */}
             </ReduxProvider>
           </Container>
   

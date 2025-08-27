@@ -3,6 +3,7 @@
 import { FC, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { motion } from "motion/react"
 
 // css
@@ -43,6 +44,8 @@ interface ModalStatusProps {
 
 const page: FC<{ params: { title: string } }> =  ({ params }) => {
 
+  const router = useRouter()
+
   const dispatch = useAppDispatch()
 
   const [currentStatus, setCurrentStatus] = useState<any>(null)
@@ -76,6 +79,11 @@ const page: FC<{ params: { title: string } }> =  ({ params }) => {
     const currentStatusColor = statusColor.filter((item: any) => {
       return item.title === decodedTitle
     })[0]
+
+
+
+
+
 
     if (!status) {
       return <Loading text={'Загрузка...'} />

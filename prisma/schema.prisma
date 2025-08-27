@@ -41,7 +41,7 @@ model Profile {
   phone String?
   telegram String?
   userId Int @unique
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 
@@ -49,10 +49,14 @@ model Profile {
 model Collection {
   id Int @id @default(autoincrement())
   title String
+  image String
   received Boolean @default(false)
+
+  createAt DateTime @default(now())
+  updateAt DateTime @default(now())
   
   userId Int
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 
@@ -79,6 +83,7 @@ model MineralPassed {
   userId Int
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([userId, id])
   
 }
 

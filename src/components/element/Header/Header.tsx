@@ -108,7 +108,12 @@ if (!currentUser) {
 
                     <Col className='d-flex justify-content-start align-items-center'>
 
-                        <Image src={(isOn) ? menuClose : menuOpen} width={30} height={30} onClick={() => setIsOn(!isOn)} alt='menu_icon'/>
+                        <Image src={(isOn) ? menuClose : menuOpen} width={30} height={30} onClick={() => {
+                            setTimeout(() => {
+                                setIsOn(!isOn)
+                            }, 1000)
+                            
+                            }} alt='menu_icon'/>
 
                     </Col>
 
@@ -190,7 +195,7 @@ if (!currentUser) {
             </Col>
 
 
-            <Col className='d-flex justify-content-start align-items-center'>
+            <Col xs={6} className='d-flex justify-content-start align-items-center'>
 
                 <Link href={'/main/profile'} style={{textDecoration: 'none', color: '#7D22C9'}}>
 
@@ -219,7 +224,7 @@ if (!currentUser) {
 
             
 
-            <Col className='d-flex justify-content-end align-items-center'>
+            <Col xs={4} className='d-flex justify-content-end align-items-center'>
 
             <AnimatePresence initial={true}>
 

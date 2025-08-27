@@ -159,7 +159,7 @@ const page: FC = () => {
                 imgTop={modalIcon}
                 onClickLink={() => {
                   setIsAuth(false)
-                  window.location.href = '/main'
+                  window.location.href = '/auth/login'
                 }}
                 text={'Вы успешно зарегестрировались'}
                 textBtn={'Перейти'}

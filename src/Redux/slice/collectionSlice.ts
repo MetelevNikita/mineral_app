@@ -7,7 +7,6 @@ import { CollectionMineralType } from "@/types/type";
 // async
 
 import { fetchGetCollectionMineral } from "@/functions/reduxAsync/collectionMineral/fetchGetCollectionMineral";
-import {fetchChangeReceivedCollectionMineeral} from "@/functions/reduxAsync/collectionMineral/fetchChangeReceivedCollectionMineeral"
 
 
 
@@ -31,20 +30,6 @@ const collectionSlice = createSlice({
             state.collection = action.payload
           })
 
-          .addCase(fetchChangeReceivedCollectionMineeral.fulfilled, (state, action) => {
-
-                state.collection = state.collection.map((collection) => {
-                    if (collection.id === action.payload.id) {
-                        collection = {
-                            ...collection,
-                            received: true
-                        }
-                    }
-
-                    return collection
-
-          })
-        })
     }
 
 

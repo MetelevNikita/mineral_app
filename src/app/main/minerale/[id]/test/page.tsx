@@ -2,6 +2,8 @@
 
 import { FC, useState, useEffect } from 'react'
 import { motion } from "motion/react"
+import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 
 // style
 
@@ -20,6 +22,7 @@ import Loading from '@/components/element/Loading/Loading'
 // modal
 
 import ModalResult from '@/components/modals/ModalResult/ModalResult'
+import ModalText from '@/components/modals/ModalText/ModalText'
 
 
 // image modal
@@ -34,16 +37,21 @@ import IconClose from '@/../public/ModalResult/close.svg'
 import { useAppDispatch, useAppSelector } from '@/types/hooks'
 import { fetchGetAsyncMineral } from '@/functions/reduxAsync/mineral/fetchGetAsyncMineral'
 
-// 
+// redux user 
+
 import { fetchUsersChangePassedMineral } from '@/functions/reduxAsync/users/fetchUsersChangePassedMineral'
 import { fetchUsersChangeTotal } from '@/functions/reduxAsync/users/fetchUsersChangeTotal'
 import { fetchUsersChangeStatus } from '@/functions/reduxAsync/users/fetchUsersChangeStatus'
+import { fetchAddNewCollectionMinerale } from '@/functions/reduxAsync/users/fetchAddNewCollectionMinerale'
 import { getUsers } from '@/functions/reduxAsync/users/getUsers'
 
+// redux collection
 
-// database status
+import { fetchGetCollectionMineral } from '@/functions/reduxAsync/collectionMineral/fetchGetCollectionMineral'
 
-import { redirect } from 'next/navigation'
+// types
+
+import { CollectionMineralType } from '@/types/type'
 
 
 
@@ -51,15 +59,18 @@ import { redirect } from 'next/navigation'
 const page = ({ params }: { params: { id: string } }) => {
 
 
-const STATUS_THRESHOLDS = [
-  { min: 2600, status: 'Министр природных ресурсов 2 600 15% скидка' },
-  { min: 2000, status: 'Начальник геолого-съемочной партии' },
-  { min: 1400, status: 'Главный геолог' },
-  { min: 1000, status: 'Старший геолог' },
-  { min: 600,  status: 'Геолог-съёмщик' },
-  { min: 200,  status: 'Инженер-геолог' },
-  { min: 100,  status: 'Стажер-геолог' },
-] as const;
+  const router = useRouter()
+
+
+  const STATUS_THRESHOLDS = [
+    { min: 2600, status: 'Министр природных ресурсов 2 600 15% скидка' },
+    { min: 2000, status: 'Начальник геолого-съемочной партии' },
+    { min: 1400, status: 'Главный геолог' },
+    { min: 1000, status: 'Старший геолог' },
+    { min: 600,  status: 'Геолог-съёмщик' },
+    { min: 200,  status: 'Инженер-геолог' },
+    { min: 100,  status: 'Стажер-геолог' },
+  ] as const;
 
 
 
@@ -70,8 +81,6 @@ const STATUS_THRESHOLDS = [
   const [buttonText, setButtonText] = useState<string>('Тест начался')
   const [questionNumber, setQuestionNumber] = useState<number>(1)
   const [price, setPrice] = useState<number>(0)
-
-
   const [newStatusText, setNewStatusText] = useState<string>('')
 
 
@@ -86,14 +95,14 @@ const STATUS_THRESHOLDS = [
 
   const [winKviz, setWinKviz] = useState<boolean>(false)
   const [notWinKviz, setNotWinKviz] = useState<boolean>(false)
+  const [kvizDone, setKvizDone] = useState<boolean>(false)
 
   // redux
 
   const currentUser = useAppSelector((state) => state.user.user).filter((item) => item.id == parseInt(userId))[0];
   const currentMineral = useAppSelector((state) => state.minerals.minerals).filter((item) => item.id === parseInt(mineralId))[0];
+  const collectionMineral = useAppSelector((state) => state.collection.collection)
   const dispatch = useAppDispatch()
-
-
 
   // get Id Mineral
 
@@ -120,13 +129,13 @@ useEffect(() => {
       }
   }, [dispatch])
 
-
   // get USER
 
 useEffect(() => {
     if (userId || mineralId) {
         dispatch(getUsers());
-        dispatch(fetchGetAsyncMineral()) 
+        dispatch(fetchGetAsyncMineral())
+        dispatch(fetchGetCollectionMineral())
     }
 }, [userId, dispatch]);
 
@@ -136,6 +145,30 @@ useEffect(() => {
       redirect(`/main/status/${newStatusText}`)
     } 
   }, [])
+
+
+
+
+useEffect(() => {
+
+    if (currentUser && currentMineral) {
+        const kvizIsDone = currentUser.mineralPassed.filter((item: any) => {
+      if (item.title === currentMineral.title) {
+        return item
+      }
+    })
+
+    
+    if (kvizIsDone.length > 0) {
+      setTimeout(() => {
+        setKvizDone(true)
+      }, 1000)
+      
+    }
+
+  }
+
+}, [currentUser, currentMineral])  
 
 
 
@@ -182,15 +215,11 @@ useEffect(() => {
 
   const handleFinalSubmit = (mineral: any) => {
 
-    console.log('Answers:', answers)
-
     const correctAnswer = answers.filter((item: any) => {
             return item.correct === true
     })
 
-
     const passed = correctAnswer.length === mineral.question.length;
-
 
     if (questionId + 1 >= mineral.question.length) {
       console.log("Тест завершён");
@@ -287,7 +316,7 @@ useEffect(() => {
           if (passedAllCorrect && !alreadyPassed) {
             await dispatch(fetchUsersChangePassedMineral({
               userId,
-              passed: { title: minerale.title, isPassed: true }
+              passed: { title: minerale.title, isPassed: false }
             })).unwrap();
           }
 
@@ -306,20 +335,60 @@ useEffect(() => {
           setNewStatusText(newStatus);
 
           if (newStatus && newStatus !== currentUser.status) {
-            window.location.href = `/main/status/${newStatus}`;
+            await updateCollectionMineral()
+            router.push(`/main/status/${newStatus}`)
+
           } else {
-            window.location.href = '/main/minerale';
+            await updateCollectionMineral()
+            router.push('/main/minerale')
+
           }
 
       } else if (!passedAllCorrect) {
           setNotWinKviz(false)
           sessionStorage.setItem('answers', encodeURIComponent(JSON.stringify(answers)))
-          window.location.href = `/main/minerale/${mineralId}/test/result`
+          router.push(`/main/minerale/${mineralId}/test/result`)
       }
     } catch (error) {
       console.log(error);
     }
   }
+
+
+
+  const updateCollectionMineral = async (): Promise<CollectionMineralType | []> => {
+    try {
+
+
+      let newCollcetionMineral: CollectionMineralType | [] = collectionMineral.find((item: any) => {
+        return item.title === currentMineral.title
+      }) ?? []
+
+      if (!newCollcetionMineral) {
+        console.log('минерал в коллекцию не найден')
+        newCollcetionMineral = []
+        return []
+      }
+
+      await dispatch(fetchAddNewCollectionMinerale({id: currentUser.id, mineral: newCollcetionMineral})).unwrap()
+      console.log('минерал добавлен в коллекцию')
+      return newCollcetionMineral
+
+    } catch (error: Error | unknown) {
+
+      if (error instanceof Error) {
+        console.log(`Ошибка добавления в коллекцию ${error.message ?? error}`);
+        throw new Error(`Ошибка добавления в коллекции ${error.message ?? error}`);
+      }
+
+      throw new Error(
+        `Ошибка добавления в коллекцию ${error}`
+      )
+
+    }
+  }
+
+
 
 
 
@@ -331,14 +400,26 @@ useEffect(() => {
   
   return (
 
+    
+
   <>
+      {
+        (kvizDone) && (
+          <Row>
+            <Col>
+                <ModalText title={`Квиз ${currentMineral.title} пройден`} text={'Данный квиз вами пройден. за повторное прохождение квиза будет начисленно только 10 баллов'} btnText={'продолжить'} onClickClose={() => {setKvizDone(false)}} onClickBtn={() => {setKvizDone(false)}} />
+            </Col>
+          </Row>
+
+        )
+      }
 
 
       {
         (winKviz) && (
 
             <Row>
-                <Col className='d-flex align-items-cente'>
+                <Col className='d-flex align-items-center'>
 
                   <ModalResult 
                     imgTop={IconWin}

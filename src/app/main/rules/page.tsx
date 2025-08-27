@@ -99,7 +99,7 @@ const rulesArr = [
 
             <Col className='d-flex justify-content-center align-items-center mb-4'>
 
-                <MyAcardeon title={'Адрес'} content={'125009, г. Москва, Моховая ул., д. 11, стр. 11 (станция метро «Охотный ряд»)'} />
+                <MyAcardeon title={'Адрес'} content={'125009, г. Москва, Моховая ул., д. 11, стр. 11 (станция метро «Охотный ряд»)'} image={''} />
 
             </Col>
 

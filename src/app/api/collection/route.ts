@@ -123,15 +123,6 @@ export const POST = async (request: Request) => {
     })
 
 
-
-    return NextResponse.json({
-      status: "ok"
-    })
-
-
-
-
-    
   } catch (error: Error | unknown) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message })
@@ -141,6 +132,3 @@ export const POST = async (request: Request) => {
     
   }
 }
-
-
-

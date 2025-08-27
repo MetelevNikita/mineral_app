@@ -33,17 +33,25 @@ import arrow from '@/../public/AnswersElement/open_answers.svg'
 
 const page = (params: {params: {id: string}}) => {
 
+  const [storageData ,setStorageData] = useState<any>(null)
+
+
+
+  useEffect(() => {
+
+    try {
+      const raw = sessionStorage.getItem('answers') as string
+      const answersObj = JSON.parse(decodeURIComponent(raw))
+      setStorageData(answersObj)
+    } catch (error) {
+      console.log(error)
+    }
+
+  }, [params])
+
   const router = useRouter()
 
   const dispatch = useAppDispatch()
-
-  const raw = sessionStorage.getItem('answers')
-
-  if (!raw) {
-    return
-  }
-
-  const answersObj = JSON.parse(decodeURIComponent(raw))
   const [mineralId, setMineralId] = useState<string>('')
 
 
@@ -70,11 +78,15 @@ const page = (params: {params: {id: string}}) => {
   }
 
 
-  const correctAnswers = answersObj.filter((item: any) => {
+  const correctAnswers = storageData.filter((item: any) => {
     if (item.correct === true) {
       return item
     }
   })
+
+
+  console.log(storageData)
+  console.log(correctAnswers)
 
 
 
@@ -126,7 +138,7 @@ const page = (params: {params: {id: string}}) => {
           <Col className='d-flex flex-column align-items-center justify-content-center mb-4'>
 
               {
-                (answersObj.length < 1 || !answersObj) ? <Loading text={'Загрузка'} /> : answersObj.map((item: any, index: number): React.ReactNode => {
+                (storageData.length < 1 || !storageData) ? <Loading text={'Загрузка'} /> : storageData.map((item: any, index: number): React.ReactNode => {
                   if (item.correct === true) {
                     return <ResultAnswers key={index+1} imageQuestion={done} answersTitle={`Вопрос ${index + 1}`} content={''} colorBG={'#EDF8EE'} style={{color: '#0F891E !important'}} />
                   } else {
@@ -149,7 +161,7 @@ const page = (params: {params: {id: string}}) => {
                       <div className={styles.answer_result_content_wrapper}>
 
 
-                        <div className={styles.answer_result_content_top_title}> {correctAnswers.length} из {answersObj.length}</div>
+                        <div className={styles.answer_result_content_top_title}> {correctAnswers.length} из {storageData.length}</div>
                         <div className={styles.answer_result_content_bottom_title}>верных ответов</div>
 
     

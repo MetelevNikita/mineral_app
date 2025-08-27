@@ -27,6 +27,7 @@ import statusStar from '@/../public/profile/start.svg'
 // types
 
 import { collectionType } from '@/types/type'
+import { UserType } from '@/types/type'
 import { CollectionMineralType } from '@/types/type'
 
 // redux
@@ -38,7 +39,8 @@ import { getUsers } from '@/functions/reduxAsync/users/getUsers'
 
 // 
 import { fetchGetCollectionMineral } from '@/functions/reduxAsync/collectionMineral/fetchGetCollectionMineral'
-import { fetchChangeReceivedCollectionMineeral } from '@/functions/reduxAsync/collectionMineral/fetchChangeReceivedCollectionMineeral'
+import { fetchChangeNewCollectionMineralReceived } from '@/functions/reduxAsync/users/fetchChangeNewCollectionMineralReceived'
+
 
 // components
 
@@ -50,6 +52,7 @@ const page: FC = () => {
 
 
   const [userId, setUserId] = useState<string>('');
+  const [getMineral, setGetMineral] = useState<boolean>(false)
   const [isActive, setIsActive] = useState<boolean>(false)
 
   const dispatch = useAppDispatch()
@@ -71,65 +74,106 @@ const page: FC = () => {
   }, [dispatch])
 
 
-  const currentUser = useAppSelector((state) => state.user.user).filter((item) => item.id === parseInt(userId));
-  const collectionMineral = useAppSelector((state) => state.collection.collection)
+  const currentUser: UserType | null = useAppSelector((state) => state.user.user).find((item: UserType) => item.id === parseInt(userId)) ?? null;
+  const collectionMineral: CollectionMineralType[] = useAppSelector((state) => state.collection.collection) ?? []
+  const statuses = useAppSelector((state) => state.status.status).filter((item) => item.title == currentUser?.status)
 
 
-  const statuses = useAppSelector((state) => state.status.status).filter((item) => item.title == currentUser[0]?.status)
+  const checkMineral: CollectionMineralType[] | [] = currentUser?.collection?.filter((item) => {
+    
+    return item && !item.received
+  }) ?? []
 
-  const sentMineralIdsRef = useRef<Set<string>>(new Set());
-  const playsAnimationRecevied = useRef<Set<string>>(new Set());
+  console.log(checkMineral.length > 0 ? checkMineral : "Массив пустой");
+
+
+
+  //
 
 
   useEffect(() => {
 
-
-    if (currentUser.length < 1) {
-      return
-    }
-
-
-      const newCollectionMineral = collectionMineral.filter((item: any) => {
-        return currentUser[0].mineralPassed.some((item2: any) => item.title === item2.title)
-      })
-
-      const toSend = newCollectionMineral.filter((item: any) => {
-        return !item.received && !sentMineralIdsRef.current.has(item.id)
-      })
-
-
-      if (toSend.length === 0) {
+      if (checkMineral?.length < 1) {
         return
       }
 
-      for (const mineral of toSend) {
-        const id = mineral.id.toString()
+      setGetMineral(true)
+      console.log(checkMineral)
 
-        sentMineralIdsRef.current.add(id)
-        console.log('mark received', id, mineral.title)
 
-        dispatch(fetchChangeReceivedCollectionMineeral({id: id, received: true})).unwrap()
-        dispatch(fetchGetCollectionMineral()).unwrap()
+  }, [currentUser])
 
+
+
+  const getChangeCollectionRecevied = async (user: UserType , mineral: CollectionMineralType[]) => {
+    try {
+
+      for (const item of mineral) {
+        console.log(mineral)
+        await dispatch(fetchChangeNewCollectionMineralReceived({idUser: user.id, idMineral: item.id})).unwrap()
+        await dispatch(getUsers())
+
+        console.log(`Статус минерала обновлен ${item.id}`)
       }
 
+      
+      setGetMineral(false)
+      setIsActive(true)
 
-
-  }, [currentUser, collectionMineral])
-
-
-  if (!currentUser || currentUser.length < 1 && !statuses || statuses.length < 1) {
-    return <Loading text={'Загрузка...'} />
+    
+    } catch (error) {
+      console.log(`Ошибка получения коллекционного минерала`, error)
+    }
   }
 
 
 
+  if (!currentUser || !statuses || statuses.length < 1) {
+    return <Loading text={'Загрузка...'} />
+  }
 
+
+  const currentUserCollection = collectionMineral.map((item) => {
+    const userMineral = currentUser?.collection as any[]
+
+    for (const mineral of userMineral) {
+      if (mineral.title === item.title) {
+        return mineral
+      } else {
+        return item
+      }
+    }
+
+
+
+    
+  })
+
+
+  console.log(currentUserCollection)
 
 
   return (
 
     <Container>
+
+      {
+        (getMineral) && (
+          <Row>
+            <Col>
+
+              <ModalResult imgTop={statusStar} onClickLink={() => {getChangeCollectionRecevied(currentUser, checkMineral)}} text={'Открыт новый минерал'} textBtn={'Получить'} colorBackground={{background: 'linear-gradient(125deg, #7D22C9 0.49%, #FFBF00 73.51%, #FFBC41 99.11%)'}} colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}/>
+          
+            
+            </Col>
+          </Row>
+
+        )
+      }
+
+
+
+
         <Row>
             <Col className='d-flex justify-content-center align-items-center mb-3'>
 
@@ -159,7 +203,7 @@ const page: FC = () => {
 
                 <div className={styles.total_container}>
                   <Image src={statusStar} width={45} height={44} alt={''}/>
-                  <div className={styles.total_title}>{currentUser[0].total}</div>
+                  <div className={styles.total_title}>{currentUser?.total}</div>
                 </div>
 
               </Col>
@@ -199,19 +243,12 @@ const page: FC = () => {
 
 
                         {
-                          collectionMineral.map((item: CollectionMineralType, index: number): ReactNode => {
-
-                            const id = item.id.toString()
-                            const firstTime = item.received && !playsAnimationRecevied.current.has(id)
+                          currentUserCollection.map((item: CollectionMineralType, index: number): ReactNode => {
 
                             return (
                               <div key={index+1} className={styles.collection_item_container}>
                                   <div className={styles.collection_item_image_box}>
-                                      <motion.div style={{filter: 'grayscale(100%)'}} animate={ firstTime ? {scale: [1, 1.2, 1], filter: ['grayscale(100%)', 'grayscale(0)']} : { filter: item.received ? 'grayscale(0)' : 'grayscale(100%)' }} transition={{duration: 2}} onAnimationComplete={() => {
-                                        if (item.received) {
-                                          playsAnimationRecevied.current.add(id)
-                                        }
-                                      }}>
+                                      <motion.div style={{filter: 'grayscale(100%)'}} animate={ item.received ? {scale: [1, 1.2, 1], filter: ['grayscale(100%)', 'grayscale(0)']} : { filter: item.received ? 'grayscale(0)' : 'grayscale(100%)' }} transition={{duration: 2}}>
                                         <Image src={item.image} width={65} height={45} alt={'collection_img'}/>
                                         </motion.div>
                                   </div>

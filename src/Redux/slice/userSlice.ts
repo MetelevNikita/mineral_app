@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // type
 
 import { UserType } from "@/types/type";
+import { CollectionMineralType } from "@/types/type";
 
 // async
 
@@ -11,7 +12,11 @@ import { fetchUsersChangeTotal } from "@/functions/reduxAsync/users/fetchUsersCh
 import { fetchUsersChangePassedMineral } from "@/functions/reduxAsync/users/fetchUsersChangePassedMineral";
 import { fetchUsersChangeStatus } from "@/functions/reduxAsync/users/fetchUsersChangeStatus";
 import { fetchUsersChangeFirstVisible } from "@/functions/reduxAsync/users/fetchUsersChangeFirstVisible";
+
 // 
+
+import { fetchAddNewCollectionMinerale } from "@/functions/reduxAsync/users/fetchAddNewCollectionMinerale";
+import { fetchChangeNewCollectionMineralReceived } from "@/functions/reduxAsync/users/fetchChangeNewCollectionMineralReceived";
 
 // 
 
@@ -101,7 +106,39 @@ const userSlice = createSlice({
                 })
             })
 
+            .addCase(fetchAddNewCollectionMinerale.fulfilled, (state, action) => {
+                state.user = state.user.map((user) => {
+                    if (user.id === action.payload.id) {
+                
+                            return {
+                                ...user,
+                                collection: action.payload.mineral
+                            }
+                        }
+                      
+                    return user
+                })
+            })
+            .addCase(fetchChangeNewCollectionMineralReceived.fulfilled, (state, action) => {
 
+                state.user = state.user.map((user: UserType | any) => {
+                    if (user.id !== action.payload.idUser) {
+                    return {
+                            ...user,
+                            collection: user.collection.map((mineral: CollectionMineralType) => {
+                                if (mineral.id === action.payload.idMineral) {
+                                    return {
+                                        ...mineral,
+                                        received: true
+                                    }
+                                }
+                            })
+                        }
+                    }
+                    return user
+                })
+            })
+            
     }
 });
 
