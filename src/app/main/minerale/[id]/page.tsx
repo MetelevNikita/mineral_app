@@ -16,6 +16,7 @@ import styles from './page.module.css'
 import MyAcardeon from '@/components/ui/MyAcardeon/MyAcardeon'
 import MyButton from '@/components/ui/MyButton/MyButton'
 import Loading from '@/components/element/Loading/Loading'
+import VideoBlock from '@/components/element/VideoBlock/VideoBlock'
 
 // functions
 
@@ -102,10 +103,8 @@ const parseDescription = currentMinerale.description.split('\n').map((line: stri
             <Row>
                 <Col className='d-flex justify-content-center align-items-center mb-3'>
 
-                <video className={styles.card_video} muted width={354} height={615} autoPlay loop>
-                    <source src={urlNew} type="video/mp4" width={34}></source>
-                </video>
-                
+                  <VideoBlock videoSrc={urlNew} />
+                  
                 </Col>
             </Row>
 

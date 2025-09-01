@@ -28,9 +28,6 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Стратегия:
-// - Навигационные запросы: network-first с fallback на /offline
-// - Статика (same-origin): cache-first
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);

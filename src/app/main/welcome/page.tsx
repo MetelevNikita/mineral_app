@@ -12,15 +12,17 @@ import { Container, Row, Col } from 'react-bootstrap'
 
 // components
 
+import VideoBlock from '@/components/element/VideoBlock/VideoBlock'
 import MyButton from '@/components/ui/MyButton/MyButton'
 import Link from 'next/link'
 
 // video
 
 
-
 const page = () => {
 
+
+const videoSrc = "http://localhost:3000/video/test.mp4"
 const [muteVideo, onMuteVideo] = useState<boolean>(true)
 
 
@@ -30,16 +32,7 @@ const [muteVideo, onMuteVideo] = useState<boolean>(true)
         <Row>
             <Col className='d-flex flex-column justify-content-center align-items-center mb-3'>
 
-        
-                <div className={styles.video_mute} onClick={() => onMuteVideo(prev => !prev)}>
-                <video className={styles.bg_video} autoPlay loop muted={muteVideo}>
-                    <source src="http://localhost:3000/video/test.mp4" type="video/mp4" />
-                </video>
-
-                <button className={styles.mute_btn} aria-label="mute/unmute">
-                    {muteVideo ? '🔇' : '🔊'}
-                </button>
-                </div>
+                <VideoBlock videoSrc={"http://localhost:3000/video/test.mp4"} />
 
             </Col>
         </Row>

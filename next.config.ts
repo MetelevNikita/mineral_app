@@ -3,6 +3,7 @@ import { WithPWA } from "next-pwa";
 
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   /* config options here */
   typescript: {
     ignoreBuildErrors: true, // Skip TypeScript errors during build
