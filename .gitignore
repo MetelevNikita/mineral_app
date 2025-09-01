@@ -39,3 +39,12 @@ next-env.d.ts
 
 /generated/prisma
 /prisma/migration
+
+
+# 
+
+/public/avatars
+/public/collections
+/public/mineral
+/public/status
+
