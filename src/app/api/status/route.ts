@@ -97,7 +97,7 @@ export const POST = async (req: Request) => {
     const newStatus = await prisma.statuses.create({
       data: {
         title: title,
-        icon: url + '/uploads/status/' + icon.name,
+        icon: '/uploads/status/' + icon.name,
         price: ''
       }
     })
