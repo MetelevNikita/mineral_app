@@ -40,7 +40,6 @@ next-env.d.ts
 /generated/prisma
 /prisma/migration
 
-
 # 
 
 /public/avatars
