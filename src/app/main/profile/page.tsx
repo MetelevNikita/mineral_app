@@ -78,10 +78,6 @@ const page: FC = () => {
   const collectionMineral: CollectionMineralType[] = useAppSelector((state) => state.collection.collection) ?? []
   const statuses = useAppSelector((state) => state.status.status).filter((item) => item.title == currentUser?.status)
 
-  console.log(currentUser)
-  console.log(collectionMineral)
-  console.log(statuses)
-
 
   const checkMineral: CollectionMineralType[] | [] = currentUser?.collection?.filter((item) => {
     
