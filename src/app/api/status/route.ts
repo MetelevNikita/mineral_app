@@ -89,6 +89,10 @@ export const POST = async (req: Request) => {
 
     const statusFilePath = path.join(process.cwd(), 'public', 'uploads', 'status')
 
+    if (!fs.existsSync(statusFilePath)) {
+      fs.mkdirSync(statusFilePath, {recursive: true})
+    }
+
     const url = await uploadFileFn(req, icon, statusFilePath)
     console.log(url)
 
