@@ -29,7 +29,8 @@ services:
       - mineral
   
 networks:
-  mineral: {}
+  mineral:
+    driver: bridge
 
 volumes:
   pgdata: {}
