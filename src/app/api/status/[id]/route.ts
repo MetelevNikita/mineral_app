@@ -16,15 +16,17 @@ const prisma = new PrismaClient()
 export const DELETE = async (req: Request, context: {params: {id: string}}) => {
 
   try {
-
-
     const { id } = await context.params
+
+    console.log(id)
 
     const getStatus = await prisma.statuses.findFirst({
       where: {
         id: parseInt(id)
       }
     })
+
+    console.log(getStatus)
 
     if (!getStatus) {
       return NextResponse.json({
@@ -44,18 +46,17 @@ export const DELETE = async (req: Request, context: {params: {id: string}}) => {
       console.error('файл не удален')
     }
 
-    
 
-    NextResponse.json({
+
+    return NextResponse.json({
       message: 'Статус удален',
     })
-
 
     
   } catch (error: Error | unknown) {
 
     if (error instanceof Error) {
-      NextResponse.json({
+      return NextResponse.json({
         error: `Статус не удален: ${error.message}`
       })
     }
