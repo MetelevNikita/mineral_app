@@ -37,10 +37,20 @@ export const sendRandomCode = async (email: string, code: number) => {
         }
 
 
-        const sendEmail = await trasporter.sendMail(options)
-        console.log(sendEmail)
+        trasporter.sendMail(options).then((data) => {
+            if (data) {
+                console.log('Код отправлен')
+            } else {
+                console.log(`Код не отправлен ${data}`)
+                throw new Error('Код не отправлен')
+            }
+        }).catch((error) => {
+            if (error) {
+                console.log(`Код не отправлен ${error}`)
+                throw new Error('Код не отправлен')
+            }
+        })
 
-        return sendEmail
 
 
 
