@@ -35,7 +35,7 @@ export const DELETE = async (req: Request, context: {params: {id: string}}) => {
     }
 
 
-    // fs.unlinkSync(path.join(process.cwd(), 'public', getStatus.icon))
+    fs.unlinkSync(path.join(process.cwd(), 'public', getStatus.icon))
     const deleteFile = await prisma.statuses.delete({
       where: {
         id: parseInt(id)

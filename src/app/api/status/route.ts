@@ -15,7 +15,7 @@ const prisma = new PrismaClient()
 
 
 
-const uploadFileFn = async (url: any, file: File, pathFile: string) => {
+const uploadFileFn = async (url: any, file: File, pathFile: string, fileName: string) => {
 
   try {
 
@@ -25,7 +25,7 @@ const uploadFileFn = async (url: any, file: File, pathFile: string) => {
     const bufferFile = await file.arrayBuffer()
     const fileBuffer = Buffer.from(bufferFile)
 
-    const pathJoin = path.join(pathFile, file.name)
+    const pathJoin = path.join(pathFile, fileName)
 
     await fs.promises.writeFile(pathJoin, fileBuffer)
     console.log(`Файл ${file.name} успешно загружен`)
@@ -93,12 +93,10 @@ export const POST = async (req: Request) => {
       fs.mkdirSync(statusFilePath, {recursive: true})
     }
 
-    const url = await uploadFileFn(req, icon, statusFilePath)
-    console.log(url)
-
-
     const iconName = path.parse(icon.name).name + '_' + Date.now() + path.parse(icon.name).ext
 
+    const url = await uploadFileFn(req, icon, statusFilePath, iconName)
+    console.log(url)
 
 
     const newStatus = await prisma.statuses.create({
