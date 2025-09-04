@@ -23,12 +23,6 @@ import imgMinerale from '@/../public/Image/pic4.svg'
 const page: FC = () => {
 
 
-  console.log(imgBuild)
-  console.log(imgMinerale)
-
-
-
-
   return (
 
     <Container>

@@ -55,19 +55,14 @@ export const POST = async (req: Request, res: Response) => {
         let image = formData.get('image') as File
 
 
-
-        const mineralFolderTitle =  title.replace(/^\s+|\s+$/g, '').toLowerCase();
-
-
         // upload
 
         const uploadFolder = path.resolve(process.cwd(), 'public', 'uploads', 'mineral');
-        const latinText = transliterate(mineralFolderTitle);
-        console.log(latinText)
+        const latinText = transliterate(title.split(' ').join(''));
 
     
         // image
-        const currentWriteFolder = uploadFolder + '/' + mineralFolderTitle
+        const currentWriteFolder = uploadFolder + '/' + latinText
         fs.mkdirSync(currentWriteFolder, {recursive: true})
 
 
