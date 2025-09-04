@@ -55,10 +55,15 @@ export const POST = async (req: Request, res: Response) => {
         let image = formData.get('image') as File
 
 
+
+        const mineralFolderTitle =  title.trim()
+
+
         // upload
 
         const uploadFolder = path.resolve(process.cwd(), 'public', 'uploads', 'mineral');
-        const latinText = transliterate(title.trim());
+        const latinText = transliterate(mineralFolderTitle);
+        console.log(latinText)
 
     
         // image
