@@ -56,8 +56,7 @@ export const POST = async (req: Request, res: Response) => {
 
 
 
-        const mineralFolderTitle =  String(title).trim().toLowerCase()
-        console.log(mineralFolderTitle)
+        const mineralFolderTitle =  title.replace(/^\s+|\s+$/g, '').toLowerCase();
 
 
         // upload
@@ -68,7 +67,7 @@ export const POST = async (req: Request, res: Response) => {
 
     
         // image
-        const currentWriteFolder = uploadFolder + '/' + latinText
+        const currentWriteFolder = uploadFolder + '/' + mineralFolderTitle
         fs.mkdirSync(currentWriteFolder, {recursive: true})
 
 
