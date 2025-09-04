@@ -29,7 +29,7 @@ const MineralCard: FC<MineralCardProps> = ({id, image, title }) => {
     <motion.div className={styles.card_container} whileHover={{scale: 0.95}}>
 
         <div className={styles.card_image_wrapper}>
-            <Image className={styles.card_image} src={image} alt={title} width={40} height={60}/>
+            <Image className={styles.card_image} src={image} alt={title} width={130} height={150}/>
         </div>
 
 
