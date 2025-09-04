@@ -27,11 +27,7 @@ const page: FC = () => {
 
                 const devices = await navigator.mediaDevices.enumerateDevices();
    
-                const stream = await navigator.mediaDevices.getUserMedia({video: {
-                    facingMode: {
-                        ideal: "environment",
-                    }
-                }});
+                const stream = await navigator.mediaDevices.getUserMedia({video: { facingMode: 'environment' }});
 
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream
