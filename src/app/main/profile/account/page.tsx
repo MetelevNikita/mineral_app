@@ -208,6 +208,7 @@ const userProfile = currentUser[0].profile || {}
                     <MyButton text={'Сохранить'} btn={styles.btn} onClick={() => {
                     updateProfile(profile)
                     setIsUpdate(true)
+                    window.location.reload()
 
                     }} type={'button'} />
                     <Link href={'/main/profile'} style={{textDecoration: 'none'}}><MyButton text={'Назад'} btn={styles.btn} onClick={() => {''}} type={'button'}/></Link>

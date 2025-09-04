@@ -26,7 +26,9 @@
 
   display: flex;
   align-items: center;
+
   flex-direction: column;
+  
 
 }
 
@@ -43,7 +45,7 @@
 
 .glass_background {
   width: 383px;
-  height: 736px;
+  height: 650px;
 
   display: flex;
   align-items: center;
