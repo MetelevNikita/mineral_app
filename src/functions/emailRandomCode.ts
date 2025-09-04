@@ -6,9 +6,14 @@ export const sendRandomCode = async (email: string, code: number) => {
 
     try {
 
+        console.log(email)
+        console.log(code)
+
 
         const trasporter = nodemailer.createTransport({
             service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 587,
             auth: {
                 user: process.env.EMAIL,
                 pass: process.env.PASS
@@ -21,9 +26,9 @@ export const sendRandomCode = async (email: string, code: number) => {
             from: 'MineralValidatePerson@gmail.com',
             to: email,
             subject: "Проверка пользователя с сайта Mineral.ru",
-            text : `Првоерочный код
-        
-                    ${code}
+            text : `Провоерочный код для регистрации на сайте Geokviz.ru
+
+                    ${code} - для почты ${email}
                 
                     не отвечайте на это письмо`
         }

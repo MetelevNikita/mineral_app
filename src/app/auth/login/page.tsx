@@ -62,7 +62,10 @@ const Login: FC = () => {
   }
 
 
-  console.log(errorField)
+
+
+  const mail = 'Kyle.BÄmail.ru'
+  console.log(mail)
 
   return (
 
