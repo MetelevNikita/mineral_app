@@ -205,8 +205,8 @@ const userProfile = currentUser[0].profile || {}
                 <MyInput value={profile.telegram} onChange={(e) => {setProfile({...profile, telegram: e.target.value})}} image={editAvatar} name={'telegram'} title={'Телеграм'} type={'tel'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.telegram : 'Ваш аккаунт телеграмма'} style={{marginBottom: '15px'}} />
 
                  <Col className='d-flex justify-content-center align-items-center'>
-                    <MyButton text={'Сохранить'} btn={styles.btn} onClick={() => {
-                    updateProfile(profile)
+                    <MyButton text={'Сохранить'} btn={styles.btn} onClick={async () => {
+                    await updateProfile(profile)
                     setIsUpdate(true)
                     window.location.reload()
 
