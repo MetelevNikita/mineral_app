@@ -87,7 +87,7 @@ const page: FC = () => {
   const checkMineral: CollectionMineralType[] | [] = currentUser?.collection?.filter((item) => {
     console.log(item)
     
-    return item && !item.received 
+    return item && !item.received !== undefined
   }) ?? []
 
   console.log(checkMineral.length > 0 ? checkMineral : "Массив пустой");
