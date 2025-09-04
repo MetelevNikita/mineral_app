@@ -56,7 +56,7 @@ export const POST = async (req: Request, res: Response) => {
 
 
 
-        const mineralFolderTitle =  title.trim().toLowerCase()
+        const mineralFolderTitle =  String(title).trim().toLowerCase()
         console.log(mineralFolderTitle)
 
 
