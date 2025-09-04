@@ -1,4 +1,4 @@
-import { error } from 'console'
+
 import nodemailer from 'nodemailer'
 
 
@@ -21,8 +21,6 @@ export const sendRandomCode = async (email: string, code: number) => {
                 user: process.env.EMAIL,
                 pass: process.env.PASS
             },
-            pool: true,
-            rateLimit: 1,
         })
 
 
