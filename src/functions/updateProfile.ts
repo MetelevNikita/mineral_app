@@ -29,6 +29,7 @@ export const updateProfile = async (data: any) => {
 
 
         const res = await responce.json();
+        console.log(res)
         console.log('Response from server:', res);
         
     } catch (error) {

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@/../generated/prisma/client.js";
+import sharp from "sharp";
 import fs from "fs";
 import path from "path";
 
@@ -46,14 +47,19 @@ export const PUT = async (req: Request) => {
       const buffer = await file.arrayBuffer();
       const fileBuffer = Buffer.from(buffer);
 
+      const shrpImage = await sharp(fileBuffer).resize(320, 240).png({
+        quality: 90,
+        progressive: true
+      }).toBuffer()
+
       // Создаем директорию, если она не существует
       const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'avatars');
       if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true });
       }
 
-      fs.writeFileSync(uploadPath, fileBuffer);
-      console.log(`File uploaded successfully to ${uploadPath}`);
+      fs.writeFileSync(uploadPath, shrpImage);
+      console.log(`File uploaded successfully to ${filename}`);
       avatarPath = `/uploads/avatars/${filename}`;  // Сохраняем путь к файлу
     }
 

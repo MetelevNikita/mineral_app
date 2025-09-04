@@ -13,16 +13,34 @@ const page: FC = () => {
 
 
     const [hasCameraAccess, setHasCameraAccess] = useState(false)
+    const [videoDeviceId, setVideoDeviceId] = useState<string | null>(null);
     const videoRef = useRef<HTMLVideoElement | null>(null)
 
     useEffect(() => {
 
         const getCamera = async () => {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: {exact: 'environment'}} })
-                if (videoRef.current) {
-                    videoRef.current.srcObject = stream
+
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    throw new Error('getUserMedia is not supported');
                 }
+
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const videoDevices = devices.filter(device => device.kind === 'videoinput');
+                const rearCamera = videoDevices.find(device => device.label.toLowerCase().includes('back'));
+
+
+                if (rearCamera) {
+                    setVideoDeviceId(rearCamera.deviceId);
+                    const stream = await navigator.mediaDevices.getUserMedia({video: { deviceId: { exact: rearCamera.deviceId } }});
+
+                    if (videoRef.current) {
+                        videoRef.current.srcObject = stream
+                    }
+                }
+
+
+
                 setHasCameraAccess(true)
             } catch (error) {
                 console.error('Ошибка доступа к камере', error);
