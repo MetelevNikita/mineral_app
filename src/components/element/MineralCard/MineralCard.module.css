@@ -24,8 +24,8 @@
 /*  */
 
 .card_image_wrapper {
-    width: 150px;
-    height: 110px;
+    width: 130px;
+    height: 150px;
     flex-shrink: 0;
     aspect-ratio: 121/97;
 
