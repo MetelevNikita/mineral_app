@@ -85,6 +85,11 @@ const page: FC = () => {
 
 
   const checkMineral: CollectionMineralType[] | [] = currentUser?.collection?.filter((item) => {
+
+    if (!item) {
+      return false
+    }
+
     console.log(item)
     
     return item && item.received !== undefined && !item.received;
