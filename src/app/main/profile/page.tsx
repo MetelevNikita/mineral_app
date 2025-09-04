@@ -79,9 +79,15 @@ const page: FC = () => {
   const statuses = useAppSelector((state) => state.status.status).filter((item) => item.title == currentUser?.status)
 
 
+
+  console.log(currentUser)
+  console.log(collectionMineral)
+
+
   const checkMineral: CollectionMineralType[] | [] = currentUser?.collection?.filter((item) => {
+    console.log(item)
     
-    return item && !item.received
+    return item && !item.received 
   }) ?? []
 
   console.log(checkMineral.length > 0 ? checkMineral : "Массив пустой");
