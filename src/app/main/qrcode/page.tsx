@@ -12,7 +12,7 @@ const page: FC = () => {
 
 
 
-    const [hasCameraAcceess, setHasCameraAccess] = useState(false)
+    const [hasCameraAccess, setHasCameraAccess] = useState(false)
     const videoRef = useRef<HTMLVideoElement | null>(null)
 
     useEffect(() => {
@@ -42,8 +42,8 @@ const page: FC = () => {
     <div className={styles.qrcode}>
 
         {
-            hasCameraAcceess ? (
-                <video ref={videoRef} autoPlay width={'100%'} height={'1080px'}/>
+            hasCameraAccess ? (
+                <video ref={videoRef} autoPlay playsInline width={'100%'} height={'auto'}/>
             ): (<>NO CAMRA</>)
         }
 
