@@ -47,10 +47,13 @@ export const PUT = async (req: Request) => {
       const buffer = await file.arrayBuffer();
       const fileBuffer = Buffer.from(buffer);
 
-      const shrpImage = await sharp(fileBuffer).resize(320, 240).png({
-        quality: 90,
+      const sharpImage = await sharp(fileBuffer).resize(320, 240).png({
+        quality: 30,
         progressive: true
       }).toBuffer()
+
+
+      console.log(sharpImage)
 
       // Создаем директорию, если она не существует
       const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'avatars');
@@ -58,7 +61,7 @@ export const PUT = async (req: Request) => {
         fs.mkdirSync(uploadDir, { recursive: true });
       }
 
-      fs.writeFileSync(uploadPath, shrpImage);
+      fs.writeFileSync(uploadPath, sharpImage);
       console.log(`File uploaded successfully to ${filename}`);
       avatarPath = `/uploads/avatars/${filename}`;  // Сохраняем путь к файлу
     }
@@ -73,6 +76,7 @@ export const PUT = async (req: Request) => {
     const currentProfile = await prisma.profile.findUnique({
       where: { userId: parseInt(userId) },
     });
+
 
 
 
