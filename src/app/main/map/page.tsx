@@ -116,7 +116,7 @@ const page: FC = () => {
 
             {
               (currentIcon !== null) && (
-                <motion.div initial={{opacity: 0, y: 0, x:-175}} animate={{opacity: 1, y: -80, x: -175}} exit={{opacity: 0, y: 0, x: -175}}><MapInfoBlock image={currentIcon.img} title={currentIcon.title} content={currentIcon.content} onClick={() => {setCurrentIcon(null)}} link={''} /></motion.div>
+                <motion.div initial={{opacity: 0, y: 0, x:-175}} animate={{opacity: 1, y: -130, x: -175}} exit={{opacity: 0, y: 0, x: -175}}><MapInfoBlock image={currentIcon.img} title={currentIcon.title} content={currentIcon.content} onClick={() => {setCurrentIcon(null)}} link={''} /></motion.div>
               )
             }
 
