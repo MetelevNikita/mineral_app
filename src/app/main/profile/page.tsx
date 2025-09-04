@@ -147,16 +147,8 @@ const page: FC = () => {
   const currentUserCollection = collectionMineral.map((item) => {
     const userMineral = currentUser?.collection as any[]
 
-    for (const mineral of userMineral) {
-      if (mineral.title === item.title) {
-        return mineral
-      } else {
-        return item
-      }
-    }
-
-
-
+    const foundMineral = userMineral.find(mineral => mineral.title === item.title);
+    return foundMineral || item;
     
   })
 
