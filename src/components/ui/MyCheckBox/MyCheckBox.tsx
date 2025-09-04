@@ -21,7 +21,7 @@ const MyCheckBox: FC<MyCheckBoxProps> = ({ title, checked, name, onClick }) => {
     <div className={styles.checkbox_container}>
 
 
-      <div className={styles.checkbox} onClick={onClick} style={(!checked) ? {justifyContent: 'flex-start'} : {justifyContent: 'flex-end'}}>
+      <div className={styles.checkbox} onClick={onClick} style={(!checked) ? {justifyContent: 'flex-start', backgroundColor: '#ababab'} : {justifyContent: 'flex-end'}}>
 
           <motion.div layout className={styles.checkbox_on} transition={{duration: 0.2}}></motion.div>
         
