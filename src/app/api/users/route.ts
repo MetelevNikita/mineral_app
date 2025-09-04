@@ -98,7 +98,9 @@ export const POST = async (req: Request | any, res: Response | any): Promise<any
         const code = generateRandomCode()
         const data = await sendRandomCode(email, code);
 
-        // 
+        //
+
+
 
         (await cookies()).set('code', code.toString());
         (await cookies()).set('email', email.toString());

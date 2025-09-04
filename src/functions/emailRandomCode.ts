@@ -6,6 +6,8 @@ export const sendRandomCode = async (email: string, code: number) => {
 
     try {
 
+        console.log('начинаяем отправку кода на почту')
+
         console.log(email)
         console.log(code)
 
@@ -13,11 +15,14 @@ export const sendRandomCode = async (email: string, code: number) => {
         const trasporter = nodemailer.createTransport({
             service: 'gmail',
             host: 'smtp.gmail.com',
-            port: 587,
+            port: 465,
+            secure: true,
             auth: {
                 user: process.env.EMAIL,
                 pass: process.env.PASS
-            }
+            },
+            pool: true,
+            rateLimit: 1,
         })
 
 
