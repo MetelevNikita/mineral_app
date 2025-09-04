@@ -21,7 +21,6 @@ import VideoBlock from '@/components/element/VideoBlock/VideoBlock'
 // functions
 
 import { getSingleMineral } from '@/functions/minerale/getSingleMineral'
-import { div, style } from 'motion/react-client'
 
 
 interface PageProps {
