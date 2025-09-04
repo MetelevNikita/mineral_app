@@ -259,7 +259,7 @@ const page: FC = () => {
                             return (
                               <div key={index+1} className={styles.collection_item_container}>
                                   <div className={styles.collection_item_image_box}>
-                                      <motion.div style={{filter: 'grayscale(100%)'}} animate={ item.received ? {scale: [1, 1.2, 1], filter: ['grayscale(100%)', 'grayscale(0)']} : { filter: item.received ? 'grayscale(0)' : 'grayscale(100%)' }} transition={{duration: 2}}>
+                                      <motion.div style={{filter: 'grayscale(100%)'}} animate={ item?.received ? {scale: [1, 1.2, 1], filter: ['grayscale(100%)', 'grayscale(0)']} : { filter: item.received ? 'grayscale(0)' : 'grayscale(100%)' }} transition={{duration: 2}}>
                                         <Image src={item.image} width={65} height={45} alt={'collection_img'}/>
                                         </motion.div>
                                   </div>
