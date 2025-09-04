@@ -12,13 +12,6 @@ export const POST = async (req: Request) => {
 
         const {name, email, message} = await req.json()
 
-        console.log(
-            process.env.EMAIL, 
-            process.env.PASS
-        )
-
-
-
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             host: 'smtp.gmail.com',
@@ -32,7 +25,7 @@ export const POST = async (req: Request) => {
 
         const data = await transporter.sendMail({
             from: `${name} <${email}>`,
-            to: process.env.EMAIL,
+            to: email,
             subject: 'Новое сообщение с сайта',
             text: `
                 Автор: ${name}
@@ -42,9 +35,7 @@ export const POST = async (req: Request) => {
 
         })
 
-
         console.log(data)
-        // console.log(data)
 
         return NextResponse.json({
             data: {
