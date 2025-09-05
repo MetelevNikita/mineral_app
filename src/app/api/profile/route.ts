@@ -51,8 +51,6 @@ export const PUT = async (req: Request) => {
       const sharpImage = await sharp(fileBuffer).resize(320, 240).jpeg({ mozjpeg: true, quality: 80 }).toBuffer();
       console.log(sharpImage)
 
-      const 
-
       // Создаем директорию, если она не существует
       const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'avatars');
       if (!fs.existsSync(uploadDir)) {
