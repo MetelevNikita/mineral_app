@@ -26,7 +26,7 @@ export const POST = async (req: Request) => {
 
 
         const data = await transporter.sendMail({
-            from: `${name} <${email}>`,
+            from: `${name} <Propaganda1108@gmail.com>`,
             to: email,
             subject: 'Новое сообщение с сайта',
             text: `
