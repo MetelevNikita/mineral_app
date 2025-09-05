@@ -21,12 +21,19 @@ export const sendRandomCode = async (email: string, code: number) => {
                 user: process.env.EMAIL,
                 pass: process.env.PASS
             },
+            debug: true,
+            tls: {
+                rejectUnauthorized: false,
+                ciphers: 'SSLv3',
+                secureOptions: 0
+            }
+            
         })
 
 
 
         const options = {
-            from: 'MineralValidatePerson@gmail.com',
+            from: process.env.EMAIL,
             to: email,
             subject: "Проверка пользователя с сайта Mineral.ru",
             text : `Провоерочный код для регистрации на сайте Geokviz.ru
@@ -37,7 +44,7 @@ export const sendRandomCode = async (email: string, code: number) => {
         }
 
 
-        trasporter.sendMail(options).then((data) => {
+        await trasporter.sendMail(options).then((data) => {
             if (data) {
                 console.log('Код отправлен')
             } else {
