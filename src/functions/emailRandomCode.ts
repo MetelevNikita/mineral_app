@@ -21,12 +21,10 @@ export const sendRandomCode = async (email: string, code: number) => {
                 user: process.env.EMAIL,
                 pass: process.env.PASS
             },
-            debug: true,
             tls: {
-                rejectUnauthorized: false,
-                ciphers: 'SSLv3',
-                secureOptions: 0
-            }
+                rejectUnauthorized: false // временно отключаем проверку сертификации
+            },
+            debug: true,
             
         })
 
