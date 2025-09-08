@@ -97,7 +97,7 @@ export const DELETE = async (res: Response, context: {params: {id: any}}) => {
 
         const latinText = transliterate(findMineral.title);
 
-        const uploadDir = path.resolve(process.cwd() + '/public' + '/uploads' + '/mineral' + `/${latinText}`)
+        const uploadDir = path.resolve(process.cwd() + '/src' + '/app' + '/uploads' + '/mineral' + `/${latinText}`)
         fs.rmSync(uploadDir, {recursive: true})
 
         return NextResponse.json({message: `Минерал с id - ${findMineral.id} удален`})

@@ -43,7 +43,7 @@ export const PUT = async (req: Request) => {
 
       if (file) {
       const filename = `${Date.now()}-${file.name}`;
-      const uploadPath = path.join(process.cwd(), 'public', 'uploads', 'avatars', filename);
+      const uploadPath = path.join(process.cwd(), 'src', 'app', 'uploads', 'avatar', filename);
       
       const buffer = await file.arrayBuffer();
       const fileBuffer = Buffer.from(buffer);
@@ -59,7 +59,7 @@ export const PUT = async (req: Request) => {
 
       fs.writeFileSync(uploadPath, sharpImage);
       console.log(`File uploaded successfully to ${filename} в формате JPEG!!!!!`);
-      avatarPath = `/uploads/avatars/${filename}`;  // Сохраняем путь к файлу
+      avatarPath = `/api/uploads/avatar/${filename}`;  // Сохраняем путь к файлу
     }
 
 

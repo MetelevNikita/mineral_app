@@ -122,5 +122,6 @@
     background: #FFBC41;
     margin-bottom: 10px;
     border-color: white !important;
-    color: white
+    color: white;
+    border: 1px solid rgb(255, 255, 255);
 }

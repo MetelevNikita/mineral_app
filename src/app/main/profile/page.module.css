@@ -174,5 +174,6 @@
     border-radius: 20px;
     background: #FFBC41;
     margin-bottom: 10px;
-    color: black
+    color: black;
+    border: 1px solid black;
 }

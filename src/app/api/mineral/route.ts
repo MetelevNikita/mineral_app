@@ -57,13 +57,24 @@ export const POST = async (req: Request, res: Response) => {
 
         // upload
 
-        const uploadFolder = path.resolve(process.cwd(), 'public', 'uploads', 'mineral');
+        const uploadFolder = path.resolve(process.cwd(), 'src', 'app', 'uploads', 'mineral');
         const latinText = transliterate(title.split(' ').join(''));
+
+        if (!fs.existsSync(uploadFolder)) {
+            fs.mkdirSync(uploadFolder, {
+                recursive: true
+            })
+        }
 
     
         // image
         const currentWriteFolder = uploadFolder + '/' + latinText
-        fs.mkdirSync(currentWriteFolder, {recursive: true})
+
+        if (!fs.existsSync(currentWriteFolder)) {
+            fs.mkdirSync(currentWriteFolder, {
+                recursive: true
+            })
+        }
 
 
         // 
@@ -102,8 +113,8 @@ export const POST = async (req: Request, res: Response) => {
             data: {
                 title,
                 description,
-                video: (video) ? `/uploads/mineral/${latinText}/${videoName}` : '',
-                image: (image) ? `/uploads/mineral/${latinText}/${filename}` : ''
+                video: (video) ? `/api/uploads/mineral/${latinText}/${videoName}` : '',
+                image: (image) ? `/api/uploads/mineral/${latinText}/${filename}` : ''
             },
 
             include: {
