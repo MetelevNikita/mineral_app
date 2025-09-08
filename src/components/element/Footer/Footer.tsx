@@ -96,8 +96,8 @@ const Footer = () => {
                         return (
                             
 
-                            <Col className='d-flex mb-2'>
-                            <Menuelement key={index+1} title={item.title} icon={item.img} path={item.link} className={styles.menu_btn}/>
+                            <Col key={index+1} className='d-flex mb-2'>
+                            <Menuelement title={item.title} icon={item.img} path={item.link} className={styles.menu_btn}/>
                             </Col>
        
                         )

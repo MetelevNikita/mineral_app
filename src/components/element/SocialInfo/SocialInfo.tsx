@@ -9,6 +9,7 @@ import styles from './SocialInfo.module.css'
 
 import tgIcon from '@/../public/social_logo/tg_icon.svg'
 import vkIcon from '@/../public/social_logo/vk_icon.svg'
+import webIcon from '@/../public/social_logo/web.svg'
 
 // types
 
@@ -29,8 +30,8 @@ const SocialInfo: FC<socialLogoProps> = ({ colorLine, colorText }) => {
   const socialLogoArr: socialLogoType[] = [
     {
       id: 1,
-      title: 'Телеграм',
-      img: tgIcon,
+      title: 'Сайт',
+      img: webIcon,
       url: '#'
     },
 
