@@ -52,7 +52,7 @@ export const PUT = async (req: Request) => {
       console.log(sharpImage)
 
       // Создаем директорию, если она не существует
-      const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'avatars');
+      const uploadDir = path.join(process.cwd(), 'src', 'app', 'uploads', 'avatar');
       if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true });
       }
