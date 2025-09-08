@@ -44,10 +44,6 @@ next-env.d.ts
 /public/mineral
 /public/status
 
-#
-
-/src/app/uploads/*
-
 # 
 
 .env
