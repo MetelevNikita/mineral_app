@@ -2,65 +2,98 @@
 
 
 import { FC, useEffect, useState, useRef } from 'react'
+import { Container, Col, Row } from 'react-bootstrap'
 
 // css
 
 import styles from './page.module.css'
 
+
 const page: FC = () => {
 
 
+  const cameraRef = useRef<HTMLVideoElement | null>(null)
 
+  useEffect(() => {
+    console.log('open camera')
 
-    const [hasCameraAccess, setHasCameraAccess] = useState(false)
-    const [videoDeviceId, setVideoDeviceId] = useState<string | null>(null);
-    const videoRef = useRef<HTMLVideoElement | null>(null)
-
-    useEffect(() => {
-
-        const getCamera = async () => {
-            try {
-
-                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                    throw new Error('getUserMedia is not supported');
-                }
-
-                const devices = await navigator.mediaDevices.enumerateDevices();
-   
-                const stream = await navigator.mediaDevices.getUserMedia({video: { facingMode: 'environment' }});
-
-                if (videoRef.current) {
-                    videoRef.current.srcObject = stream
-                }
-                
-                setHasCameraAccess(true)
-            } catch (error) {
-                console.error('Ошибка доступа к камере', error);
-                setHasCameraAccess(false);
-            }
+    const getCamera = async () => {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          throw new Error('getUserMedia is not supported');
         }
 
 
-        if (typeof window !== 'undefined') {
-        getCamera();
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: 'environment'
+          }
+        })
+      
+        console.log(stream)
+
+        if (cameraRef.current) {
+          cameraRef.current.srcObject = stream
         }
-        
-    }, [])
+    }
+
+      if (typeof window !== 'undefined' && navigator.mediaDevices) {
+          getCamera();
+       }
+
+
+   }, [])
+
+
+
+   console.log()
+
 
 
   return (
-    <div className={styles.qrcode}>
 
-        {
-            hasCameraAccess ? (
-                <video ref={videoRef} autoPlay playsInline width={'100%'} height={'auto'}/>
-            ): (<>NO CAMRA</>)
-        }
+    <Container>
+        <Row>
+            <Col className='d-flex justify-content-center align-items-center mb-3'>
 
-    
-      
-    </div>
+                <div className={styles.title}>QR code</div>
+
+            </Col>
+        </Row>
+
+      <Row>
+        <Col className='d-flex justify-content-center align-items-center mb-3'>
+
+          <div>
+
+            <div className={styles.camera_info}></div>
+            
+            <div className={styles.camera_container}>
+              <video ref={cameraRef} autoPlay playsInline className={styles.camera}>
+                
+              </video>
+            </div>
+          
+        </div>
+
+        </Col>
+      </Row>
+
+
+
+
+
+    </Container>
+
+
+
+
+
   )
 }
 
 export default page
+
+
+
+
+
