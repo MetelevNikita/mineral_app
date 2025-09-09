@@ -7,6 +7,15 @@
     line-height: 125%; /* 31.25px */
 }
 
+.camera_info {
+    width: 354px;
+    color: #000;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 125%; /* 31.25px */
+}
+
 
 .camera_border {
 
@@ -14,14 +23,29 @@
 
 
 .camera_container {
-  border: 10px solid #FFBC41;
-  border-radius: 20px;
-  padding: 20px;
+  position: relative; /* Для позиционирования внутри контейнера */
+  display: inline-block;
 }
 
 
 
 .camera {
   border-radius: 20px;
+  width: 100%; /* Видео займет всю ширину контейнера */
+  height: auto;
 
+}
+
+
+.camera_container::before {
+  content: ""; /* Создание псевдоэлемента */
+  position: absolute; /* Абсолютное позиционирование относительно контейнера */
+  top: 20%; /* Отступ сверху (регулируйте по необходимости) */
+  left: 25%; /* Отступ слева (регулируйте по необходимости) */
+  width: 50%; /* Ширина рамки */
+  height: 60%; /* Высота рамки */
+  border: 4px solid #ffffff; /* Зеленая рамка */
+  border-style: double;
+  box-sizing: border-box; /* Учитываем рамку в расчетах */
+  pointer-events: none; /* Чтобы рамка не мешала взаимодействовать с видео */
 }

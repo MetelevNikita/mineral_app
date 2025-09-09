@@ -6,9 +6,10 @@
     height: 100%;
     background-color: #fafafa7c;
 
-    /* z-index: 9999; */
+    z-index: 9999;
     margin: 0;
     padding: 0;
+
 
 
 }

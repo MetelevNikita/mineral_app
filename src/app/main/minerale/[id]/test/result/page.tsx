@@ -177,7 +177,7 @@ const page = (params: {params: {id: string}}) => {
         </Row>
 
         <Row>
-          <Col className='d-flex flex-row align-items-center justify-content-center mb-4'>
+          <Col className='d-flex flex-row align-items-center justify-content-center mb-5'>
 
               
 
