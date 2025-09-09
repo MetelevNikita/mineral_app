@@ -4,8 +4,11 @@
 import { FC, useEffect, useState, useRef } from 'react'
 import { Container, Col, Row } from 'react-bootstrap'
 import jsQR from "jsqr";
-import { Html5QrcodeScanner } from "html5-qrcode";
-import {Html5Qrcode} from "html5-qrcode"
+
+// components
+
+import ModalText from '@/components/modals/ModalText/ModalText';
+
 
 
 
@@ -14,109 +17,18 @@ import {Html5Qrcode} from "html5-qrcode"
 import styles from './page.module.css'
 
 
-// const page: FC = () => {
-
-//   const [error, setError] = useState<string | null>(null)
-//   const [cameraId, setCameraId] = useState<string | null>(null)
-//   const scannerRef = useRef<Html5QrcodeScanner | null>(null);
-
-
-//   useEffect(() => {
-
-//     const initializeCamera = async () => {
-//       try {
-
-//         const device = await Html5Qrcode.getCameras()
-
-//         console.log('Доступные камеры: ', device)
-
-//         if (device && device.length > 0) {
-//           setCameraId(device[0].id)
-//         }
-
-//         if (scannerRef.current) {
-//           scannerRef.current.clear().catch((error) => {
-//             console.error(
-//               'Error clearing the scanner: ',
-//               error
-//             )
-//           })
-//         }
-
-
-
-//         scannerRef.current = new Html5QrcodeScanner("camera", {
-//             fps: 10,
-//             qrbox: {
-//               width: 300,
-//               height: 300,
-//             },
-//             showTorchButtonIfSupported: true,
-//             showZoomSliderIfSupported: true,
-//           }, false
-//         )
-
-
-//         scannerRef.current.render(
-//           (decodedText) => {
-//             console.log('Распознанный текст: ', decodedText)
-//           },
-
-//           (scanError: any) => {
-//             const errorMessage = scanError.message || '';
-            
-//             // Игнорируем обычные ошибки сканирования
-//             const ignorableErrors = [
-//               'No barcode or QR code detected',
-//               'NotFoundException: No MultiFormat Readers',
-//               'No QR code found',
-//               'QR code parse error'
-//             ];
-
-//             const shouldIgnore = ignorableErrors.some(ignorable => 
-//               errorMessage.includes(ignorable)
-//             );
-
-//             if (!shouldIgnore) {
-//               console.warn('Важная ошибка сканирования:', scanError);
-//               setError(errorMessage);
-//             }
-//           }
-//         )
-        
-//       } catch (error) {
-//         console.error(error)
-//       }
-//     }
-
-//     initializeCamera()
-
-
-//   }, [])
-
-
-//   return (
-//     <div id="camera">
-      
-//     </div>
-//   )
-// }
-
-// export default page
-
-
-
-
 const page: FC = () => {
 
-  const [isScanning, setIsScanning] = useState(false);
+
+  const [modal, setModal] = useState(false)
+  const [qrCode, setQrCode] = useState<string | null>(null)
   const cameraRef = useRef<HTMLVideoElement | null>(null)
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
 
   useEffect(() => {
     console.log('open camera')
 
-    const getCamera = async () => {
+    const startScan = async () => {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
           throw new Error('getUserMedia is not supported');
         }
@@ -125,94 +37,56 @@ const page: FC = () => {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: {
             facingMode: 'environment',
-            width: {
-              min: 640,
-              ideal: 1280,
-              max: 1920
-            }
           }
         })
       
         console.log(stream)
 
         if (cameraRef.current) {
-          cameraRef.current.srcObject = stream
-          await cameraRef.current.play()
-          setIsScanning(true)
-          startQRScanning()
-        }
-    }
-
-      if (typeof window !== 'undefined' && navigator.mediaDevices) {
-          getCamera();
-       }
+            cameraRef.current.srcObject = stream
+            cameraRef.current.play();
+          };
 
 
-   }, [])
+          const canvas = document.createElement('canvas')
+          const ctx = canvas.getContext('2d')
+          if (!ctx) return
+          console.log(ctx)
 
+          const scan = async () => {
+              if (cameraRef.current && cameraRef.current.videoWidth > 0 && cameraRef.current.videoHeight > 0) {
 
-   const scanQrCode = async () => {
-    try {
+                  canvas.width = cameraRef.current.videoWidth
+                  canvas.height = cameraRef.current.videoHeight
 
-      if (!cameraRef.current && !canvasRef.current) return
+                  ctx.drawImage(cameraRef.current, 0, 0, canvas.width, canvas.height)
+                  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+                  const qrcode = jsQR(imageData.data, imageData.width, imageData.height)
+        
 
-      const video = cameraRef.current
-      const canvas = canvasRef.current
-      const context = canvas?.getContext('2d')
-
-      if (!context && !video) return null
-
-      if (canvas && video) {
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-
-          context?.drawImage(video, 0, 0, canvas.width, canvas.height)
-
-          const imageData = context?.getImageData(0, 0, canvas.width, canvas.height)
-
-          if (imageData) {
-            const qrCode = jsQR(
-              imageData.data,
-              imageData.width,
-              imageData.height,
-              {
-                inversionAttempts: 'dontInvert',
-
+                  if (qrcode) {
+                    if (qrcode.data) {
+                      setQrCode(qrcode.data)
+                      setModal(true)
+                    } else {
+                      return
+                    }
+                  }
               }
-            )
 
-
-            return qrCode
+              requestAnimationFrame(scan)
           }
-      }
 
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message)
-      }
-    }
-   }
+          scan()
 
-
-   const startQRScanning = async () => {
-    try {
-
-      const scan = () => {
-        if (isScanning) {
-          const qrCode = scanQrCode()
-          console.log(qrCode)
         }
-      }
-      
-    } catch (error) {
-      
-    }
-   }
+
+        startScan()
+
+    }, [])
 
 
-
-
-
+    console.log(modal)
 
 
 
@@ -221,6 +95,21 @@ const page: FC = () => {
   return (
 
     <Container>
+
+
+      {
+        modal && (
+          <ModalText title={'Перейти на страницу'} text={'Квиза'} btnText={'Перейти'}
+          onClickClose={() => {
+            setModal(false)
+          }} onClickBtn={() => {
+            console.log('ок')
+          }} />
+        )
+      }
+
+
+
         <Row>
             <Col className='d-flex justify-content-center align-items-center mb-3'>
 
@@ -234,7 +123,13 @@ const page: FC = () => {
 
           <div>
 
-            <div className={styles.camera_info}></div>
+            <Col className='d-flex justify-content-center align-items-center mb-3'>
+
+            <div className={styles.camera_info}>
+              Для того что бы перейти на страницу с квизомом, сканируйте QR код.
+            </div>
+            
+            </Col>
             
             <div className={styles.camera_container}>
               <video ref={cameraRef} autoPlay playsInline className={styles.camera}>
