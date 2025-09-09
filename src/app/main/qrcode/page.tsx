@@ -69,6 +69,7 @@ const page: FC = () => {
                       setQrCode(qrcode.data)
                       setModal(true)
                     } else {
+                      requestAnimationFrame(scan)
                       return
                     }
                   }
@@ -86,10 +87,44 @@ const page: FC = () => {
     }, [])
 
 
-    console.log(modal)
 
 
 
+    const separateQrCodeData = (data: string): any => {
+      try {
+
+
+        if (!data) {
+          return []
+        }
+
+
+        const obj = {
+          link: '',
+          title: ''
+        }
+        
+        for (const item of data.split(' ')) {
+          if (!item.includes('https://')) {
+            obj.title += `${item} `
+          } else {
+            obj.link = item
+          }    
+        }
+        
+        return obj
+
+      } catch (error) {
+        console.error('Error splitting data:', error)
+        return []
+      }
+    }
+
+
+
+
+    const newText = separateQrCodeData(qrCode as string)
+    console.log(newText)
 
 
   return (
@@ -99,11 +134,11 @@ const page: FC = () => {
 
       {
         modal && (
-          <ModalText title={'Перейти на страницу'} text={'Квиза'} btnText={'Перейти'}
+          <ModalText title={'QR code отсканирован'} text={`Вы хотите перейти на страницу с квизом - ${newText.title}`} btnText={'Перейти'}
           onClickClose={() => {
             setModal(false)
           }} onClickBtn={() => {
-            console.log('ок')
+            window.location.href = newText.link
           }} />
         )
       }
