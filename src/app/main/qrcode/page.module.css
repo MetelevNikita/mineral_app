@@ -9,12 +9,11 @@
 
 
 .camera_border {
-  
+
 }
 
 
 .camera_container {
-  width: 100%;
   border: 10px solid #FFBC41;
   border-radius: 20px;
   padding: 20px;
