@@ -36,6 +36,7 @@ import ReduxProvider from "@/Redux/Provider";
 // 
 
 
+
 export const metadata: Metadata = {
   title: "Mineral App",
   description: "Добро пожаловать!",
@@ -64,8 +65,9 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link  rel="manifest" href="/api/manifest"/>
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        {/* Манифест подключается автоматически, т.к. есть app/manifest.ts */}
+        <link rel="icon" href="/icon-96x96" />
         </head>
         <body className={`${OpenSans.className}, ${InterFont.className}`}>
 
