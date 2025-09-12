@@ -40,20 +40,7 @@ import ReduxProvider from "@/Redux/Provider";
 export const metadata: Metadata = {
   title: "GEOKVIZ APP 3.0",
   description: "NEW APP from GEOKVIZ",
-  manifest: "/src/app/manifest.ts",
-  icons: {
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
-  },
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "black-translucent",
-    title: "GEOKVIZ APP IOS APP",
-    startupImage: [
-      {
-        url: "/apple-touch-icon.png",
-      }
-    ]
-  }
+  manifest: "/manifest.webmanifest",
 }
 
 export default function RootLayout({
@@ -66,12 +53,20 @@ export default function RootLayout({
 
     <html lang="en">
         <head>
-        {/* iOS PWA */}
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-        <link rel="icon" href="/icon-96x96" />
+          {/* PWA meta tags */}
+          <meta name="application-name" content="GEOKVIZ APP 3.0" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+          <meta name="apple-mobile-web-app-title" content="GEOKVIZ APP 3.0" />
+          <meta name="mobile-web-app-capable" content="yes" />
+          <meta name="theme-color" content="#000000" />
+          
+          {/* Icons */}
+          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/icon-32x32.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/icon-16x16.png" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          <link rel="manifest" href="/manifest.webmanifest" />
         </head>
         <body className={`${OpenSans.className}, ${InterFont.className}`}>
 
