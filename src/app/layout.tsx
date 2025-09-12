@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   description: "NEW APP from GEOKVIZ",
   icons: {
     icon: [{ url: "/favicon-196.png", sizes: "196x196", type: "image/png" }],
-    apple: [{ url: "/apple-icon-180.png" }],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   appleWebApp: {
     capable: true,
