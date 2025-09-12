@@ -3,8 +3,8 @@ import type { MetadataRoute } from 'next'
  
 export default function manifest(): MetadataRoute.Manifest {
   return {
-      name: 'Geokviz 2.0',
-      short_name: 'Geokviz 2.0',
+      name: 'Geokviz START IOS',
+      short_name: 'Geokviz START IOS',
       description: 'Новый взягляд на геологию',
       start_url: '/',
       display: 'standalone',
