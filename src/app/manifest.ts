@@ -3,8 +3,8 @@ import type { MetadataRoute } from 'next'
  
 export default function manifest(): MetadataRoute.Manifest {
   return {
-      name: 'Geokviz',
-      short_name: 'Geokviz !!!!!!!!!!!!!',
+      name: 'Geokviz 2.0',
+      short_name: 'Geokviz 2.0',
       description: 'Новый взягляд на геологию',
       start_url: '/',
       display: 'standalone',
@@ -14,9 +14,18 @@ export default function manifest(): MetadataRoute.Manifest {
       orientation: 'portrait',
       prefer_related_applications: true,
       icons: [
-        { src: '/icon-96x96.png', sizes: '96x96', type: 'image/png' },
-        { src: '/icon-192x192.png', sizes: '192x192', type: 'image/png' },
-        { src: '/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+            {
+              src: "/web-app-manifest-192x192.png",
+              sizes: "192x192",
+              type: "image/png",
+              purpose: "maskable"
+            },
+            {
+              src: "/web-app-manifest-512x512.png",
+              sizes: "512x512",
+              type: "image/png",
+              purpose: "maskable"
+            }
       ]
   }
 }
