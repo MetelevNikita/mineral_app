@@ -49,6 +49,11 @@ export const metadata: Metadata = {
         url: "/apple-touch-icon.png",
       },
     ]
+  },
+
+  other: {
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
   }
 }
 
@@ -62,20 +67,17 @@ export default function RootLayout({
 
     <html lang="en">
         <head>
-          {/* PWA meta tags */}
-          <meta name="application-name" content="GEOKVIZ APP 3.0" />
+          {/* Стандартная иконка для всех устройств */}
+          <link rel="icon" href="/favicon.ico" />
+          
+          {/* Иконки для Apple devices */}
+          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+          <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+          
+          {/* Мета-теги для iOS */}
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-          <meta name="apple-mobile-web-app-title" content="GEOKVIZ APP 3.0" />
-          <meta name="mobile-web-app-capable" content="yes" />
-          <meta name="theme-color" content="#000000" />
-          
-          {/* Icons */}
-          <link rel="icon" href="/favicon.ico" />
-          <link rel="icon" type="image/png" sizes="32x32" href="/icon-32x32.png" />
-          <link rel="icon" type="image/png" sizes="16x16" href="/icon-16x16.png" />
-          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-          <link rel="manifest" href="/manifest.webmanifest" />
+          <meta name="apple-mobile-web-app-title" content="GEOKVIZ APP IOS FROM LAYOUT" />
         </head>
         <body className={`${OpenSans.className}, ${InterFont.className}`}>
 
