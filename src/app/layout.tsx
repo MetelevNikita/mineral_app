@@ -38,7 +38,7 @@ import ReduxProvider from "@/Redux/Provider";
 
 
 export const metadata: Metadata = {
-  title: "GEOKVIZ APP",
+  title: "GEOKVIZ APP !!!!!",
   description: "NEW APP from GEOKVIZ",
   icons: {
     icon: [{ url: "/favicon-196.png", sizes: "196x196", type: "image/png" }],

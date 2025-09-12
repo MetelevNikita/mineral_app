@@ -62,11 +62,6 @@ const Login: FC = () => {
   }
 
 
-
-
-  const mail = 'Kyle.BÄmail.ru'
-  console.log(mail)
-
   return (
 
     <Container>
