@@ -19,7 +19,7 @@ import type { mapBlockArrType } from '@/types/type'
 import { div } from 'motion/react-client'
 
 interface MapSvgProps {
-  iconArr: mapBlockArrType[]
+  iconArr: any
   current: {currentIcon: mapBlockArrType | null, setCurrentIcon: (icon: mapBlockArrType | null) => any}
 }
 
@@ -74,14 +74,14 @@ const MapSvg: FC<MapSvgProps> = ({ iconArr, current }) => {
       (iconArr.length > 1) && iconArr.map((item: mapBlockArrType, index: number): React.ReactNode => {
         return (
  
-           <foreignObject key={index + 1} x={item.coordinate?.top} y={item.coordinate?.left} width={70} height={70} onClick={() => {
+           <foreignObject key={index + 1} x={item.coordinate?.left} y={item.coordinate?.top} width={45} height={45} onClick={() => {
             setCurrentIcon(null)
             setTimeout(() => {
               setCurrentIcon(item)
             }, 300)
             }}>
-              <motion.div whileHover={{scale: 0.8}} whileTap={{scale: 0.9}}>
-                <Image src={item.img} alt={item.title}/>
+              <motion.div whileTap={{scale: 0.9}} onClick={(e) => {console.log(e.target)}}>
+                <Image src={item.img} alt={'icon'}/>
               </motion.div>
             </foreignObject>
 

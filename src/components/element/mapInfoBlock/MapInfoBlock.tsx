@@ -20,14 +20,13 @@ import { style } from 'motion/react-client'
 interface MapInfoBlockProps {
 
     image: string | StaticImageData
-    title: string
-    content: string
+    section: string
     onClick: () => void
     link: string
 
 }
 
-const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, title, content, onClick, link,  }) => {
+const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, link,  }) => {
   return (
     <div className={styles.bottom_container}>
 
@@ -44,8 +43,8 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, title, content, onClick, l
                     </div>
 
                     <div className={styles.content_wrapper}>
-                        <div className={styles.title}>{title}</div>
-                        <div className={styles.content}>{content}</div>
+                        <div className={styles.title}>{section}</div>
+                        <div className={styles.content}>{''}</div>
                     </div>
 
 

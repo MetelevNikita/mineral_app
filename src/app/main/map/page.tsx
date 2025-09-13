@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from "motion/react"
 
 
@@ -17,16 +17,20 @@ import { Container, Row, Col } from 'react-bootstrap'
 import MapSvg from '@/components/ui/MapSVG/MapSvg'
 import MapInfoBlock from '@/components/element/mapInfoBlock/MapInfoBlock'
 
+// redux
+
+import { useAppDispatch, useAppSelector } from '@/types/hooks'
+import { fetchGetMineralMap } from '@/functions/reduxAsync/map/fetchGetMineralMap'
+
 // types
 
-import type { mapBlockArrType } from '@/types/type' 
+import type { mapBlockArrType, MineralMapType } from '@/types/type' 
 
 // img
 
-import img1 from '@/../public/map/Group 36779.svg'
-import img2 from '@/../public/map/Group 36780.svg'
-import img3 from '@/../public/map/Group 36781.svg'
-import img4 from '@/../public/map/Group 36782.svg'
+import mapIcon from '@/../public/map/map_icon.svg'
+import mapIconActive from '@/../public/map/map_icon_active.svg'
+import { section } from 'motion/react-client'
 
 
 
@@ -34,55 +38,154 @@ import img4 from '@/../public/map/Group 36782.svg'
 
 const page: FC = () => {
 
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(
+      fetchGetMineralMap()
+    ).unwrap()
+  }, [])
+
+
+  const mineralMap = useAppSelector((state) => state.mapMinerals.map)
+  console.log(mineralMap)
+
+  const coordinateMineralApp = mineralMap.map((item: any) => {
+    return {
+      ...item,
+    }
+  })
+
+
   const mapBlockArr: mapBlockArrType[] = [
     {
       id: 1,
-      title: 'минерал 1',
-      content: 'текст 1 текст 1 текст 1 текст 1 текст 1 текст 1 текст 1 текст 1',
-      img: img1,
+      section: 'section A',
+      img: mapIcon,
       coordinate: {
-        top: 1,
-        left: 215
+        top: 0,
+        left: 35
       }
     },
 
-
     {
       id: 2,
-      title: 'минерал 2',
-      content: 'текст 2 текст 2 текст 2 текст 2 текст 2 текст 2 текст 2 текст 2',
-      img: img2,
+      section: 'section K',
+      img: mapIcon,
       coordinate: {
-        top: 135,
-        left: 145
+        top: 0,
+        left: 90
       }
     },
 
     {
       id: 3,
-      title: 'минерал 3',
-      content: 'текст 3 текст 3 текст 2 текст 2 текст 2 текст 2 текст 2 текст 2',
-      img: img3,
+      section: 'section B',
+      img: mapIcon,
       coordinate: {
-        top: 155,
-        left: 0
+        top: 0,
+        left: 145
+      }
+    },
+
+    {
+      id: 4,
+      section: 'section C',
+      img: mapIcon,
+      coordinate: {
+        top: 0,
+        left: 195
       }
     },
 
 
     {
-      id: 4,
-      title: 'минерал 4',
-      content: 'текст 4 текст 4 текст 4 текст 4 текст 2 текст 2 текст 2 текст 2',
-      img: img4,
+      id: 5,
+      section: 'section E',
+      img: mapIcon,
       coordinate: {
-        top: 135,
-        left: 370
+        top: 90,
+        left: 10
       }
-    }
+    },
+
+    {
+      id: 6,
+      section: 'section F',
+      img: mapIcon,
+      coordinate: {
+        top: 90,
+        left: 115
+      }
+    },
+
+    {
+      id: 7,
+      section: 'section G',
+      img: mapIcon,
+      coordinate: {
+        top: 90,
+        left: 235
+      }
+    },
+
+
+    {
+      id: 8,
+      section: 'section Q',
+      img: mapIcon,
+      coordinate: {
+        top: 170,
+        left: 55
+      }
+    },
+
+
+    {
+      id: 9,
+      section: 'section Y',
+      img: mapIcon,
+      coordinate: {
+        top: 170,
+        left: 110
+      }
+    },
+
+    {
+      id: 10,
+      section: 'section W',
+      img: mapIcon,
+      coordinate: {
+        top: 170,
+        left: 165
+      }
+    },
+
+
+
+
+
+
+    
   ]
 
   const [currentIcon, setCurrentIcon] = useState<mapBlockArrType | null>(null)
+  console.log(currentIcon)
+
+
+  const mapFilteredArr = mapBlockArr.map((item: any): any => {
+    if (item.id == currentIcon?.id) {
+      return {
+        ...item,
+        img: mapIconActive
+      } 
+    } else {
+        return item
+    }
+  })
+
+
+  console.log(mapFilteredArr)
 
 
   return (
@@ -105,7 +208,7 @@ const page: FC = () => {
                   <div className={styles.map_background}>
 
                         <div className={styles.map_image_container}>
-                            <MapSvg current={{currentIcon, setCurrentIcon}} iconArr={mapBlockArr}></MapSvg>
+                            <MapSvg current={{currentIcon, setCurrentIcon}} iconArr={mapFilteredArr}></MapSvg>
                         </div>
 
                   </div>
@@ -116,7 +219,7 @@ const page: FC = () => {
 
             {
               (currentIcon !== null) && (
-                <motion.div initial={{opacity: 0, y: 0, x:-175}} animate={{opacity: 1, y: -180, x: -175}} exit={{opacity: 0, y: 0, x: -175}}><MapInfoBlock image={currentIcon.img} title={currentIcon.title} content={currentIcon.content} onClick={() => {setCurrentIcon(null)}} link={''} /></motion.div>
+                <motion.div initial={{opacity: 0, y: 0, x:-175}} animate={{opacity: 1, y: -180, x: -175}} exit={{opacity: 0, y: 0, x: -175}}><MapInfoBlock image={currentIcon.img} section={currentIcon.section} onClick={() => {setCurrentIcon(null)}} link={''} /></motion.div>
               )
             }
 

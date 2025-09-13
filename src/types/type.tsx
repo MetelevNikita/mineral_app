@@ -39,8 +39,7 @@ export type contactsArrType = {
 
 export type mapBlockArrType = {
     id: number
-    title: string
-    content: string
+    section: string
     img: string | StaticImageData
     coordinate: {
         top: number
@@ -159,4 +158,16 @@ export type CollectionMineralType = {
     received: boolean | undefined,
     createAt: string | Date,
     updateAt: string | Date,
+}
+
+
+// mineral map
+
+export type MineralMapType = {
+    id: number,
+    title: string,
+    description: string,
+    image: string | StaticImageData,
+    createAt: string | Date,
+    updateAt: string | Date
 }

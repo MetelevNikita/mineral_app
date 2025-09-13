@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { userReducer } from "../slice/userSlice";
 import { statusReducer } from "../slice/statusSlice";
 import { collectionReducer } from "../slice/collectionSlice";
+import { mapReducer } from "../slice/mapSlice";
 
 // mineral
 
@@ -13,7 +14,9 @@ export const store = configureStore({
     user: userReducer,
     minerals: mineralReducer,
     status: statusReducer,
-    collection: collectionReducer
+    collection: collectionReducer,
+    mapMinerals: mapReducer,
+
   },
   devTools: process.env.NODE_ENV !== 'production',
 });
