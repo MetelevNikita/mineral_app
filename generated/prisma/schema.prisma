@@ -126,3 +126,12 @@ model Statuses {
   createAt DateTime @default(now())
   updateAt DateTime @default(now())
 }
+
+model MineralMap {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  image       String?
+  createAt    DateTime @default(now())
+  updateAt    DateTime @default(now())
+}
