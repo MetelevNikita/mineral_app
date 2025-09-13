@@ -9,7 +9,12 @@ import nodemailer from 'nodemailer'
             auth: {
                 user: process.env.EMAIL,
                 pass: process.env.PASS
-            }
+            },
+                connectionTimeout: 10000,
+                socketTimeout: 15000,
+                tls: {
+                    rejectUnauthorized: false
+                }
         })
 
 
