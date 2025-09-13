@@ -59,7 +59,6 @@ export const createUser = async (user: any) => {
         }
 
         const data = await responce.json()
-        console.log(data)
         return {
             message: data.message,
             success: true,

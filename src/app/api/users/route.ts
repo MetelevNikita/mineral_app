@@ -95,15 +95,16 @@ export const POST = async (req: Request | any, res: Response | any): Promise<any
         }
 
 
-        const code = generateRandomCode()
-        const data = await sendRandomCode(email, code);
+        const code = generateRandomCode();
 
         //
 
-
-
         (await cookies()).set('code', code.toString());
         (await cookies()).set('email', email.toString());
+
+
+        console.log('Код после регистрации отправляется на почту:', code);
+        await sendRandomCode(email, code);
 
 
         return NextResponse.json({message:'Email send code'})

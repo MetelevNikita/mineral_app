@@ -1,72 +1,43 @@
 
+import { em } from 'motion/react-client';
 import nodemailer from 'nodemailer'
+
+ const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 587,
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.PASS
+            }
+        })
 
 
 export const sendRandomCode = async (email: string, code: number) => {
 
     try {
 
-        console.log('начинаяем отправку кода на почту')
-
-        console.log(email)
-        console.log(code)
-
-
-        const trasporter = nodemailer.createTransport({
-            service: 'gmail',
-            host: 'smtp.gmail.com',
-            port: 465,
-            secure: true,
-            auth: {
-                user: process.env.EMAIL,
-                pass: process.env.PASS
-            },
-            tls: {
-                rejectUnauthorized: false // временно отключаем проверку сертификации
-            },
-            debug: true,
-            
-        })
-
-
-
-        const options = {
-            from: process.env.EMAIL,
+       const info = await transporter.sendMail({
+            from: 'Propaganda1108@gmail.com',
             to: email,
-            subject: "Проверка пользователя с сайта Mineral.ru",
-            text : `Провоерочный код для регистрации на сайте Geokviz.ru
-
-                    ${code} - для почты ${email}
-                
-                    не отвечайте на это письмо`
-        }
-
-
-        await trasporter.sendMail(options).then((data) => {
-            if (data) {
-                console.log('Код отправлен')
-            } else {
-                console.log(`Код не отправлен ${data}`)
-                throw new Error('Код не отправлен')
-            }
-        }).catch((error) => {
-            if (error) {
-                console.log(`Код не отправлен ${error}`)
-                throw new Error('Код не отправлен')
-            }
+            subject: 'Код подтверждения',
+            text: `
+            Ваш код подтверждения: ${code}
+            `
         })
 
 
-
-
+        console.log(`Сообщение отправлено на почту ${email}`, info.messageId);
         
     } catch (error: Error | unknown) {
-
         if (error instanceof Error) {
-            console.log(`Код не сформирован. Сообщение на почту ${email} не отправлено ${error.message}`)
+            console.error(`Не удалось отправить код подтверждения на почту ${email} ${error.message}`)
+            return `Не удалось отправить код подтверждения на почту ${email} ${error.message}`
         }
 
-        console.log(`Код не сформирован ${error}`)
+        console.error(error)
+        return error
+        
     }
 
 }
