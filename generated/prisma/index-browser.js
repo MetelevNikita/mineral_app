@@ -210,6 +210,15 @@ exports.Prisma.StatusesScalarFieldEnum = {
   updateAt: 'updateAt'
 };
 
+exports.Prisma.MineralMapScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  image: 'image',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -235,7 +244,8 @@ exports.Prisma.ModelName = {
   Mineral: 'Mineral',
   Question: 'Question',
   Answer: 'Answer',
-  Statuses: 'Statuses'
+  Statuses: 'Statuses',
+  MineralMap: 'MineralMap'
 };
 
 /**

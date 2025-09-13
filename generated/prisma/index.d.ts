@@ -58,6 +58,11 @@ export type Answer = $Result.DefaultSelection<Prisma.$AnswerPayload>
  * 
  */
 export type Statuses = $Result.DefaultSelection<Prisma.$StatusesPayload>
+/**
+ * Model MineralMap
+ * 
+ */
+export type MineralMap = $Result.DefaultSelection<Prisma.$MineralMapPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -266,6 +271,16 @@ export class PrismaClient<
     * ```
     */
   get statuses(): Prisma.StatusesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mineralMap`: Exposes CRUD operations for the **MineralMap** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MineralMaps
+    * const mineralMaps = await prisma.mineralMap.findMany()
+    * ```
+    */
+  get mineralMap(): Prisma.MineralMapDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -714,7 +729,8 @@ export namespace Prisma {
     Mineral: 'Mineral',
     Question: 'Question',
     Answer: 'Answer',
-    Statuses: 'Statuses'
+    Statuses: 'Statuses',
+    MineralMap: 'MineralMap'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -733,7 +749,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "profile" | "collection" | "collectionMineral" | "mineralPassed" | "mineral" | "question" | "answer" | "statuses"
+      modelProps: "user" | "profile" | "collection" | "collectionMineral" | "mineralPassed" | "mineral" | "question" | "answer" | "statuses" | "mineralMap"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1403,6 +1419,80 @@ export namespace Prisma {
           }
         }
       }
+      MineralMap: {
+        payload: Prisma.$MineralMapPayload<ExtArgs>
+        fields: Prisma.MineralMapFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MineralMapFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MineralMapPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MineralMapFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MineralMapPayload>
+          }
+          findFirst: {
+            args: Prisma.MineralMapFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MineralMapPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MineralMapFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MineralMapPayload>
+          }
+          findMany: {
+            args: Prisma.MineralMapFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MineralMapPayload>[]
+          }
+          create: {
+            args: Prisma.MineralMapCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MineralMapPayload>
+          }
+          createMany: {
+            args: Prisma.MineralMapCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MineralMapCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MineralMapPayload>[]
+          }
+          delete: {
+            args: Prisma.MineralMapDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MineralMapPayload>
+          }
+          update: {
+            args: Prisma.MineralMapUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MineralMapPayload>
+          }
+          deleteMany: {
+            args: Prisma.MineralMapDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MineralMapUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MineralMapUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MineralMapPayload>[]
+          }
+          upsert: {
+            args: Prisma.MineralMapUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MineralMapPayload>
+          }
+          aggregate: {
+            args: Prisma.MineralMapAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMineralMap>
+          }
+          groupBy: {
+            args: Prisma.MineralMapGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MineralMapGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MineralMapCountArgs<ExtArgs>
+            result: $Utils.Optional<MineralMapCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1504,6 +1594,7 @@ export namespace Prisma {
     question?: QuestionOmit
     answer?: AnswerOmit
     statuses?: StatusesOmit
+    mineralMap?: MineralMapOmit
   }
 
   /* Types for Logging */
@@ -11751,6 +11842,1048 @@ export namespace Prisma {
 
 
   /**
+   * Model MineralMap
+   */
+
+  export type AggregateMineralMap = {
+    _count: MineralMapCountAggregateOutputType | null
+    _avg: MineralMapAvgAggregateOutputType | null
+    _sum: MineralMapSumAggregateOutputType | null
+    _min: MineralMapMinAggregateOutputType | null
+    _max: MineralMapMaxAggregateOutputType | null
+  }
+
+  export type MineralMapAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type MineralMapSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type MineralMapMinAggregateOutputType = {
+    id: number | null
+    title: string | null
+    description: string | null
+    image: string | null
+    createAt: Date | null
+    updateAt: Date | null
+  }
+
+  export type MineralMapMaxAggregateOutputType = {
+    id: number | null
+    title: string | null
+    description: string | null
+    image: string | null
+    createAt: Date | null
+    updateAt: Date | null
+  }
+
+  export type MineralMapCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    image: number
+    createAt: number
+    updateAt: number
+    _all: number
+  }
+
+
+  export type MineralMapAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type MineralMapSumAggregateInputType = {
+    id?: true
+  }
+
+  export type MineralMapMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    image?: true
+    createAt?: true
+    updateAt?: true
+  }
+
+  export type MineralMapMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    image?: true
+    createAt?: true
+    updateAt?: true
+  }
+
+  export type MineralMapCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    image?: true
+    createAt?: true
+    updateAt?: true
+    _all?: true
+  }
+
+  export type MineralMapAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MineralMap to aggregate.
+     */
+    where?: MineralMapWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MineralMaps to fetch.
+     */
+    orderBy?: MineralMapOrderByWithRelationInput | MineralMapOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MineralMapWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MineralMaps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MineralMaps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MineralMaps
+    **/
+    _count?: true | MineralMapCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MineralMapAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MineralMapSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MineralMapMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MineralMapMaxAggregateInputType
+  }
+
+  export type GetMineralMapAggregateType<T extends MineralMapAggregateArgs> = {
+        [P in keyof T & keyof AggregateMineralMap]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMineralMap[P]>
+      : GetScalarType<T[P], AggregateMineralMap[P]>
+  }
+
+
+
+
+  export type MineralMapGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MineralMapWhereInput
+    orderBy?: MineralMapOrderByWithAggregationInput | MineralMapOrderByWithAggregationInput[]
+    by: MineralMapScalarFieldEnum[] | MineralMapScalarFieldEnum
+    having?: MineralMapScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MineralMapCountAggregateInputType | true
+    _avg?: MineralMapAvgAggregateInputType
+    _sum?: MineralMapSumAggregateInputType
+    _min?: MineralMapMinAggregateInputType
+    _max?: MineralMapMaxAggregateInputType
+  }
+
+  export type MineralMapGroupByOutputType = {
+    id: number
+    title: string
+    description: string
+    image: string | null
+    createAt: Date
+    updateAt: Date
+    _count: MineralMapCountAggregateOutputType | null
+    _avg: MineralMapAvgAggregateOutputType | null
+    _sum: MineralMapSumAggregateOutputType | null
+    _min: MineralMapMinAggregateOutputType | null
+    _max: MineralMapMaxAggregateOutputType | null
+  }
+
+  type GetMineralMapGroupByPayload<T extends MineralMapGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MineralMapGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MineralMapGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MineralMapGroupByOutputType[P]>
+            : GetScalarType<T[P], MineralMapGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MineralMapSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    image?: boolean
+    createAt?: boolean
+    updateAt?: boolean
+  }, ExtArgs["result"]["mineralMap"]>
+
+  export type MineralMapSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    image?: boolean
+    createAt?: boolean
+    updateAt?: boolean
+  }, ExtArgs["result"]["mineralMap"]>
+
+  export type MineralMapSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    image?: boolean
+    createAt?: boolean
+    updateAt?: boolean
+  }, ExtArgs["result"]["mineralMap"]>
+
+  export type MineralMapSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    image?: boolean
+    createAt?: boolean
+    updateAt?: boolean
+  }
+
+  export type MineralMapOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "image" | "createAt" | "updateAt", ExtArgs["result"]["mineralMap"]>
+
+  export type $MineralMapPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MineralMap"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      title: string
+      description: string
+      image: string | null
+      createAt: Date
+      updateAt: Date
+    }, ExtArgs["result"]["mineralMap"]>
+    composites: {}
+  }
+
+  type MineralMapGetPayload<S extends boolean | null | undefined | MineralMapDefaultArgs> = $Result.GetResult<Prisma.$MineralMapPayload, S>
+
+  type MineralMapCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MineralMapFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MineralMapCountAggregateInputType | true
+    }
+
+  export interface MineralMapDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MineralMap'], meta: { name: 'MineralMap' } }
+    /**
+     * Find zero or one MineralMap that matches the filter.
+     * @param {MineralMapFindUniqueArgs} args - Arguments to find a MineralMap
+     * @example
+     * // Get one MineralMap
+     * const mineralMap = await prisma.mineralMap.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MineralMapFindUniqueArgs>(args: SelectSubset<T, MineralMapFindUniqueArgs<ExtArgs>>): Prisma__MineralMapClient<$Result.GetResult<Prisma.$MineralMapPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MineralMap that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MineralMapFindUniqueOrThrowArgs} args - Arguments to find a MineralMap
+     * @example
+     * // Get one MineralMap
+     * const mineralMap = await prisma.mineralMap.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MineralMapFindUniqueOrThrowArgs>(args: SelectSubset<T, MineralMapFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MineralMapClient<$Result.GetResult<Prisma.$MineralMapPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MineralMap that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MineralMapFindFirstArgs} args - Arguments to find a MineralMap
+     * @example
+     * // Get one MineralMap
+     * const mineralMap = await prisma.mineralMap.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MineralMapFindFirstArgs>(args?: SelectSubset<T, MineralMapFindFirstArgs<ExtArgs>>): Prisma__MineralMapClient<$Result.GetResult<Prisma.$MineralMapPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MineralMap that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MineralMapFindFirstOrThrowArgs} args - Arguments to find a MineralMap
+     * @example
+     * // Get one MineralMap
+     * const mineralMap = await prisma.mineralMap.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MineralMapFindFirstOrThrowArgs>(args?: SelectSubset<T, MineralMapFindFirstOrThrowArgs<ExtArgs>>): Prisma__MineralMapClient<$Result.GetResult<Prisma.$MineralMapPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MineralMaps that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MineralMapFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MineralMaps
+     * const mineralMaps = await prisma.mineralMap.findMany()
+     * 
+     * // Get first 10 MineralMaps
+     * const mineralMaps = await prisma.mineralMap.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mineralMapWithIdOnly = await prisma.mineralMap.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MineralMapFindManyArgs>(args?: SelectSubset<T, MineralMapFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MineralMapPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MineralMap.
+     * @param {MineralMapCreateArgs} args - Arguments to create a MineralMap.
+     * @example
+     * // Create one MineralMap
+     * const MineralMap = await prisma.mineralMap.create({
+     *   data: {
+     *     // ... data to create a MineralMap
+     *   }
+     * })
+     * 
+     */
+    create<T extends MineralMapCreateArgs>(args: SelectSubset<T, MineralMapCreateArgs<ExtArgs>>): Prisma__MineralMapClient<$Result.GetResult<Prisma.$MineralMapPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MineralMaps.
+     * @param {MineralMapCreateManyArgs} args - Arguments to create many MineralMaps.
+     * @example
+     * // Create many MineralMaps
+     * const mineralMap = await prisma.mineralMap.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MineralMapCreateManyArgs>(args?: SelectSubset<T, MineralMapCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MineralMaps and returns the data saved in the database.
+     * @param {MineralMapCreateManyAndReturnArgs} args - Arguments to create many MineralMaps.
+     * @example
+     * // Create many MineralMaps
+     * const mineralMap = await prisma.mineralMap.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MineralMaps and only return the `id`
+     * const mineralMapWithIdOnly = await prisma.mineralMap.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MineralMapCreateManyAndReturnArgs>(args?: SelectSubset<T, MineralMapCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MineralMapPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MineralMap.
+     * @param {MineralMapDeleteArgs} args - Arguments to delete one MineralMap.
+     * @example
+     * // Delete one MineralMap
+     * const MineralMap = await prisma.mineralMap.delete({
+     *   where: {
+     *     // ... filter to delete one MineralMap
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MineralMapDeleteArgs>(args: SelectSubset<T, MineralMapDeleteArgs<ExtArgs>>): Prisma__MineralMapClient<$Result.GetResult<Prisma.$MineralMapPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MineralMap.
+     * @param {MineralMapUpdateArgs} args - Arguments to update one MineralMap.
+     * @example
+     * // Update one MineralMap
+     * const mineralMap = await prisma.mineralMap.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MineralMapUpdateArgs>(args: SelectSubset<T, MineralMapUpdateArgs<ExtArgs>>): Prisma__MineralMapClient<$Result.GetResult<Prisma.$MineralMapPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MineralMaps.
+     * @param {MineralMapDeleteManyArgs} args - Arguments to filter MineralMaps to delete.
+     * @example
+     * // Delete a few MineralMaps
+     * const { count } = await prisma.mineralMap.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MineralMapDeleteManyArgs>(args?: SelectSubset<T, MineralMapDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MineralMaps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MineralMapUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MineralMaps
+     * const mineralMap = await prisma.mineralMap.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MineralMapUpdateManyArgs>(args: SelectSubset<T, MineralMapUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MineralMaps and returns the data updated in the database.
+     * @param {MineralMapUpdateManyAndReturnArgs} args - Arguments to update many MineralMaps.
+     * @example
+     * // Update many MineralMaps
+     * const mineralMap = await prisma.mineralMap.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MineralMaps and only return the `id`
+     * const mineralMapWithIdOnly = await prisma.mineralMap.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MineralMapUpdateManyAndReturnArgs>(args: SelectSubset<T, MineralMapUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MineralMapPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MineralMap.
+     * @param {MineralMapUpsertArgs} args - Arguments to update or create a MineralMap.
+     * @example
+     * // Update or create a MineralMap
+     * const mineralMap = await prisma.mineralMap.upsert({
+     *   create: {
+     *     // ... data to create a MineralMap
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MineralMap we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MineralMapUpsertArgs>(args: SelectSubset<T, MineralMapUpsertArgs<ExtArgs>>): Prisma__MineralMapClient<$Result.GetResult<Prisma.$MineralMapPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MineralMaps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MineralMapCountArgs} args - Arguments to filter MineralMaps to count.
+     * @example
+     * // Count the number of MineralMaps
+     * const count = await prisma.mineralMap.count({
+     *   where: {
+     *     // ... the filter for the MineralMaps we want to count
+     *   }
+     * })
+    **/
+    count<T extends MineralMapCountArgs>(
+      args?: Subset<T, MineralMapCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MineralMapCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MineralMap.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MineralMapAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MineralMapAggregateArgs>(args: Subset<T, MineralMapAggregateArgs>): Prisma.PrismaPromise<GetMineralMapAggregateType<T>>
+
+    /**
+     * Group by MineralMap.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MineralMapGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MineralMapGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MineralMapGroupByArgs['orderBy'] }
+        : { orderBy?: MineralMapGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MineralMapGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMineralMapGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MineralMap model
+   */
+  readonly fields: MineralMapFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MineralMap.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MineralMapClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MineralMap model
+   */
+  interface MineralMapFieldRefs {
+    readonly id: FieldRef<"MineralMap", 'Int'>
+    readonly title: FieldRef<"MineralMap", 'String'>
+    readonly description: FieldRef<"MineralMap", 'String'>
+    readonly image: FieldRef<"MineralMap", 'String'>
+    readonly createAt: FieldRef<"MineralMap", 'DateTime'>
+    readonly updateAt: FieldRef<"MineralMap", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MineralMap findUnique
+   */
+  export type MineralMapFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MineralMap
+     */
+    select?: MineralMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MineralMap
+     */
+    omit?: MineralMapOmit<ExtArgs> | null
+    /**
+     * Filter, which MineralMap to fetch.
+     */
+    where: MineralMapWhereUniqueInput
+  }
+
+  /**
+   * MineralMap findUniqueOrThrow
+   */
+  export type MineralMapFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MineralMap
+     */
+    select?: MineralMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MineralMap
+     */
+    omit?: MineralMapOmit<ExtArgs> | null
+    /**
+     * Filter, which MineralMap to fetch.
+     */
+    where: MineralMapWhereUniqueInput
+  }
+
+  /**
+   * MineralMap findFirst
+   */
+  export type MineralMapFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MineralMap
+     */
+    select?: MineralMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MineralMap
+     */
+    omit?: MineralMapOmit<ExtArgs> | null
+    /**
+     * Filter, which MineralMap to fetch.
+     */
+    where?: MineralMapWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MineralMaps to fetch.
+     */
+    orderBy?: MineralMapOrderByWithRelationInput | MineralMapOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MineralMaps.
+     */
+    cursor?: MineralMapWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MineralMaps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MineralMaps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MineralMaps.
+     */
+    distinct?: MineralMapScalarFieldEnum | MineralMapScalarFieldEnum[]
+  }
+
+  /**
+   * MineralMap findFirstOrThrow
+   */
+  export type MineralMapFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MineralMap
+     */
+    select?: MineralMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MineralMap
+     */
+    omit?: MineralMapOmit<ExtArgs> | null
+    /**
+     * Filter, which MineralMap to fetch.
+     */
+    where?: MineralMapWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MineralMaps to fetch.
+     */
+    orderBy?: MineralMapOrderByWithRelationInput | MineralMapOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MineralMaps.
+     */
+    cursor?: MineralMapWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MineralMaps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MineralMaps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MineralMaps.
+     */
+    distinct?: MineralMapScalarFieldEnum | MineralMapScalarFieldEnum[]
+  }
+
+  /**
+   * MineralMap findMany
+   */
+  export type MineralMapFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MineralMap
+     */
+    select?: MineralMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MineralMap
+     */
+    omit?: MineralMapOmit<ExtArgs> | null
+    /**
+     * Filter, which MineralMaps to fetch.
+     */
+    where?: MineralMapWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MineralMaps to fetch.
+     */
+    orderBy?: MineralMapOrderByWithRelationInput | MineralMapOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MineralMaps.
+     */
+    cursor?: MineralMapWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MineralMaps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MineralMaps.
+     */
+    skip?: number
+    distinct?: MineralMapScalarFieldEnum | MineralMapScalarFieldEnum[]
+  }
+
+  /**
+   * MineralMap create
+   */
+  export type MineralMapCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MineralMap
+     */
+    select?: MineralMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MineralMap
+     */
+    omit?: MineralMapOmit<ExtArgs> | null
+    /**
+     * The data needed to create a MineralMap.
+     */
+    data: XOR<MineralMapCreateInput, MineralMapUncheckedCreateInput>
+  }
+
+  /**
+   * MineralMap createMany
+   */
+  export type MineralMapCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MineralMaps.
+     */
+    data: MineralMapCreateManyInput | MineralMapCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MineralMap createManyAndReturn
+   */
+  export type MineralMapCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MineralMap
+     */
+    select?: MineralMapSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MineralMap
+     */
+    omit?: MineralMapOmit<ExtArgs> | null
+    /**
+     * The data used to create many MineralMaps.
+     */
+    data: MineralMapCreateManyInput | MineralMapCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MineralMap update
+   */
+  export type MineralMapUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MineralMap
+     */
+    select?: MineralMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MineralMap
+     */
+    omit?: MineralMapOmit<ExtArgs> | null
+    /**
+     * The data needed to update a MineralMap.
+     */
+    data: XOR<MineralMapUpdateInput, MineralMapUncheckedUpdateInput>
+    /**
+     * Choose, which MineralMap to update.
+     */
+    where: MineralMapWhereUniqueInput
+  }
+
+  /**
+   * MineralMap updateMany
+   */
+  export type MineralMapUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MineralMaps.
+     */
+    data: XOR<MineralMapUpdateManyMutationInput, MineralMapUncheckedUpdateManyInput>
+    /**
+     * Filter which MineralMaps to update
+     */
+    where?: MineralMapWhereInput
+    /**
+     * Limit how many MineralMaps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MineralMap updateManyAndReturn
+   */
+  export type MineralMapUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MineralMap
+     */
+    select?: MineralMapSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MineralMap
+     */
+    omit?: MineralMapOmit<ExtArgs> | null
+    /**
+     * The data used to update MineralMaps.
+     */
+    data: XOR<MineralMapUpdateManyMutationInput, MineralMapUncheckedUpdateManyInput>
+    /**
+     * Filter which MineralMaps to update
+     */
+    where?: MineralMapWhereInput
+    /**
+     * Limit how many MineralMaps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MineralMap upsert
+   */
+  export type MineralMapUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MineralMap
+     */
+    select?: MineralMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MineralMap
+     */
+    omit?: MineralMapOmit<ExtArgs> | null
+    /**
+     * The filter to search for the MineralMap to update in case it exists.
+     */
+    where: MineralMapWhereUniqueInput
+    /**
+     * In case the MineralMap found by the `where` argument doesn't exist, create a new MineralMap with this data.
+     */
+    create: XOR<MineralMapCreateInput, MineralMapUncheckedCreateInput>
+    /**
+     * In case the MineralMap was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MineralMapUpdateInput, MineralMapUncheckedUpdateInput>
+  }
+
+  /**
+   * MineralMap delete
+   */
+  export type MineralMapDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MineralMap
+     */
+    select?: MineralMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MineralMap
+     */
+    omit?: MineralMapOmit<ExtArgs> | null
+    /**
+     * Filter which MineralMap to delete.
+     */
+    where: MineralMapWhereUniqueInput
+  }
+
+  /**
+   * MineralMap deleteMany
+   */
+  export type MineralMapDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MineralMaps to delete
+     */
+    where?: MineralMapWhereInput
+    /**
+     * Limit how many MineralMaps to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MineralMap without action
+   */
+  export type MineralMapDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MineralMap
+     */
+    select?: MineralMapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MineralMap
+     */
+    omit?: MineralMapOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -11879,6 +13012,18 @@ export namespace Prisma {
   };
 
   export type StatusesScalarFieldEnum = (typeof StatusesScalarFieldEnum)[keyof typeof StatusesScalarFieldEnum]
+
+
+  export const MineralMapScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    image: 'image',
+    createAt: 'createAt',
+    updateAt: 'updateAt'
+  };
+
+  export type MineralMapScalarFieldEnum = (typeof MineralMapScalarFieldEnum)[keyof typeof MineralMapScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -12583,6 +13728,65 @@ export namespace Prisma {
     updateAt?: DateTimeWithAggregatesFilter<"Statuses"> | Date | string
   }
 
+  export type MineralMapWhereInput = {
+    AND?: MineralMapWhereInput | MineralMapWhereInput[]
+    OR?: MineralMapWhereInput[]
+    NOT?: MineralMapWhereInput | MineralMapWhereInput[]
+    id?: IntFilter<"MineralMap"> | number
+    title?: StringFilter<"MineralMap"> | string
+    description?: StringFilter<"MineralMap"> | string
+    image?: StringNullableFilter<"MineralMap"> | string | null
+    createAt?: DateTimeFilter<"MineralMap"> | Date | string
+    updateAt?: DateTimeFilter<"MineralMap"> | Date | string
+  }
+
+  export type MineralMapOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    image?: SortOrderInput | SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type MineralMapWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: MineralMapWhereInput | MineralMapWhereInput[]
+    OR?: MineralMapWhereInput[]
+    NOT?: MineralMapWhereInput | MineralMapWhereInput[]
+    title?: StringFilter<"MineralMap"> | string
+    description?: StringFilter<"MineralMap"> | string
+    image?: StringNullableFilter<"MineralMap"> | string | null
+    createAt?: DateTimeFilter<"MineralMap"> | Date | string
+    updateAt?: DateTimeFilter<"MineralMap"> | Date | string
+  }, "id">
+
+  export type MineralMapOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    image?: SortOrderInput | SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    _count?: MineralMapCountOrderByAggregateInput
+    _avg?: MineralMapAvgOrderByAggregateInput
+    _max?: MineralMapMaxOrderByAggregateInput
+    _min?: MineralMapMinOrderByAggregateInput
+    _sum?: MineralMapSumOrderByAggregateInput
+  }
+
+  export type MineralMapScalarWhereWithAggregatesInput = {
+    AND?: MineralMapScalarWhereWithAggregatesInput | MineralMapScalarWhereWithAggregatesInput[]
+    OR?: MineralMapScalarWhereWithAggregatesInput[]
+    NOT?: MineralMapScalarWhereWithAggregatesInput | MineralMapScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"MineralMap"> | number
+    title?: StringWithAggregatesFilter<"MineralMap"> | string
+    description?: StringWithAggregatesFilter<"MineralMap"> | string
+    image?: StringNullableWithAggregatesFilter<"MineralMap"> | string | null
+    createAt?: DateTimeWithAggregatesFilter<"MineralMap"> | Date | string
+    updateAt?: DateTimeWithAggregatesFilter<"MineralMap"> | Date | string
+  }
+
   export type UserCreateInput = {
     name: string
     email: string
@@ -13201,6 +14405,66 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MineralMapCreateInput = {
+    title: string
+    description: string
+    image?: string | null
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type MineralMapUncheckedCreateInput = {
+    id?: number
+    title: string
+    description: string
+    image?: string | null
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type MineralMapUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MineralMapUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MineralMapCreateManyInput = {
+    id?: number
+    title: string
+    description: string
+    image?: string | null
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type MineralMapUpdateManyMutationInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MineralMapUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -13753,6 +15017,41 @@ export namespace Prisma {
   }
 
   export type StatusesSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type MineralMapCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    image?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type MineralMapAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type MineralMapMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    image?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type MineralMapMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    image?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type MineralMapSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
