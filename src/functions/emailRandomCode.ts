@@ -12,6 +12,8 @@ import nodemailer from 'nodemailer'
             },
                 connectionTimeout: 10000,
                 socketTimeout: 15000,
+                logger: true,
+                debug: true,
                 tls: {
                     rejectUnauthorized: false
                 }
