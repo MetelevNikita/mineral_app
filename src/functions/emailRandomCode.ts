@@ -15,7 +15,8 @@ import nodemailer from 'nodemailer'
                 logger: true,
                 debug: true,
                 tls: {
-                    rejectUnauthorized: false
+                    rejectUnauthorized: true,
+                    minVersion: 'TLSv1.2'
                 }
         })
 
