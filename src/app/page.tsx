@@ -72,7 +72,7 @@ const page: FC = () => {
         <div className={styles.image_background}>
 
 
-                <Row className="mb-4 mt-4">
+                <Row className="mb-5 mt-5">
                     {
                         partnersArr.map((item: partnersArrType, index: number): React.ReactNode => {
                             return <Col key={item.id} className="d-flex justify-content-center align-items-center"><Link href={item.url}><Image src={item.img} alt={item.title} /></Link></Col>
