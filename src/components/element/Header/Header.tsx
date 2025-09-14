@@ -184,7 +184,7 @@ if (!currentUser) {
 
   return (
     
-    <Container>
+    <Container className='fixed-top'>
         <div className={styles.header_container}>
             <div className={styles.header_wrapper}>
 
