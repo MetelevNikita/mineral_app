@@ -73,7 +73,6 @@ const page: FC = () => {
 
 
                 <Row className="mb-4 mt-4">
-                  <Col>
                     {
                         partnersArr.map((item: partnersArrType, index: number): React.ReactNode => {
                             return <Col key={item.id} className="d-flex justify-content-center align-items-center"><Link href={item.url}><Image src={item.img} alt={item.title} /></Link></Col>
