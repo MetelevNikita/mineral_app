@@ -3,6 +3,9 @@ import fs from "fs";
 import path from "path";
 
 
+export const dynamic = "force-dynamic"; 
+export const runtime = "nodejs";    
+
 export const GET = async (req: NextRequest, { params }: {params: {folder: string, filename: string}}) => {
   try {
 
@@ -39,6 +42,7 @@ export const GET = async (req: NextRequest, { params }: {params: {folder: string
     if (ext === ".jpg" || ext === ".jpeg") contentType = "image/jpeg";
     if (ext === ".gif") contentType = "image/gif";
     if (ext === ".webp") contentType = "image/webp";
+    if (ext === ".mp4") contentType = "video/mp4";
 
 
     console.log(ext)
