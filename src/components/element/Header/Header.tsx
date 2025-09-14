@@ -275,7 +275,7 @@ if (!currentUser) {
 
                     </Row>
 
-            </div>
+                    </div>
 
         </div>
 
