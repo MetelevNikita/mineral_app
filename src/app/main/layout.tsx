@@ -18,11 +18,10 @@ export default function authLayout({children}: {
     return (
         <Container style={{padding: 0}}>
             <Header />
-            <Row className='mt-5'>
-                <Col className='mt-5'>
+            <Row className='mt-3'>
+
                     {children}
-                </Col>
-                       
+     
             </Row>
             <Footer />
         </Container>
