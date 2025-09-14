@@ -75,7 +75,7 @@ export default function RootLayout({
           
           {/* Дополнительные размеры для лучшей совместимости */}
           <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png" />
-          <link rel="apple-touch-icon" sizes="167x167" href="/apple-touch-icon-167x167.png" />
+          <link rel="apple-touch-icon" sizes="167x167" href="/apple-touch-icon-167x167.png"/>
     
           <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
           

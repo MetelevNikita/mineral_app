@@ -88,7 +88,8 @@
     gap: 10px;
     flex-shrink: 0;
     border-radius: 20px;
-    background: #FFBC41;
-    color: Black;
+    border: 1px solid black;
+    color: black;
+
     margin-bottom: 10px;
 }

@@ -102,7 +102,7 @@ const menuArr = [
 
 if (!currentUser) {
     return (
-        <Container className='mt-3 mb-4'>
+        <Container className='mt-3 mb-4 fixed-top'>
 
                 <Row className='d-flex flex-row justify-content-center align-items-center'>
 
@@ -184,7 +184,8 @@ if (!currentUser) {
 
   return (
     
-    <Container className='mt-3 mb-4'>
+    <Container className='fixed-top'>
+        <div className={styles.header_container}>
 
         <Row className='d-flex flex-row justify-content-center align-items-center'>
 
@@ -229,9 +230,11 @@ if (!currentUser) {
             <AnimatePresence initial={true}>
 
 
-                <motion.div key={currentUser.total} initial={{scale: 1}} animate={{ scale: [1, 1.4, 1], rotate: [0, 10, 0] }} transition={{duration: 0.3, delay: 0.5}} className={styles.right_container}>
+                <motion.div key={currentUser.total} initial={{scale: 1}} animate={{ scale: [1, 1.4, 1], rotate: [0, 10, 0] }} transition={{duration: 0.3, delay: 0.5}}>
+                    <Link className={styles.right_container} href={'/main/profile'} style={{textDecoration: 'none', color: '#7D22C9'}}>
                     <Image src={headerStar} width={17} height={16} alt='avatar'/>
                     <div className={styles.right_text}>{currentUser.total}</div>
+                    </Link>
                 </motion.div>
 
 
@@ -270,6 +273,8 @@ if (!currentUser) {
             </Col>
 
         </Row>
+
+        </div>
 
     </Container>
 
