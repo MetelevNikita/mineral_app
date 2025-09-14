@@ -186,93 +186,96 @@ if (!currentUser) {
     
     <Container className='fixed-top'>
         <div className={styles.header_container}>
+            <div className={styles.header_wrapper}>
 
-        <Row className='d-flex flex-row justify-content-center align-items-center'>
+                    <Row className='d-flex flex-row justify-content-center align-items-center'>
 
-            <Col className='d-flex justify-content-start align-items-center' xs={2}>
+                        <Col className='d-flex justify-content-start align-items-center' xs={2}>
 
-                <Image src={(isOn) ? menuClose : menuOpen} width={30} height={30} onClick={() => setIsOn(!isOn)} alt='menu_icon'/>
+                            <Image src={(isOn) ? menuClose : menuOpen} width={30} height={30} onClick={() => setIsOn(!isOn)} alt='menu_icon'/>
 
-            </Col>
-
-
-            <Col xs={6} className='d-flex justify-content-start align-items-center'>
-
-                <Link href={'/main/profile'} style={{textDecoration: 'none', color: '#7D22C9'}}>
-
-                    <div className={styles.middle_container}>
-                        <div className={styles.middle_image_container}>
-
-                            <div className={styles.middle_image_container}><Image className={styles.image_avatar} src={(!currentUser.profile || currentUser.profile.avatar === '') ? emtyAvatar : currentUser.profile.avatar} width={36} height={48} alt='avatar'/></div>
-
-                        </div>
-
-                        <div className={styles.middle_text_wrapper}>
-
-                            <div className={styles.middle_title}>Звание:</div>
-
-                            <div className={styles.middle_text}>{currentUser.status}</div>
+                        </Col>
 
 
-                        </div>
+                        <Col xs={6} className='d-flex justify-content-start align-items-center'>
 
-  
-                    </div>
+                            <Link href={'/main/profile'} style={{textDecoration: 'none', color: '#7D22C9'}}>
 
-                </Link>
-            
-            </Col>
+                                <div className={styles.middle_container}>
+                                    <div className={styles.middle_image_container}>
+
+                                        <div className={styles.middle_image_container}><Image className={styles.image_avatar} src={(!currentUser.profile || currentUser.profile.avatar === '') ? emtyAvatar : currentUser.profile.avatar} width={36} height={48} alt='avatar'/></div>
+
+                                    </div>
+
+                                    <div className={styles.middle_text_wrapper}>
+
+                                        <div className={styles.middle_title}>Звание:</div>
+
+                                        <div className={styles.middle_text}>{currentUser.status}</div>
+
+
+                                    </div>
 
             
-
-            <Col xs={4} className='d-flex justify-content-end align-items-center'>
-
-            <AnimatePresence initial={true}>
-
-
-                <motion.div key={currentUser.total} initial={{scale: 1}} animate={{ scale: [1, 1.4, 1], rotate: [0, 10, 0] }} transition={{duration: 0.3, delay: 0.5}}>
-                    <Link className={styles.right_container} href={'/main/profile'} style={{textDecoration: 'none', color: '#7D22C9'}}>
-                    <Image src={headerStar} width={17} height={16} alt='avatar'/>
-                    <div className={styles.right_text}>{currentUser.total}</div>
-                    </Link>
-                </motion.div>
-
-
-
-            </AnimatePresence>
-
-
-            </Col>
-
-        </Row>
-
-
-
-        <Row className='mb-4'>
-            <Col className='d-flex justify-content-start align-items-center'>
-            <AnimatePresence>
-
-            {
-                isOn && (
-                    <motion.div initial={{opacity: 1, y: -1000}} animate={{opacity: 1, y: 60}} exit={{opacity: 1, y: -1000}} transition={{duration: 1, delayChildren: 1}} className={styles.menu_container}>
-                        {
-                            menuArr.map((item) => (
-                                <div key={item.id} className={styles.menu_item_container}>
-                                <Link key={item.id} href={item.link} style={{textDecoration: 'none'}} onClick={() => {setIsOn(false)}}>
-                                    <div  className={styles.menu_item}>{item.title}</div>
-                                </Link>
-
-                                <div className={styles.menu_line}></div>
                                 </div>
-                            ))
-                        }
-                    </motion.div>
-                )
-            }
-            </AnimatePresence>
-            </Col>
 
-        </Row>
+                            </Link>
+                        
+                        </Col>
+
+                        
+
+                        <Col xs={4} className='d-flex justify-content-end align-items-center'>
+
+                        <AnimatePresence initial={true}>
+
+
+                            <motion.div key={currentUser.total} initial={{scale: 1}} animate={{ scale: [1, 1.4, 1], rotate: [0, 10, 0] }} transition={{duration: 0.3, delay: 0.5}}>
+                                <Link className={styles.right_container} href={'/main/profile'} style={{textDecoration: 'none', color: '#7D22C9'}}>
+                                <Image src={headerStar} width={17} height={16} alt='avatar'/>
+                                <div className={styles.right_text}>{currentUser.total}</div>
+                                </Link>
+                            </motion.div>
+
+
+
+                        </AnimatePresence>
+
+
+                        </Col>
+
+                    </Row>
+
+
+
+                    <Row className='mb-4'>
+                        <Col className='d-flex justify-content-start align-items-center'>
+                        <AnimatePresence>
+
+                        {
+                            isOn && (
+                                <motion.div initial={{opacity: 1, y: -1000}} animate={{opacity: 1, y: 60}} exit={{opacity: 1, y: -1000}} transition={{duration: 1, delayChildren: 1}} className={styles.menu_container}>
+                                    {
+                                        menuArr.map((item) => (
+                                            <div key={item.id} className={styles.menu_item_container}>
+                                            <Link key={item.id} href={item.link} style={{textDecoration: 'none'}} onClick={() => {setIsOn(false)}}>
+                                                <div  className={styles.menu_item}>{item.title}</div>
+                                            </Link>
+
+                                            <div className={styles.menu_line}></div>
+                                            </div>
+                                        ))
+                                    }
+                                </motion.div>
+                            )
+                        }
+                        </AnimatePresence>
+                        </Col>
+
+                    </Row>
+
+            </div>
 
         </div>
 
