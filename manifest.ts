@@ -12,13 +12,6 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: '#000000',
     orientation: 'portrait',
     prefer_related_applications: true,
-    related_applications: [
-      {
-        platform: 'web',
-        url: 'https://geokviz.ru',
-        id: 'com.geokviz.android', 
-      },
-    ],
     icons: [
       { src: '/icon-96x96.png', sizes: '96x96', type: 'image/png' },
       { src: '/icon-192x192.png', sizes: '192x192', type: 'image/png' },
