@@ -9,31 +9,3 @@ html, body {
 }
 
 
-:root {
-  /* На не-iOS вернётся 0px — это ок. */
-  --safe-top: env(safe-area-inset-top);
-  --navbar-h: 56px; /* высота вашей navbar в Bootstrap по умолчанию */
-}
-
-/* Хедер «подрастает» на safe area сверху */
-.safe-top {
-  padding-top: var(--safe-top);
-}
-
-/* Контент отступает на safe area + высоту хедера */
-.page-with-safe-top {
-  padding-top: calc(var(--safe-top) + var(--navbar-h));
-}
-
-/* Если делаете не fixed, а sticky — тоже ок: */
-.navbar.sticky-top {
-  position: sticky;
-  top: 0;
-  padding-top: var(--safe-top);
-  z-index: 1030; /* поверх контента */
-}
-
-/* Высота экрана без визуальных артефактов в iOS */
-.full-height {
-  min-height: 100svh; /* или 100dvh, смотря что удобнее */
-}
