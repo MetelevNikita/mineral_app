@@ -152,17 +152,8 @@ const Registration: FC = () => {
 
                 <MyButton style={{marginBottom: '20px'}} text={'Регистрация'} btn={styles.btn} onClick={() => {registrationUser(user)}} type={'button'} />
                 <Link style={{textDecoration: 'none'}} href={'/auth'}><MyButton style={{marginBottom: '20px'}} text={'Назад'} btn={styles.btn} onClick={() => {createUser(user)}} type={'button'} /></Link>
-
- 
-              
-
-
-
-              
+   
           </Col>
-
-
-
         </Row>
 
     </Container>

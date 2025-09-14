@@ -45,8 +45,8 @@ const partnersArr: partnersArrType[] = [
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
 
-        <Container className="vh-100 d-flex flex-column justify-content-around align-items-center" style={{overflow: 'hidden'}}>
-            <Row className="mb-3">
+        <Container className="vh-100 d-flex flex-column justify-content-around align-items-center">
+            <Row>
                 {
                     partnersArr.map((item: partnersArrType, index: number): React.ReactNode => {
                         return <Col key={index+1} className="d-flex justify-content-center align-items-center"><Link href={item.url}><Image src={item.img} alt={item.title} /></Link></Col>
@@ -57,7 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {children}
 
 
-            <Row className="mb-4">
+            <Row>
 
                 <Col>
                     <SocialInfo colorText={"#000000"} colorLine={"#D8DADC"} />
