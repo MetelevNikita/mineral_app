@@ -48,6 +48,42 @@ export const GET = async (req: NextRequest, { params }: {params: {folder: string
     console.log(ext)
 
 
+    if (ext === ".mp4") {
+      const stat = fs.statSync(file);
+      const fileSize = stat.size;
+
+      const isMedia = contentType.startsWith("video/") || contentType.startsWith("audio/")
+
+        const range = req.headers.get("range");
+        if (isMedia && range) {
+        const match = range.match(/bytes=(\d*)-(\d*)/);
+
+        if (!match) {
+          return new NextResponse("Invalid Range", {
+            status: 400,
+          })
+        }
+        
+        let start = match[1] ? parseInt(match[1], 10) : 0;
+        let end = match[2] ? parseInt(match[2], 10) : fileSize - 1;
+        const chunkSize = end - start + 1;
+        const stream = fs.createReadStream(file, { start, end });
+
+        return new NextResponse(stream as any, {
+            status: 206,
+            headers: {
+              "Content-Type": contentType,
+              "Content-Length": String(chunkSize),
+              "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+              "Accept-Ranges": "bytes",
+              "Cache-Control": "public, max-age=31536000, immutable",
+              "X-Content-Type-Options": "nosniff",
+            },
+          });
+      }
+    }
+
+
     return new NextResponse(file, {
           status: 200,
           headers: {
