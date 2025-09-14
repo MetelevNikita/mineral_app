@@ -46,7 +46,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
 
         <Container className="vh-100 d-flex flex-column justify-content-around align-items-center">
-            <Row>
+            <Row className="mt-4">
                 {
                     partnersArr.map((item: partnersArrType, index: number): React.ReactNode => {
                         return <Col key={index+1} className="d-flex justify-content-center align-items-center"><Link href={item.url}><Image src={item.img} alt={item.title} /></Link></Col>
@@ -56,15 +56,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {children}
 
-
-            <Row>
-
-                <Col>
+                <Col className="mt-4">
                     <SocialInfo colorText={"#000000"} colorLine={"#D8DADC"} />
                 </Col>
 
-            </Row>
-            
         </Container>
     )
 }
