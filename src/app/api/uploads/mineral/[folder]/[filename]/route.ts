@@ -49,7 +49,7 @@ export const GET = async (req: NextRequest, { params }: {params: {folder: string
 
 
     if (ext === ".mp4") {
-      const stat = fs.statSync(file);
+      const stat = fs.statSync(path.join(folderPath, filename));
       const fileSize = stat.size;
 
       const isMedia = contentType.startsWith("video/") || contentType.startsWith("audio/")
@@ -67,7 +67,7 @@ export const GET = async (req: NextRequest, { params }: {params: {folder: string
         let start = match[1] ? parseInt(match[1], 10) : 0;
         let end = match[2] ? parseInt(match[2], 10) : fileSize - 1;
         const chunkSize = end - start + 1;
-        const stream = fs.createReadStream(file, { start, end });
+        const stream = fs.createReadStream(path.join(folderPath, filename), { start, end });
 
         return new NextResponse(stream as any, {
             status: 206,
