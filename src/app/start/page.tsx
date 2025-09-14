@@ -73,11 +73,13 @@ const page: FC = () => {
 
 
                 <Row className="mb-4 mt-4">
+                  <Col className='mt-5 d-flex justify-content-between' style={{width: '400px'}}>
                     {
                         partnersArr.map((item: partnersArrType, index: number): React.ReactNode => {
                             return <Col key={item.id} className="d-flex justify-content-center align-items-center"><Link href={item.url}><Image src={item.img} alt={item.title} /></Link></Col>
                         })
                     }
+                    </Col>
                 </Row>
 
                 <div className={styles.glass_background}>
