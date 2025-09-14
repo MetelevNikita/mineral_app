@@ -131,8 +131,6 @@ const Registration: FC = () => {
 
               <div className={styles.title}>Добро пожаловать</div>
 
-      
-
                 <MyInput value={user.name} onChange={(e) => {setUser({...user, name: e.target.value})}} name={'name'}  title={'Имя*'} type={'text'} placeholder={'Имя'} style={{marginBottom: '15px'}} />
                 <MyInput value={user.email} onChange={(e) => {setUser({...user, email: e.target.value})}} name={'email'} title={'Почта*'} type={'email'} placeholder={'email'} style={{marginBottom: '15px'}} />
                 <MyInput value={user.password} onChange={(e) => {setUser({...user, password: e.target.value})}} name={'password'} title={'Пароль*'} type={'password'} placeholder={'password'} style={{marginBottom: '15px'}} />
@@ -150,8 +148,8 @@ const Registration: FC = () => {
                 {/*  */}
 
 
-                <MyButton style={{marginBottom: '20px'}} text={'Регистрация'} btn={styles.btn} onClick={() => {registrationUser(user)}} type={'button'} />
-                <Link style={{textDecoration: 'none'}} href={'/auth'}><MyButton style={{marginBottom: '20px'}} text={'Назад'} btn={styles.btn} onClick={() => {createUser(user)}} type={'button'} /></Link>
+                <MyButton style={{marginBottom: '15px'}} text={'Регистрация'} btn={styles.btn} onClick={() => {registrationUser(user)}} type={'button'} />
+                <Link style={{textDecoration: 'none'}} href={'/auth'}><MyButton text={'Назад'} btn={styles.btn} onClick={() => {createUser(user)}} type={'button'} /></Link>
    
           </Col>
         </Row>
