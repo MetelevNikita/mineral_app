@@ -76,6 +76,9 @@ export default function RootLayout({
 
 
     <html lang="en">
+      <head>
+          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
+      </head>
         <body className={`${OpenSans.className}, ${InterFont.className}`}>
 
           <Container style={{padding: 0}}>
