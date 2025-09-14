@@ -67,8 +67,8 @@ const rulesArr = [
 
 
 
-        <Row>
-            <Col className='d-flex justify-content-center align-items-center mb-4'>
+        <Row className='mb-4'>
+            <Col className='d-flex justify-content-center align-items-center'>
 
                 <div className={styles.rules_container}>
 
@@ -106,8 +106,8 @@ const rulesArr = [
         </Row>
 
 
-        <Row>
-            <Col className='d-flex justify-content-center align-items-center mb-4'>
+        <Row className='mb-5'>
+            <Col className='d-flex justify-content-center align-items-center mb-5'>
                 <Link href={'/main'} style={{textDecoration: 'none'}}><MyButton text={'Спасибо'} btn={styles.btn} onClick={() => {''}} type={'button'} /></Link>    
             </Col>
         </Row>

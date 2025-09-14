@@ -5,7 +5,7 @@ import {useContext} from 'react'
 
 // 
 
-import { Container } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 
 // components
 
@@ -18,7 +18,12 @@ export default function authLayout({children}: {
     return (
         <Container style={{padding: 0}}>
             <Header />
-            {children}
+            <Row className='mt-5'>
+                <Col className='mt-5'>
+                    {children}
+                </Col>
+                       
+            </Row>
             <Footer />
         </Container>
     )
