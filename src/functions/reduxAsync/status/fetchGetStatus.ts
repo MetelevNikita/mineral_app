@@ -23,7 +23,6 @@ export const fetchGetStatus = createAsyncThunk(
 
 
       const data = await responce.json()
-      console.log(data)
       return data
 
     }

@@ -59,7 +59,6 @@ const Registration: FC = () => {
 
   const registrationUser = async (user: any) => {
     const registration = await createUser(user)
-    console.log(registration)
 
     if (registration?.message === 'empty field') {
       setError(true)

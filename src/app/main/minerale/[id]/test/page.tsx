@@ -74,6 +74,19 @@ const page = ({ params }: { params: { id: string } }) => {
 
 
 
+
+  //   const STATUS_THRESHOLDS = [
+  //   { min: 2600, title: 'Министр природных ресурсов 2 600 15% скидка', price: '5000' },
+  //   { min: 2000, title: 'Начальник геолого-съемочной партии', price: '4000', },
+  //   { min: 1400, title: 'Главный геолог', price: '3000' },
+  //   { min: 1000, title: 'Старший геолог', price: '2000' },
+  //   { min: 600,  title: 'Геолог-съёмщик', price: '1500' },
+  //   { min: 200,  title: 'Инженер-геолог', price: '1000' },
+  //   { min: 100,  title: 'Стажер-геолог', price: '' },
+  // ] as const;
+
+
+
   const [userId, setUserId] = useState<string>('')
   const [mineralId, setMineralId] = useState<string>('');
   const [answers, setAnswers] = useState<any>([])
@@ -118,33 +131,33 @@ const page = ({ params }: { params: { id: string } }) => {
 
   //  get Id User
 
-useEffect(() => {
+  useEffect(() => {
 
-    const userId = sessionStorage.getItem('userID')
+      const userId = sessionStorage.getItem('userID')
 
-    if (userId !== null) {
-        setUserId(userId)
-      } else {
-        console.log(`User ID не определен!`)
+      if (userId !== null) {
+          setUserId(userId)
+        } else {
+          console.log(`User ID не определен!`)
+        }
+    }, [dispatch])
+
+    // get USER
+
+  useEffect(() => {
+      if (userId || mineralId) {
+          dispatch(getUsers());
+          dispatch(fetchGetAsyncMineral())
+          dispatch(fetchGetCollectionMineral())
       }
-  }, [dispatch])
-
-  // get USER
-
-useEffect(() => {
-    if (userId || mineralId) {
-        dispatch(getUsers());
-        dispatch(fetchGetAsyncMineral())
-        dispatch(fetchGetCollectionMineral())
-    }
-}, [userId, dispatch]);
+  }, [userId, dispatch]);
 
 
-useEffect(() => {
-      if (newStatusText !== '') {
-      redirect(`/main/status/${newStatusText}`)
-    } 
-  }, [])
+  useEffect(() => {
+        if (newStatusText !== '') {
+        redirect(`/main/status/${newStatusText}`)
+      } 
+    }, [])
 
 
 
@@ -252,7 +265,7 @@ useEffect(() => {
   //
 
 
-  const calcStatusByTotal = (total: number): string => {
+  const calcStatusByTotal = (total: number): any => {
     const found = STATUS_THRESHOLDS.find(t => total >= t.min);
     return found ? found.status : '';
   };
@@ -261,6 +274,8 @@ useEffect(() => {
 
   const applyStatusIfUpgraded = async (total: number, currentStatus: string) => {
     const nextStatus = calcStatusByTotal(total);
+
+    console.log(nextStatus)
 
     // если порог не достигнут — ничего не делаем
     if (!nextStatus) return '';
@@ -276,12 +291,12 @@ useEffect(() => {
 
 
 
-  const newStatusUser = async (total: number, currentStatus: string) => {
+  const newStatusUser = async (total: number, currentStatus: {title: string, price: string} | any) => {
     try {
       return await applyStatusIfUpgraded(total, currentStatus);
     } catch (error: Error | unknown) {
       if (error instanceof Error) {
-        console.log(`Ошибка получения статуса ${error.message ?? error}`);
+        console.error(`Ошибка получения статуса ${error.message ?? error}`);
         throw new Error(`Ошибка получения статуса ${error.message ?? error}`);
       }
       throw new Error(`Ошибка получения статуса ${error}`)
@@ -329,10 +344,17 @@ useEffect(() => {
           await dispatch(getUsers()).unwrap();
 
           // Пробуем апгрейдить статус (один раз до следующего порога)
+
+          if (!currentUser.status) {
+            return
+          }
+
           const newStatus = await newStatusUser(newTotal, currentUser.status);
 
           setWinKviz(false);
           setNewStatusText(newStatus);
+
+          console.log('НОВЫЙ СТАТУС', newStatus)
 
           if (newStatus && newStatus !== currentUser.status) {
             await updateCollectionMineral()
@@ -350,7 +372,8 @@ useEffect(() => {
           router.push(`/main/minerale/${mineralId}/test/result`)
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      return
     }
   }
 
@@ -377,7 +400,7 @@ useEffect(() => {
     } catch (error: Error | unknown) {
 
       if (error instanceof Error) {
-        console.log(`Ошибка добавления в коллекцию ${error.message ?? error}`);
+        console.error(`Ошибка добавления в коллекцию ${error.message ?? error}`);
         throw new Error(`Ошибка добавления в коллекции ${error.message ?? error}`);
       }
 

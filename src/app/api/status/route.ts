@@ -103,7 +103,7 @@ export const POST = async (req: Request) => {
       data: {
         title: title,
         icon: '/uploads/status/' + iconName,
-        price: ''
+        price: price
       }
     })
 

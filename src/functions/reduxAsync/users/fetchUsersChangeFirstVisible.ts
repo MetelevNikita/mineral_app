@@ -6,9 +6,6 @@ export const fetchUsersChangeFirstVisible = createAsyncThunk(
     async ({userId, visible}: {userId: string, visible: boolean}) => {
 
       try {
-
-        console.log(visible)
-
         const responce = await fetch(`/api/users/${userId}`, {
           method: 'PATCH',
           headers: {
@@ -27,7 +24,6 @@ export const fetchUsersChangeFirstVisible = createAsyncThunk(
 
 
         const data = await responce.json()
-        console.log(data)
         return data
         
         

@@ -29,13 +29,13 @@ export const fetchUsersChangePassedMineralStatus = createAsyncThunk(
         
       } catch (error: Error | unknown) {
         if (error instanceof Error) {
-          console.log(`Ошибка обновления статуса пройденного минерала ${error.message}`)
+          console.error(`Ошибка обновления статуса пройденного минерала ${error.message}`)
           throw new Error(
             `Ошибка обновления статуса пройденного минерала ${error.message}`
           )
         }
 
-        console.log(`Ошибка обновления статуса пройденного минерала ${error}`)
+        console.error(`Ошибка обновления статуса пройденного минерала ${error}`)
         throw new Error(
           `Ошибка обновления статуса пройденного минерала ${error}`
         )

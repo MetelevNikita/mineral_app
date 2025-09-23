@@ -1,8 +1,6 @@
 export const repeatEmailCode = async (email: string, code: string) => {
     try {
 
-        console.log(email, code)
-
         const responce = await fetch('/api/repeat', {
             method: 'POST',
             headers: {

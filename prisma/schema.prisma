@@ -32,7 +32,6 @@ model User {
 
 
 
-
 model Profile {
   id Int @id @default(autoincrement())
   avatar String

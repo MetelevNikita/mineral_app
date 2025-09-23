@@ -26,7 +26,6 @@ const page: FC = () => {
 
 
   useEffect(() => {
-    console.log('open camera')
 
     const startScan = async () => {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -40,7 +39,6 @@ const page: FC = () => {
           }
         })
       
-        console.log(stream)
 
         if (cameraRef.current) {
             cameraRef.current.srcObject = stream
@@ -51,7 +49,6 @@ const page: FC = () => {
           const canvas = document.createElement('canvas')
           const ctx = canvas.getContext('2d')
           if (!ctx) return
-          console.log(ctx)
 
           const scan = async () => {
               if (cameraRef.current && cameraRef.current.videoWidth > 0 && cameraRef.current.videoHeight > 0) {
@@ -120,11 +117,7 @@ const page: FC = () => {
       }
     }
 
-
-
-
     const newText = separateQrCodeData(qrCode as string)
-    console.log(newText)
 
 
   return (

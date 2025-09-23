@@ -85,11 +85,9 @@ const page: FC = () => {
         const updateCode = [...code]
         updateCode[index] = value
         setCode(updateCode)
-        console.log(inputsRef.current[index + 1])
 
         if (value && index < length - 1) {
             inputsRef.current[index + 1]?.focus()
-            console.log(inputsRef.current[index + 1])
         }
 
     }

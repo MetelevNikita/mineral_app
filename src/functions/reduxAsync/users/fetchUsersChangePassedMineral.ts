@@ -22,7 +22,6 @@ export const fetchUsersChangePassedMineral = createAsyncThunk(
         }
         
         const data = await responce.json()
-        console.log(data)
         return data
 
       }

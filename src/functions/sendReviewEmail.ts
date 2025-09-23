@@ -4,14 +4,6 @@ export const sendReviewEmail = async (messageEmail: {name: string, email: string
 
         const { name, email, message } = messageEmail
 
-
-        console.log({
-            name,
-            email,
-            message
-        })
-
-
         const responce = await fetch('/api/email', {
             method: 'POST',
             headers: {
@@ -31,8 +23,6 @@ export const sendReviewEmail = async (messageEmail: {name: string, email: string
         }
 
         const data = await responce.json()
-        console.log(data)
-
         return {message: 'success'}
         
     } catch (error: Error | unknown) {

@@ -74,9 +74,6 @@ const page: FC = () => {
 
 
 
-    console.log(isAuth)
-
-
   return (
 
     <Container>
@@ -110,7 +107,7 @@ const page: FC = () => {
 
 
         <Row className='mb-3'>
-            <Col className='d-flex justify-content-start align-items-center mb-4'>
+            <Col className='d-flex justify-content-center align-items-center mb-4'>
 
                 <div className={styles.title}>Отзыв</div>
 
@@ -172,7 +169,6 @@ const page: FC = () => {
 
                     <MyButton text={'Отправть'} btn={styles.btn} onClick={async () => {
                         const res = await sendReviewEmail(messageEmail)
-                        console.log(res)
                         if (res?.message === 'success') {
                             setIsAuth(true)
                         }

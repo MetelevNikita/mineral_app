@@ -136,7 +136,7 @@ export const PATCH = async (req: Request, context: {params: any}) => {
         })
 
         if (!newMineralPassed) {
-            NextResponse.json({
+            return NextResponse.json({
                 message: "Ошибка обновления статуса прохождения квиза"
             })
         }
@@ -149,6 +149,7 @@ export const PATCH = async (req: Request, context: {params: any}) => {
         })
 
         } else if (data.status) {
+            console.log(data, "data.status")
 
             const { status } = data
 

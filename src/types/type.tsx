@@ -59,7 +59,7 @@ export type UserType = {
     password: string,
     total: string,
     collection: any[] | null,
-    status: string,
+    status: string
     createdAt: string | Date,
     updatedAr: string | Date
     isAdmin: boolean

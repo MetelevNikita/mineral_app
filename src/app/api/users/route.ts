@@ -26,13 +26,12 @@ export const GET = async (req: Request | any, res: Response | any): Promise<any>
     try {
 
 
-        console.log('click')
 
         const users = await prisma.user.findMany({
             include: {
                 collection: true,
                 profile: true,
-                mineralPassed: true
+                mineralPassed: true,
             }
         })
 
@@ -86,7 +85,7 @@ export const POST = async (req: Request | any, res: Response | any): Promise<any
             include: {
                 collection: true,
                 profile: true,
-                mineralPassed: true
+                mineralPassed: true,
             }
         })
 

@@ -72,8 +72,8 @@ const page: FC = () => {
         <div className={styles.image_background}>
 
 
-                <Row className="mb-4 mt-5 d-flex justify-content-between">
-                  <Col className='d-flex mt-3 d-flex justify-content-between' style={{width: '400px'}}>
+                <Row className="mb-4 mt-3 d-flex justify-content-between">
+                  <Col className='d-flex d-flex justify-content-between' style={{width: '400px'}}>
                     {
                         partnersArr.map((item: partnersArrType, index: number): React.ReactNode => {
                             return <Col key={item.id} className="d-flex justify-content-center align-items-center"><Link href={item.url}><Image src={item.img} alt={item.title} /></Link></Col>

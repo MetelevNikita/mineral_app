@@ -49,6 +49,8 @@ useEffect(() => {
 
 const currentUser = useAppSelector(state => state.user.user).filter((user: UserType) => user.id == parseInt(id))[0]
 
+console.log(currentUser)
+
 
 
 const menuArr = [

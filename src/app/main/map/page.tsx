@@ -48,7 +48,6 @@ const page: FC = () => {
 
 
   const mineralMap = useAppSelector((state) => state.mapMinerals.map)
-  console.log(mineralMap)
 
   const coordinateMineralApp = mineralMap.map((item: any) => {
     return {
@@ -170,7 +169,6 @@ const page: FC = () => {
   ]
 
   const [currentIcon, setCurrentIcon] = useState<mapBlockArrType | null>(null)
-  console.log(currentIcon)
 
 
   const mapFilteredArr = mapBlockArr.map((item: any): any => {
@@ -184,8 +182,6 @@ const page: FC = () => {
     }
   })
 
-
-  console.log(mapFilteredArr)
 
 
   return (
