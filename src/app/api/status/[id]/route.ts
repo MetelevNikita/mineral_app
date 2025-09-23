@@ -35,7 +35,6 @@ export const DELETE = async (req: Request, context: {params: {id: string}}) => {
     }
 
 
-    fs.unlinkSync(path.join(process.cwd(), 'public', getStatus.icon))
     const deleteFile = await prisma.statuses.delete({
       where: {
         id: parseInt(id)
@@ -44,6 +43,15 @@ export const DELETE = async (req: Request, context: {params: {id: string}}) => {
 
     if (!deleteFile) {
       console.error('файл не удален')
+    }
+
+
+    const filePath = path.join(process.cwd(), 'public', getStatus.icon)
+
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath)
+    } else {
+      console.log('Файл не найден, пропускаем удаление')
     }
 
 
