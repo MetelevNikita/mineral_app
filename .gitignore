@@ -39,10 +39,10 @@ next-env.d.ts
 
 # 
 
-/public/avatars
-/public/collections
-/public/mineral
-/public/status
+/public/uploads/avatars
+/public/uploads/collections
+/public/uploads/mineral
+/public/uploads/status
 
 # 
 
