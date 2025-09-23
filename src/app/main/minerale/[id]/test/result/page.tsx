@@ -44,7 +44,7 @@ const page = (params: {params: {id: string}}) => {
       const answersObj = JSON.parse(decodeURIComponent(raw))
       setStorageData(answersObj)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
 
   }, [params])
@@ -83,11 +83,6 @@ const page = (params: {params: {id: string}}) => {
       return item
     }
   })
-
-
-  console.log(storageData)
-  console.log(correctAnswers)
-
 
 
   return (

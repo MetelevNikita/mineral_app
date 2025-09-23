@@ -14,17 +14,16 @@ export const getSingleUser = async (userId: string) => {
         }
 
         const data = await responce.json()
-        console.log(`Пользователь получен ${data}`)
         return data
 
         
     } catch (error: Error | unknown) {
         if(error instanceof Error) {
-            console.log(`Ошибка получения пользователя ${error.message}`)
+            console.error(`Ошибка получения пользователя ${error.message}`)
             throw new Error(`Ошибка получения пользователя ${error.message}`)
         }
 
-        console.log(error)
+        console.error(error)
         throw new Error(`Ошибка получения пользователя ${error}`)
     }
 }

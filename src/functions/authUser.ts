@@ -30,7 +30,7 @@ export const authUser = async (user: any) => {
     } catch (error: Error | unknown) {
 
         if (error instanceof Error) {
-            console.log(error.message);
+            console.error(error.message);
             return {message: error.message, auth: false}
         }
         

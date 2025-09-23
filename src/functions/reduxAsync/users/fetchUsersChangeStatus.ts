@@ -6,6 +6,8 @@ export const fetchUsersChangeStatus = createAsyncThunk(
 
       try {
 
+        console.log(status)
+
         const responce = await fetch(`/api/users/${userId}`, {
           method: 'PATCH',
           headers: {
@@ -21,7 +23,6 @@ export const fetchUsersChangeStatus = createAsyncThunk(
           }
 
           const data = await responce.json()
-          console.log(data)
           return data
 
 

@@ -30,7 +30,6 @@ export const authAdmin = async (formData: FormData) => {
         if (response.status === 200) {
 
             const data = await response.json()
-            console.log(data)
             if (remember) {
                 localStorage.setItem('token', JSON.stringify(data.accessToken))
             }

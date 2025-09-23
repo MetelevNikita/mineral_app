@@ -29,11 +29,12 @@ export const updateProfile = async (data: any) => {
 
 
         const res = await responce.json();
-        console.log(res)
-        console.log('Response from server:', res);
+        return res
+
+
         
     } catch (error) {
         console.error('Error updating profile:', error);
-        throw error; // Re-throw the error to handle it in the calling function
+        throw error;
     }
 }

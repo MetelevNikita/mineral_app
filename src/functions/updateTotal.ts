@@ -14,17 +14,17 @@ export const updateTotal = async (id: string, total: number) => {
 
 
         const data = await responce.json()
-        console.log(data)
+
         return data
 
     
     } catch (error: Error | unknown) {
 
         if (error instanceof Error) {
-            console.log(`Ошибка обновления параметра балов ${error.message}`)
+            console.error(`Ошибка обновления параметра балов ${error.message}`)
         }
 
-        console.log(error)
+        console.error(error)
 
         
     }

@@ -53,7 +53,7 @@ export const createUser = async (user: any) => {
             if (responce.status === 409) {
                 alert('Пользователь с таким email уже существует')
             } else {
-                console.log(`${responce.status} ${responce.statusText}`)
+                console.error(`${responce.status} ${responce.statusText}`)
                 throw new Error(responce.statusText)
             }
         }
@@ -70,7 +70,7 @@ export const createUser = async (user: any) => {
     } catch (error: Error | unknown) {
 
         if (error instanceof Error) {
-            console.log(`Ошибка регистрации пользователя: ${error.message}`)
+            console.error(`Ошибка регистрации пользователя: ${error.message}`)
         }
         
     }

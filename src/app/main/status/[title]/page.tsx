@@ -74,7 +74,6 @@ const page: FC<{ params: { title: string } }> =  ({ params }) => {
         return item.title === decodedTitle
     })[0]
 
-    console.log('Status:', status)
 
     const currentStatusColor = statusColor.filter((item: any) => {
       return item.title === decodedTitle

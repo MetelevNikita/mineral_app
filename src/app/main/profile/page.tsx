@@ -78,10 +78,10 @@ const page: FC = () => {
   const collectionMineral: CollectionMineralType[] = useAppSelector((state) => state.collection.collection) ?? []
   const statuses = useAppSelector((state) => state.status.status).filter((item) => item.title == currentUser?.status)
 
+  console.log(statuses)
 
 
-  console.log(currentUser)
-  console.log(collectionMineral)
+  
 
 
   const checkMineral: CollectionMineralType[] | [] = currentUser?.collection?.filter((item) => {
@@ -90,12 +90,9 @@ const page: FC = () => {
       return false
     }
 
-    console.log(item)
-    
     return item && item.received !== undefined && !item.received;
   }) ?? []
 
-  console.log(checkMineral.length > 0 ? checkMineral : "Массив пустой");
 
 
 
@@ -153,8 +150,6 @@ const page: FC = () => {
   })
 
 
-  console.log(currentUserCollection)
-
 
   return (
 
@@ -198,40 +193,30 @@ const page: FC = () => {
 
 
 
-        <Row>
+        <Row className='d-flex flex-row justify-content-center mb-3'>
 
-          <Col className='d-flex flex-row'>
 
-              <Col className='d-flex justify-content-center align-items-center mb-3'>
-
-                <div className={styles.total_container}>
+                <div className={styles.total_container} style={(statuses[0].price !== '') ? {width: '170px'} : {width: '354px'}}>
                   <Image src={statusStar} width={45} height={44} alt={''}/>
                   <div className={styles.total_title}>{currentUser?.total}</div>
                 </div>
 
-              </Col>
+
 
               {
 
                 statuses[0].price !== '' && (
 
-                  <Col className='d-flex justify-content-center align-items-center mb-3'>
-
-                      <div className={styles.price_container}>
+                      <div className={styles.price_container} style={{width: '170px'}}>
                           <div className={styles.price_title}>10%</div>
                           <div className={styles.price_subtitle}>Скидка</div>
                       </div>
 
-                  </Col>
-
                 )
-
               }
 
 
-          
-
-            </Col>
+ 
 
         </Row>
 

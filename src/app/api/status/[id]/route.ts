@@ -42,8 +42,6 @@ export const DELETE = async (req: Request, context: {params: {id: string}}) => {
       }
     })
 
-
-
     if (!deleteFile) {
       console.error('файл не удален')
     }
