@@ -35,6 +35,8 @@ const ShareButtonVk: FC<ShareButtomVkProps> = ({ title, icon }) => {
 
 
 
+
+
   const createWallPost = async (accessToken: string, message: string, title: string) => {
     try {
 
@@ -82,22 +84,35 @@ const ShareButtonVk: FC<ShareButtomVkProps> = ({ title, icon }) => {
       initialized.current = true;
 
       VKID.Config.init({
-      app: VK_APP_ID,
-      redirectUrl: REDIRECT_URL,
-      responseMode: VKID.ConfigResponseMode.Callback,
-      scope: 'wall photos'
-
+        app: VK_APP_ID,
+        redirectUrl: REDIRECT_URL,
+        responseMode: VKID.ConfigResponseMode.Callback,
+        scope: 'wall photos'
       })
 
       if (oneTapContainer.current) {
       const oneTap = new VKID.OneTap();
-      oneTap.render({ container: oneTapContainer.current, contentId: 2}).on(VKID.OneTapInternalEvents.LOGIN_SUCCESS, (payload: any) => {
+      oneTap.render({ container: oneTapContainer.current, contentId: 2}).on(VKID.OneTapInternalEvents.LOGIN_SUCCESS, async (payload: any) => {
         const code = payload.code;
         const deviceId = payload.device_id;
 
-        VKID.Auth.exchangeCode(code, deviceId)
-          .then(vkidOnSuccess)
-          .catch(vkidOnError);
+        console.log(deviceId)
+
+
+        try {
+
+          const data = await VKID.Auth.exchangeCode(code, deviceId)
+          const newToken = await VKID.Auth.refreshToken(data.refresh_token, deviceId)
+          console.log(data)
+          console.log(newToken)
+          createWallPost(newToken.access_token, messageStatus, title)
+          
+        } catch (error) {
+          console.log(`Ошибка при получении токена ${error}`)
+        }
+
+        
+
       });
 
     }
@@ -109,26 +124,6 @@ const ShareButtonVk: FC<ShareButtomVkProps> = ({ title, icon }) => {
     };
 
   }, [])
-
-
-
-
-  const vkidOnSuccess = (data: any) => {
-    console.log('Token data: ', data)
-
-    setAccessToken(data.access_token);
-    setUserId(data.user_id);
-
-    if (data.access_token) {
-      console.log(data)
-      console.log(data.access_token)
-      createWallPost(data.access_token, messageStatus, title)
-    }
-  }
-
-  const vkidOnError = (error: any) => {
-      console.log(error)
-  }
 
 
   return (
