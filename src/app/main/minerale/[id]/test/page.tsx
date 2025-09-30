@@ -30,6 +30,7 @@ import ModalText from '@/components/modals/ModalText/ModalText'
 import IconWin from '@/../public/ModalResult/star.svg'
 import IconNotWin from '@/../public/ModalResult/error.svg'
 import IconClose from '@/../public/ModalResult/close.svg'
+import statusStar from '@/../public/profile/start.svg'
 
 
 // redux
@@ -43,6 +44,7 @@ import { fetchUsersChangePassedMineral } from '@/functions/reduxAsync/users/fetc
 import { fetchUsersChangeTotal } from '@/functions/reduxAsync/users/fetchUsersChangeTotal'
 import { fetchUsersChangeStatus } from '@/functions/reduxAsync/users/fetchUsersChangeStatus'
 import { fetchAddNewCollectionMinerale } from '@/functions/reduxAsync/users/fetchAddNewCollectionMinerale'
+import { fetchChangeNewCollectionMineralReceived } from '@/functions/reduxAsync/users/fetchChangeNewCollectionMineralReceived'
 import { getUsers } from '@/functions/reduxAsync/users/getUsers'
 
 // redux collection
@@ -52,6 +54,7 @@ import { fetchGetCollectionMineral } from '@/functions/reduxAsync/collectionMine
 // types
 
 import { CollectionMineralType } from '@/types/type'
+import { UserType } from '@/types/type'
 
 
 
@@ -63,7 +66,7 @@ const page = ({ params }: { params: { id: string } }) => {
 
 
   const STATUS_THRESHOLDS = [
-    { min: 2600, status: 'Министр природных ресурсов 2 600 15% скидка' },
+    { min: 2600, status: 'Министр природных ресурсов' },
     { min: 2000, status: 'Начальник геолого-съемочной партии' },
     { min: 1400, status: 'Главный геолог' },
     { min: 1000, status: 'Старший геолог' },
@@ -75,17 +78,6 @@ const page = ({ params }: { params: { id: string } }) => {
 
 
 
-  //   const STATUS_THRESHOLDS = [
-  //   { min: 2600, title: 'Министр природных ресурсов 2 600 15% скидка', price: '5000' },
-  //   { min: 2000, title: 'Начальник геолого-съемочной партии', price: '4000', },
-  //   { min: 1400, title: 'Главный геолог', price: '3000' },
-  //   { min: 1000, title: 'Старший геолог', price: '2000' },
-  //   { min: 600,  title: 'Геолог-съёмщик', price: '1500' },
-  //   { min: 200,  title: 'Инженер-геолог', price: '1000' },
-  //   { min: 100,  title: 'Стажер-геолог', price: '' },
-  // ] as const;
-
-
 
   const [userId, setUserId] = useState<string>('')
   const [mineralId, setMineralId] = useState<string>('');
@@ -95,6 +87,7 @@ const page = ({ params }: { params: { id: string } }) => {
   const [questionNumber, setQuestionNumber] = useState<number>(1)
   const [price, setPrice] = useState<number>(0)
   const [newStatusText, setNewStatusText] = useState<string>('')
+   const [getMineral, setGetMineral] = useState<boolean>(false)
 
 
 
@@ -138,7 +131,7 @@ const page = ({ params }: { params: { id: string } }) => {
       if (userId !== null) {
           setUserId(userId)
         } else {
-          console.log(`User ID не определен!`)
+          console.error(`User ID не определен!`)
         }
     }, [dispatch])
 
@@ -154,34 +147,25 @@ const page = ({ params }: { params: { id: string } }) => {
 
 
   useEffect(() => {
-        if (newStatusText !== '') {
-        redirect(`/main/status/${newStatusText}`)
-      } 
-    }, [])
 
+      if (currentUser && currentMineral) {
+          const kvizIsDone = currentUser.mineralPassed.filter((item: any) => {
+        if (item.title === currentMineral.title) {
+          return item
+        }
+      })
 
-
-
-useEffect(() => {
-
-    if (currentUser && currentMineral) {
-        const kvizIsDone = currentUser.mineralPassed.filter((item: any) => {
-      if (item.title === currentMineral.title) {
-        return item
-      }
-    })
-
-    
-    if (kvizIsDone.length > 0) {
-      setTimeout(() => {
-        setKvizDone(true)
-      }, 1000)
       
+      if (kvizIsDone.length > 0) {
+        setTimeout(() => {
+          setKvizDone(true)
+        }, 1000)
+        
+      }
+
     }
 
-  }
-
-}, [currentUser, currentMineral])  
+  }, [currentUser, currentMineral])  
 
 
 
@@ -235,8 +219,6 @@ useEffect(() => {
     const passed = correctAnswer.length === mineral.question.length;
 
     if (questionId + 1 >= mineral.question.length) {
-      console.log("Тест завершён");
-
       const isPassed = currentUser?.mineralPassed.filter((item: any) => item.title === mineral.title).length > 0;
 
 
@@ -274,8 +256,6 @@ useEffect(() => {
 
   const applyStatusIfUpgraded = async (total: number, currentStatus: string) => {
     const nextStatus = calcStatusByTotal(total);
-
-    console.log(nextStatus)
 
     // если порог не достигнут — ничего не делаем
     if (!nextStatus) return '';
@@ -319,6 +299,7 @@ useEffect(() => {
 
       const alreadyPassed = user.mineralPassed.some((i: any) => i.title === minerale.title);
 
+
       // Считаем очки
 
       let pointsToAdd = 0;
@@ -355,15 +336,27 @@ useEffect(() => {
           setNewStatusText(newStatus);
 
           console.log('НОВЫЙ СТАТУС', newStatus)
+          const newCollectionMineralData = await updateCollectionMineral();
 
           if (newStatus && newStatus !== currentUser.status) {
-            await updateCollectionMineral()
-            router.push(`/main/status/${newStatus}`)
 
-          } else {
-            await updateCollectionMineral()
-            router.push('/main/minerale')
 
+              if (newCollectionMineralData.length >= 1) {
+                setGetMineral(true);
+                return;
+              } else {
+
+                router.push(`/main/status/${newStatus}`);
+                return;
+              }
+            } else {
+              if (newCollectionMineralData.length >= 1) {
+                setGetMineral(true);
+                return;
+              } else {
+                router.push(`/main/status/${newStatus}`);
+                return;
+              }
           }
 
       } else if (!passedAllCorrect) {
@@ -379,21 +372,22 @@ useEffect(() => {
 
 
 
-  const updateCollectionMineral = async (): Promise<CollectionMineralType | []> => {
+  const updateCollectionMineral = async (): Promise<CollectionMineralType[] | []> => {
     try {
 
 
-      let newCollcetionMineral: CollectionMineralType | [] = collectionMineral.find((item: any) => {
+      let newCollcetionMineral: CollectionMineralType[] | [] = collectionMineral.filter((item: any) => {
         return item.title === currentMineral.title
       }) ?? []
 
-      if (!newCollcetionMineral) {
+
+
+      if (newCollcetionMineral.length < 1) {
         console.log('минерал в коллекцию не найден')
-        newCollcetionMineral = []
         return []
       }
 
-      await dispatch(fetchAddNewCollectionMinerale({id: currentUser.id, mineral: newCollcetionMineral})).unwrap()
+      await dispatch(fetchAddNewCollectionMinerale({id: currentUser.id, mineral: newCollcetionMineral[0]})).unwrap()
       console.log('минерал добавлен в коллекцию')
       return newCollcetionMineral
 
@@ -412,6 +406,26 @@ useEffect(() => {
   }
 
 
+  const getChangeCollectionRecevied = async (user: UserType , mineral: CollectionMineralType[]) => {
+    try {
+
+      for (const item of mineral) {
+        await dispatch(fetchChangeNewCollectionMineralReceived({idUser: user.id, idMineral: item.id})).unwrap()
+        await dispatch(getUsers())
+
+        console.log(`Статус минерала обновлен ${item.id}`)
+      }
+
+      
+      setGetMineral(false)
+
+
+    
+    } catch (error) {
+      console.log(`Ошибка получения коллекционного минерала`, error)
+    }
+  }
+  
 
 
 
@@ -483,6 +497,28 @@ useEffect(() => {
                 
                 </Col>
             </Row>
+
+        )
+      }
+
+
+
+      {
+        (getMineral) && (
+          <Row>
+            <Col>
+
+              <ModalResult imgTop={statusStar} onClickLink={async () => {
+                await updateCollectionMineral()
+                await getChangeCollectionRecevied(currentUser, collectionMineral)
+                setGetMineral(false)
+                router.push(`/main/status/${newStatusText}`)
+
+              }} text={'Открыт новый минерал'} textBtn={'Получить'} colorBackground={{background: 'linear-gradient(125deg, #7D22C9 0.49%, #FFBF00 73.51%, #FFBC41 99.11%)'}} colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}/>
+          
+            
+            </Col>
+          </Row>
 
         )
       }

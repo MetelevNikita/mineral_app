@@ -37,7 +37,8 @@ import { useAppDispatch } from '@/types/hooks'
 import { fetchGetStatus } from '@/functions/reduxAsync/status/fetchGetStatus'
 import { getUsers } from '@/functions/reduxAsync/users/getUsers'
 
-// 
+//
+
 import { fetchGetCollectionMineral } from '@/functions/reduxAsync/collectionMineral/fetchGetCollectionMineral'
 import { fetchChangeNewCollectionMineralReceived } from '@/functions/reduxAsync/users/fetchChangeNewCollectionMineralReceived'
 
@@ -45,7 +46,7 @@ import { fetchChangeNewCollectionMineralReceived } from '@/functions/reduxAsync/
 // components
 
 import Loading from '@/components/element/Loading/Loading'
-
+import ShareButtonVk from '@/components/ui/ShareButtonVk/ShareButtonVk'
 
 
 const page: FC = () => {
@@ -76,64 +77,10 @@ const page: FC = () => {
 
   const currentUser: UserType | null = useAppSelector((state) => state.user.user).find((item: UserType) => item.id === parseInt(userId)) ?? null;
   const collectionMineral: CollectionMineralType[] = useAppSelector((state) => state.collection.collection) ?? []
-  const statuses = useAppSelector((state) => state.status.status).filter((item) => item.title == currentUser?.status)
-
-  console.log(statuses)
-
-
-  
-
-
-  const checkMineral: CollectionMineralType[] | [] = currentUser?.collection?.filter((item) => {
-
-    if (!item) {
-      return false
-    }
-
-    return item && item.received !== undefined && !item.received;
-  }) ?? []
-
-
+  const statuses = useAppSelector((state) => state.status.status).find((item) => item.title == currentUser?.status)
 
 
   //
-
-
-  useEffect(() => {
-
-      if (checkMineral?.length < 1) {
-        return
-      }
-
-      setGetMineral(true)
-      console.log(checkMineral)
-
-
-  }, [currentUser])
-
-
-
-  const getChangeCollectionRecevied = async (user: UserType , mineral: CollectionMineralType[]) => {
-    try {
-
-      for (const item of mineral) {
-        console.log(mineral)
-        await dispatch(fetchChangeNewCollectionMineralReceived({idUser: user.id, idMineral: item.id})).unwrap()
-        await dispatch(getUsers())
-
-        console.log(`Статус минерала обновлен ${item.id}`)
-      }
-
-      
-      setGetMineral(false)
-      setIsActive(true)
-
-    
-    } catch (error) {
-      console.log(`Ошибка получения коллекционного минерала`, error)
-    }
-  }
-
 
 
   if (!currentUser || !statuses || statuses.length < 1) {
@@ -144,33 +91,25 @@ const page: FC = () => {
   const currentUserCollection = collectionMineral.map((item) => {
     const userMineral = currentUser?.collection as any[]
 
+    if (!userMineral) {
+      console.error(
+        'Не удалось получить коллекционный минерал пользователя',
+        currentUser
+      )
+      return item
+    }
+
     const foundMineral = userMineral.find(mineral => mineral.title === item.title);
     return foundMineral || item;
     
-  })
+  }) || []
+
 
 
 
   return (
 
     <Container>
-
-      {
-        (getMineral) && (
-          <Row>
-            <Col>
-
-              <ModalResult imgTop={statusStar} onClickLink={() => {getChangeCollectionRecevied(currentUser, checkMineral)}} text={'Открыт новый минерал'} textBtn={'Получить'} colorBackground={{background: 'linear-gradient(125deg, #7D22C9 0.49%, #FFBF00 73.51%, #FFBC41 99.11%)'}} colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}/>
-          
-            
-            </Col>
-          </Row>
-
-        )
-      }
-
-
-
 
         <Row>
             <Col className='d-flex justify-content-center align-items-center mb-3'>
@@ -185,7 +124,7 @@ const page: FC = () => {
 
             <Col className='d-flex justify-content-center align-items-center mb-1'>
 
-                <Status title={statuses[0].title} img={statuses[0].icon} onClick={() => {}} />
+                <Status title={statuses.title} img={statuses.icon} onClick={() => {}} />
 
             </Col>
 
@@ -196,7 +135,7 @@ const page: FC = () => {
         <Row className='d-flex flex-row justify-content-center mb-3'>
 
 
-                <div className={styles.total_container} style={(statuses[0].price !== '') ? {width: '170px'} : {width: '354px'}}>
+                <div className={styles.total_container} style={(statuses.price !== '') ? {width: '170px'} : {width: '354px'}}>
                   <Image src={statusStar} width={45} height={44} alt={''}/>
                   <div className={styles.total_title}>{currentUser?.total}</div>
                 </div>
@@ -205,7 +144,7 @@ const page: FC = () => {
 
               {
 
-                statuses[0].price !== '' && (
+                statuses.price !== '' && (
 
                       <div className={styles.price_container} style={{width: '170px'}}>
                           <div className={styles.price_title}>10%</div>
@@ -213,6 +152,7 @@ const page: FC = () => {
                       </div>
 
                 )
+                
               }
 
 

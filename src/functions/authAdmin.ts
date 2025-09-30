@@ -51,7 +51,7 @@ export const authAdmin = async (formData: FormData) => {
     } catch (error: Error | unknown | any) {
 
         if (error instanceof Error) {
-            console.log(`Ошибка авторизация админ панели: ${error.message}`)
+            console.error(`Ошибка авторизация админ панели: ${error.message}`)
         }
 
         

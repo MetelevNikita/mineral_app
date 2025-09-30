@@ -6,8 +6,6 @@ export const fetchUsersChangeStatus = createAsyncThunk(
 
       try {
 
-        console.log(status)
-
         const responce = await fetch(`/api/users/${userId}`, {
           method: 'PATCH',
           headers: {
@@ -31,7 +29,7 @@ export const fetchUsersChangeStatus = createAsyncThunk(
       } catch (error: Error | unknown) {
 
         if (error instanceof Error) {
-          console.log(`Ошибка получения статуса ${error.message}`)
+          console.error(`Ошибка получения статуса ${error.message}`)
           throw new Error(
             `Ошибка получения статуса ${error.message}`
           )

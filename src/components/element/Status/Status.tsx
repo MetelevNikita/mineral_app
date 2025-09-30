@@ -8,11 +8,17 @@ import styles from './Status.module.css'
 // components
 
 import MyButton from '@/components/ui/MyButton/MyButton'
+import ShareButtonVk from '@/components/ui/ShareButtonVk/ShareButtonVk'
+
+// type
+
+import { UserType } from '@/types/type'
 
 
 interface StatusProps {
     title: string,
     img: string,
+
     onClick: () => void
 }
 
@@ -28,7 +34,8 @@ const Status: FC<StatusProps> = ({ title, img, onClick }) => {
             </div>
 
             <div className={styles.top_btn_container}>
-                <MyButton text={'Поделиться в ВК'} btn={styles.btn} onClick={onClick} type={'button'} />
+                <ShareButtonVk icon={img} title={title}/>
+                {/* <MyButton text={'Поделиться в ВК'} btn={styles.btn} onClick={onClick} type={'button'} /> */}
             </div>
 
 
