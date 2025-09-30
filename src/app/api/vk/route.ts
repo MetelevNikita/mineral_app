@@ -3,6 +3,7 @@ import fs from 'fs'
 import path from "path";
 
 
+
 export const POST = async (req: Request) => {
   try {
 
@@ -10,12 +11,6 @@ export const POST = async (req: Request) => {
     console.log(url.origin)
 
     const {accessToken, message, title} = await req.json()
-
-    console.log({
-      accessToken,
-      message,
-      title
-    })
 
 
     const responceURLPhoto = await fetch(`https://api.vk.com/method/photos.getWallUploadServer?v=5.131&access_token=${accessToken}`);
