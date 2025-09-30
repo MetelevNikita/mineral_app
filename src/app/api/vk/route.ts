@@ -23,6 +23,7 @@ export const POST = async (req: Request) => {
       throw new Error(`Ошибка запроса на сервер - получения статуса ${responceURLPhoto.status}`);
     }
     const dataURL = await responceURLPhoto.json();
+    console.log(dataURL)
     console.log(dataURL.response.upload_url);
 
 
