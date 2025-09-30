@@ -19,7 +19,7 @@ const ShareButtonVk: FC<ShareButtomVkProps> = ({ title, icon }) => {
  const messageStatus = `Вы достигли уровня ${title} на сайте geokviz.ru`
 
   const VK_APP_ID = 54083822
-  const REDIRECT_URL = 'https://geokviz.ru/main/profile'
+  const REDIRECT_URL = 'https://www.geokviz.ru/main/profile'
 
 
   const oneTapContainer = useRef<HTMLDivElement>(null);
