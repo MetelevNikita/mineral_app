@@ -1,0 +1,126 @@
+import { NextResponse } from "next/server";
+import fs from 'fs'
+import path from "path";
+
+
+export const POST = async (req: Request) => {
+  try {
+
+    const url = new URL(req.url)
+    console.log(url.origin)
+
+    const {accessToken, message, title} = await req.json()
+
+    console.log({
+      accessToken,
+      message,
+      title
+    })
+
+
+    const responceURLPhoto = await fetch(`https://api.vk.com/method/photos.getWallUploadServer?v=5.131&access_token=${accessToken}`);
+    if (!responceURLPhoto.ok) {
+      throw new Error(`Ошибка запроса на сервер - получения статуса ${responceURLPhoto.status}`);
+    }
+    const dataURL = await responceURLPhoto.json();
+    console.log(dataURL.response.upload_url);
+
+
+
+    // upload image
+
+    const statusesDir = fs.readdirSync(path.join(process.cwd(), 'public', 'vk_statuses'));
+    console.log(statusesDir)
+    console.log(title)
+
+    const currentStatusesImage = statusesDir.find((file) => file.toLocaleLowerCase() == `${title.toLocaleLowerCase()}.png`) as string
+    console.log(currentStatusesImage)
+    
+
+    const imageBuffer = fs.readFileSync(path.join(process.cwd(), 'public', 'vk_statuses', currentStatusesImage));
+    const imageBlob = new Blob([imageBuffer], { type: 'image/png' });
+    console.log("Image size:", imageBlob.size, "type:", imageBlob.type);
+
+
+    const uploadForm = new FormData();
+    uploadForm.append('photo', imageBlob, 'image.png');
+
+
+    const savePhotoFromServer = await fetch(dataURL.response.upload_url, {
+      method: 'POST',
+      body: uploadForm,
+    })
+
+    if (!savePhotoFromServer.ok) {
+      throw new Error(
+        `Ошибка сохранения изображения ${savePhotoFromServer.status} ${savePhotoFromServer.statusText}`
+      )
+    }
+
+    const uploadDataResponce = await savePhotoFromServer.json()
+    console.log(uploadDataResponce)
+
+
+
+    // save photo
+
+    const savePhotoResponse = await fetch('https://api.vk.com/method/photos.saveWallPhoto', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        access_token: accessToken,
+        server: uploadDataResponce.server,
+        photo: uploadDataResponce.photo,
+        hash: uploadDataResponce.hash,
+        v: '5.131',
+      }),
+    });
+
+    const savePhotoData = await savePhotoResponse.json();
+    if (savePhotoData.error) {
+      return NextResponse.json({ error: savePhotoData.error.error_msg || 'VK API error' }, { status: 400 });
+    }
+
+
+    // 
+
+    const response = await fetch('https://api.vk.com/method/wall.post', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        access_token: accessToken,
+        message: message,
+        attachments: `photo${savePhotoData.response[0].owner_id}_${savePhotoData.response[0].id}`,
+        v: '5.131'
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      return NextResponse.json(
+        { error: data.error.error_msg || 'VK API error' },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json({ success: true, data: data.response });
+    
+
+  } catch (error: Error | unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message })
+    }
+
+    return NextResponse.json({
+      error: {
+        message: "Ошибка при получении данных"
+      }
+    })
+    
+  }
+}

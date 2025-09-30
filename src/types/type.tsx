@@ -134,6 +134,7 @@ export type Answers = {
 // statuses
 
 export type StatusesType = {
+    [x: string]: any
     id: number | any,
     title: string,
     icon: string,

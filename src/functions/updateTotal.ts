@@ -1,8 +1,5 @@
 export const updateTotal = async (id: string, total: number) => {
     try {
-
-        console.log(total)
-
         const responce = await fetch(`/api/users/${id}`, {
             method: 'PATCH',
             body: JSON.stringify({total})

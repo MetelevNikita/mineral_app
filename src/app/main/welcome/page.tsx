@@ -32,7 +32,7 @@ const [muteVideo, onMuteVideo] = useState<boolean>(true)
         <Row>
             <Col className='d-flex flex-column justify-content-center align-items-center mb-3'>
 
-                <VideoBlock videoSrc={"/video/test.mp4"} />
+                <VideoBlock videoSrc={"/video/test2.mp4"} />
 
             </Col>
         </Row>
