@@ -19,7 +19,7 @@ const ShareButtonVk: FC<ShareButtomVkProps> = ({ title, icon }) => {
  const messageStatus = `Вы достигли уровня ${title} на сайте geokviz.ru`
 
   const VK_APP_ID = 54083822
-  const REDIRECT_URL = 'https://www.geokviz.ru/main/profile'
+  const REDIRECT_URL = 'https://geokviz.ru/main/profile'
 
 
   const oneTapContainer = useRef<HTMLDivElement>(null);
@@ -96,22 +96,17 @@ const ShareButtonVk: FC<ShareButtomVkProps> = ({ title, icon }) => {
         const code = payload.code;
         const deviceId = payload.device_id;
 
-        console.log(deviceId)
-
 
         try {
 
           const data = await VKID.Auth.exchangeCode(code, deviceId)
-          const newToken = await VKID.Auth.refreshToken(data.refresh_token, deviceId)
-          console.log(data)
-          console.log(newToken)
-          createWallPost(newToken.access_token, messageStatus, title)
+          const updateToken = await VKID.Auth.refreshToken(data.refresh_token, deviceId)
+
+          createWallPost(updateToken.access_token, messageStatus, title)
           
         } catch (error) {
           console.log(`Ошибка при получении токена ${error}`)
         }
-
-        
 
       });
 
