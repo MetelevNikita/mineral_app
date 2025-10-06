@@ -5,6 +5,13 @@ import { NextRequest } from 'next/server'
 
 export function middleware (request: NextRequest) {
 
+
+    if (request.nextUrl.pathname.startsWith('/_next') ||
+      request.nextUrl.pathname.includes('.') ||
+      request.nextUrl.pathname.startsWith('/api/')) {
+        return NextResponse.next()
+    }
+
     const adminCookie = request.cookies.get('admin')?.value
     const accessToken = request.cookies.get('accessToken')?.value
     const currentURL = request.url

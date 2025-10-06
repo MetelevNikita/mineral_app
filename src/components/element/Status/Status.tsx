@@ -9,6 +9,7 @@ import styles from './Status.module.css'
 
 import MyButton from '@/components/ui/MyButton/MyButton'
 import ShareButtonVk from '@/components/ui/ShareButtonVk/ShareButtonVk'
+import ShareButtonPhpProps from '@/components/ui/ShareButtonVk/ShareButtonPHP'
 
 // type
 
@@ -35,7 +36,8 @@ const Status: FC<StatusProps> = ({ title, img, onClick }) => {
 
             <div className={styles.top_btn_container}>
                 <ShareButtonVk icon={img} title={title}/>
-                {/* <MyButton text={'Поделиться в ВК'} btn={styles.btn} onClick={onClick} type={'button'} /> */}
+                {/* <ShareButtonPhpProps title={'TEST'} icon={''} /> */}
+
             </div>
 
 

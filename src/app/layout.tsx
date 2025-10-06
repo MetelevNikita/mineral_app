@@ -35,28 +35,19 @@ import ReduxProvider from "@/Redux/Provider";
 
 // 
 
-
-
 export const metadata = {
   title: "GEOKVIZ APP START WEB",
   description: "NEW APP from GEOKVIZ",
-  manifest: "/manifest.webmanifest",
+  manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    title: "GEOKVIZ APP 3.0",
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
+    title: "GEOKVIZ APP",
   },
   icons: {
-    icon: [{ url: "/favicon.ico" }],
-    other: [
-      {
-        url: "/favicon-16x16.png",
-        sizes: "16x16",
-        type: "image/png",
-      }
-    ],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
-  },
+    apple: "/apple-touch-icon.png",
+    icon: "/icon.png",
+  }
 };
 
 export default function RootLayout({
@@ -69,6 +60,9 @@ export default function RootLayout({
 
     <html lang="en">
         <body className={`${OpenSans.className}, ${InterFont.className}`}>
+          <head>
+            <link rel="manifest" href="/manifest.json" />
+          </head>
 
           <Container style={{padding: 0}}>
             <ReduxProvider>
