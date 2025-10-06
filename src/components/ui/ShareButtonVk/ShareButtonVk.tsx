@@ -19,7 +19,7 @@ const ShareButtonVk: FC<ShareButtomVkProps> = ({ title, icon }) => {
  const messageStatus = `Вы достигли уровня ${title} на сайте geokviz.ru`
 
   const VK_APP_ID = 54083822
-  const REDIRECT_URL = 'https://geokviz.ru/main/profile'
+  const REDIRECT_URL = 'https://3ti1y7-37-220-81-20.ru.tuna.am/main/profile'
 
 
   const oneTapContainer = useRef<HTMLDivElement>(null);
@@ -59,15 +59,14 @@ const ShareButtonVk: FC<ShareButtomVkProps> = ({ title, icon }) => {
         )
       }
 
-      if (responce.ok) {
-        try {
-          const data = await responce.json()
-          console.log(data)
-        } catch (error) {
-          console.error(error)
+      const data = await responce.json()
+      if (data.error) {
+        if (data.error.error_code === 5) {
+          console.error('Ошибка авторизации: токен привязан к другому IP');
+          alert('Ошибка авторизации. Попробуйте войти заново.');
         }
+        throw new Error(`VK API Error: ${data.error.error_msg}`);
       }
-
 
 
 
@@ -76,6 +75,11 @@ const ShareButtonVk: FC<ShareButtomVkProps> = ({ title, icon }) => {
       console.error(error)
     }
   }
+
+
+
+
+ 
 
 
   useEffect(() => {
@@ -87,7 +91,7 @@ const ShareButtonVk: FC<ShareButtomVkProps> = ({ title, icon }) => {
         app: VK_APP_ID,
         redirectUrl: REDIRECT_URL,
         responseMode: VKID.ConfigResponseMode.Callback,
-        scope: 'wall photos'
+        scope: 'wall,photos,offline'
       })
 
       if (oneTapContainer.current) {

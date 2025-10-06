@@ -79,8 +79,10 @@ const page: FC = () => {
   const collectionMineral: CollectionMineralType[] = useAppSelector((state) => state.collection.collection) ?? []
   const statuses = useAppSelector((state) => state.status.status).find((item) => item.title == currentUser?.status)
 
+  console.log(currentUser)
+  console.log(statuses)
+  console.log(collectionMineral)
 
-  //
 
 
   if (!currentUser || !statuses || statuses.length < 1) {
