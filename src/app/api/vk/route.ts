@@ -59,6 +59,7 @@ export const POST = async (req: Request, res: Response) => {
     }
 
     const acceesToken = JSON.parse(dataToken).access_token;
+    console.log(acceesToken)
   
 
     
@@ -120,7 +121,7 @@ export const POST = async (req: Request, res: Response) => {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
-        access_token: accessToken,
+        access_token: acceesToken,
         server: uploadDataResponce.server,
         photo: uploadDataResponce.photo,
         hash: uploadDataResponce.hash,
