@@ -65,73 +65,73 @@ export const POST = async (req: Request, res: Response) => {
     // PHOTO
 
 
-    // const responceURLPhoto = await fetch(`https://api.vk.com/method/photos.getWallUploadServer?v=5.131&access_token=${accessToken}`);
+    const responceURLPhoto = await fetch(`https://api.vk.com/method/photos.getWallUploadServer?v=5.131&access_token=${acceesToken}`);
 
-    // if (!responceURLPhoto.ok) {
-    //   throw new Error(`Ошибка запроса на сервер - получения статуса ${responceURLPhoto.status}`);
-    // }
+    if (!responceURLPhoto.ok) {
+      throw new Error(`Ошибка запроса на сервер - получения статуса ${responceURLPhoto.status}`);
+    }
 
-    // const dataURL = await responceURLPhoto.json();
-    // console.log(dataURL)
-    // console.log(dataURL.response.upload_url);
+    const dataURL = await responceURLPhoto.json();
+    console.log(dataURL)
+    console.log(dataURL.response.upload_url);
 
 
 
-    // // upload image
+    // upload image
 
-    // const statusesDir = fs.readdirSync(path.join(process.cwd(), 'public', 'vk_statuses'));
-    // console.log(statusesDir)
-    // console.log(title)
+    const statusesDir = fs.readdirSync(path.join(process.cwd(), 'public', 'vk_statuses'));
+    console.log(statusesDir)
+    console.log(title)
 
-    // const currentStatusesImage = statusesDir.find((file) => file.toLocaleLowerCase() == `${title.toLocaleLowerCase()}.png`) as string
-    // console.log(currentStatusesImage)
+    const currentStatusesImage = statusesDir.find((file) => file.toLocaleLowerCase() == `${title.toLocaleLowerCase()}.png`) as string
+    console.log(currentStatusesImage)
     
 
-    // const imageBuffer = fs.readFileSync(path.join(process.cwd(), 'public', 'vk_statuses', currentStatusesImage));
-    // const imageBlob = new Blob([imageBuffer], { type: 'image/png' });
-    // console.log("Image size:", imageBlob.size, "type:", imageBlob.type);
+    const imageBuffer = fs.readFileSync(path.join(process.cwd(), 'public', 'vk_statuses', currentStatusesImage));
+    const imageBlob = new Blob([imageBuffer], { type: 'image/png' });
+    console.log("Image size:", imageBlob.size, "type:", imageBlob.type);
 
 
-    // const uploadForm = new FormData();
-    // uploadForm.append('photo', imageBlob, 'image.png');
+    const uploadForm = new FormData();
+    uploadForm.append('photo', imageBlob, 'image.png');
 
 
-    // const savePhotoFromServer = await fetch(dataURL.response.upload_url, {
-    //   method: 'POST',
-    //   body: uploadForm,
-    // })
+    const savePhotoFromServer = await fetch(dataURL.response.upload_url, {
+      method: 'POST',
+      body: uploadForm,
+    })
 
-    // if (!savePhotoFromServer.ok) {
-    //   throw new Error(
-    //     `Ошибка сохранения изображения ${savePhotoFromServer.status} ${savePhotoFromServer.statusText}`
-    //   )
-    // }
+    if (!savePhotoFromServer.ok) {
+      throw new Error(
+        `Ошибка сохранения изображения ${savePhotoFromServer.status} ${savePhotoFromServer.statusText}`
+      )
+    }
 
-    // const uploadDataResponce = await savePhotoFromServer.json()
-    // console.log(uploadDataResponce)
+    const uploadDataResponce = await savePhotoFromServer.json()
+    console.log(uploadDataResponce)
 
 
 
-    // // save photo
+    // save photo
 
-    // const savePhotoResponse = await fetch('https://api.vk.com/method/photos.saveWallPhoto', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/x-www-form-urlencoded',
-    //   },
-    //   body: new URLSearchParams({
-    //     access_token: accessToken,
-    //     server: uploadDataResponce.server,
-    //     photo: uploadDataResponce.photo,
-    //     hash: uploadDataResponce.hash,
-    //     v: '5.131',
-    //   }),
-    // });
+    const savePhotoResponse = await fetch('https://api.vk.com/method/photos.saveWallPhoto', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        access_token: accessToken,
+        server: uploadDataResponce.server,
+        photo: uploadDataResponce.photo,
+        hash: uploadDataResponce.hash,
+        v: '5.131',
+      }),
+    });
 
-    // const savePhotoData = await savePhotoResponse.json();
-    // if (savePhotoData.error) {
-    //   return NextResponse.json({ error: savePhotoData.error.error_msg || 'VK API error' }, { status: 400 });
-    // }
+    const savePhotoData = await savePhotoResponse.json();
+    if (savePhotoData.error) {
+      return NextResponse.json({ error: savePhotoData.error.error_msg || 'VK API error' }, { status: 400 });
+    }
 
 
     // 
@@ -144,7 +144,7 @@ export const POST = async (req: Request, res: Response) => {
       body: new URLSearchParams({
         access_token: acceesToken,
         message: message,
-        // attachments: `photo${savePhotoData.response[0].owner_id}_${savePhotoData.response[0].id}`,
+        attachments: `photo${savePhotoData.response[0].owner_id}_${savePhotoData.response[0].id}`,
         v: '5.131'
       })
     });
