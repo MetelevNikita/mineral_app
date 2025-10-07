@@ -9,7 +9,6 @@ import styles from './Status.module.css'
 
 import MyButton from '@/components/ui/MyButton/MyButton'
 import ShareButtonVk from '@/components/ui/ShareButtonVk/ShareButtonVk'
-import ShareButtonPhpProps from '@/components/ui/ShareButtonVk/ShareButtonPHP'
 
 // type
 

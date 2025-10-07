@@ -4,9 +4,9 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import * as VKID from '@vkid/sdk';
 
-// types
+// utils
 
-import { UserType } from '@/types/type';
+import { generateCodeVerifier, generateCodeChallenge, generateState } from '@/lib/pce-utils'
 
 
 interface ShareButtomVkProps {
@@ -16,50 +16,76 @@ interface ShareButtomVkProps {
 
 const ShareButtonVk: FC<ShareButtomVkProps> = ({ title, icon }) => {
 
- const messageStatus = `Вы достигли уровня ${title} на сайте geokviz.ru`
+  const [codeVerifier, setCodeVerifier] = useState<string | null>(null);
+  const [codeChallenge, setCodeChallenge] = useState<string | null>(null);
+  const [vkCode, setVkCode] = useState<string | null>(null);
+  const [vkDevice, setVkDevice] = useState<string | null>(null);
+  const [state, setState] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const VK_APP_ID = 54083822
-  const REDIRECT_URL = 'https://geokviz.ru/main/profile'
-
-
-  const oneTapContainer = useRef<HTMLDivElement>(null);
-  const [accessToken, setAccessToken] = useState<string>('');
-  const [authCode, setAuthCode] = useState<string>('');
-  const [userId, setUserId] = useState<number | null>(null);
-
-
-  const initialized = useRef(false);
+  const messageStatus = `Вы достигли уровня ${title} на сайте geokviz.ru`
+  const VK_APP_ID = process.env.NEXT_PUBLIC_VK_APP_ID as string
+  const REDIRECT_URL = process.env.NEXT_PUBLIC_VK_REDIRECT_URI as string
 
 
 
+  useEffect(() => {
+      const url = new URL(window.location.href)
+      const code = url.searchParams.get('code')
+      const deviceId = url.searchParams.get('device_id')
+      const state = url.searchParams.get('state')
+
+      if (code) {
+        console.log('Received authorization code:', code);
+        setVkCode(code);
+        setVkDevice(deviceId);
+        
+        // Автоматически обрабатываем код, если он есть в URL
+        handleAuthorizationCode(code, deviceId);
+      }
+  }, [])
 
 
 
-
-
-  const createWallPost = async (accessToken: string, message: string, title: string) => {
+  const handleAuthorizationCode = async (code: string, deviceId: string | null) => {
     try {
+      setIsProcessing(true);
+      
+      // Получаем code_verifier из sessionStorage
+      const storedVerifier = sessionStorage.getItem('vk_code_verifier');
+      const storedState = sessionStorage.getItem('vk_state');
 
-      const responce = await fetch(`/api/vk`, {
+      if (!storedVerifier) {
+        throw new Error('Code verifier not found in storage');
+      }
+
+      console.log('Processing authorization with code:', code);
+      console.log('Using verifier:', storedVerifier);
+
+      const response = await fetch(`/api/vk`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          accessToken,
-          message,
-          title
-          
+          code: code,
+          deviceId: deviceId,
+          state: storedState,
+          codeVerifier: storedVerifier,
+          title: title,
+          message: messageStatus,
         })
       })
 
-      if (!responce.ok) {
+      if (!response.ok) {
         throw new Error(
-          `Ошибка создания поста на стене VK ${responce.status} ${responce.statusText}`
+          `Ошибка создания поста на стене VK ${response.status} ${response.statusText}`
         )
       }
 
-      const data = await responce.json()
+      const data = await response.json()
+      console.log('VK API response:', data)
+      
       if (data.error) {
         if (data.error.error_code === 5) {
           console.error('Ошибка авторизации: токен привязан к другому IP');
@@ -69,64 +95,62 @@ const ShareButtonVk: FC<ShareButtomVkProps> = ({ title, icon }) => {
       }
 
 
+      window.history.replaceState({}, document.title, window.location.pathname);
+      sessionStorage.removeItem('vk_code_verifier');
+      sessionStorage.removeItem('vk_state');
 
-      
+
+      // логигка для модельного окна
+
+
+      // 
+
     } catch (error) {
-      console.error(error)
+      console.error(`ОШИБКА: ${error}`)
+      alert('Ошибка при публикации в VK');
+    } finally {
+      setIsProcessing(false);
     }
   }
 
+  const startAuthorization = async () => {
+    try {
+      const verifier = generateCodeVerifier();
+      const challenge = await generateCodeChallenge(verifier);
+      const stateParam = generateState();
 
+      console.log('Generated verifier:', verifier);
+      console.log('Generated challenge:', challenge);
 
+      // Сохраняем в sessionStorage для использования после редиректа
+      sessionStorage.setItem('vk_code_verifier', verifier);
+      sessionStorage.setItem('vk_state', stateParam);
 
- 
+      // Формируем URL для авторизации
+      const authUrl = new URL('https://id.vk.ru/authorize');
+      authUrl.searchParams.append('response_type', 'code');
+      authUrl.searchParams.append('client_id', VK_APP_ID.toString());
+      authUrl.searchParams.append('scope', 'wall,photos');
+      authUrl.searchParams.append('redirect_uri', REDIRECT_URL);
+      authUrl.searchParams.append('state', stateParam);
+      authUrl.searchParams.append('code_challenge', challenge);
+      authUrl.searchParams.append('code_challenge_method', 'S256');
 
+      console.log('Redirecting to:', authUrl.toString());
+      
+      // Редирект на авторизацию VK
+      window.location.href = authUrl.toString();
 
-  useEffect(() => {
-
-    if (initialized.current) return;
-      initialized.current = true;
-
-      VKID.Config.init({
-        app: VK_APP_ID,
-        redirectUrl: REDIRECT_URL,
-        responseMode: VKID.ConfigResponseMode.Callback,
-        scope: 'wall,photos,offline'
-      })
-
-      if (oneTapContainer.current) {
-      const oneTap = new VKID.OneTap();
-      oneTap.render({ container: oneTapContainer.current, contentId: 2}).on(VKID.OneTapInternalEvents.LOGIN_SUCCESS, async (payload: any) => {
-        const code = payload.code;
-        const deviceId = payload.device_id;
-
-
-        try {
-
-          const data = await VKID.Auth.exchangeCode(code, deviceId)
-          const updateToken = await VKID.Auth.refreshToken(data.refresh_token, deviceId)
-
-          createWallPost(updateToken.access_token, messageStatus, title)
-          
-        } catch (error) {
-          console.log(`Ошибка при получении токена ${error}`)
-        }
-
-      });
-
+    } catch (error) {
+      console.error('Ошибка при запуске авторизации VK:', error);
+      alert('Ошибка при запуске авторизации VK');
     }
-
-    return () => {
-      if (oneTapContainer.current) {
-        oneTapContainer.current.innerHTML = '';
-      }
-    };
-
-  }, [])
-
+  }
 
   return (
-    <div ref={oneTapContainer} />
+    <button  onClick={startAuthorization} disabled={isProcessing}>
+      {isProcessing ? 'Обработка...' : 'Поделиться в VK'}
+    </button>
   )
 }
 
