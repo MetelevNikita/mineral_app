@@ -64,7 +64,7 @@ export default function RootLayout({
             <link rel="manifest" href="/manifest.json" />
           </head>
 
-          <Container style={{padding: 0}}>
+          <Container>
             <ReduxProvider>
                 {children}
                 {/* <InstalPrompts /> */}

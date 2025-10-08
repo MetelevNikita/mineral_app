@@ -524,7 +524,7 @@ const page = ({ params }: { params: { id: string } }) => {
       }
     
   
-    <Container>
+    <Container className='mb-5'>
 
         <Row>
             <Col className='d-flex justify-content-center mb-4'>
@@ -583,7 +583,7 @@ const page = ({ params }: { params: { id: string } }) => {
         </Row>
 
 
-        <Row>
+        <Row className='mb-5'>
           <Col className='d-flex flex-column justify-content-center align-items-center mb-3'>
 
             <motion.div animate={answerDisabled ? {scale: [1,1.2,1]} : {scale: [1]}} transition={{duration: 0.4}}><MyButton style={answerDisabled ? {background: '#FFBC41', color: 'white', border: 'none'} : {}} text={buttonText} btn={styles.btn} onClick={() => {handleFinalSubmit(currentMineral)}} type={'button'} disabled={resultDisabled}/></motion.div>
