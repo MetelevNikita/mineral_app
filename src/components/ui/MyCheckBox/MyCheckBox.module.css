@@ -37,8 +37,13 @@
 /*  */
 
 .checkbox_title_container {
-    max-width: 205px;
+    max-width: 220px;
     margin-left: 10px;
+}
+
+
+.checkbox_title {
+    font-size: 16px;
 }
 
 

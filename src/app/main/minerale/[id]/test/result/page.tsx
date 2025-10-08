@@ -97,7 +97,7 @@ const page = (params: {params: {id: string}}) => {
         </Row>
 
         <Row>
-            <Col className='d-flex justify-content-center mb-4'>
+            <Col className='d-flex justify-content-center mb-3'>
             
               <div className={styles.question_block_bottom}>
                 <div className={styles.question_block_top}>
@@ -171,7 +171,7 @@ const page = (params: {params: {id: string}}) => {
           </Col>
         </Row>
 
-        <Row>
+        <Row className='mt-3'>
           <Col className='d-flex flex-row align-items-center justify-content-center mb-5'>
 
               

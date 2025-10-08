@@ -20,7 +20,7 @@ model User {
   total         Int
   mineralPassed MineralPassed[]
   collection    Collection[]
-  status        String
+  status        String?
   createAt      DateTime        @default(now())
   updateAr      DateTime        @default(now())
   isAdmin       Boolean

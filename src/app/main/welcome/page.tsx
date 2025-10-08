@@ -21,10 +21,7 @@ import Link from 'next/link'
 
 const page = () => {
 
-
-const videoSrc = "http://localhost:3000/video/test.mp4"
 const [muteVideo, onMuteVideo] = useState<boolean>(true)
-
 
   return (
     

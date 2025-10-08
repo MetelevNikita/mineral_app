@@ -42,7 +42,7 @@ export const metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "GEOKVIZ APP",
+    title: "geokviz",
   },
   icons: {
     apple: "/apple-touch-icon.png",

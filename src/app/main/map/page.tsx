@@ -30,8 +30,6 @@ import type { mapBlockArrType, MineralMapType } from '@/types/type'
 
 import mapIcon from '@/../public/map/map_icon.svg'
 import mapIconActive from '@/../public/map/map_icon_active.svg'
-import { section } from 'motion/react-client'
-
 
 
 
@@ -159,14 +157,11 @@ const page: FC = () => {
         left: 165
       }
     },
-
-
-
-
-
-
-    
   ]
+
+
+
+
 
   const [currentIcon, setCurrentIcon] = useState<mapBlockArrType | null>(null)
 
@@ -186,7 +181,7 @@ const page: FC = () => {
 
   return (
 
-    <Container style={{overflowY: 'hidden', overflowX: 'hidden'}}>
+    <Container style={{height: '100vh'}}>
         <Row>
             <Col className='d-flex justify-content-center align-items-center mb-4'>
 
@@ -195,7 +190,7 @@ const page: FC = () => {
             </Col>
         </Row>
 
-        <Row>
+        <Row className='mb-5'>
 
           <Col className='d-flex flex-column justify-content-center align-items-center mb-4'>
 
@@ -215,7 +210,7 @@ const page: FC = () => {
 
             {
               (currentIcon !== null) && (
-                <motion.div initial={{opacity: 0, y: 0, x:-175}} animate={{opacity: 1, y: -180, x: -175}} exit={{opacity: 0, y: 0, x: -175}}><MapInfoBlock image={currentIcon.img} section={currentIcon.section} onClick={() => {setCurrentIcon(null)}} link={''} /></motion.div>
+                <motion.div initial={{opacity: 0, y: 0, x:0}} animate={{opacity: 1, y: -200, x: 0}} exit={{opacity: 0, y: -200, x: 0}}><MapInfoBlock close={{currentIcon, setCurrentIcon}} image={currentIcon.img} section={currentIcon.section} onClick={() => {setCurrentIcon(null)}} link={''} /></motion.div>
               )
             }
 
@@ -223,15 +218,6 @@ const page: FC = () => {
           
           </Col>
 
-        </Row>
-
-
-        <Row className='mb-5'>
-          <Col className='mb-5'>
-
- 
-
-          </Col>
         </Row>
 
     </Container>

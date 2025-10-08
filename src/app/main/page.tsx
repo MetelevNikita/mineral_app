@@ -30,7 +30,7 @@ const page: FC = () => {
 
       <Col className='d-flex justify-content-center align-items-center mb-3'>
 
-          <HorizontalBlock path={'/main/minerale'} imgSrc={imgMinerale} imgWidth={129} imgHeight={116} text={'Пройти видеогид по минералам'} btnText={'Начать'} onClick={() => {}} />
+          <HorizontalBlock path={'/main/minerale'} imgSrc={imgBuild} imgWidth={139} imgHeight={116} text={'Пройти видеогид по минералам'} btnText={'Начать'} onClick={() => {}} />
 
       </Col>
 
@@ -42,11 +42,11 @@ const page: FC = () => {
         <Col md={12}  className='d-flex justify-content-center align-items-center mb-3'>
 
 
-              <div className={styles.vertical_box}><VerticalBlock path={'/main/rules'} imgSrc={imgGromofon} imgWidth={102} imgHeight={100} text={'Правила музея'} onClick={() => {}} /></div>
+              <div className={styles.vertical_box}><VerticalBlock path={'/main/rules'} imgSrc={imgGromofon} imgWidth={132} imgHeight={100} text={'Правила музея'} onClick={() => {}} /></div>
 
 
 
-              <div className={styles.vertical_box}><VerticalBlock path={'/main/review'} imgSrc={imgHand} imgWidth={109} imgHeight={96} text={'Оставить отзыв'} onClick={() => {}} /></div>
+              <div className={styles.vertical_box}><VerticalBlock path={'/main/review'} imgSrc={imgHand} imgWidth={139} imgHeight={96} text={'Оставить отзыв'} onClick={() => {}} /></div>
 
 
         </Col>
@@ -55,7 +55,7 @@ const page: FC = () => {
 
         <Col className='d-flex justify-content-center align-items-center mb-3'>
 
-            <HorizontalBlock path='/main/welcome' imgSrc={imgBuild} imgWidth={138} imgHeight={110} text={'Приветственное видео музея'} btnText={'Смотреть'} onClick={() => {}} />
+            <HorizontalBlock path='/main/welcome' imgSrc={imgMinerale} imgWidth={139} imgHeight={110} text={'Приветственное видео музея'} btnText={'Смотреть'} onClick={() => {}} />
 
         </Col>
 
