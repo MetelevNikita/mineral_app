@@ -26,7 +26,7 @@ const page: FC = () => {
   return (
 
     <Container>
-      <Row className='mt-3'>
+      <Row className='mt-3 mb-5'>
 
       <Col className='d-flex justify-content-center align-items-center mb-3'>
 
@@ -53,7 +53,7 @@ const page: FC = () => {
 
         {/*  */}
 
-        <Col className='d-flex justify-content-center align-items-center mb-3'>
+        <Col className='d-flex justify-content-center align-items-center mb-5'>
 
             <HorizontalBlock path='/main/welcome' imgSrc={imgMinerale} imgWidth={139} imgHeight={110} text={'Приветственное видео музея'} btnText={'Смотреть'} onClick={() => {}} />
 

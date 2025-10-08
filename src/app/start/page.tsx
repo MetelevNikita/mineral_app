@@ -64,7 +64,7 @@ const page: FC = () => {
 
   return (
     
-    <Container>
+    <Container className='mb-5'>
       <Row>
         <Col className='d-flex flex-column justify-content-center align-items-center'>
       <div className={styles.container}>
