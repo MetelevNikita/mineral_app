@@ -57,7 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {children}
 
 
-            <Row className="">
+            <Row className="mt-1 mb-4">
 
                 <Col>
                     <SocialInfo colorText={"#000000"} colorLine={"#D8DADC"} />

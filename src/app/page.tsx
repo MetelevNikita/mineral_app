@@ -72,7 +72,7 @@ const page: FC = () => {
         <div className={styles.image_background}>
 
 
-                <Row className="mb-4 mt-3 d-flex justify-content-between">
+                <Row className="mb-4 mt-4 d-flex justify-content-between">
                   <Col className='d-flex d-flex justify-content-between' style={{width: '400px'}}>
                     {
                         partnersArr.map((item: partnersArrType, index: number): React.ReactNode => {

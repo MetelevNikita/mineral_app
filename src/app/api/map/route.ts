@@ -66,6 +66,8 @@ export const GET = async () => {
       })
     }
 
+    console.log('done')
+
     return NextResponse.json(
       mineralMap
     )
@@ -79,7 +81,7 @@ export const GET = async () => {
       })
     }
 
-    NextResponse.json({
+    return NextResponse.json({
       error: {
         message: "Неизвестная ошибка",
         code: 500,

@@ -48,6 +48,15 @@ export type mapBlockArrType = {
 }
 
 
+export type mineralMapDataType = {
+    id: number,
+    section: string,
+    title: string,
+    description: string,
+    img: string | StaticImageData,
+}
+
+
 
 // user
 

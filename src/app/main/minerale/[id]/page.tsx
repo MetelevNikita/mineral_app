@@ -100,21 +100,21 @@ const parseDescription = currentMinerale.description.split('\n').map((line: stri
   return (
     <Container>
             <Row>
-                <Col className='d-flex justify-content-center align-items-center mb-3'>
+                <Col className='d-flex justify-content-center align-items-center mb-2'>
 
                   <VideoBlock videoSrc={urlNew} />
                   
                 </Col>
             </Row>
 
-            <Row>
+            <Row className=''>
                 <Col className='d-flex justify-content-center align-items-center mb-3'>
                   <MyAcardeon title={currentMinerale.title} content={parseDescription} image={''} />
                 </Col>
             </Row>
 
 
-            <Row>
+            <Row className=''>
               <Col className='d-flex justify-content-center align-items-center mb-2'>
 
                 <Link href={`${id}/test/`}><MyButton text={'Пройти тест'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>

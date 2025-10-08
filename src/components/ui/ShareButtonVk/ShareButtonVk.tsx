@@ -2,7 +2,12 @@
 
 
 import { FC, useEffect, useRef, useState } from 'react'
-import * as VKID from '@vkid/sdk';
+
+
+// styles
+
+import styles from './ShareButoonVk.module.css'
+
 
 // utils
 
@@ -148,7 +153,7 @@ const ShareButtonVk: FC<ShareButtomVkProps> = ({ title, icon }) => {
   }
 
   return (
-    <button  onClick={startAuthorization} disabled={isProcessing}>
+    <button className={styles.btn}  onClick={startAuthorization} disabled={isProcessing}>
       {isProcessing ? 'Обработка...' : 'Поделиться в VK'}
     </button>
   )

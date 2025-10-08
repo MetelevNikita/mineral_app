@@ -29,14 +29,14 @@ const Status: FC<StatusProps> = ({ title, img, onClick }) => {
         <div className={styles.top_container}>
 
             <div className={styles.top_content}>
-                <Image src={img} width={74} height={79} alt={'status_icon'} />
-                <div className={styles.top_title}>{title}</div>
+                <div className={styles.image_container}>
+                    <Image src={img} width={74} height={79} alt={'status_icon'} />
+                </div>
+                <div className={styles.top_title}>Поздравляем Вы {title}</div>
             </div>
 
             <div className={styles.top_btn_container}>
                 <ShareButtonVk icon={img} title={title}/>
-                {/* <ShareButtonPhpProps title={'TEST'} icon={''} /> */}
-
             </div>
 
 
