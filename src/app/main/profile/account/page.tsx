@@ -154,7 +154,7 @@ const userProfile = currentUser[0].profile || {}
                 <div className={styles.avatar_container}>
 
                     {
-                        (previweAvatar) ? <div className={styles.avatar_box}><Image width={100} height={50} className={styles.preview_image} src={previweAvatar} alt={'empty_avatar'}/></div> : (!currentUser[0].profile || currentUser[0].profile?.avatar == '') ? <div className={styles.avatar_box}><Image src={emptyAvatar} width={100} height={50} alt={'empty_avatar'}/></div> : <div className={styles.avatar_box}><Image className={styles.avatar} src={currentUser[0].profile.avatar} width={80} height={30} alt={'empty_avatar'}/></div>
+                        (previweAvatar) ? <div className={styles.avatar_box}><Image width={100} height={50} className={styles.preview_image} src={previweAvatar} alt={'avatar'}/></div> : (!currentUser[0].profile || currentUser[0].profile?.avatar == '') ? <div className={styles.avatar_box}><Image src={emptyAvatar} width={100} height={50} alt={'empty_avatar'}/></div> : <div className={styles.avatar_box}><Image className={styles.avatar} src={currentUser[0].profile.avatar} width={80} height={30} alt={'empty_avatar'}/></div>
                     }
                    
                 </div>

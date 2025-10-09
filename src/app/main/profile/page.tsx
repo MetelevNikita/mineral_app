@@ -168,7 +168,7 @@ const page: FC = () => {
             <Col className='d-flex justify-content-center align-items-center mb-3'>
 
                 <div className={styles.collection_container}>
-                    <div className={styles.collection_title}>Ваша коллекция миниралов</div>
+                    <div className={styles.collection_title}>Ваша коллекция минералов</div>
                     <div className={styles.collection_item_box}>
 
 
