@@ -17,6 +17,7 @@ export const GET = async () => {
     try {
 
         const allMineral = await prisma.mineral.findMany({
+            orderBy: { id: 'asc' },
             include: {
                 question: {
                     include: {

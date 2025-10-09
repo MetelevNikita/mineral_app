@@ -229,6 +229,12 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
             console.log(image.name)
             const currentImageName = path.parse(currentMineral.image).base
 
+            // delete file
+
+            fs.unlinkSync(path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath, currentImageName))
+
+            console.log(`Файл ${currentImageName} удален`)
+
             // download file
 
             const buffer = await image.arrayBuffer()
@@ -238,10 +244,6 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
             // url to DB
 
             updateData.image = '/api/uploads/mineral/' + endFolderPath + '/' + image.name
-
-            // 
-
-            fs.unlinkSync(path.join(uploadFolder, currentImageName))
 
             } catch (error) {
                 console.error('Ошибка записи фото:', error);
@@ -254,9 +256,17 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
         if (video !== null) {
 
             try {
+
+
                 
                 console.log(video.name)
                 const currentVideoName = path.parse(currentMineral.video).base
+
+                // delete file
+
+                fs.unlinkSync(path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath, currentVideoName))
+
+                console.log(`Файл ${currentVideoName} удален`)
 
                 // download file
 
@@ -279,9 +289,7 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
 
                 updateData.video = '/api/uploads/mineral/' + endFolderPath + '/' + video.name
 
-                // delete file
 
-                fs.unlinkSync(uploadPath)
 
             } catch (error) {
                 console.error('Ошибка записи видео:', error);
