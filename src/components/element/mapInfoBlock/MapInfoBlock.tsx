@@ -90,15 +90,16 @@ interface MapInfoBlockProps {
     image: string | StaticImageData
     section: string
     onClick: () => void
-    link: string
+    id: number
     close: any
 
 }
 
-const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, link, close  }) => {
+const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, close  }) => {
 
 
   const [currentMineral, setCurrentMineral] = useState<any | null>(null)
+  const [currentReduxMneralId, setCurrentReduxMneralId] = useState<number | null>(null)
   const {currentIcon, setCurrentIcon} = close
 
   const currentSectionData = mineralData.filter((item) => {
@@ -107,6 +108,9 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, link, cl
           return item
       }
   })
+
+
+  console.log(currentReduxMneralId)
 
 
   return (
@@ -125,14 +129,14 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, link, cl
                         (currentMineral) ?
 
                         (
-                        <MapMineralCurrent title={currentMineral.title} description={currentMineral.description} image={currentMineral.img} />
+                        <MapMineralCurrent id={{currentReduxMneralId, setCurrentReduxMneralId}} title={currentMineral.title} description={currentMineral.description} image={currentMineral.img} />
                         )
                         
                         :
                         
                         (
                           currentSectionData.map((item, index) => {
-                            return <MapMineralBlock onClick={() => {setCurrentMineral(item)}} key={index+1} title={item.title} icon={item.img}/>
+                            return <MapMineralBlock id={item.id} onClick={() => {setCurrentMineral(item)}} key={index+1} title={item.title} icon={item.img}/>
                           })
                         )
                         
@@ -143,7 +147,7 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, link, cl
 
                   <div className={styles.bottom}>
 
-                      <Link href={link}><MyButton text={'Закрыть'} btn={styles.btn} type={'button'} onClick={() => {setCurrentIcon(null)}} /></Link>
+                     <MyButton text={(currentMineral) ? 'Перейти' : 'Закрыть'} btn={styles.btn} type={'button'} onClick={() => {(currentMineral) ? window.location.href = `/main/minerale/${currentReduxMneralId}` : setCurrentIcon(null)}} />
 
                   </div>
 
