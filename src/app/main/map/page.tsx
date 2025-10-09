@@ -210,7 +210,7 @@ const page: FC = () => {
 
             {
               (currentIcon !== null) && (
-                <motion.div initial={{opacity: 0, y: 0, x:0}} animate={{opacity: 1, y: -200, x: 0}} exit={{opacity: 0, y: -200, x: 0}}><MapInfoBlock close={{currentIcon, setCurrentIcon}} image={currentIcon.img} section={currentIcon.section} onClick={() => {setCurrentIcon(null)}} link={''} /></motion.div>
+                <motion.div initial={{opacity: 0, y: 0, x:0}} animate={{opacity: 1, y: -250, x: 0}} exit={{opacity: 0, y: -200, x: 0}}><MapInfoBlock id={currentIcon.id} close={{currentIcon, setCurrentIcon}} image={currentIcon.img} section={currentIcon.section} onClick={() => {setCurrentIcon(null)}}/></motion.div>
               )
             }
 

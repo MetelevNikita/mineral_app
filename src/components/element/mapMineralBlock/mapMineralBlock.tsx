@@ -11,12 +11,13 @@ import Image, { StaticImageData } from 'next/image'
 // 
 
 interface MapMineralBlockProps {
+  id: number
   title: string
   icon: StaticImageData | string
   onClick?: () => void
 }
 
-const MapMineralBlock: FC<MapMineralBlockProps> = ({ title, icon, onClick }) => {
+const MapMineralBlock: FC<MapMineralBlockProps> = ({id, title, icon, onClick }) => {
 
 
   return (
