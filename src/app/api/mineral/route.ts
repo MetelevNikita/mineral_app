@@ -83,11 +83,6 @@ export const POST = async (req: Request, res: Response) => {
         const filename = image.name
         const buffer = await image.arrayBuffer();
         const fileBuffer = Buffer.from(buffer);
-
-
-
-
-
         fsPromices.writeFile(currentWriteFolder + '/' + filename, fileBuffer)
 
 
