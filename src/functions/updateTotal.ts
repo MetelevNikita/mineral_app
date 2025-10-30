@@ -11,7 +11,7 @@ export const updateTotal = async (id: string, total: number) => {
 
 
         const data = await responce.json()
-
+        console.log(data)
         return data
 
     

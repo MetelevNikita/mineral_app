@@ -71,6 +71,30 @@ export const POST = async (req: Request | any, res: Response | any): Promise<any
         }
 
 
+        // генерация кода
+
+
+        const code = generateRandomCode();
+
+        (await cookies()).set('code', code.toString());
+        (await cookies()).set('email', email.toString());
+
+
+        console.log('Код после регистрации отправляется на почту:', code);
+        const messagetoEmail = await sendRandomCode(email, code) as {status: number, message: string};
+
+        console.log(`Данные об отправке письма на почту ${messagetoEmail}`)
+
+        if (messagetoEmail.message === 'error') {
+            return NextResponse.json({
+                message: 'Ошибка отправки кода на email'
+            })
+        }
+
+
+        //
+
+
         const hashPassword = await bcrypt.hash(password, 10)
 
         const newUser = await prisma.user.create({
@@ -90,23 +114,12 @@ export const POST = async (req: Request | any, res: Response | any): Promise<any
         })
 
         if (!newUser) {
-            return NextResponse.json({message: "User not created"})
+            return NextResponse.json({message: "Пользователь не создан"})
         }
 
 
-        const code = generateRandomCode();
 
-        //
-
-        (await cookies()).set('code', code.toString());
-        (await cookies()).set('email', email.toString());
-
-
-        console.log('Код после регистрации отправляется на почту:', code);
-        await sendRandomCode(email, code);
-
-
-        return NextResponse.json({message:'Email send code'})
+        return NextResponse.json({message: `Сообщение отправлено на почту ${email}`})
 
 
         
