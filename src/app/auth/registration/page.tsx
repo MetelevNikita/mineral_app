@@ -60,18 +60,21 @@ const Registration: FC = () => {
   const registrationUser = async (user: any) => {
     const registration = await createUser(user)
 
-    if (registration?.message === 'empty field') {
+    if (registration?.message === 'Не заполнены поля') {
       setError(true)
       setModalMessage('Заполните все поля')
-    } else if (registration?.message === 'password repeat') {
+    } else if (registration?.message === 'Пароли не совпадают') {
       setError(true)
       setModalMessage('Пароли не совпадают')
-    } else if (registration?.message === 'politic') {
+    } else if (registration?.message === 'Не активировано соглашение') {
       setError(true)
       setModalMessage('Необходимо согласиться с политикой')
-    } else if (registration?.success === true) {
+    } else if (registration?.message === `Сообщение отправлено на почту ${user.email}`) {
       setIsAuth(true)
       setModalMessage('Успешная регистрация')
+    } else if (registration?.message === 'Ошибка отправки кода на email') {
+      setError(true)
+      setModalMessage('Ошибка запроса на Email, попробуйте позже')
     }
 
   }

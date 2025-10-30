@@ -24,7 +24,7 @@ const VideoBlock:FC<VideoBlockProps> = ({ videoSrc }) => {
   return (
 
           <div className={styles.video_mute} onClick={() => onMuteVideo(prev => !prev)}>
-            <video className={styles.bg_video} autoPlay loop muted={muteVideo}>
+            <video className={styles.bg_video} autoPlay loop playsInline muted={muteVideo}>
                 <source src={videoSrc} type="video/mp4" />
             </video>
 

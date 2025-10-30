@@ -88,7 +88,7 @@ const page: FC = () => {
 
 
                   <motion.div initial={{opacity: 0, scale: 0.5}} animate={{opacity: 1, scale: 1}} transition={{duration: 2}} className={styles.image_box}>
-                  <Image src={logo_icon} width={247} height={247} alt={'logo_icon'}/>
+                  <Image src={logo_icon} width={180} height={220} alt={'logo_icon'}/>
                   </motion.div>
 
                   </Col>

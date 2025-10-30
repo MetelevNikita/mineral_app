@@ -5,32 +5,25 @@
 export const createUser = async (user: any) => {
     try {
 
-
         const { name, email, password, confirmPassword, politic } = user
 
         if (name == '' || email == '' || password == '') {
             return {
-                message: 'empty field',
-                succes: false,
+                message: 'Не заполнены поля',
                 status: 400
             }
         }
-
-    
 
         if (!politic) {
             return {
-                message: 'politic',
-                succes: false,
+                message: 'Не активировано соглашение',
                 status: 400
             }
         }
 
-
         if (password !== confirmPassword) {
             return {
-                message: 'password repeat',
-                succes: false,
+                message: 'Пароли не совпадают',
                 status: 400
             }
         }
@@ -59,18 +52,18 @@ export const createUser = async (user: any) => {
         }
 
         const data = await responce.json()
-        return {
-            message: data.message,
-            success: true,
-            status: 200
-        }
-
+        console.log(data)
+        return data
 
 
     } catch (error: Error | unknown) {
 
         if (error instanceof Error) {
             console.error(`Ошибка регистрации пользователя: ${error.message}`)
+            return {
+                message: error.message,
+                status: 500
+            }
         }
         
     }

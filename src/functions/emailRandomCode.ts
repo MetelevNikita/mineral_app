@@ -35,12 +35,29 @@ export const sendRandomCode = async (email: string, code: number) => {
         })
 
 
-        console.log(`Сообщение отправлено на почту ${email}`, info.messageId);
+        if (info && info.messageId) {
+            console.log(`Сообщение отправлено на почту ${email}. ID сообщения: ${info.messageId}`);
+            return {
+                status: 200,
+                message: 'saccess'
+            }
+        } else {
+            console.log(`Ошибка при отправке сообщения на почту ${email}`);
+            return {
+                status: 400,
+                message: 'error'
+            }
+        }
+        
+
         
     } catch (error: Error | unknown) {
         if (error instanceof Error) {
             console.error(`Не удалось отправить код подтверждения на почту ${email} ${error.message}`)
-            return `Не удалось отправить код подтверждения на почту ${email} ${error.message}`
+            return {
+                status: 400,
+                message: 'error'
+            }
         }
 
         console.error(error)
