@@ -32,14 +32,14 @@ const SocialInfo: FC<socialLogoProps> = ({ colorLine, colorText }) => {
       id: 1,
       title: 'Сайт',
       img: webIcon,
-      url: '#'
+      url: 'https://sgm.ru/?ysclid=mhef6puc10304866610'
     },
 
     {
       id: 2,
       title: 'Вконтакте',
       img: vkIcon,
-      url: '#'
+      url: 'https://vk.com/sgm_ras'
     }
   ]
 

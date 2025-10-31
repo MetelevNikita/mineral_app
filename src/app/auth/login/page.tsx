@@ -32,6 +32,7 @@ import MyCheckBox from '@/components/ui/MyCheckBox/MyCheckBox'
 
 const Login: FC = () => {
 
+
   const [isAuth, setIsAuth] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const [errorText, setErrorText] = useState<string>('')
@@ -87,7 +88,7 @@ const Login: FC = () => {
                   />
               }
 
-              {
+              {/* {
                 error &&
                   <ModalResult
                     imgTop={modelIconError}
@@ -101,7 +102,7 @@ const Login: FC = () => {
                     colorBackground={{background: 'linear-gradient(262deg, #C92225 3.49%, #FF8041 121.77%)'}}
                     colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}                  
                 />
-              }
+              } */}
               
               
               </Col>
@@ -119,8 +120,9 @@ const Login: FC = () => {
                   name={'email'}
                   title={'Ваша почта'}
                   type={'text'}
-                  placeholder={'email'} style={{marginBottom: '15px'}}
+                  placeholder={''} style={{marginBottom: '15px'}}
                   borderColor={(errorField) ? {borderColor: 'red !important'} : {}}
+                  errorField={{error, setError}}
                   />
                   
                 <MyInput
@@ -129,9 +131,10 @@ const Login: FC = () => {
                   name={'password'}
                   title={'Ваш пароль'}
                   type={'password'}
-                  placeholder={'password'}
+                  placeholder={''}
                   style={{marginBottom: '15px'}}
                   borderColor={(error) ? {borderColor: 'red'} : {borderColor: '#D8DADC'}}
+                  errorField={{error, setError}}
                   />
                   
 
@@ -146,6 +149,17 @@ const Login: FC = () => {
                   }} title={'Запомнить меня'} checked={check} name={'remember'} />
                   <div className={styles.forget_pass_title}>Забыли пароль?</div>
                 </div>
+
+
+                {
+                  error && (
+                    <Col className='d-flex justify-content-start align-items-center mb-3'>
+                    
+                      <div className={styles.error_message}>{errorText} *</div>
+                    
+                    </Col>
+                  )
+                }
 
                 <MyButton style={{marginBottom: '20px'}} text={'Войти'} btn={styles.btn} onClick={() => {
                   userIn()

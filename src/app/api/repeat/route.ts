@@ -7,9 +7,14 @@ import { sendRandomCode } from '@/functions/emailRandomCode'
 
 
 export const POST = async (req: Request) => {
+
+    
+
     try {
 
         const { email, code } = await req.json()
+
+        console.log(email, code)
 
         if (!email || !code) {
             return NextResponse.json({
@@ -21,9 +26,11 @@ export const POST = async (req: Request) => {
 
 
         const data = await sendRandomCode(email, code)
+        console.log(data)
 
-        if (!data) {
+        if (data.message == 'error') {
             return NextResponse.json({
+                status: 400,
                 message: "Сообщение не отправлено - проверьте настройки VPN или отключите его",
             })
         }
@@ -31,7 +38,10 @@ export const POST = async (req: Request) => {
 
         (await cookies()).set('code', code)
 
-        return NextResponse.json({message: "Сообщение отправлено",})
+        return NextResponse.json({
+            status: 200,
+            message: "Сообщение отправлено"
+        })
 
 
 

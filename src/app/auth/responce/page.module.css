@@ -43,12 +43,14 @@
 }
 
 
-.num {
+
+.input {
     width: 56px;
     height: 65px;
     flex-shrink: 0;
     border-radius: 15px;
-    border: 1px solid #D8DADC;
+    border: 1px solid #000000;
+    color: black;
 
     /*  */
 
@@ -58,6 +60,24 @@
     margin-left: 3px;
     margin-right: 3px;
 
+}
+
+
+.input_error {
+    width: 56px;
+    height: 65px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    border: 1px solid #E64646;
+    color: #E64646;
+
+    /*  */
+
+    font-size: 27px;
+
+    text-align: center;
+    margin-left: 3px;
+    margin-right: 3px;
 }
 
 /*  */
@@ -83,4 +103,21 @@
     flex-shrink: 0;
     border-radius: 10px;
     background: #FFBC41;
+    color: white;
+}
+
+/*  */
+
+
+.error_message {
+
+    width: 353px;
+    height: max-content;
+
+    /*  */
+
+    font-size: 16px;
+    font-weight: 600;
+    color: #E64646;
+    text-align: center;
 }

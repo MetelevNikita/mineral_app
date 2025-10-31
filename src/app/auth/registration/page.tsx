@@ -105,7 +105,7 @@ const Registration: FC = () => {
                   />
               }
 
-              {
+              {/* {
                 error &&
                   <ModalResult
                     imgTop={ModalIconError}
@@ -118,7 +118,7 @@ const Registration: FC = () => {
                     colorBackground={{background: 'linear-gradient(262deg, #C92225 3.49%, #FF8041 121.77%)'}}
                     colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}                  
                 />
-              }
+              } */}
               
               
               </Col>
@@ -133,10 +133,10 @@ const Registration: FC = () => {
 
               <div className={styles.title}>Добро пожаловать</div>
 
-                <MyInput value={user.name} onChange={(e) => {setUser({...user, name: e.target.value})}} name={'name'}  title={'Имя*'} type={'text'} placeholder={'Имя'} style={{marginBottom: '15px'}} />
-                <MyInput value={user.email} onChange={(e) => {setUser({...user, email: e.target.value})}} name={'email'} title={'Почта*'} type={'email'} placeholder={'email'} style={{marginBottom: '15px'}} />
-                <MyInput value={user.password} onChange={(e) => {setUser({...user, password: e.target.value})}} name={'password'} title={'Пароль*'} type={'password'} placeholder={'password'} style={{marginBottom: '15px'}} />
-                <MyInput value={user.confirmPassword} onChange={(e) => {setUser({...user, confirmPassword: e.target.value})}} name={'confirmPassword'} title={'Повтор пароля*'} type={'password'} placeholder={'confirmPassword'} style={{marginBottom: '15px'}} />
+                <MyInput value={user.name} onChange={(e) => {setUser({...user, name: e.target.value})}} name={'name'}  title={'Имя'} type={'text'} placeholder={''} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
+                <MyInput value={user.email} onChange={(e) => {setUser({...user, email: e.target.value})}} name={'email'} title={'Почта'} type={'email'} placeholder={''} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
+                <MyInput value={user.password} onChange={(e) => {setUser({...user, password: e.target.value})}} name={'password'} title={'Пароль'} type={'password'} placeholder={''} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
+                <MyInput value={user.confirmPassword} onChange={(e) => {setUser({...user, confirmPassword: e.target.value})}} name={'confirmPassword'} title={'Повтор пароля'} type={'password'} placeholder={''} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
 
                 {/*  */}
 
@@ -145,6 +145,17 @@ const Registration: FC = () => {
                   <MyCheckBox name={'politic'} title={'Я соглашаюсь на обработку персональных данных'} onClick={handleCheckChange} checked={check} />
 
                 </Col>
+
+
+                {
+                  error && (
+                    <Col className='d-flex justify-content-start align-items-center mb-3'>
+                    
+                      <div className={styles.error_message}>{modalMessage} *</div>
+                    
+                    </Col>
+                  )
+                }
 
                   
                 {/*  */}
