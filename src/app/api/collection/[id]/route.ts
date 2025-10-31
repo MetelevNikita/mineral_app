@@ -14,7 +14,7 @@ export const DELETE = async (request: Request, context: {params: {id: string}}) 
   try {
 
 
-    const collectionPath = path.join(process.cwd(), 'public', 'uploads' ,'collections')
+    const collectionPath = path.join(process.cwd(), 'src', 'app', 'uploads' ,'collections')
 
     const { id } = await context.params
     console.log(id)
@@ -29,7 +29,7 @@ export const DELETE = async (request: Request, context: {params: {id: string}}) 
       }
     })
 
-    console.log(getCollectionMineral)
+    console.log('Найденный минерал в коллекции', getCollectionMineral)
 
 
     const urlPars = path.parse(getCollectionMineral?.image as string)
