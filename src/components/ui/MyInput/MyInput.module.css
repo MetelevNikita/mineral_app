@@ -12,7 +12,19 @@
 
     /*  */
 
-    margin-bottom: 5;
+    margin-bottom: 10px;
+}
+
+.input_span_error {
+    color: #E64646;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 125%; /* 17.5px */
+
+    /*  */
+
+    margin-bottom: 10px;
 }
 
 
@@ -33,6 +45,21 @@
     border-radius: 10px;
     border: 1px solid #D8DADC;
     background: #FFF;
+}
+
+
+.input_error {
+    display: flex;
+    width: 353px;
+    padding: 18px 16px;
+    align-items: center;
+    gap: 10px;
+
+    /*  */
+
+    border-radius: 10px;
+    border: 1px solid #E64646;
+    color: #E64646
 }
 
 

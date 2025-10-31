@@ -21,7 +21,7 @@ import nodemailer from 'nodemailer'
 })
 
 
-export const sendRandomCode = async (email: string, code: number) => {
+export const sendRandomCode = async (email: string, code: number): Promise<{status: number, message: string}> => {
 
     try {
 
@@ -61,7 +61,10 @@ export const sendRandomCode = async (email: string, code: number) => {
         }
 
         console.error(error)
-        return error
+        return {
+            status: 400,
+            message: 'error'
+        }
         
     }
 

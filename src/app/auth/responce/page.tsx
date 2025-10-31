@@ -42,32 +42,44 @@ const page: FC = () => {
     const inputsRef = useRef<any>([])
 
 
+
+
     useEffect(() => {
-            
-        const intervalId = setInterval(() => {
+        const interval = setInterval(() => {
+            setTime((prev: any): string => {
 
-            if (time > 0) {
-            setTime((prevCounter: any) => {
+                if (!prev) return '00'
+                
+                let second = (prev <= 10) ? `0${prev - 1}` : `${prev - 1}`
 
-                    if (prevCounter === 0) {
-                        clearInterval(intervalId)
-                        return 0
-                    }
-                    return prevCounter - 1
-            
-                })
-            } 
-
-    }, 1000)
-
+                if (second === '00') {
+                    clearInterval(interval)
+                    return '00'
+                }
+                
+                return second
+                
+            })
+        }, 1000)
     }, [])
+
+
+
+
+
+
+    
+        
+    
 
     const length = 6
     const arr = [1,2,3,4,5,6]
 
-    const [time, setTime] = useState(60)
+    const [time, setTime] = useState<string>('15')
     const [code, setCode] = useState<string[]>([])
     const [repeatCode, setRepeatCode] = useState<any>()
+
+    console.log(time)
     
 
     let newCode: number | string = ''
@@ -111,7 +123,7 @@ const page: FC = () => {
         }
 
 
-        if (time === 0) {
+        if (time === '00') {
 
             if (code.join('') !== repeatCode.toString()) {
                 setErrorText('Неверный код')
@@ -142,6 +154,28 @@ const page: FC = () => {
     }
 
 
+    const repeatCodeHandler = async () => {
+        try {
+            newCode = generateRandomCode() as number
+            setRepeatCode(newCode)
+            const sendRepeat = await repeatEmailCode(email as string, newCode.toString())
+
+            console.log(sendRepeat)
+
+            if (sendRepeat.message === 'Сообщение не отправлено - проверьте настройки VPN или отключите его') {
+                setErrorText('Сообщение не отправлено - проверьте настройки VPN или отключите его')
+                setError(true)
+            } else {
+                console.log('sendRepeat', sendRepeat)
+                setError(false)
+            }
+
+        } catch (error) {
+            
+        }
+    }
+
+
 
   return (
 
@@ -165,22 +199,6 @@ const page: FC = () => {
                 colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}                  
               />
             }
-
-
-            {
-              (error) &&
-                <ModalResult
-                    imgTop={modalIconError}
-                    onClickLink={() => {
-                    setError(false)
-                    }}
-                    text={errorText}
-                    textBtn={'Назад'}
-                    colorBackground={{background: 'linear-gradient(262deg, #C92225 3.49%, #FF8041 121.77%)'}}
-                    colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}                  
-                />
-            }
-
 
           </Col>
         </Row>
@@ -213,31 +231,45 @@ const page: FC = () => {
         <Row className='mb-5'>
             <Col className='d-flex flex-row justify-content-center align-items-center'>
 
+                {
 
-
-                        {
-
-                            arr.map((item: number, index: number) => {
-                               return (
-                                <input style={(errorFiled) ? {borderColor: 'red'} : {borderColor: ''}} key={index} className={styles.num} type="text" min={0} max={9} step={1} maxLength={1} inputMode='numeric' onFocus={() => {
-                                    setErrorFiled(false)
+                    arr.map((item: number, index: number) => {
+                        return (
+                            <input
+                                className={(error) ? styles.input_error : styles.input} key={index} 
+                                type="text"
+                                min={0}
+                                max={9}
+                                step={1}
+                                maxLength={1}
+                                inputMode='numeric' onFocus={() => {
+                                setError(false)
                                 }}
-                                    ref={(el) => {
-                                        inputsRef.current[index] = el
-                                    }}
-                                    onChange={(e) => {
-                                        handleInput(e.target.value, index)
-                                    }}
-                                />
-                               )
-                            })
-                            
-                        }
-
-
-
+                                ref={(el) => {
+                                    inputsRef.current[index] = el
+                                }}
+                                onChange={(e) => {
+                                    handleInput(e.target.value, index)
+                                }}
+                            />
+                        )
+                    })
+                    
+                }
 
             </Col>
+        </Row>
+
+        <Row>
+            {
+                error && (
+                    <Col className='d-flex justify-content-center align-items-center mb-3'>
+                    
+                        <div className={styles.error_message}>Неверный код, пожалуйста, повторите попытку</div>
+                    
+                    </Col>
+                )
+            }
         </Row>
 
 
@@ -262,14 +294,24 @@ const page: FC = () => {
         <Row className='mb-5'>
             <Col className='d-flex flex-column justify-content-start align-items-center'>
 
-            {(time === 0) && <MyButton text={'отправить повторно'} btn={styles.btn} onClick={() => {
-                newCode = generateRandomCode() as number
-                setRepeatCode(newCode)
-                repeatEmailCode(email as string, newCode.toString())
-                }} type={'button'} />}
+            {(time == '00') && <MyButton text={'отправить повторно'} btn={styles.btn} onClick={async () => {
+                await repeatCodeHandler()
+            }} type={'button'} />}
 
             </Col>
         </Row>
+
+
+
+        {
+            (error) && (
+                <Row className='mb-5'>
+                    <Col className='d-flex flex-column justify-content-center align-items-center'>
+                        <div className={styles.error_message}>{errorText}</div>
+                    </Col>
+                </Row>
+            )
+        }
     </Container>
  
   )

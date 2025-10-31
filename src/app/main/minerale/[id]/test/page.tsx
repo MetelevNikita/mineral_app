@@ -1,9 +1,8 @@
 'use client'
 
-import { FC, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from "motion/react"
 import { useRouter } from 'next/navigation'
-import { redirect } from 'next/navigation'
 
 // style
 

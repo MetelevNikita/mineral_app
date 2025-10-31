@@ -30,3 +30,19 @@
     /*  */
 
 }
+
+
+/* error */
+
+
+.error_message {
+
+    width: 353px;
+    height: 10px;
+
+    /*  */
+
+    font-size: 12px;
+    color: #E64646;
+    text-align: left;
+}

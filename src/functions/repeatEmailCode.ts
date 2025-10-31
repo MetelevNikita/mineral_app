@@ -18,7 +18,6 @@ export const repeatEmailCode = async (email: string, code: string) => {
         }
 
         const data = await responce.json()
-        alert(data.message)
         return data
         
         
