@@ -67,7 +67,6 @@ export default function RootLayout({
           <Container>
             <ReduxProvider>
                 {children}
-                {/* <InstalPrompts /> */}
             </ReduxProvider>
           </Container>
       </body>

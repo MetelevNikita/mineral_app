@@ -9,6 +9,8 @@ export const GET = async (req: NextRequest, { params }: {params: {folder: string
 
     const { folder, filename } = await params;
 
+    console.log(folder, filename)
+
 
     const folderPath = path.join(process.cwd(), "src", "app", "uploads", folder);
     console.log(folderPath)

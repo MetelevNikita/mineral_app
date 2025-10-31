@@ -39,8 +39,9 @@ export const POST = async (request: Request) => {
   try {
 
     const url = new URL(request.url)
+    console.log(url)
 
-    const collectionPath = path.join(process.cwd(), "public", "uploads" ,"collections")
+    const collectionPath = path.join(process.cwd(), "src", "app", "uploads" , "collections")
 
     if (!fs.existsSync(collectionPath)) {
       fs.mkdirSync(collectionPath, {
@@ -48,9 +49,7 @@ export const POST = async (request: Request) => {
       })
     }
 
-    
-
-
+  
     const formData = await request.formData()
 
     // 
@@ -63,7 +62,6 @@ export const POST = async (request: Request) => {
     const newImageName = urlParse.name + '_' + Date.now() + urlParse.ext
 
     // 
-
 
     const getMineral = await prisma.collectionMineral.findFirst({
       where: {
@@ -99,9 +97,7 @@ export const POST = async (request: Request) => {
     }
 
 
-
-
-    const imageUrl = `/uploads/collections/${newImageName}`
+    const imageUrl = `/api/uploads/collections/${newImageName}`
 
     const newCollectionMineral = await prisma.collectionMineral.create({
       data: {
@@ -110,6 +106,8 @@ export const POST = async (request: Request) => {
           }
       
     })
+
+    
 
     if (!newCollectionMineral) {
       return NextResponse.json({
