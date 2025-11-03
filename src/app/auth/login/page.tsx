@@ -57,9 +57,6 @@ const Login: FC = () => {
         } else if (data?.message === 'success') {
           setIsAuth(true)
         }
-
-
-
   }
 
 
@@ -68,6 +65,10 @@ const Login: FC = () => {
     <Container>
 
       <Row className='h-100 d-flex flex-column justify-content-center align-items-center'>
+
+
+
+        {/* MODAL */}
 
 
           <Row>
@@ -88,39 +89,23 @@ const Login: FC = () => {
                   />
               }
 
-              {/* {
-                error &&
-                  <ModalResult
-                    imgTop={modelIconError}
-                    onClickLink={() => {
-                      setError(false)
-                      setErrorField(true)
-                      return
-                    }}
-                    text={errorText}
-                    textBtn={'Назад'}
-                    colorBackground={{background: 'linear-gradient(262deg, #C92225 3.49%, #FF8041 121.77%)'}}
-                    colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}                  
-                />
-              } */}
-              
-              
               </Col>
           </Row>
+
+          {/*  */}
 
 
 
           <Col className='d-flex flex-column justify-content-center align-items-center'>
 
-              <div className={styles.title}>Добро пожаловать</div>
+              <div className={styles.title}>Вход</div>
 
                 <MyInput
                   value={user.email}
                   onChange={(e) => {setUser({...user, email: e.target.value})}}
                   name={'email'}
-                  title={'Ваша почта'}
                   type={'text'}
-                  placeholder={''} style={{marginBottom: '15px'}}
+                  placeholder={'Почта'} style={{marginBottom: '15px'}}
                   borderColor={(errorField) ? {borderColor: 'red !important'} : {}}
                   errorField={{error, setError}}
                   />
@@ -129,9 +114,8 @@ const Login: FC = () => {
                   value={user.password}
                   onChange={(e) => {setUser({...user, password: e.target.value})}}
                   name={'password'}
-                  title={'Ваш пароль'}
                   type={'password'}
-                  placeholder={''}
+                  placeholder={'Пароль'}
                   style={{marginBottom: '15px'}}
                   borderColor={(error) ? {borderColor: 'red'} : {borderColor: '#D8DADC'}}
                   errorField={{error, setError}}
@@ -147,7 +131,7 @@ const Login: FC = () => {
                     }))
 
                   }} title={'Запомнить меня'} checked={check} name={'remember'} />
-                  <div className={styles.forget_pass_title}>Забыли пароль?</div>
+                  <Link href={'/auth/reset'} className={styles.forget_pass_title}>Забыли пароль?</Link>
                 </div>
 
 
