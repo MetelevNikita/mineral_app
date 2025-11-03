@@ -101,8 +101,7 @@ const page = () => {
 
 
   return (
-    <Container>
-
+    <>
 
         <Row>
           <Col>
@@ -128,7 +127,8 @@ const page = () => {
 
 
         <Row className='mb-5'>
-            <Col className='d-flex justify-content-center align-items-center'>
+
+            <Col className='d-flex justify-content-center align-items-center mb-5'>
 
                 <div className={styles.button_container}>
 
@@ -137,10 +137,7 @@ const page = () => {
                 </div>
 
             </Col>
-        </Row>
 
-
-        <Row className='mb-5'>
             <Col className='d-flex flex-column justify-content-center align-items-center'>
 
               <div className={styles.title}>Вход</div>
@@ -166,7 +163,7 @@ const page = () => {
                 </Row>
             )
         }
-    </Container>
+    </>
   )
 }
 
