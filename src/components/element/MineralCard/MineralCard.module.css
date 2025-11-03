@@ -1,7 +1,7 @@
 .card_container {
     display: flex;
     width: 170px;
-    height: 255px;
+    min-height: 235px;
     justify-content: center;
     align-items: center;
     gap: 10px;
@@ -49,7 +49,7 @@
 
 .card_title {
     color: #000;
-    font-size: 15px;
+    font-size: 17px;
     font-style: normal;
     font-weight: 600;
     line-height: 125%; /* 21.25px */

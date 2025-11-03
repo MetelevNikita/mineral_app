@@ -26,7 +26,7 @@ interface MineralCardProps {
 
 const MineralCard: FC<MineralCardProps> = ({id, image, title }) => {
   return (
-    <motion.div className={styles.card_container} whileHover={{scale: 0.95}}>
+    <motion.div className={styles.card_container} whileHover={{scale: 0.95}} whileTap={{scale: 1.05}} onClick={() => {window.location.href = `minerale/${id}`}}>
 
         <div className={styles.card_image_wrapper}>
             <Image className={styles.card_image} src={image} alt={title} width={130} height={150}/>
@@ -38,9 +38,9 @@ const MineralCard: FC<MineralCardProps> = ({id, image, title }) => {
         </div>
 
 
-        <div className={styles.card_btn_wrapper}>
+        {/* <div className={styles.card_btn_wrapper}>
             <Link href={`minerale/${id}`}><MyButton text={'Посмотреть'} btn={styles.card_btn} onClick={() => {}} type={'button'} imgActive={true}/></Link>
-        </div>
+        </div> */}
 
       
     </motion.div>

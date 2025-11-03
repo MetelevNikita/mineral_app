@@ -99,31 +99,29 @@ const page: FC<Props> = () => {
 
 
   return (
-    <Container>
-
-      <Row className='mb-5'>
-            <Col className='d-flex justify-content-center align-items-center'>
-
-                <div className={styles.button_container}>
-
-                    <Link href={'/auth/login'}><Image src={backIcon} alt='back_icon' width={39} height={39}/></Link>
-
-                </div>
-
-            </Col>
-        </Row>
-
+    <>
 
       <Row>
+
+        <Col className='d-flex justify-content-center align-items-center mb-5'>
+
+            <div className={styles.button_container}>
+
+                <Link href={'/auth/login'}><Image src={backIcon} alt='back_icon' width={39} height={39}/></Link>
+
+            </div>
+
+        </Col>
+
+
         <Col className='d-flex flex-column justify-content-center align-items-center'>
-
-
 
 
           <div className={styles.title}>Вход</div>
           <div className={styles.subtitle}>Введите почту которая была зарегистрирована.На нее будет отправлен ссылка для сброса пароля.</div>
 
-          <MyInput title={'Ваш пароль'} type={'email'} placeholder={''} style={{marginBottom: '20px'}} value={email} onChange={(e: any) => {setEmail(e.target.value)}} borderColor={(error) ? {borderColor: 'red'} : {borderColor: '#D8DADC'}}/>
+  
+          <MyInput type={'email'} placeholder={''} style={{marginBottom: '20px'}} value={email} onChange={(e: any) => {setEmail(e.target.value)}} borderColor={(error) ? {borderColor: 'red'} : {borderColor: '#D8DADC'}}/>
 
 
 
@@ -153,7 +151,7 @@ const page: FC<Props> = () => {
 
         </Col>
       </Row>
-    </Container>
+    </>
   )
 }
 
