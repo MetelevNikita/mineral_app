@@ -15,10 +15,10 @@ import VerticalBlock from '@/components/element/VerticalBlcok/verticalBlock'
 
 // img
 
-import imgBuild from '@/../public/Image/pic1.svg'
-import imgGromofon from '@/../public/Image/pic2.svg'
-import imgHand from '@/../public/Image/pic3.svg'
-import imgMinerale from '@/../public/Image/pic4.svg'
+import imgBuild from '@/../public/Image/pic1.png'
+import imgGromofon from '@/../public/Image/pic2.png'
+import imgHand from '@/../public/Image/pic3.png'
+import imgMinerale from '@/../public/Image/pic4.png'
 
 const page: FC = () => {
 
