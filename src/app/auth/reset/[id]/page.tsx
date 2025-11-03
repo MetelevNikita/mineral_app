@@ -144,9 +144,9 @@ const page = () => {
               <div className={styles.subtitle}>Введите новый пароль</div>
 
 
-              <MyInput title={''} type={'password'} placeholder={'Придумайте пароль'} style={{marginBottom: '10px'}} value={newPassword.password} onChange={(e: any) => {setNewPassword({...newPassword, password: e.target.value})}} borderColor={(error) ? {borderColor: 'red'} : {borderColor: '#D8DADC'}}/>
+              <MyInput title={''} type={'password'} placeholder={'Придумайте пароль'} style={{marginBottom: '10px'}} value={newPassword.password} onChange={(e: any) => {setNewPassword({...newPassword, password: e.target.value})}} borderColor={(error) ? {borderColor: 'red'} : {borderColor: '#D8DADC'}} pass={true}/>
 
-              <MyInput title={''} type={'password'} placeholder={'Повторите пароль'} style={{marginBottom: '10px'}} value={newPassword.repeatPassword} onChange={(e: any) => {setNewPassword({...newPassword, repeatPassword: e.target.value})}} borderColor={(error) ? {borderColor: 'red'} : {borderColor: '#D8DADC'}}/>
+              <MyInput title={''} type={'password'} placeholder={'Повторите пароль'} style={{marginBottom: '10px'}} value={newPassword.repeatPassword} onChange={(e: any) => {setNewPassword({...newPassword, repeatPassword: e.target.value})}} borderColor={(error) ? {borderColor: 'red'} : {borderColor: '#D8DADC'}} pass={true}/>
 
               <MyButton text={'Сохранить'} btn={styles.btn} onClick={() => {changePasswordHandler()}} type={'button'} />
 
