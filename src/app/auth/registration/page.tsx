@@ -105,22 +105,6 @@ const Registration: FC = () => {
                   />
               }
 
-              {/* {
-                error &&
-                  <ModalResult
-                    imgTop={ModalIconError}
-                    onClickLink={() => {
-                      setError(false)
-                      return
-                    }}
-                    text={modalMessage}
-                    textBtn={'Назад'}
-                    colorBackground={{background: 'linear-gradient(262deg, #C92225 3.49%, #FF8041 121.77%)'}}
-                    colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}                  
-                />
-              } */}
-              
-              
               </Col>
           </Row>
       }
@@ -131,18 +115,22 @@ const Registration: FC = () => {
 
           <Col className='d-flex flex-column justify-content-center align-items-center'>
 
-              <div className={styles.title}>Добро пожаловать</div>
+              <div className={styles.title}>Зарегистрироваться</div>
 
-                <MyInput value={user.name} onChange={(e) => {setUser({...user, name: e.target.value})}} name={'name'}  title={'Имя'} type={'text'} placeholder={''} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
-                <MyInput value={user.email} onChange={(e) => {setUser({...user, email: e.target.value})}} name={'email'} title={'Почта'} type={'email'} placeholder={''} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
-                <MyInput value={user.password} onChange={(e) => {setUser({...user, password: e.target.value})}} name={'password'} title={'Пароль'} type={'password'} placeholder={''} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
-                <MyInput value={user.confirmPassword} onChange={(e) => {setUser({...user, confirmPassword: e.target.value})}} name={'confirmPassword'} title={'Повтор пароля'} type={'password'} placeholder={''} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
+                <MyInput value={user.name} onChange={(e) => {setUser({...user, name: e.target.value})}} name={'name'} type={'text'} placeholder={'Имя*'} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
+                <MyInput value={user.email} onChange={(e) => {setUser({...user, email: e.target.value})}} name={'email'} type={'email'} placeholder={'Почта*'} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
+                <MyInput value={user.password} onChange={(e) => {setUser({...user, password: e.target.value})}} name={'password'} type={'password'} placeholder={'Пароль*'} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
+                <MyInput value={user.confirmPassword} onChange={(e) => {setUser({...user, confirmPassword: e.target.value})}} name={'confirmPassword'} type={'password'} placeholder={'Повторите пароль'} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
 
                 {/*  */}
 
                 <Col className='d-flex justify-content-start align-items-center mb-4'>
 
-                  <MyCheckBox name={'politic'} title={'Я соглашаюсь на обработку персональных данных'} onClick={handleCheckChange} checked={check} />
+                  <div className={styles.politic_wrapper}>
+
+                    <MyCheckBox name={'politic'} title={'Я соглашаюсь на обработку персональных данных'} onClick={handleCheckChange} checked={check} />
+
+                  </div>
 
                 </Col>
 
