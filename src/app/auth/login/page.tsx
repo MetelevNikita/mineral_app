@@ -119,6 +119,7 @@ const Login: FC = () => {
                   style={{marginBottom: '15px'}}
                   borderColor={(error) ? {borderColor: 'red'} : {borderColor: '#D8DADC'}}
                   errorField={{error, setError}}
+                  pass={true}
                   />
                   
 

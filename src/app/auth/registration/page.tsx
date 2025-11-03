@@ -119,8 +119,8 @@ const Registration: FC = () => {
 
                 <MyInput value={user.name} onChange={(e) => {setUser({...user, name: e.target.value})}} name={'name'} type={'text'} placeholder={'Имя*'} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
                 <MyInput value={user.email} onChange={(e) => {setUser({...user, email: e.target.value})}} name={'email'} type={'email'} placeholder={'Почта*'} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
-                <MyInput value={user.password} onChange={(e) => {setUser({...user, password: e.target.value})}} name={'password'} type={'password'} placeholder={'Пароль*'} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
-                <MyInput value={user.confirmPassword} onChange={(e) => {setUser({...user, confirmPassword: e.target.value})}} name={'confirmPassword'} type={'password'} placeholder={'Повторите пароль'} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
+                <MyInput value={user.password} onChange={(e) => {setUser({...user, password: e.target.value})}} name={'password'} type={'password'} placeholder={'Пароль*'} style={{marginBottom: '15px'}} errorField={{error, setError}} pass={true}/>
+                <MyInput value={user.confirmPassword} onChange={(e) => {setUser({...user, confirmPassword: e.target.value})}} name={'confirmPassword'} type={'password'} placeholder={'Повторите пароль'} style={{marginBottom: '15px'}} errorField={{error, setError}} pass={true}/>
 
                 {/*  */}
 
