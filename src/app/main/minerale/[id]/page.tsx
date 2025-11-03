@@ -117,7 +117,7 @@ const parseDescription = currentMinerale.description.split('\n').map((line: stri
             <Row className=''>
               <Col className='d-flex justify-content-center align-items-center mb-2'>
 
-                <Link href={`${id}/test/`}><MyButton text={'Пройти тест'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>
+                <Link href={`${id}/test/`}><MyButton text={'Пройти геоквиз'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>
               
               </Col>
             </Row>

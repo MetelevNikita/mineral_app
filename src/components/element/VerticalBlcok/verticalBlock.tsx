@@ -2,7 +2,7 @@
 
 import { FC } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 
 // 
 
@@ -19,7 +19,7 @@ import MyButton from '@/components/ui/MyButton/MyButton'
 // 
 
 interface VerticalBlockProps {
-    imgSrc: string,
+    imgSrc: string | StaticImageData,
     imgWidth: number,
     imgHeight: number,
     text: string,

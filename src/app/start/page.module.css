@@ -37,7 +37,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 60px;
+  margin-top: 40px;
 
 
 }
@@ -97,7 +97,7 @@
 }
 
 .info {
-    margin-top: 42px;
+    margin-top: 10px;
     width: 300px;
     color: #FFF;
     text-align: center;

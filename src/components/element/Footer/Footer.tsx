@@ -87,7 +87,7 @@ const Footer = () => {
   
   return (
 
-    <Container className='fixed-bottom'>
+    <Container className='fixed-bottom' style={{overscrollBehavior: 'none', WebkitOverflowScrolling: 'touch'}}>
         <Row className='d-flex justify-content-center align-items-center'>
 
 

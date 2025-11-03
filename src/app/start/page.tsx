@@ -72,7 +72,7 @@ const page: FC = () => {
         <div className={styles.image_background}>
 
 
-                <Row className="mb-4 mt-5">
+                <Row className="mb-4 mt-3">
                   <Col className='d-flex justify-content-between' style={{width: '400px'}}>
                     {
                         partnersArr.map((item: partnersArrType, index: number): React.ReactNode => {
@@ -88,7 +88,7 @@ const page: FC = () => {
 
 
                   <motion.div initial={{opacity: 0, scale: 0.5}} animate={{opacity: 1, scale: 1}} transition={{duration: 2}} className={styles.image_box}>
-                  <Image src={logo_icon} width={100} height={100} alt={'logo_icon'}/>
+                  <Image src={logo_icon} width={180} height={100} alt={'logo_icon'}/>
                   </motion.div>
 
                   </Col>
