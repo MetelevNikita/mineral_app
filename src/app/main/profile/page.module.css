@@ -99,8 +99,8 @@
     line-height: 125%; /* 25px */
 
     /*  */
-    margin-top: 13px;
-    margin-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 
     /*  */
 
@@ -111,19 +111,26 @@
 
 .collection_container {
     width: 354px;
-    height: 310px;
+    min-height: 310px;
+    height: max-content;
     flex-shrink: 0;
     border-radius: 20px;
     background: #7D22C9;
-    background-image: url('../../../../public/ModalStatus/modal_status_bg.svg');
+    /* background-image: url('../../../../public/ModalStatus/modal_status_bg.svg'); */
 
     
 }
 
 .collection_item_box {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+
+        /*  */
+
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-around;
         flex-wrap: wrap;
         gap: 15;
 }

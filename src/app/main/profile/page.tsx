@@ -168,7 +168,7 @@ const page: FC = () => {
             <Col className='d-flex justify-content-center align-items-center mb-3'>
 
                 <div className={styles.collection_container}>
-                    <div className={styles.collection_title}>Ваша коллекция минералов</div>
+                    <div className={styles.collection_title}>Ваша коллекция</div>
                     <div className={styles.collection_item_box}>
 
 
@@ -178,7 +178,7 @@ const page: FC = () => {
                             return (
                               <div key={index+1} className={styles.collection_item_container}>
                                       <motion.div className={styles.collection_item_image_box} style={{filter: 'grayscale(100%)'}} animate={ item?.received ? {scale: [1, 1.2, 1], filter: ['grayscale(100%)', 'grayscale(0)']} : { filter: item?.received ? 'grayscale(0)' : 'grayscale(100%)' }} transition={{duration: 2}}>
-                                        <Image src={item?.image} width={50} height={45} alt={'collection_img'}/>
+                                        <Image src={item?.image} width={60} height={45} alt={'collection_img'}/>
                                         <span className={styles.collection_item_title}>{item.title}</span>
                                         </motion.div>
                                 </div>

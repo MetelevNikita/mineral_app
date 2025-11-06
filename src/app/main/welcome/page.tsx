@@ -37,7 +37,7 @@ const [muteVideo, onMuteVideo] = useState<boolean>(true)
         <Row>
             <Col className='d-flex flex-column justify-content-center align-items-center mb-3'>
 
-                <Link href={'/main'}><MyButton text={'Начать'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>
+                <Link href={'/main/minerale'}><MyButton text={'К минералам'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>
 
             </Col>
         </Row>

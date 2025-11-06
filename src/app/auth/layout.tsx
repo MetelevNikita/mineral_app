@@ -37,7 +37,7 @@ const partnersArr: partnersArrType[] = [
         title: 'logoThree',
         img: logoThree,
         url: ''
-    }
+    },
 ]
 
 

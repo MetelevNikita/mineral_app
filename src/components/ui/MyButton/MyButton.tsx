@@ -32,7 +32,7 @@ const MyButton: FC<MyButtonProps> = ({ style, text, btn, onClick, type, disabled
 
 
     <button style={style} type={type} className={[styles.btn_osnova, btn].join(' ')} onClick={onClick} disabled={disabled}>
-      <div>{text}</div>
+      <div style={{width: 'max-content'}}>{text}</div>
 
       {
 

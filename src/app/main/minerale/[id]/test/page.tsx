@@ -474,7 +474,7 @@ const page = ({ params }: { params: { id: string } }) => {
         )
       }
 
-
+window.location.href = `/main/minerale/${mineralId}/test/result`
 
       {
 
@@ -485,9 +485,9 @@ const page = ({ params }: { params: { id: string } }) => {
 
                   <ModalResult 
                     imgTop={IconNotWin}
-                    onClickLink={() => {closeModal(currentMineral, currentUser)}}
+                    onClickLink={() => {window.location.href = `/main/minerale/${mineralId}/test/result`}}
                     imgClose={IconClose}
-                    onClickClose={() => {window.location.href = `/main/minerale/${mineralId}/test/result`}}
+                    onClickClose={() => {closeModal(currentMineral, currentUser)}}
                     text={`Геоквиз не пройден`}
                     textBtn={'Подробнее'}
                     colorBackground={{background: 'linear-gradient(262deg, #C92225 3.49%, #FF8041 121.77%)'}}
