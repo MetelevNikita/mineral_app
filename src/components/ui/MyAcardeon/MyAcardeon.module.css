@@ -10,7 +10,7 @@
 
     /*  */
 
-    border-radius: 20px;
+    border-radius: 10px;
     border: 1px solid #FFBC41;
 }
 
@@ -29,7 +29,7 @@
 
     /*  */
 
-    border-radius: 20px;
+    border-radius: 10px;
     background: #FFBC41;
 }
 
@@ -40,7 +40,7 @@
     font-style: normal;
     font-weight: 700;
     line-height: 29px; /* 181.25% */
-    text-transform: lowercase;
+    /* text-transform: lowercase; */
 }
 
 .acarderon_top_icon {
@@ -75,7 +75,6 @@
 .acarderon_bottom_text {
     padding: 10px;
     overflow: hidden;
-    transition: padding 0.5s ease, opacity 0.5s ease;
 }
 
 

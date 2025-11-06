@@ -113,7 +113,6 @@ const parseDescription = currentMinerale.description.split('\n').map((line: stri
                 </Col>
             </Row>
 
-
             <Row className=''>
               <Col className='d-flex justify-content-center align-items-center mb-2'>
 

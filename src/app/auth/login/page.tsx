@@ -82,7 +82,8 @@ const Login: FC = () => {
                       setIsAuth(false)
                       window.location.href = '/start'
                     }}
-                    text={'Вы успешно вошли'}
+                    text={'Вы успешно зарегистрированы!'}
+                    subtext={'Войдите в личный кабинет видеогида.'}
                     textBtn={'Перейти'}
                     colorBackground={{background: 'linear-gradient(262deg, #7D22C9 3.49%, #FFBC41 121.77%)'}}
                     colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}                  

@@ -45,17 +45,17 @@ const partnersArr: partnersArrType[] = [
 
     {
         id: 2,
-        title: 'logoTwo',
-        img: logoTwo,
+        title: 'logoThree',
+        img: logoThree,
         url: ''
     },
 
     {
         id: 3,
-        title: 'logoThree',
-        img: logoThree,
+        title: 'logoTwo',
+        img: logoTwo,
         url: ''
-    }
+    },
 ]
 
 
@@ -98,7 +98,7 @@ const page: FC = () => {
                     <div className={styles.title}>Добро <br/> пожаловать!</div>
                     <div className={styles.subtitle}>в цифровой видеогид</div>
 
-                    <div className={styles.info}>Вы зарегистрированы. Прослушайте приветственное обращение директора музея.  </div>
+                    <div className={styles.info}>Прослушайте приветственное обращение директора музея.  </div>
                   
                 </Col>
 

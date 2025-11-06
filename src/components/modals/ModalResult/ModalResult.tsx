@@ -22,6 +22,7 @@ interface ModalResultProps {
     imgClose?: string | StaticImageData
     onClickClose?: () => any
     text: string
+    subtext?: string
     textBtn: string
     colorBackground: CSSProperties
     colorTop: CSSProperties
@@ -29,7 +30,7 @@ interface ModalResultProps {
 
 }
 
-const ModalResult: FC<ModalResultProps> = ({ imgTop, imgClose, onClickLink, onClickClose, text, textBtn, colorBackground, colorTop}) => {
+const ModalResult: FC<ModalResultProps> = ({ imgTop, imgClose, onClickLink, onClickClose, text, subtext, textBtn, colorBackground, colorTop}) => {
 
 
 
@@ -64,7 +65,9 @@ const ModalResult: FC<ModalResultProps> = ({ imgTop, imgClose, onClickLink, onCl
 
                         <div className={styles.image_text_container}>
                             <div className={styles.text}>{text}</div>
+                            <div className={styles.subtext}>{subtext}</div>
                         </div>
+
 
 
                         <div className={styles.image_btn_container}>

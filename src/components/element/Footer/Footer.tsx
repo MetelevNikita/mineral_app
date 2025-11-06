@@ -96,7 +96,7 @@ const Footer = () => {
                         return (
                             
 
-                            <Col key={index+1} className='d-flex mb-2'>
+                            <Col key={index+1} className='d-flex justify-content-center  mb-2'>
                             <Menuelement title={item.title} icon={item.img} path={item.link} className={styles.menu_btn}/>
                             </Col>
        

@@ -23,15 +23,16 @@ interface MyAcardeonProps {
 const MyAcardeon: FC<MyAcardeonProps> = ({ title, content, image }) => {
 
 const [isOn, setIsOn] = useState(false)
-
 console.log(isOn)
+
+const titleWord = title.slice(0,1).toLocaleUpperCase() + title.slice(1)
 
 
   return (
     <div className={styles.acarderon_container}>
 
         <div className={styles.acarderon_top}>
-            <div className={styles.acarderon_top_text}>{title}</div>
+            <div className={styles.acarderon_top_text}>{titleWord}</div>
             
             <motion.div animate={isOn ? {rotate: 90} : {rotate: 0}}>
                 <Image onClick={() => {setIsOn(prev => !prev)}} src={arrIcon} width={48} height={48} alt='arrow_icon'/>
@@ -43,11 +44,7 @@ console.log(isOn)
         {
                 isOn ? 
                     <motion.div
-                        className={styles.acarderon_bottom_text}
-                        initial={{ opacity: 0, border: 'none' }}   // Начальное состояние
-                        animate={{ opacity: 1 }}  // Конечное состояние
-                        transition={{ duration: 0.5 }}   // Время анимации
-                    >
+                        className={styles.acarderon_bottom_text}>
                         {(image) ? <div className={styles.image_container}><Image src={image} width={324} alt={'image'}/></div> : <div className={styles.content}>{content}</div>}
                     </motion.div> :
                     null
