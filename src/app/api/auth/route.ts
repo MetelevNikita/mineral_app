@@ -39,6 +39,14 @@ export const POST = async (req: Request) => {
         }
 
 
+        if (authUser.blocked) {
+            console.log('BLOCKED')
+            return NextResponse.json({
+                message: "Your account is blocked",
+            })
+        }
+
+
         const token = jwt.sign({id: authUser.id, email: authUser.email}, process.env.SECRET_KEY as string, {expiresIn: '1h'})
   
         

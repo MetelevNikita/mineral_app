@@ -1,0 +1,23 @@
+.mineral_components_container {
+  width: 353px;
+  height: 56px;
+
+  /*  */
+
+  border-radius: 10px;
+  border: 1px solid #9480A5;
+
+  /*  */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mineral_components_title {}
+
+
+.mineral_components_container:hover {
+  background-color: #9480A5;
+  color: white
+}

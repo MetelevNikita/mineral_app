@@ -31,7 +31,7 @@ export default function AdminLayout({
 }>) {
   return (
 
-      <Container className="h-100">
+      <Container className="vh-100">
       {children}
       </Container>
 

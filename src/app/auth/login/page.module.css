@@ -65,7 +65,7 @@
 .error_message {
 
     width: 353px;
-    height: 10px;
+    height: max-content;
 
     /*  */
 

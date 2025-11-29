@@ -1,4 +1,55 @@
 
+.title_admin_container {
+    width: 100%;
+    height: max-content;
+    margin-bottom: 20px;
+
+    /*  */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title_admin {
+    width: 386px;
+    height: max-content;
+
+    /*  */
+
+    color: #9480A5;
+    font-size: 48px;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    line-height: .9;
+
+    /*  */
+
+    text-align: center;
+}
+
+
+/*  */
+
+
+.auth_admin_container {
+
+    height: 452px;
+    width: 600px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 50px;
+
+    /*  */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
 .logo_container {
     display: flex;
     align-items: center;
@@ -17,8 +68,18 @@ margin-left: 10px;
 
 }
 
-.btn {
-    border-radius: 10px;
+.auth_admin_btn_container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
 
-    
+.auth_admin_btn {
+    width: 50%;
+    height: 56px;
+    background-color: #9480A5;
+    color: white;
 }

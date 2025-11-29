@@ -130,7 +130,8 @@ exports.Prisma.UserScalarFieldEnum = {
   createAt: 'createAt',
   updateAr: 'updateAr',
   isAdmin: 'isAdmin',
-  firstVisit: 'firstVisit'
+  firstVisit: 'firstVisit',
+  blocked: 'blocked'
 };
 
 exports.Prisma.ProfileScalarFieldEnum = {
@@ -219,6 +220,18 @@ exports.Prisma.MineralMapScalarFieldEnum = {
   updateAt: 'updateAt'
 };
 
+exports.Prisma.ContactsScalarFieldEnum = {
+  id: 'id',
+  adress: 'adress',
+  events: 'events',
+  laboratory: 'laboratory',
+  news: 'news',
+  path: 'path',
+  way: 'way',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -245,7 +258,8 @@ exports.Prisma.ModelName = {
   Question: 'Question',
   Answer: 'Answer',
   Statuses: 'Statuses',
-  MineralMap: 'MineralMap'
+  MineralMap: 'MineralMap',
+  Contacts: 'Contacts'
 };
 
 /**

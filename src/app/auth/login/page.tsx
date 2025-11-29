@@ -50,8 +50,14 @@ const Login: FC = () => {
   const userIn = async () => {
         const data = await authUser(user)
 
+        console.log(data)
+
         if (data?.message === 'Bad Request' || data?.message === 'Not Found' || data?.message === "Unauthorized") {
           setErrorText('Неверный логин или пароль')
+          setError(true)
+          setErrorField(true)
+        } else if (data?.message === 'Your account is blocked') {
+          setErrorText('Ваш аккаунт заблокирован администриацией, Напишите нам для уточнения деталей')
           setError(true)
           setErrorField(true)
         } else if (data?.message === 'success') {

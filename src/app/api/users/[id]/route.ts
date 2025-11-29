@@ -258,7 +258,29 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                 return NextResponse.json({
                     message: `Статус минерала обновлен ${idMineral}`,
                 })
-            }
+        } else if (data.blocked) {
+
+                const { blocked } = data
+
+                const updateBlocked = await prisma.user.update({
+                    where: {
+                        id: parseInt(id)
+                    },
+                    data: {
+                        blocked: JSON.parse(blocked)
+                    }
+                })
+
+                if (!updateBlocked) {
+                   return NextResponse.json({
+                        message: "Ошибка обновления статуса блокировки"
+                    })
+                }
+
+                return NextResponse.json({
+                    message: "Статус блокировки обновлен"
+                })
+        }
            
         
 

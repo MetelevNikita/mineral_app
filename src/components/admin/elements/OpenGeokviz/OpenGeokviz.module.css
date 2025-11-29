@@ -1,0 +1,130 @@
+.open_geokviz_container {
+  width: 100%;
+}
+
+.open_geokviz_title {
+  font-size: 32px;
+  font-weight: 600;
+
+  /*  */
+
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.open_geokviz_subtitle {
+  font-size: 14px;
+  font-weight: 200;
+
+  /*  */
+
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+
+
+.open_geokviz_wrapper {
+  width: 100%;
+}
+
+
+
+
+/*  */
+
+
+.open_geokviz_question_block {
+  margin-top: 10px;
+  margin-bottom: 60px;
+}
+
+.question_block {
+    margin-top: 10px;
+  margin-bottom: 60px;
+}
+
+.open_geokviz_question_wrapper {}
+
+.open_geokviz_question_title {
+  width: max-content;
+  height: max-content;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: #9480A5
+}
+
+/*  */
+
+.answers_block {
+  
+}
+
+.answer_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.answers_title {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+/*  */
+
+.answers_checkbox_wrapper {
+
+  display: flex;
+  align-items: center;
+  
+  /*  */
+
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.answers_checkbox_title {
+  font-size: 14px;
+}
+
+.answers_checkbox {
+  width: 15px;
+  height: 15px;
+
+  /*  */
+
+  margin-left: 10px;
+}
+
+
+/*  */
+
+
+.geokviz_btn_container {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+
+  /*  */
+  margin-top: 30px;
+  margin-bottom: 20px;
+
+}
+.btn {
+  width: 49%;
+  height: 56px;
+
+  background-color: #9480A5;
+  color: white
+}
+
+.btn:hover {
+  background-color: #9480a500;
+  border: 1px solid black;
+  color: black;
+}

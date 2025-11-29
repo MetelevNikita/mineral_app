@@ -4,6 +4,9 @@ export const getMineral = async () => {
 
         const responce = await fetch('/api/mineral', {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
 
         if (!responce.ok) {

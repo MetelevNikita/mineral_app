@@ -1,0 +1,24 @@
+.content_container {
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  background-color: rgb(255, 255, 255);
+  font-family: 'Open Sans', sans-serif;
+
+  /*  */
+
+  padding: 20px;
+}
+
+
+.content_title {
+  font-size: 14px;
+  font-weight: 400;
+  color: #798597
+
+}
+
+.content_wrapper {
+
+
+}
