@@ -19,7 +19,7 @@ export function middleware (request: NextRequest) {
 
 
 
-    const publicPaths = ['/', '/auth', '/auth/login', '/auth/register', '/admin'];
+    const publicPaths = ['/', '/auth', '/auth/login', '/auth/registration', '/admin'];
 
 
     const isPublic = publicPaths.includes(currentPath);
