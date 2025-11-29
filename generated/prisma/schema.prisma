@@ -12,6 +12,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// USER
+
 model User {
   id            Int             @id @default(autoincrement())
   name          String
@@ -25,6 +27,7 @@ model User {
   updateAr      DateTime        @default(now())
   isAdmin       Boolean
   firstVisit    Boolean         @default(false)
+  blocked       Boolean?        @default(false)
 
   profile Profile?
 }
@@ -40,6 +43,8 @@ model Profile {
   userId     Int     @unique
   user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+// COLLECTION
 
 model Collection {
   id       Int     @id @default(autoincrement())
@@ -77,7 +82,7 @@ model MineralPassed {
   @@unique([userId, id])
 }
 
-// minerale
+// MINERAL
 
 model Mineral {
   id          Int      @id @default(autoincrement())
@@ -127,6 +132,8 @@ model Statuses {
   updateAt DateTime @default(now())
 }
 
+// MAP
+
 model MineralMap {
   id          Int      @id @default(autoincrement())
   title       String
@@ -134,4 +141,18 @@ model MineralMap {
   image       String?
   createAt    DateTime @default(now())
   updateAt    DateTime @default(now())
+}
+
+// CONTANTS
+
+model Contacts {
+  id         Int      @id @default(autoincrement())
+  adress     String?
+  events     String?
+  laboratory String?
+  news       String?
+  path       String?
+  way        String?
+  createAt   DateTime @default(now())
+  updateAt   DateTime @default(now())
 }

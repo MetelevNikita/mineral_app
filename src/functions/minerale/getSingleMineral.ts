@@ -3,7 +3,10 @@ export const getSingleMineral = async (id: number | string) => {
     try {
 
         const response = await fetch(`/api/mineral/${id}`, {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
 
         if (!response.ok) {

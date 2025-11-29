@@ -65,22 +65,14 @@ const page: FC = () => {
 
 
 
-
-
-
-    
-        
-    
-
     const length = 6
     const arr = [1,2,3,4,5,6]
 
-    const [time, setTime] = useState<string>('15')
+    const [time, setTime] = useState<string>('60')
     const [code, setCode] = useState<string[]>([])
     const [repeatCode, setRepeatCode] = useState<any>()
 
-    console.log(time)
-    
+    // 
 
     let newCode: number | string = ''
     const email = Cookies.get('email')

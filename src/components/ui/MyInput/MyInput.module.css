@@ -13,6 +13,7 @@
     /*  */
 
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .input_span_error {
@@ -35,16 +36,18 @@
 
 .input {
     display: flex;
-    width: 353px;
-    padding: 18px 16px;
+    min-width: 353px;
+    width: 100%;
+    height: 56px;
     align-items: center;
+    padding-left: 10px;
     gap: 10px;
 
     /*  */
 
     border-radius: 10px;
     border: 1px solid #D8DADC;
-    background: #FFF;
+    /* background: #FFF; */
 }
 
 

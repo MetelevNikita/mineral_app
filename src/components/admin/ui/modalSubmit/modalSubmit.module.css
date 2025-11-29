@@ -1,0 +1,95 @@
+.modal_submit_bg {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.439);
+
+  /*  */
+
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  z-index: 9999;
+  
+}
+
+.modal_submit_container {
+  width: 450px;
+  height: 250px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.122);
+
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+
+  /*  */
+
+  
+}
+
+.modal_submit_wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  /*  */
+
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/*  */
+
+
+.modal_submit_icon_wrapper {
+  width: max-content;
+  height: max-content;
+  margin-bottom: 15px;
+
+  
+
+
+}
+
+.modal_submit_icon {
+  width: 80px;
+  color: #9480A5
+}
+
+/*  */
+
+
+.modal_submit_text_wrapper {
+  text-align: center;
+
+}
+
+.modal_submit_text {
+  font-size: 22px;
+
+  /*  */
+
+
+  margin-bottom: 15px;
+}
+
+/*  */
+
+.modal_submit_btn_container {}
+
+.modal_submit_btn {
+  background-color: #9480A5;
+  width: max-content;
+  height: max-content;
+  padding: 10px 20px;
+
+  /*  */
+
+  color: white;
+}

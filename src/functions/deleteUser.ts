@@ -1,4 +1,4 @@
-export const deleteUser = async (userID: string): Promise<void> => {
+export const deleteUser = async (userID: string): Promise<{message: string, status: number } | any> => {
     try {
 
         if (!userID) {
@@ -18,9 +18,12 @@ export const deleteUser = async (userID: string): Promise<void> => {
         const result = await response.json();
         console.log("Результат удаления пользователя:", result);
 
-        window.confirm("Пользователь успешно удален. Вы будете перенаправлены на страницу входа.");
-        sessionStorage.removeItem('userID'); 
-        window.location.href = '/auth/login';  
+
+        return {
+            message: "Пользователь успешно удален",
+            status: response.status
+        }
+ 
 
     } catch (error) {
         console.error("Ошибка при удалении пользователя:", error);

@@ -66,7 +66,7 @@ export const POST = async (req: Request | any, res: Response | any): Promise<any
 
         if (findEmail) {
             if (findEmail.email === email) {
-                return NextResponse.json({message: "Email already exists"})
+                return NextResponse.json({message: "Пользователь с такой почтой уже зарегестрирован"})
             }
         }
 
@@ -104,7 +104,7 @@ export const POST = async (req: Request | any, res: Response | any): Promise<any
                 password: hashPassword,
                 total: 0,
                 status: 'Студент-геолог',
-                isAdmin: false
+                isAdmin: (!isAdmin) ? false : isAdmin,
             },
             include: {
                 collection: true,

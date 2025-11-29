@@ -60,6 +60,8 @@ const Registration: FC = () => {
   const registrationUser = async (user: any) => {
     const registration = await createUser(user)
 
+    console.log(registration)
+
     if (registration?.message === 'Не заполнены поля') {
       setError(true)
       setModalMessage('Заполните все поля')
@@ -75,6 +77,9 @@ const Registration: FC = () => {
     } else if (registration?.message === 'Ошибка отправки кода на email') {
       setError(true)
       setModalMessage('Ошибка запроса на Email, попробуйте позже')
+    } else if (registration?.message === 'Пользователь с такой почтой уже зарегестрирован') {
+      setError(true)
+      setModalMessage('Пользователь с такой почтой уже зарегестрирован')
     }
 
   }

@@ -1,17 +1,10 @@
-export const authAdmin = async (formData: FormData) => {
+export const authAdmin = async (authData: {email: string, password: string}) => {
 
     try {
 
+        const {email, password} = authData
 
-
-        const email = formData.get('email') as string
-        const password = formData.get('password') as string
-        const remember = formData.get('remember') as string
-
-
-
-
-        const response = await fetch('/api/auth', {
+        const response = await fetch('/api/auth/admin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -19,40 +12,29 @@ export const authAdmin = async (formData: FormData) => {
             body: JSON.stringify({
                 email,
                 password
-            })
+            }),
+            
         })
 
         if (!response.ok) {
-            throw new Error(response.statusText)
+            throw new Error(`Ошибка авторизации админ пользователя ${response.statusText}`)
    
         }
 
-        if (response.status === 200) {
 
-            const data = await response.json()
-            if (remember) {
-                localStorage.setItem('token', JSON.stringify(data.accessToken))
-            }
-
-            if (data.admin) {
-                window.location.href = '/admin/dashboard'
-
-            } else {
-                alert(
-                    'Вы не являетесь администратором'
-                )
-
-                window.location.href = '/admin'
-            }
-            
-        }
+        const data = await response.json()
+        console.log(data)
+        return data
 
 
-    } catch (error: Error | unknown | any) {
+
+    } catch (error: Error | unknown) {
 
         if (error instanceof Error) {
             console.error(`Ошибка авторизация админ панели: ${error.message}`)
         }
+
+        console.error(`Ошибка авторизация админ панели: ${error}`)
 
         
         

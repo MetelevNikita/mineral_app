@@ -1,0 +1,36 @@
+
+.mineral_container {
+  cursor: pointer;
+}
+
+
+
+
+
+.mineral_title {
+ font-size: 32px;
+ font-weight: 600;
+
+ /*  */
+
+ margin-top: 10px;
+ margin-bottom: 20px;
+}
+
+
+.mineral_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 20px; /* 20px по вертикали и 30px по горизонтали */
+  align-items: center;
+}
+
+
+/*  */
+
+.btn_search {
+  width: 353px;
+  height: 56px;
+  background-color: #9480A5;
+  color: white
+}

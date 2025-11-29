@@ -234,7 +234,13 @@ const userProfile = currentUser[0].profile || {}
 
                 <div className={styles.line}></div>
 
-                <div className={styles.delete_account_box} onClick={() => {deleteUser(userId || '')}}>
+                <div className={styles.delete_account_box}
+                    onClick={() => {
+                        deleteUser(userId || '')
+                        confirm("Пользователь успешно удален. Вы будете перенаправлены на страницу входа.");
+                        sessionStorage.removeItem('userID'); 
+                        window.location.href = '/auth/login'; 
+                    }}>
                     <Image src={deleteAccount} width={18} height={20} alt={'empty_avatar'}/>
                     <div className={styles.delete_account_title}>Удалить профиль</div>
                 </div>

@@ -120,15 +120,52 @@ export const POST = async (req: Request, context: {params: {id: any}}) => {
     try {
 
 
+        console.log('СОЗДАНИЕ GEOKVIZ!!!! ')
+
+
         const formData = await req.formData()
 
-        const title = formData.get('title') as string
-        const image = formData.get('image')
-        const arrAnswers = formData.get('arrAnswers') as string
-        const arr = JSON.parse(arrAnswers)
+        // const title = formData.get('title') as string
+        // const image = formData.get('image')
+        // const arrAnswers = formData.get('arrAnswers') as string
+        // const arr = JSON.parse(arrAnswers)
+
+
+        // console.log(arr)
 
         const {id} = await context.params
         console.log(id)
+
+
+        const allQuestions = formData.get('questions') as string
+        const arr = JSON.parse(allQuestions)
+        console.log(arr)
+
+
+        // const createQuestion = await prisma.mineral.update({
+        //     where: {
+        //         id: parseInt(id)
+        //     },
+        //     data: {
+        //         question: {
+        //             create: {
+        //                 title,
+        //                 image: '',
+        //                 answers: {
+        //                     create: arr.map((answer: any) => ({
+        //                             text: answer.text,
+        //                             correct: answer.correct, // или другое поле
+        //                         })),
+        //                     }
+        //                 }
+        //             }
+        //         }
+            
+        // })
+
+
+
+
 
         const createQuestion = await prisma.mineral.update({
             where: {
@@ -136,24 +173,27 @@ export const POST = async (req: Request, context: {params: {id: any}}) => {
             },
             data: {
                 question: {
-                    create: {
-                        title,
-                        image: '',
-                        answers: {
-                            create: arr.map((answer: any) => ({
-                                    text: answer.text,
-                                    correct: answer.correct, // или другое поле
-                                })),
+                    create: arr.map((item: {title: string, answers: any}) => {
+                        return {
+                            title: item.title,
+                            answers: {
+                                create: item.answers.map((answer: {text: string, correct: string}) => {
+                                    return {
+                                        text: answer.text,
+                                        correct: answer.correct
+                                    }
+                                })
                             }
                         }
-                    }
+                  
+                    })
                 }
-            
+            }
         })
 
-        console.log(createQuestion)
+        // console.log(createQuestion)
 
-        return NextResponse.json({message: 'allow create question'})
+        return NextResponse.json({message: 'Геоквиз создан или изменен'})
         
     } catch (error: Error | unknown) {
         if (error instanceof Error) {

@@ -474,20 +474,21 @@ const page = ({ params }: { params: { id: string } }) => {
         )
       }
 
-window.location.href = `/main/minerale/${mineralId}/test/result`
 
-      {
+      {/* {
 
-        (notWinKviz) && (
+        (notWinKviz) && ( */}
 
            <Row>
                 <Col className='d-flex align-items-cente'>
 
                   <ModalResult 
                     imgTop={IconNotWin}
-                    onClickLink={() => {window.location.href = `/main/minerale/${mineralId}/test/result`}}
+                    onClickLink={() => {
+                      closeModal(currentMineral, currentUser)
+                    }}
                     imgClose={IconClose}
-                    onClickClose={() => {closeModal(currentMineral, currentUser)}}
+                    onClickClose={() => {window.location.href = `/main/minerale/`}}
                     text={`Геоквиз не пройден`}
                     textBtn={'Подробнее'}
                     colorBackground={{background: 'linear-gradient(262deg, #C92225 3.49%, #FF8041 121.77%)'}}
@@ -497,8 +498,8 @@ window.location.href = `/main/minerale/${mineralId}/test/result`
                 </Col>
             </Row>
 
-        )
-      }
+        {/* )
+      } */}
 
 
 
