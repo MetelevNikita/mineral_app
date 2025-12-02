@@ -1,0 +1,38 @@
+
+.contacts_container {
+  cursor: pointer;
+}
+
+
+
+
+
+.contacts_title {
+ font-size: 32px;
+ font-weight: 600;
+
+ /*  */
+
+ margin-top: 10px;
+ margin-bottom: 20px;
+}
+
+
+.contacts_wrapper {
+
+}
+
+
+/*  */
+
+
+.contacts_form_btn_container {
+  margin-top: 20px;
+}
+
+.btn {
+  width: 353px;
+  height: 56px;
+  background-color: #9480A5;
+  color: white
+}

@@ -1,4 +1,4 @@
-export const createQuestions = async (geokviz: FormData, id: string | number): Promise<{message: string, status: number}> => {
+export const createQuestions = async (geokviz: FormData, id: string | number): Promise<{message: string, data: string, status: number}> => {
   try {
 
       const responce = await fetch(`/api/mineral/${id}`, {
@@ -16,6 +16,7 @@ export const createQuestions = async (geokviz: FormData, id: string | number): P
       console.log(data)
       return {
         message: 'Вопросы успешно созданы',
+        data: 'sucees',
         status: 200
       }
 
@@ -28,6 +29,7 @@ export const createQuestions = async (geokviz: FormData, id: string | number): P
       )
       return {
         message: `Ошибка создания вопросов`,
+        data: 'error',
         status: 500
       }
     }
@@ -38,6 +40,7 @@ export const createQuestions = async (geokviz: FormData, id: string | number): P
 
     return {
       message: `Ошибка создания вопросов`,
+      data: 'error',
       status: 500
     }
     

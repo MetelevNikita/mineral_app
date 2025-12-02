@@ -3,59 +3,15 @@ import { PrismaClient } from "../../../../generated/prisma";
 import path from "path";
 import fs from "fs";
 
+// utils
+
+import { uploadNewFile } from "@/utils/uploadNewFile";
+import { deleteCurrentFile } from "@/utils/deleteCurrentFile";
+
+
 // 
 
 const prisma = new PrismaClient()
-
-//
-
-
-const uploadFile = async (file: File, url: any) => {
-
-
-
-  const fileName = file.name
-  console.log(fileName)
-
-  const fileBuffer = await file.arrayBuffer()
-  const fileData = Buffer.from(fileBuffer)
-
-
-  const filePath = path.join(process.cwd(), 'src', 'app', 'uploads', 'contacts')
-
-  if (!fs.existsSync(filePath)) {
-      fs.mkdirSync(filePath, { recursive: true })
-  }
-
-
-  const data = fs.writeFileSync(path.join(filePath, fileName), fileData)
-
-  return `${url.protocol}//${url.host}/api/uploads/contacts/${fileName}`
-
-
-
-}
-
-
-const deleteFile = async (filename: any, url: any) => {
-
-  try {
-
-    const oldFile = filename.way.split('/').pop() as string
-    console.log(oldFile)
-
-    const deleteFile = fs.unlinkSync(path.join(process.cwd(), 'src', 'app', 'uploads', 'contacts', oldFile))
-    return {
-      file: deleteFile,
-      status: 'deleted'
-    }
-
-    
-  } catch (error) {
-    console.log(error)
-  }
-
-}
 
 
 // 
@@ -111,6 +67,8 @@ export const PATCH  = async (req: Request) => {
 
     // 
 
+    console.log('ВАЙ ИЗ ФАЙЛА ', way)
+
 
 
     const newOBject: any = {}
@@ -145,14 +103,16 @@ export const PATCH  = async (req: Request) => {
 
     if (way) {
 
-      if (getContacts?.way) {
-        const deleteFileData = await deleteFile(getContacts, newUrl)
-        console.log('старый файл удален')
+      if (getContacts) {
+        const filename = await uploadNewFile(way, 'contacts')
+        await deleteCurrentFile(getContacts.way as string, 'contacts')
+        newOBject['way'] = filename
+      } else {
+        const filename = await uploadNewFile(way, 'contacts')
+        newOBject['way'] = filename
       }
 
-      const filename = await uploadFile(way, newUrl)
 
-      newOBject['way'] = filename
     }
 
 

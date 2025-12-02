@@ -125,13 +125,6 @@ export const POST = async (req: Request, context: {params: {id: any}}) => {
 
         const formData = await req.formData()
 
-        // const title = formData.get('title') as string
-        // const image = formData.get('image')
-        // const arrAnswers = formData.get('arrAnswers') as string
-        // const arr = JSON.parse(arrAnswers)
-
-
-        // console.log(arr)
 
         const {id} = await context.params
         console.log(id)
@@ -142,30 +135,55 @@ export const POST = async (req: Request, context: {params: {id: any}}) => {
         console.log(arr)
 
 
-        // const createQuestion = await prisma.mineral.update({
-        //     where: {
-        //         id: parseInt(id)
-        //     },
-        //     data: {
-        //         question: {
-        //             create: {
-        //                 title,
-        //                 image: '',
-        //                 answers: {
-        //                     create: arr.map((answer: any) => ({
-        //                             text: answer.text,
-        //                             correct: answer.correct, // или другое поле
-        //                         })),
-        //                     }
-        //                 }
-        //             }
-        //         }
+        // 
+
+        const getMineral = await prisma.mineral.findFirst({
+            where: {
+                id: parseInt(id)
+            },
+            include: {
+                question: {
+                    include: {
+                        answers: true
+                    }
+                }
+            }
+        })
+
+        if (!getMineral) {
+            return NextResponse.json({
+                message: `Минерал для обновления с id ${id} не найден`
+            })
+        }
+
+
+
+        if (getMineral.question.length > 0) {
+
+            await prisma.answer.deleteMany({
+                where: {
+                    question: {
+                        mineralId: parseInt(id)
+                    }
+                }
+            })
             
-        // })
+            await prisma.question.deleteMany({
+                where: {
+                    mineralId: parseInt(id)
+                }
+            })
+
+
+            console.log('старые данные удалены')
+        }
+
+
+            console.log('новые данные')
 
 
 
-
+        // 
 
         const createQuestion = await prisma.mineral.update({
             where: {
@@ -191,7 +209,7 @@ export const POST = async (req: Request, context: {params: {id: any}}) => {
             }
         })
 
-        // console.log(createQuestion)
+        console.log(createQuestion)
 
         return NextResponse.json({message: 'Геоквиз создан или изменен'})
         

@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Profile" ALTER COLUMN "age" SET DATA TYPE TEXT;

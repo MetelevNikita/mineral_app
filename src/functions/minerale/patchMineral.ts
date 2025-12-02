@@ -1,4 +1,4 @@
-export const pathcMineral = async (mineral: FormData, id: string | number): Promise<{message: string, status: number}> => {
+export const pathcMineral = async (mineral: FormData, id: string | number): Promise<{message: string, data: string, status: number}> => {
 
   try {
 
@@ -8,12 +8,17 @@ export const pathcMineral = async (mineral: FormData, id: string | number): Prom
     })
 
     if (!responce.ok) {
-        throw new Error(`Ошибка обновления минерала ${responce.status}`)
+        return {
+            message: `Ошибка обновления минерала ${responce.status}`,
+            data: 'error',
+            status: 500
+        }
     }
 
 
     return {
         message: 'Минерал успешно обновлен',
+        data: 'sucees',
         status: 200
     }
 
@@ -23,14 +28,16 @@ export const pathcMineral = async (mineral: FormData, id: string | number): Prom
         if (error instanceof Error) {
            console.error(`Ошибка получения минералов ${error.message}`)
            return {
-               message: `Ошибка обновления минерала ${error.message}`,
-               status: 500
+                message: `Ошибка обновления минерала ${error.message}`,
+                data: 'sucees',
+                status: 500
            }
         }
 
         console.log(error)
         return {
             message: 'Ошибка обновления минерала',
+            data: 'sucees',
             status: 500
         }
 

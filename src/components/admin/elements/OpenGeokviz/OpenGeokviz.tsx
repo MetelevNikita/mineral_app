@@ -177,35 +177,20 @@ const OpenGeokviz: FC<OpenGeokvizProps> = ({ contextMenu, contextMenuActive, sub
       const formData = new FormData()
       formData.append('questions', JSON.stringify(questionBlock))
 
-      console.log(...formData)
+      const res = await createQuestions(formData, menuActive.id)
+      if (res.data === 'success') {
+        alert(res.message)
+      } else {
+        alert(res.message)
+      }
 
-      const result = await createQuestions(formData, menuActive.id)
-      console.log(result)
-
-      if (result.message === 'Вопросы успешно созданы') {
-      setModalInfoActive(false),
-      setModalSubmitActive({
-        type: 'success',
-        status: true
-      })
       setMenuActive({
-          id: 1,
-          label: 'Минералы',
-          value: 'minerals'
-        })
-    } else {
-      setModalInfoActive(false),
-      setModalSubmitActive({
-        type: 'error',
-        status: true
-      })
-      setMenuActive({
-        id: 1,
+        id: menuActive.id,
         label: 'Минералы',
         value: 'minerals'
       })
-    }
-      
+
+
     } catch (error: Error | unknown) {
       if (error instanceof Error) {
         console.error(`Ошибка создания геоквиза ${error.message}`)
@@ -353,7 +338,7 @@ const OpenGeokviz: FC<OpenGeokvizProps> = ({ contextMenu, contextMenuActive, sub
                 text={'Назад к миенарлу'}
                 btn={styles.btn}
                 onClick={() => {
-                  console.log(questionBlock)
+
                   setMenuActive({
                     id: 1,
                     label: 'Минералы',

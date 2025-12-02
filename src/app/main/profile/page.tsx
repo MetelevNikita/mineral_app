@@ -77,11 +77,8 @@ const page: FC = () => {
 
   const currentUser: UserType | null = useAppSelector((state) => state.user.user).find((item: UserType) => item.id === parseInt(userId)) ?? null;
   const collectionMineral: CollectionMineralType[] = useAppSelector((state) => state.collection.collection) ?? []
-  const statuses = useAppSelector((state) => state.status.status).find((item) => item.title == currentUser?.status)
+  const statuses = useAppSelector((state) => state.status.status).find((item) => item.title == currentUser?.status) ?? 'Студент-геолог'
 
-  console.log(currentUser)
-  console.log(statuses)
-  console.log(collectionMineral)
 
 
 
@@ -104,7 +101,10 @@ const page: FC = () => {
     const foundMineral = userMineral.find(mineral => mineral.title === item.title);
     return foundMineral || item;
     
-  }) || []
+  }) ?? []
+
+
+  console.log(currentUserCollection)
 
 
 

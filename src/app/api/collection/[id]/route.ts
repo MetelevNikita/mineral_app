@@ -6,6 +6,11 @@ import path from "path"
 
 // 
 
+import { deleteCurrentFile } from "@/utils/deleteCurrentFile";
+import { uploadNewFile } from "@/utils/uploadNewFile";
+
+// 
+
 const prisma = new PrismaClient()
 
 // 
@@ -14,13 +19,8 @@ export const DELETE = async (request: Request, context: {params: {id: string}}) 
   try {
 
 
-    const collectionPath = path.join(process.cwd(), 'src', 'app', 'uploads' ,'collections')
-
     const { id } = await context.params
     console.log(id)
-
-    // delete image from storage
-
 
 
     const getCollectionMineral = await prisma.collectionMineral.findFirst({
@@ -32,17 +32,13 @@ export const DELETE = async (request: Request, context: {params: {id: string}}) 
     console.log('Найденный минерал в коллекции', getCollectionMineral)
 
 
-    const urlPars = path.parse(getCollectionMineral?.image as string)
-    console.log(urlPars.base)
+    // 
 
-    await fs.promises.rm(path.join(collectionPath, urlPars.base)), {
-      recursive: true,
-      force: true
-    }
 
-    console.log(`Изображение ${urlPars.base} удалено из базы`)
+    const deleteIcon = await deleteCurrentFile(getCollectionMineral?.image as string, 'collections')
 
-    
+
+    // 
 
     const deleteCollectionMineral = await prisma.collectionMineral.delete({
       where: {
@@ -78,8 +74,16 @@ export const PATCH = async (request: Request, context: {params: {id: string}}) =
     console.log(id)
 
 
-    const body = await request.json()
-    console.log(body)
+    const formData = await request.formData()
+    console.log(formData)
+
+    const title = formData.get('title')
+    const image = formData.get('image')
+
+
+
+
+
 
 
     const getMineral = await prisma.collectionMineral.findFirst({
@@ -88,13 +92,22 @@ export const PATCH = async (request: Request, context: {params: {id: string}}) =
       }
     })
 
-    console.log(getMineral)
 
     if (!getMineral) {
-      NextResponse.json({
+      return NextResponse.json({
         message: `Минерал для обновления с id ${id} не найден`
       })
     }
+
+
+    // 
+
+
+    // const deleteCollectionIcon = await deleteCurrentFile(getMineral.image, 'collections')
+    // const uploadCollectionIcon = await uploadNewFile(image as File, 'collections')
+
+
+    // 
 
 
     const updateMineral = await prisma.collectionMineral.update({

@@ -5,6 +5,18 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true, // Skip TypeScript errors during build
   },
+  images: {
+    domains: ['localhost'],
+    // или для Next.js 13+:
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/api/uploads/**',
+      },
+    ],
+  },
   async headers() {
     return [
       {

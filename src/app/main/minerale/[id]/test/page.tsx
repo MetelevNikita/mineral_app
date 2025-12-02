@@ -475,9 +475,9 @@ const page = ({ params }: { params: { id: string } }) => {
       }
 
 
-      {/* {
+      {
 
-        (notWinKviz) && ( */}
+        (notWinKviz) && (
 
            <Row>
                 <Col className='d-flex align-items-cente'>
@@ -498,8 +498,8 @@ const page = ({ params }: { params: { id: string } }) => {
                 </Col>
             </Row>
 
-        {/* )
-      } */}
+        )
+      }
 
 
 

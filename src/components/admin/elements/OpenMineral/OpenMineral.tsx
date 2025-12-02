@@ -105,21 +105,21 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
         }
 
 
-        console.log(...formData)
-        const result = await pathcMineral(formData, menuActive.id)
-        console.log(result)
+        const res = await pathcMineral(formData, menuActive.id)
 
-        if (result.message === 'Минерал успешно обновлен') {
-          setModalSubmitActive({
-            type: 'change',
-            status: true
-          })
+        if (res.data === 'success') {
+          alert(res.message)
         } else {
-          setModalSubmitActive({
-            type: 'error',
-            status: true
-          })
+          alert(res.message)
         }
+
+        setMenuActive({
+          id: menuActive.id,
+          label: 'Минералы',
+          value: 'minerals'
+        })
+    
+
 
      } catch (error: Error | unknown) {
         if (error instanceof Error) {
@@ -131,15 +131,6 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
             status: true
           })
         }
-
-
-        console.error(
-          `Ошибка измененеия минерала: ${error}`,
-        )
-        setModalSubmitActive({
-          type: 'error',
-          status: true
-        })
         
      }
 
@@ -148,26 +139,23 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
 
   const deleteMineralHandler = async (id: any) => {
     try {
+      const res = await deleteMineral(id)
 
-
-      const result = await deleteMineral(id)
-      if (result.message === 'Минерал успешно удален') {
-        setModalSubmitActive({
-          type: 'delete',
-          status: true
-        })
+      if (res.data === 'success') {
+        alert(res.message)
       } else {
-        setModalSubmitActive({
-          type: 'error',
-          status: true
-        })
+        alert(res.message)
       }
 
+      setMenuActive({
+        id: 1,
+        label: 'Минералы',
+        value: 'minerals'
+      })
+      
       
     } catch (error) {
-      if (error) {
-        console.log(error)
-      }
+      console.error(error)
     }
   }
 

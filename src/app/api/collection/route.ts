@@ -3,6 +3,10 @@ import { PrismaClient } from "../../../../generated/prisma";
 import fs from "fs"
 import path from "path"
 
+// utils
+
+import { uploadNewFile } from "@/utils/uploadNewFile";
+
 // 
 
 
@@ -13,6 +17,8 @@ export const GET = async () => {
   try {
 
     const allCollcetions = await prisma.collectionMineral.findMany()
+
+    console.log(allCollcetions)
 
     if (!allCollcetions || allCollcetions.length < 1) {
       return NextResponse.json([])
@@ -39,16 +45,6 @@ export const POST = async (request: Request) => {
   try {
 
     const url = new URL(request.url)
-    console.log(url)
-
-    const collectionPath = path.join(process.cwd(), "src", "app", "uploads" , "collections")
-
-    if (!fs.existsSync(collectionPath)) {
-      fs.mkdirSync(collectionPath, {
-        recursive: true
-      })
-    }
-
   
     const formData = await request.formData()
 
@@ -58,8 +54,9 @@ export const POST = async (request: Request) => {
     const image = formData.get('image') as File
 
 
-    const urlParse = path.parse(image.name)
-    const newImageName = urlParse.name + '_' + Date.now() + urlParse.ext
+    //
+
+    const newFile = await uploadNewFile(image, 'collections') as string
 
     // 
 
@@ -77,32 +74,10 @@ export const POST = async (request: Request) => {
 
     // file
 
-    if (image) {
-      const imageBuffer = await image.arrayBuffer()
-      const BufferImage = Buffer.from(imageBuffer)
-      console.log(image.name)
-
-
-      try {
-        await fs.promises.writeFile(collectionPath + '/' + newImageName, BufferImage)
-        console.log(`Файл ${image.name} успешно загружен в коллекцию`)
-        
-      } catch (error: Error | unknown) {
-        if (error instanceof Error) {
-          console.error(`Ошибка загрузки файла ${image.name}: ${error.message}`)
-        }
-        return NextResponse.json(error)
-      }
-
-    }
-
-
-    const imageUrl = `/api/uploads/collections/${newImageName}`
-
     const newCollectionMineral = await prisma.collectionMineral.create({
       data: {
             title: title,
-            image: imageUrl,
+            image: newFile,
           }
       
     })
