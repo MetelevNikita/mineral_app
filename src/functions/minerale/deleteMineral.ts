@@ -1,9 +1,6 @@
-export const deleteMineral = async (id: number | string): Promise<{message: string, status: number}> => {
+export const deleteMineral = async (id: number | string): Promise<{message: string, data: string, status: number}> => {
 
   try {
-
-    console.log('ID из DELETE MIENRTAAL', id)
-
 
     const responce = await fetch(`/api/mineral/${id}`, {
       method: 'DELETE',
@@ -16,6 +13,7 @@ export const deleteMineral = async (id: number | string): Promise<{message: stri
       console.error(`Ошибка удаления минерала ${responce.status} ${responce.statusText}`)
       return {
         message: 'Ошибка удаления минерала',
+        data: 'error',
         status: 500
       }
     }
@@ -24,6 +22,7 @@ export const deleteMineral = async (id: number | string): Promise<{message: stri
     console.log(data)
     return {
       message: `Минерал успешно удален`,
+      data: 'sucees',
       status: 200
     }
     
@@ -33,13 +32,14 @@ export const deleteMineral = async (id: number | string): Promise<{message: stri
            console.error(`Ошибка удаления минерала ${error.message}`)
            return {
              message: 'Ошибка удаления минерала',
+             data: 'error',
              status: 500
            }
         }
 
-        console.log(error)
         return {
           message: 'Ошибка удаления минерала',
+          data: 'error',
           status: 500
         }
 

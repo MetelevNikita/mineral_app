@@ -67,29 +67,32 @@ const NewMineral: FC<NewMineralProps> = ({ contextMenu, contextMenuActive, submi
     e.preventDefault()
 
 
+    if (!newForm.title || !newForm.description) {
+      alert('Заполните все поля')
+      return
+    }
+
+
     const formData = new FormData()
     formData.append('title',  newForm.title),
     formData.append('image',  newForm.image[0]),
     formData.append('video', newForm.video[0]),
-    formData.append('description', newForm.description),
+    formData.append('description', newForm.description)
 
 
-    setModalInfoActive(true)
-    const result = await postMineral(formData)
+
+    const res = await postMineral(formData)
 
 
-    if (result.message === 'Минерал успешно создан') {
-      setModalInfoActive(false),
-      setModalSubmitActive({
-        type: 'success',
-        status: true
+    if (res.data === 'sucees') {
+      alert(res.message)
+      setMenuActive({
+        id: 1,
+        label: 'Минералы',
+        value: 'minerals'
       })
     } else {
-      setModalInfoActive(false),
-      setModalSubmitActive({
-        type: 'error',
-        status: true
-      })
+      alert(res.message),
       setMenuActive({
         id: 1,
         label: 'Минералы',
@@ -97,11 +100,7 @@ const NewMineral: FC<NewMineralProps> = ({ contextMenu, contextMenuActive, submi
       })
     }
 
-
-    console.log(result)
   }
-
-
 
 
 

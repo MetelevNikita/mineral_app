@@ -17,10 +17,14 @@ import EditMineral from '../EditMinerals/EditMinerals'
 import OpenMineral from '../OpenMineral/OpenMineral'
 import NewMineral from '../NewMineral/NewMineral'
 import OpenGeokviz from '../OpenGeokviz/OpenGeokviz'
+import Collection from '../Collection/Collection'
+import Status from '../Status/Status'
+import EditStatus from '../EditStatus/EditStatus'
 
 // functions
 
 import { getSingleMineral } from '@/functions/minerale/getSingleMineral'
+import Contacts from '../Contacts/Contacts'
 
 // 
 
@@ -44,14 +48,14 @@ const RightSide: FC<RightSideProps> = ({ contextMenu, contextMenuActive, submitA
   const { menu, setMenu } = contextMenu
   const { menuActive, setMenuActive } = contextMenuActive
 
-  // modal
-
-
-
-  // 
-
-
+  
   const [ mineral, setMineral ] = useState<any>(null)
+
+
+  console.log('menuActive', menuActive)
+
+
+  
 
 
 
@@ -80,7 +84,13 @@ const RightSide: FC<RightSideProps> = ({ contextMenu, contextMenuActive, submitA
       case 'users':
         return <EditUser />
       case 'contacts':
-        return <div>Contacts Content</div>
+        return <Contacts />
+      case 'collection':
+        return <Collection />
+      case 'status':
+        return <Status contextMenu={contextMenu} contextMenuActive={contextMenuActive}/>
+              case 'edit_status':
+        return <EditStatus contextMenu={contextMenu} contextMenuActive={contextMenuActive}/>
       default:
         return <div>Default Content</div>
     }

@@ -3,6 +3,11 @@ import { PrismaClient } from "../../../../../generated/prisma";
 import fs from 'fs'
 import path from "path";
 
+// utils
+
+import { uploadNewFile } from "@/utils/uploadNewFile";
+import { deleteCurrentFile } from "@/utils/deleteCurrentFile";
+
 // types
 
 import { StatusesType } from "@/types/type";
@@ -33,6 +38,18 @@ export const DELETE = async (req: Request, context: {params: {id: string}}) => {
         message: 'Статус не найден'
       })
     }
+
+
+
+    // 
+
+
+    const deleteFileIcon = await deleteCurrentFile(getStatus.icon, 'status')
+    console.log(deleteFileIcon)
+
+
+
+    // 
 
 
     const deleteFile = await prisma.statuses.delete({
@@ -69,9 +86,104 @@ export const DELETE = async (req: Request, context: {params: {id: string}}) => {
       })
     }
 
-    NextResponse.json({error: error})
+    return NextResponse.json({error: error})
     
     
   }
 
+}
+
+
+
+export const PATCH = async (req: Request, context: {params: {id: string}}) => {
+  try {
+
+    const { id } = await context.params
+    console.log(id)
+
+
+    const formData = await req.formData()
+    console.log(formData)
+
+    const title = formData.get('title')
+    const icon = formData.get('icon')
+    const price = formData.get('price')
+
+    // 
+
+
+    const currentStatus = await prisma.statuses.findFirst({
+      where: {
+        id: parseInt(id)
+      }
+    })
+
+    if (!currentStatus) {
+      return NextResponse.json({
+        message: 'Статус не найден'
+      })
+    }
+
+
+
+    const changeObj: any = {}
+
+
+    if (title) {
+      changeObj['title'] = formData.get('title') as string
+    }
+
+    if (icon) {
+
+      const res = await uploadNewFile(icon as File | any, 'status')
+      console.log(res)
+
+      changeObj['icon'] = res
+
+      const deleteFile = await deleteCurrentFile(currentStatus.icon, 'status')
+      console.log("ФАЙЛ УДАЛЕН!!!! ", deleteFile)
+
+
+    }
+
+    if (price) {
+      changeObj['price'] = formData.get('price') as string
+    }
+
+
+
+    console.log(changeObj)
+
+    const updateStatus = await prisma.statuses.update({
+      where: {
+        id: parseInt(id)
+      },
+      data: changeObj
+    })
+
+
+    console.log(updateStatus)
+
+    if (!updateStatus) {
+      return NextResponse.json({
+        message: 'Ошибка обновления статуса'
+      })
+    }
+
+    return NextResponse.json({
+      message: 'Статус изменен',
+    })
+    
+  } catch (error: Error | unknown) {
+
+    if (error instanceof Error) {
+      return NextResponse.json({
+        error: `Статус не изменен: ${error.message}`
+      })
+    }
+
+    return NextResponse.json({error: error})
+    
+    
+  }
 }

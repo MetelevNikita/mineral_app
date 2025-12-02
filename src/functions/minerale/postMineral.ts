@@ -1,4 +1,4 @@
-export const postMineral = async (mineral: FormData): Promise<{message: string, status: number}> => {
+export const postMineral = async (mineral: FormData): Promise<{message: string, data: string, status: number}> => {
   try {
 
     const responce = await fetch('/api/mineral', {
@@ -15,6 +15,7 @@ export const postMineral = async (mineral: FormData): Promise<{message: string, 
 
     return {
       message: 'Минерал успешно создан',
+      data: 'sucees',
       status: 200
     }
     
@@ -24,6 +25,7 @@ export const postMineral = async (mineral: FormData): Promise<{message: string, 
            console.error(`Ошибка получения минералов ${error.message}`)
            return {
              message: 'Ошибка создания минерала',
+             data: 'error',
              status: 500
            }
         }
@@ -31,6 +33,7 @@ export const postMineral = async (mineral: FormData): Promise<{message: string, 
         console.log(error)
         return {
           message: 'Ошибка создания минерала',
+          data: 'error',
           status: 500
         }
 

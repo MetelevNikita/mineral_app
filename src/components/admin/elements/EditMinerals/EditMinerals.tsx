@@ -117,7 +117,7 @@ const EditMinerals: FC<EditMineralsProps> = ({ contextMenu, contextMenuActive })
 
     
               {
-                (!minerals || minerals.length === 0) ? <div>Список минерало пуст</div> : searchMineralData.map((mineral: any, index: number): React.ReactNode => {
+                (!minerals || minerals.length === 0) ? <div>Список минералов пуст</div> : searchMineralData.map((mineral: any, index: number): React.ReactNode => {
                   return (
                     <MineralComponent key={index+1} title={mineral.title} id={mineral.id} open={handleOpenMineral}/>
                   )

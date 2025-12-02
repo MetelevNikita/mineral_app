@@ -1,0 +1,122 @@
+
+.statuscontainer {
+  cursor: pointer;
+}
+
+/*  */
+
+
+.status_title_wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status_title {
+ font-size: 32px;
+ font-weight: 600;
+
+
+
+ /*  */
+
+ margin-top: 10px;
+ margin-bottom: 20px;
+}
+
+
+.status_title_btn {
+  width: max-content;
+  height: max-content;
+  padding: 10px 20px;
+  background-color: #9480A5;
+  color: white
+}
+
+/*  */
+
+
+.status_wrapper {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px 20px; /* 20px по вертикали и 30px по горизонтали */
+  align-items: center;
+
+}
+
+
+/* item */
+
+
+.status_item_box {
+  width: max-content;
+  height: 50px;
+  border: 1px solid #9480A5;
+  border-radius: 10px;
+
+  /*  */
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+.status_item_image_wrapper {
+  width: 50px;
+  height: 50px;
+
+  /*  */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.status_item_btn {
+  width: max-content;
+  height: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 10px;
+
+  /*  */
+
+
+  background-color: #9480A5;
+  color: white
+}
+
+
+
+
+/*  */
+
+.status_form_inputs {
+  /* display: flex;
+  align-items: center; */
+  gap: 20px;
+}
+
+/*  */
+
+.status_form_btn_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /*  */
+
+  margin-top: 20px;
+}
+
+.btn {
+  width: 353px;
+  height: 56px;
+  background-color: #9480A5;
+  color: white
+}

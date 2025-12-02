@@ -7,43 +7,15 @@ import path from "path";
 
 import { StatusesType } from "@/types/type";
 
+// utils
+
+import { uploadNewFile } from "@/utils/uploadNewFile";
+
+
 
 const prisma = new PrismaClient()
 
 // 
-
-
-
-
-const uploadFileFn = async (url: any, file: File, pathFile: string, fileName: string) => {
-
-  try {
-
-    const fileUrl = new URL(url.url)
-    console.log(fileUrl)
-
-    const bufferFile = await file.arrayBuffer()
-    const fileBuffer = Buffer.from(bufferFile)
-
-    const pathJoin = path.join(pathFile, fileName)
-
-    await fs.promises.writeFile(pathJoin, fileBuffer)
-    console.log(`Файл ${file.name} успешно загружен`)
-
-
-    return fileUrl.origin
-
-    
-
-  } catch (error: Error | unknown) {
-    if (error instanceof Error) {
-      console.error(`Ошибка загрузки файла ${file.name}: ${error.message}`)
-      return NextResponse.json({
-        error: error.message
-      })
-    }
-  }
-}
 
 
 
@@ -87,22 +59,15 @@ export const POST = async (req: Request) => {
 
     // 
 
-    const statusFilePath = path.join(process.cwd(), 'public', 'uploads', 'status')
 
-    if (!fs.existsSync(statusFilePath)) {
-      fs.mkdirSync(statusFilePath, {recursive: true})
-    }
+    const newFile = await uploadNewFile(icon, 'status')
 
-    const iconName = path.parse(icon.name).name + '_' + Date.now() + path.parse(icon.name).ext
-
-    const url = await uploadFileFn(req, icon, statusFilePath, iconName)
-    console.log(url)
 
 
     const newStatus = await prisma.statuses.create({
       data: {
         title: title,
-        icon: '/uploads/status/' + iconName,
+        icon: newFile as any,
         price: price
       }
     })

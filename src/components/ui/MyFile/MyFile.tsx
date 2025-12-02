@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
 import Image from 'next/image'
 
 // styles
@@ -15,32 +15,39 @@ interface MyFileProps {
   title: string,
   name: string,
   placeholder: string
-  value?: string
+  value?: any
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 
 const MyFile: FC<MyFileProps> = ({ title, name, placeholder, value, onChange }) => {
 
-  
-  const file = value && value[0] as File | any
-  const previwImage = file ? URL.createObjectURL(file as any) : ''
-
-  console.log(previwImage)
-
-  console.log(placeholder)
+  const [fileName, setFileName] = useState<string>('')
+  const [previewImage, setPreviewImage] = useState<string>('')
 
 
+
+
+
+  useEffect(() => {
+    if (value instanceof FileList) {
+      setFileName(value[0].name)
+      setPreviewImage(URL.createObjectURL(value[0]))
+    } else {
+      setPreviewImage(value)
+      setFileName(value)
+    }
+  }, [value])
 
 
 
   return (
     <div className={styles.input_file_container}>
 
-      <span className={styles.input_file_span}>{title}</span>
+      {(title) && <span className={styles.input_file_span}>{title}</span>}
 
       <label className={styles.input_file_label} htmlFor={title}>
-        <div>{(!file) ? placeholder : file.name}</div>
+        <div>{(value instanceof FileList) ? value[0].name : placeholder}</div>
         <Image className={styles.input_file_icon} src={downloadIcon} width={24} alt='download_icon'/>
         <input
           name={name}
@@ -52,9 +59,9 @@ const MyFile: FC<MyFileProps> = ({ title, name, placeholder, value, onChange }) 
 
 
       {
-        (previwImage) && (
+        (previewImage) && (
           <div className={styles.file_container}>
-            <Image className={styles.file_image} src={previwImage} alt='preview image' width={70} height={0}/>
+            <Image className={styles.file_image} src={previewImage} alt='preview image' width={70} height={0}/>
           </div>
         )
       }

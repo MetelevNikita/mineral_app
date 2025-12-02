@@ -45,7 +45,19 @@ const page: FC = () => {
     {
       id: 3,
       label: 'Контакты',
-      value: 'constacts'
+      value: 'contacts'
+    },
+
+    {
+      id: 4,
+      label: 'Коллекция',
+      value: 'collection'
+    },
+
+    {
+      id: 5,
+      label: 'Статусы',
+      value: 'status'
     }
   ])
   const [menuActive, setMenuActive] = useState<{id: number, label: string, value: string}>({id: 1, label: 'Минералы', value: 'minerals'})
@@ -69,112 +81,6 @@ const page: FC = () => {
   return (
 
     <Container fluid className='vh-100' style={{marginTop: '20px', marginBottom: '20px'}}>
-
-
-    {/*  */}
-
-
-    <Row>
-      <Col>
-
-        {
-          (modalInfoActive === true) && (
-            <ModalInfo text={'Контент загружается просьба не перезагружать страницу'} icon={<BsXCircle style={{width: 80, color: '#9480A5'}}/>} />
-          )
-        }
-
-
-        {
-          (modalSubmitActive.type === 'delete' && modalSubmitActive.status === true) && (
-            <ModalSubmit
-              text={'Минерал успешно удален'}
-              icon={<BsExclamationCircle style={{width: 80, color: '#9480A5'}}/>}
-              active={{modalSubmitActive, setModalSubmitActive}}
-              onClick={() => {
-                    setModalSubmitActive({
-                      type: '',
-                      status: false
-                    })
-                    setMenuActive({
-                      id: 1,
-                      label: 'Минералы',
-                      value: 'minerals'
-                    })
-                  }
-                }
-              />
-          )
-        }
-
-
-        {
-          (modalSubmitActive.type === 'change' && modalSubmitActive.status === true) && (
-            <ModalSubmit
-              text={'Ошибка изменения минерала'}
-              icon={<BsExclamationCircle style={{width: 80, color: '#9480A5'}}/>}
-              active={{modalSubmitActive, setModalSubmitActive}}
-              onClick={() => {
-                    setModalSubmitActive({
-                      type: '',
-                      status: false
-                    })
-                    setMenuActive({
-                      id: 1,
-                      label: 'Минералы',
-                      value: 'minerals'
-                    })
-                  }
-                }
-              />
-          )
-        }
-
-        {
-          (modalSubmitActive.type === 'error' && modalSubmitActive.status === true) && (
-            <ModalSubmit
-              text={'Ошибка при создании минерала'}
-              icon={<BsExclamationCircle style={{width: 80, color: '#9480A5'}}/>}
-              active={{modalSubmitActive, setModalSubmitActive}}
-              onClick={() => {
-                    setModalSubmitActive({
-                      type: '',
-                      status: false
-                    })
-                    setMenuActive({
-                      id: 1,
-                      label: 'Минералы',
-                      value: 'minerals'
-                    })
-                  }
-                }
-              />
-          )
-        }
-
-        {
-          (modalSubmitActive.type === 'success' && modalSubmitActive.status === true) && (
-            <ModalSubmit
-              text={'Минерал успешно создан, Доступно добавления ГЕОКВИЗА'}
-              icon={<BsCheckCircle style={{width: 80, color: '#9480A5'}}/>}
-              active={{modalSubmitActive, setModalSubmitActive}}
-              onClick={() => {
-                    setModalSubmitActive({
-                      type: '',
-                      status: false
-                    })
-                    setMenuActive({
-                      id: 1,
-                      label: 'Минералы',
-                      value: 'minerals'
-                    })
-                  }
-                }
-              />
-          )
-        }
-      
-      </Col>
-    </Row>
 
 
     {/*  */}

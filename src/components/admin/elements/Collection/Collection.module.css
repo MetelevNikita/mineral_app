@@ -1,0 +1,95 @@
+
+.collection_container {
+  cursor: pointer;
+}
+
+
+
+
+
+.collection_title {
+ font-size: 32px;
+ font-weight: 600;
+
+ /*  */
+
+ margin-top: 10px;
+ margin-bottom: 20px;
+}
+
+
+.collection_wrapper {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px 20px; /* 20px по вертикали и 30px по горизонтали */
+  align-items: center;
+
+}
+
+
+/* item */
+
+
+.collection_item_box {
+  width: 140px;
+  height: 160px;
+  background-color: rgba(95, 95, 95, 0.121);
+  border-radius: 10px;
+
+  /*  */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.collection_item_image_wrapper {
+  width: 120px;
+  height: 120px;
+
+  /*  */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.collection_item_btn {
+  margin-top: 5px;
+  width: 100px;
+  height: 40px;
+
+  /*  */
+
+
+  background-color: #9480A5;
+  color: white
+}
+
+
+
+
+/*  */
+
+.collection_form_inputs {
+  /* display: flex;
+  align-items: center; */
+  gap: 20px;
+}
+
+/*  */
+
+.collection_form_btn_container {
+  margin-top: 20px;
+}
+
+.btn {
+  width: 353px;
+  height: 56px;
+  background-color: #9480A5;
+  color: white
+}
