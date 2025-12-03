@@ -103,6 +103,9 @@ export const PATCH  = async (req: Request) => {
 
     if (way) {
 
+
+      
+
       if (getContacts) {
         const filename = await uploadNewFile(way, 'contacts')
         await deleteCurrentFile(getContacts.way as string, 'contacts')
