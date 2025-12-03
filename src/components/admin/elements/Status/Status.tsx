@@ -67,7 +67,7 @@ const Status: FC<StatusProps> = ({ contextMenu, contextMenuActive }) => {
 
     e.preventDefault()
 
-    if (!newStatus.title || !newStatus.icon || !newStatus.price) {
+    if (!newStatus.title || !newStatus.icon) {
       alert('Заполните все поля')
       return
     }
@@ -149,7 +149,7 @@ const Status: FC<StatusProps> = ({ contextMenu, contextMenuActive }) => {
 
 
                 <MyInput
-                  title={'Введите название'}
+                  title={'* Введите название'}
                   type={'text'}
                   placeholder={'текст'}
                   style={{}}
@@ -157,7 +157,7 @@ const Status: FC<StatusProps> = ({ contextMenu, contextMenuActive }) => {
                   onChange={(e: any) => setNewStatus({...newStatus, title: e.target.value})}
                 />
                 <MyFile
-                  title={'Загрузите иконку'}
+                  title={'* Загрузите иконку'}
                   name={''}
                   placeholder={'иконка не выбрана'}
                   value={newStatus.icon}

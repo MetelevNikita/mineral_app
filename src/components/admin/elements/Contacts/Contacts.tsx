@@ -42,14 +42,14 @@ const Contacts: FC = () => {
 
     (async () => {
       const data = await getContacts()
-      if (data) {
+      if (data[0]) {
         setContacts({
-          adress: data[0].adress,
-          events: data[0].events,
-          laboratory: data[0].laboratory,
-          news: data[0].news,
-          path: data[0].path,
-          way:  data[0].way,
+          adress: data[0].adress || '',
+          events: data[0].events || '',
+          laboratory: data[0].laboratory || '',
+          news: data[0].news || '',
+          path: data[0].path || '',
+          way:  data[0].way || '',
         })
       }
     })()
@@ -57,7 +57,12 @@ const Contacts: FC = () => {
   }, [])
 
 
-  console.log(contacts)
+
+  console.log(newContact)
+
+
+
+
 
 
 
@@ -79,7 +84,7 @@ const Contacts: FC = () => {
     formData.append('laboratory', newContact.laboratory || ''),
     formData.append('news', newContact.news || ''),
     formData.append('path', newContact.path || ''),
-    formData.append('way', newContact.way[0] || '')
+    formData.append('way', (newContact.way instanceof FileList) ? newContact.way[0] : newContact.way)
 
     // 
 
@@ -127,8 +132,8 @@ const Contacts: FC = () => {
                   type={'text'}
                   placeholder={'текст'}
                   style={{}}
-                  value={newContact.adress || contacts.adress}
-                  onChange={(e: any) => setContacts({...contacts, adress: e.target.value})}
+                  value={newContact.adress || contacts?.adress}
+                  onChange={(e: any) => setNewContact({...newContact, adress: e.target.value})}
                 />
 
 
@@ -137,8 +142,8 @@ const Contacts: FC = () => {
                   type={'text'}
                   placeholder={'текст'}
                   style={{}}
-                  value={newContact.events || contacts.events}
-                  onChange={(e: any) => setNewContact({...contacts, events: e.target.value})}
+                  value={newContact.events || contacts?.events}
+                  onChange={(e: any) => setNewContact({...newContact, events: e.target.value})}
                 />
 
                 <MyInput
@@ -146,8 +151,8 @@ const Contacts: FC = () => {
                   type={'text'}
                   placeholder={'текст'}
                   style={{}}
-                  value={newContact.laboratory || contacts.laboratory}
-                  onChange={(e: any) => setNewContact({...contacts, laboratory: e.target.value})}
+                  value={newContact.laboratory || contacts?.laboratory}
+                  onChange={(e: any) => setNewContact({...newContact, laboratory: e.target.value})}
                 />
 
 
@@ -156,8 +161,8 @@ const Contacts: FC = () => {
                   type={'text'}
                   placeholder={'текст'}
                   style={{}}
-                  value={newContact.news || contacts.news}
-                  onChange={(e: any) => setNewContact({...contacts, news: e.target.value})}
+                  value={newContact.news || contacts?.news}
+                  onChange={(e: any) => setNewContact({...newContact, news: e.target.value})}
                 />
 
 
@@ -167,7 +172,7 @@ const Contacts: FC = () => {
                   placeholder={'текст'}
                   style={{}}
                   value={newContact.path || contacts.path}
-                  onChange={(e: any) => setNewContact({...contacts, path: e.target.value})}
+                  onChange={(e: any) => setNewContact({...newContact, path: e.target.value})}
                 />
 
                 <MyFile
@@ -175,7 +180,7 @@ const Contacts: FC = () => {
                   name={''}
                   placeholder={contacts.way}
                   value={newContact.way}
-                  onChange={(e: any) => setNewContact({...contacts, way: e.target.files})}
+                  onChange={(e: any) => setNewContact({...newContact, way: e.target.files})}
                 />
 
 
