@@ -43,7 +43,7 @@ const page: FC = () => {
             if (res) {
 
                 const objRes = Object.entries(res[0])
-                const newData = objRes.filter((item) => item[0] !== 'id').map((item, index) => {
+                const newData = objRes.filter((item) => item[0] !== 'id' && item[0] !== 'createAt' && item[0] !== 'updateAt').map((item, index) => {
                     const value = ['Адрес', 'Проведение мероприятий', 'Лаборатория', 'СМИ', 'Как добраться', 'Схема расположения музея']
 
                         if (item[0] === 'way') {
