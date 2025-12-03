@@ -23,8 +23,6 @@ interface MyAcardeonProps {
 const MyAcardeon: FC<MyAcardeonProps> = ({ title, content, image }) => {
 
 const [isOn, setIsOn] = useState(false)
-console.log(isOn)
-
 const titleWord = title.slice(0,1).toLocaleUpperCase() + title.slice(1)
 
 
@@ -45,7 +43,7 @@ const titleWord = title.slice(0,1).toLocaleUpperCase() + title.slice(1)
                 isOn ? 
                     <motion.div
                         className={styles.acarderon_bottom_text}>
-                        {(image) ? <div className={styles.image_container}><Image src={image} width={324} alt={'image'}/></div> : <div className={styles.content}>{content}</div>}
+                        {(image) ? <div className={styles.image_container}><Image src={image} width={324} height={400} alt={'image'}/></div> : <div className={styles.content}>{content}</div>}
                     </motion.div> :
                     null
             }
