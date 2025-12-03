@@ -68,7 +68,6 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
   const [mineral, setMineral] = useState<any>(null)
   const {menuActive, setMenuActive} = contextMenuActive;
 
-  console.log(menuActive)
 
 
   useEffect(() => {
@@ -219,7 +218,7 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
             {/* photo and video */}
 
             <MyFile title='Фото минерала' placeholder={mineral.image} name={'image'} onChange={(e) => {setNewForm({...newForm, image: e.target.files})}} value={newForm.image}/>
-            <MyFile title='Видео' placeholder={mineral.video} name={'video'} onChange={(e) => {setNewForm({...newForm, video: e.target.files ? e.target.files[0] : null})}} value={newForm.video}/>
+            <MyFile title='Видео' placeholder={mineral.video} name={'video'} onChange={(e) => {setNewForm({...newForm, video: e.target.files})}} value={newForm.video}/>
 
             {/*  */}
 
