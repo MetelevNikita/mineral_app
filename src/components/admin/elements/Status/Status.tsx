@@ -42,9 +42,10 @@ const Status: FC<StatusProps> = ({ contextMenu, contextMenuActive }) => {
   // 
 
   const [status, setStatus] = useState<any>([])
-  const [newStatus, setNewStatus] = useState<{title: string, icon: File | any, price: string}>({
+  const [newStatus, setNewStatus] = useState<{title: string, icon: File | any, total: number, price: string}>({
     title: '',
     icon: '',
+    total: 0,
     price: ''
   })
 
@@ -75,6 +76,7 @@ const Status: FC<StatusProps> = ({ contextMenu, contextMenuActive }) => {
     const formData = new FormData()
     formData.append('title', newStatus.title)
     formData.append('icon', newStatus.icon[0])
+    formData.append('total', newStatus.total.toString())
     formData.append('price', newStatus.price)
 
     //
@@ -91,12 +93,17 @@ const Status: FC<StatusProps> = ({ contextMenu, contextMenuActive }) => {
     setNewStatus({
       title: '',
       icon: '',
+      total: 0,
       price: ''
     })
 
 
   }
 
+
+
+
+  console.log(newStatus)
 
   // 
 
@@ -163,6 +170,15 @@ const Status: FC<StatusProps> = ({ contextMenu, contextMenuActive }) => {
                   value={newStatus.icon}
                   onChange={(e: any) => setNewStatus({...newStatus, icon: e.target.files})}
                 />
+                <MyInput
+                  title={'* Баллы'}
+                  type={'number'}
+                  style={{}}
+                  placeholder={'Введите призовое количество баллов для получения нового статуса'}
+                  value={newStatus.total.toString()}
+                  onChange={(e: any) => setNewStatus({...newStatus, total: e.target.value})}
+                />
+                
                 <MyInput
                   title={'Введите скидку'}
                   type={'text'}

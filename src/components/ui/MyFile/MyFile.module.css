@@ -47,7 +47,7 @@
 
 
 .file_container {
-    width: 160px;
+    width: max-content;
     height: max-content;
     border-radius: 10px;
     background-color: rgba(95, 95, 95, 0.121);
@@ -56,7 +56,7 @@
 
     margin-top: 10px;
     margin-bottom: 10px;
-    padding: 20px;
+    padding: 10px;
 
 }
 

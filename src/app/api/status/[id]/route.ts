@@ -107,7 +107,9 @@ export const PATCH = async (req: Request, context: {params: {id: string}}) => {
 
     const title = formData.get('title')
     const icon = formData.get('icon')
+    const total = formData.get('total')
     const price = formData.get('price')
+
 
     // 
 
@@ -146,6 +148,10 @@ export const PATCH = async (req: Request, context: {params: {id: string}}) => {
 
     }
 
+    if (total) {
+      changeObj['total'] = Number(formData.get('total'))
+    }
+
     if (price) {
       changeObj['price'] = formData.get('price') as string
     }
@@ -153,6 +159,8 @@ export const PATCH = async (req: Request, context: {params: {id: string}}) => {
 
 
     console.log(changeObj)
+
+    console.log('START UPDATE!!!!!!!!')
 
     const updateStatus = await prisma.statuses.update({
       where: {

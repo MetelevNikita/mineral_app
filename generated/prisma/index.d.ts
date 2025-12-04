@@ -10921,10 +10921,12 @@ export namespace Prisma {
 
   export type StatusesAvgAggregateOutputType = {
     id: number | null
+    total: number | null
   }
 
   export type StatusesSumAggregateOutputType = {
     id: number | null
+    total: number | null
   }
 
   export type StatusesMinAggregateOutputType = {
@@ -10932,6 +10934,7 @@ export namespace Prisma {
     title: string | null
     icon: string | null
     price: string | null
+    total: number | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -10941,6 +10944,7 @@ export namespace Prisma {
     title: string | null
     icon: string | null
     price: string | null
+    total: number | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -10950,6 +10954,7 @@ export namespace Prisma {
     title: number
     icon: number
     price: number
+    total: number
     createAt: number
     updateAt: number
     _all: number
@@ -10958,10 +10963,12 @@ export namespace Prisma {
 
   export type StatusesAvgAggregateInputType = {
     id?: true
+    total?: true
   }
 
   export type StatusesSumAggregateInputType = {
     id?: true
+    total?: true
   }
 
   export type StatusesMinAggregateInputType = {
@@ -10969,6 +10976,7 @@ export namespace Prisma {
     title?: true
     icon?: true
     price?: true
+    total?: true
     createAt?: true
     updateAt?: true
   }
@@ -10978,6 +10986,7 @@ export namespace Prisma {
     title?: true
     icon?: true
     price?: true
+    total?: true
     createAt?: true
     updateAt?: true
   }
@@ -10987,6 +10996,7 @@ export namespace Prisma {
     title?: true
     icon?: true
     price?: true
+    total?: true
     createAt?: true
     updateAt?: true
     _all?: true
@@ -11083,6 +11093,7 @@ export namespace Prisma {
     title: string
     icon: string
     price: string | null
+    total: number
     createAt: Date
     updateAt: Date
     _count: StatusesCountAggregateOutputType | null
@@ -11111,6 +11122,7 @@ export namespace Prisma {
     title?: boolean
     icon?: boolean
     price?: boolean
+    total?: boolean
     createAt?: boolean
     updateAt?: boolean
   }, ExtArgs["result"]["statuses"]>
@@ -11120,6 +11132,7 @@ export namespace Prisma {
     title?: boolean
     icon?: boolean
     price?: boolean
+    total?: boolean
     createAt?: boolean
     updateAt?: boolean
   }, ExtArgs["result"]["statuses"]>
@@ -11129,6 +11142,7 @@ export namespace Prisma {
     title?: boolean
     icon?: boolean
     price?: boolean
+    total?: boolean
     createAt?: boolean
     updateAt?: boolean
   }, ExtArgs["result"]["statuses"]>
@@ -11138,11 +11152,12 @@ export namespace Prisma {
     title?: boolean
     icon?: boolean
     price?: boolean
+    total?: boolean
     createAt?: boolean
     updateAt?: boolean
   }
 
-  export type StatusesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "icon" | "price" | "createAt" | "updateAt", ExtArgs["result"]["statuses"]>
+  export type StatusesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "icon" | "price" | "total" | "createAt" | "updateAt", ExtArgs["result"]["statuses"]>
 
   export type $StatusesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Statuses"
@@ -11152,6 +11167,7 @@ export namespace Prisma {
       title: string
       icon: string
       price: string | null
+      total: number
       createAt: Date
       updateAt: Date
     }, ExtArgs["result"]["statuses"]>
@@ -11581,6 +11597,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Statuses", 'String'>
     readonly icon: FieldRef<"Statuses", 'String'>
     readonly price: FieldRef<"Statuses", 'String'>
+    readonly total: FieldRef<"Statuses", 'Int'>
     readonly createAt: FieldRef<"Statuses", 'DateTime'>
     readonly updateAt: FieldRef<"Statuses", 'DateTime'>
   }
@@ -14197,6 +14214,7 @@ export namespace Prisma {
     title: 'title',
     icon: 'icon',
     price: 'price',
+    total: 'total',
     createAt: 'createAt',
     updateAt: 'updateAt'
   };
@@ -14887,6 +14905,7 @@ export namespace Prisma {
     title?: StringFilter<"Statuses"> | string
     icon?: StringFilter<"Statuses"> | string
     price?: StringNullableFilter<"Statuses"> | string | null
+    total?: IntFilter<"Statuses"> | number
     createAt?: DateTimeFilter<"Statuses"> | Date | string
     updateAt?: DateTimeFilter<"Statuses"> | Date | string
   }
@@ -14896,6 +14915,7 @@ export namespace Prisma {
     title?: SortOrder
     icon?: SortOrder
     price?: SortOrderInput | SortOrder
+    total?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -14908,6 +14928,7 @@ export namespace Prisma {
     title?: StringFilter<"Statuses"> | string
     icon?: StringFilter<"Statuses"> | string
     price?: StringNullableFilter<"Statuses"> | string | null
+    total?: IntFilter<"Statuses"> | number
     createAt?: DateTimeFilter<"Statuses"> | Date | string
     updateAt?: DateTimeFilter<"Statuses"> | Date | string
   }, "id">
@@ -14917,6 +14938,7 @@ export namespace Prisma {
     title?: SortOrder
     icon?: SortOrder
     price?: SortOrderInput | SortOrder
+    total?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
     _count?: StatusesCountOrderByAggregateInput
@@ -14934,6 +14956,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Statuses"> | string
     icon?: StringWithAggregatesFilter<"Statuses"> | string
     price?: StringNullableWithAggregatesFilter<"Statuses"> | string | null
+    total?: IntWithAggregatesFilter<"Statuses"> | number
     createAt?: DateTimeWithAggregatesFilter<"Statuses"> | Date | string
     updateAt?: DateTimeWithAggregatesFilter<"Statuses"> | Date | string
   }
@@ -15640,6 +15663,7 @@ export namespace Prisma {
     title: string
     icon: string
     price?: string | null
+    total?: number
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -15649,6 +15673,7 @@ export namespace Prisma {
     title: string
     icon: string
     price?: string | null
+    total?: number
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -15657,6 +15682,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
     price?: NullableStringFieldUpdateOperationsInput | string | null
+    total?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15666,6 +15692,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
     price?: NullableStringFieldUpdateOperationsInput | string | null
+    total?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15675,6 +15702,7 @@ export namespace Prisma {
     title: string
     icon: string
     price?: string | null
+    total?: number
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -15683,6 +15711,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
     price?: NullableStringFieldUpdateOperationsInput | string | null
+    total?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15692,6 +15721,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     icon?: StringFieldUpdateOperationsInput | string
     price?: NullableStringFieldUpdateOperationsInput | string | null
+    total?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16378,12 +16408,14 @@ export namespace Prisma {
     title?: SortOrder
     icon?: SortOrder
     price?: SortOrder
+    total?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
 
   export type StatusesAvgOrderByAggregateInput = {
     id?: SortOrder
+    total?: SortOrder
   }
 
   export type StatusesMaxOrderByAggregateInput = {
@@ -16391,6 +16423,7 @@ export namespace Prisma {
     title?: SortOrder
     icon?: SortOrder
     price?: SortOrder
+    total?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -16400,12 +16433,14 @@ export namespace Prisma {
     title?: SortOrder
     icon?: SortOrder
     price?: SortOrder
+    total?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
 
   export type StatusesSumOrderByAggregateInput = {
     id?: SortOrder
+    total?: SortOrder
   }
 
   export type MineralMapCountOrderByAggregateInput = {
