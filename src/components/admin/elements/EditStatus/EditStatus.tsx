@@ -45,9 +45,10 @@ const EditStatus: FC<EditStatusProps> = ({ contextMenu, contextMenuActive }) => 
   // 
 
   const [status, setStatus] = useState<any>(null)
-  const [newStatus, setNewStatus] = useState<{title: string, icon: File | any, price: string}>({
+  const [newStatus, setNewStatus] = useState<{title: string, icon: File | any, total: number, price: string}>({
     title: '',
     icon: '',
+    total: 0,
     price: ''
   })
 
@@ -65,6 +66,9 @@ const EditStatus: FC<EditStatusProps> = ({ contextMenu, contextMenuActive }) => 
 
 
 
+
+
+
   const handleEditStatus = async (e: any) => {
 
     e.preventDefault()
@@ -79,6 +83,10 @@ const EditStatus: FC<EditStatusProps> = ({ contextMenu, contextMenuActive }) => 
 
     if (newStatus.icon) {
       formData.append('icon', newStatus.icon[0])
+    }
+
+    if (newStatus.total) {
+      formData.append('total', newStatus.total.toString())
     }
 
     if (newStatus.price) {
@@ -177,6 +185,14 @@ const EditStatus: FC<EditStatusProps> = ({ contextMenu, contextMenuActive }) => 
                   placeholder={status.icon}
                   value={newStatus.icon}
                   onChange={(e: any) => setNewStatus({...newStatus, icon: e.target.files})}
+                />
+                <MyInput
+                  title={'Введите скидку'}
+                  type={'number'}
+                  placeholder={'текст'}
+                  style={{}}
+                  value={newStatus.total || status.total}
+                  onChange={(e: any) => setNewStatus({...newStatus, total: e.target.value})}
                 />
                 <MyInput
                   title={'Введите скидку'}

@@ -55,9 +55,13 @@ export const POST = async (req: Request) => {
 
     const title = formData.get('title') as string
     const icon = formData.get('icon') as File
+    const total = formData.get('total') as string
     const price = formData.get('price') as string
 
-    // 
+    //
+
+
+    console.log('TOTAL ', total)
 
 
     const newFile = await uploadNewFile(icon, 'status')
@@ -68,6 +72,7 @@ export const POST = async (req: Request) => {
       data: {
         title: title,
         icon: newFile as any,
+        total: Number(total) as number,
         price: price
       }
     })

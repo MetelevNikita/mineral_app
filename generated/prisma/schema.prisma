@@ -127,6 +127,7 @@ model Statuses {
   title String
   icon  String
   price String?
+  total Int     @default(0)
 
   createAt DateTime @default(now())
   updateAt DateTime @default(now())

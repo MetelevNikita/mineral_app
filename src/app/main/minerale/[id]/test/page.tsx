@@ -50,6 +50,10 @@ import { getUsers } from '@/functions/reduxAsync/users/getUsers'
 
 import { fetchGetCollectionMineral } from '@/functions/reduxAsync/collectionMineral/fetchGetCollectionMineral'
 
+// functions
+
+import { getStatus } from '@/functions/status/getStatus'
+
 // types
 
 import { CollectionMineralType } from '@/types/type'
@@ -64,17 +68,15 @@ const page = ({ params }: { params: { id: string } }) => {
   const router = useRouter()
 
 
-  const STATUS_THRESHOLDS = [
-    { min: 2600, status: 'Министр природных ресурсов' },
-    { min: 2000, status: 'Начальник геолого-съемочной партии' },
-    { min: 1400, status: 'Главный геолог' },
-    { min: 1000, status: 'Старший геолог' },
-    { min: 600,  status: 'Геолог-съёмщик' },
-    { min: 200,  status: 'Инженер-геолог' },
-    { min: 100,  status: 'Стажер-геолог' },
-  ] as const;
-
-
+  // const STATUS_THRESHOLDS = [
+  //   { min: 2600, status: 'Министр природных ресурсов' },
+  //   { min: 2000, status: 'Начальник геолого-съемочной партии' },
+  //   { min: 1400, status: 'Главный геолог' },
+  //   { min: 1000, status: 'Старший геолог' },
+  //   { min: 600,  status: 'Геолог-съёмщик' },
+  //   { min: 200,  status: 'Инженер-геолог' },
+  //   { min: 100,  status: 'Стажер-геолог' },
+  // ] as const;
 
 
 
@@ -86,7 +88,8 @@ const page = ({ params }: { params: { id: string } }) => {
   const [questionNumber, setQuestionNumber] = useState<number>(1)
   const [price, setPrice] = useState<number>(0)
   const [newStatusText, setNewStatusText] = useState<string>('')
-   const [getMineral, setGetMineral] = useState<boolean>(false)
+  const [getMineral, setGetMineral] = useState<boolean>(false)
+  const [statuses, setStatuses] = useState<any>([])
 
 
 
@@ -101,6 +104,28 @@ const page = ({ params }: { params: { id: string } }) => {
   const [winKviz, setWinKviz] = useState<boolean>(false)
   const [notWinKviz, setNotWinKviz] = useState<boolean>(false)
   const [kvizDone, setKvizDone] = useState<boolean>(false)
+
+
+  // 
+
+
+
+  useEffect(() => {
+    (async () => {
+      const res = await getStatus()
+      
+      setStatuses(res.map((item: {title: string, total: number | string}) => {
+        return {
+          min: item.total,
+          status: item.title
+        }
+      }))
+    })()
+  }, [])
+
+
+  console.log('STATUSES ', statuses)
+
 
   // redux
 
@@ -239,7 +264,7 @@ const page = ({ params }: { params: { id: string } }) => {
     newTotal: number
   ): string | null => {
     // Проходим по всем порогам от низшего к высшему
-    for (const threshold of STATUS_THRESHOLDS) {
+    for (const threshold of statuses) {
       // Если newTotal достиг или превысил порог, И previousTotal был меньше этого порога
       if (newTotal >= threshold.min && previousTotal < threshold.min) {
         return threshold.status;

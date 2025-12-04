@@ -207,6 +207,7 @@ exports.Prisma.StatusesScalarFieldEnum = {
   title: 'title',
   icon: 'icon',
   price: 'price',
+  total: 'total',
   createAt: 'createAt',
   updateAt: 'updateAt'
 };
