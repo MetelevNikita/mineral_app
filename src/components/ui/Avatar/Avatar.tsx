@@ -40,7 +40,7 @@ const Avatar: FC<AvatarProps> = ({ src, previewSrc, alt }) => {
       
       // Для вертикальных фото поворачиваем на 90 градусов
       if (isVertical) {
-        setRotation(90)
+        setRotation(0)
       } else {
         setRotation(0)
       }
