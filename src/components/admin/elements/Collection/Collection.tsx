@@ -21,7 +21,9 @@ import { getCollection } from '@/functions/collection/getCollection'
 import { postCollection } from '@/functions/collection/postCollection'
 import { deleteCollection } from '@/functions/collection/deleteCollection'
 
-// 
+// icon
+
+import deleteIcon from '@/../public/admin/UI/delete_icon.svg'
 
 const Collectin: FC = () => {
 
@@ -42,8 +44,6 @@ const Collectin: FC = () => {
 
     })()
   }, [update])
-
-  console.log(collection)
 
   // 
 
@@ -116,10 +116,16 @@ const Collectin: FC = () => {
               return (
                 <div key={index+1} className={styles.collection_item_box}>
                   <div className={styles.collection_item_image_wrapper}>
-                      <Image width={100} height={100} className={''} src={item.image} alt={'collection_icon'}/>
+                      <Image width={50} height={50} className={''} src={item.image} alt={'collection_icon'}/>
                   </div>
 
-                  <MyButton text={'удалить'} btn={styles.collection_item_btn} onClick={() => {handleDeleteMineral(item.id)}} type={'button'} />
+
+                  <div className={styles.collection_item_title_wrapper}>
+                    <div className={styles.collection_item_title}>{item.title}</div>
+                    <Image src={deleteIcon} width={20} height={20} alt={'delete_icon'} onClick={() => {handleDeleteMineral(item.id)}}/>
+                  </div>
+
+
                 </div>
               )
             })
