@@ -156,10 +156,7 @@ const page = ({ params }: { params: { id: string } }) => {
 
       
       if (kvizIsDone.length > 0) {
-        setTimeout(() => {
           setKvizDone(true)
-        }, 1000)
-        
       }
 
     }
@@ -210,164 +207,143 @@ const page = ({ params }: { params: { id: string } }) => {
 
 
   const handleFinalSubmit = (mineral: any) => {
-
     const correctAnswer = answers.filter((item: any) => {
-            return item.correct === true
-    })
+      return item.correct === true;
+    });
 
     const passed = correctAnswer.length === mineral.question.length;
 
     if (questionId + 1 >= mineral.question.length) {
-      const isPassed = currentUser?.mineralPassed.filter((item: any) => item.title === mineral.title).length > 0;
-
+      const isPassed = currentUser?.mineralPassed.filter((item: any) => 
+        item.title === mineral.title
+      ).length > 0;
 
       if (passed) {
-
-        if (!isPassed) {
-          setPrice(100);
-          setWinKviz(true)
-        } else {
-          setPrice(10);
-          setWinKviz(true)
-        }
-
+        const pointsToAdd = isPassed ? 10 : 100;
+        setPrice(pointsToAdd); // Отображаем сколько баллов получим
+        setWinKviz(true);
       } else {
         setPrice(0);
-        setNotWinKviz(true)
+        setNotWinKviz(true);
       }
-
-
     } else {
-      alert('Вы не закончили отвечать на вопросы')
+      alert('Вы не закончили отвечать на вопросы');
     }
-
-  }
+  };
 
   //
 
 
-  const calcStatusByTotal = (total: number): any => {
-    const found = STATUS_THRESHOLDS.find(t => total >= t.min);
-    return found ? found.status : '';
-  };
-
-
-
-  const applyStatusIfUpgraded = async (total: number, currentStatus: string) => {
-    const nextStatus = calcStatusByTotal(total);
-
-    // если порог не достигнут — ничего не делаем
-    if (!nextStatus) return '';
-
-    // если статус не изменился — не дергаем API повторно
-    if (nextStatus === currentStatus) return nextStatus;
-
-    // апгрейд статуса
-    await dispatch(fetchUsersChangeStatus({ userId, status: nextStatus })).unwrap();
-    await dispatch(getUsers()).unwrap();
-    return nextStatus;
-  };
-
-
-
-  const newStatusUser = async (total: number, currentStatus: {title: string, price: string} | any) => {
-    try {
-      return await applyStatusIfUpgraded(total, currentStatus);
-    } catch (error: Error | unknown) {
-      if (error instanceof Error) {
-        console.error(`Ошибка получения статуса ${error.message ?? error}`);
-        throw new Error(`Ошибка получения статуса ${error.message ?? error}`);
+  const getNewStatusIfThresholdCrossed = (
+    previousTotal: number, 
+    newTotal: number
+  ): string | null => {
+    // Проходим по всем порогам от низшего к высшему
+    for (const threshold of STATUS_THRESHOLDS) {
+      // Если newTotal достиг или превысил порог, И previousTotal был меньше этого порога
+      if (newTotal >= threshold.min && previousTotal < threshold.min) {
+        return threshold.status;
       }
-      throw new Error(`Ошибка получения статуса ${error}`)
+    }
+    return null;
+  };
+
+
+
+  const newStatusUser = async (newTotal: number) => {
+    try {
+      const previousTotal = currentUser.total || 0;
+      const newStatus = getNewStatusIfThresholdCrossed(previousTotal as number, newTotal);
+      
+      // Если достигнут новый порог
+      if (newStatus && newStatus !== currentUser.status) {
+        console.log(`Достигнут новый статус: ${newStatus} (${newTotal} баллов)`);
+        await dispatch(fetchUsersChangeStatus({ userId, status: newStatus })).unwrap();
+        await dispatch(getUsers()).unwrap();
+        return newStatus;
+      }
+      
+      return null; // Статус не изменился
+    } catch (error: Error | unknown) {
+      console.error('Ошибка обновления статуса:', error);
+      return null;
     }
   };
 
 
 
+  
   const closeModal = async (minerale: any, user: any) => {
     try {
-
-      let total = user.total;
-
-      // проверили правильность ответов
-
+      const previousTotal = user.total || 0;
+      
+      // проверяем правильность ответов
       const correctAnswer = answers.filter((item: any) => item.correct === true);
       const passedAllCorrect = correctAnswer.length === minerale.question.length;
 
-      // проверили проходили ли мы квиз
-
+      // проверяем проходили ли мы квиз
       const alreadyPassed = user.mineralPassed.some((i: any) => i.title === minerale.title);
 
-
       // Считаем очки
-
       let pointsToAdd = 0;
       if (passedAllCorrect) {
-          pointsToAdd = alreadyPassed ? 10 : 100;
+        pointsToAdd = alreadyPassed ? 10 : 100;
 
-          const newTotal = total + pointsToAdd;
+        const newTotal = previousTotal + pointsToAdd;
+        console.log(`Баллы: ${previousTotal} + ${pointsToAdd} = ${newTotal}`);
 
-          // Если это первое прохождение и всё верно — фиксируем «пройдено»
-          if (passedAllCorrect && !alreadyPassed) {
-            await dispatch(fetchUsersChangePassedMineral({
-              userId,
-              passed: { title: minerale.title, isPassed: false }
-            })).unwrap();
-          }
+        // Если это первое прохождение и всё верно — фиксируем «пройдено»
+        if (passedAllCorrect && !alreadyPassed) {
+          await dispatch(fetchUsersChangePassedMineral({
+            userId,
+            passed: { title: minerale.title, isPassed: false }
+          })).unwrap();
+        }
 
-          // Если есть очки — фиксируем новый total (даже при повторном прохождении)
-          if (pointsToAdd > 0) {
-            await dispatch(fetchUsersChangeTotal({ userId, total: newTotal })).unwrap();
-          }
+        // Если есть очки — фиксируем новый total
+        if (pointsToAdd > 0) {
+          await dispatch(fetchUsersChangeTotal({ userId, total: newTotal })).unwrap();
+        }
 
-          // Обновляем пользователя после записи total/пасса
-          await dispatch(getUsers()).unwrap();
+        // Обновляем пользователя
+        await dispatch(getUsers()).unwrap();
 
-          // Пробуем апгрейдить статус (один раз до следующего порога)
+        // Проверяем, достигнут ли новый порог статуса
+        const newStatus = await newStatusUser(newTotal);
 
-          if (!currentUser.status) {
-            return
-          }
-
-          const newStatus = await newStatusUser(newTotal, currentUser.status);
-
+        if (passedAllCorrect) {
           setWinKviz(false);
-          setNewStatusText(newStatus);
-
-          console.log('НОВЫЙ СТАТУС', newStatus)
+          
+          // Проверяем, есть ли новый минерал в коллекции
           const newCollectionMineralData = await updateCollectionMineral();
-
-          if (newStatus && newStatus !== currentUser.status) {
-
-
-              if (newCollectionMineralData.length >= 1) {
-                setGetMineral(true);
-                return;
-              } else {
-
-                router.push(`/main/status/${newStatus}`);
-                return;
-              }
+          
+          // Если достигнут новый статус
+          if (newStatus) {
+            setNewStatusText(newStatus);
+            
+            if (newCollectionMineralData.length >= 1) {
+              setGetMineral(true);
             } else {
-              if (newCollectionMineralData.length >= 1) {
-                setGetMineral(true);
-                return;
-              } else {
-                router.push(`/main/status/${newStatus}`);
-                return;
-              }
+              router.push(`/main/status/${newStatus}`);
+            }
+          } else {
+            if (newCollectionMineralData.length >= 1) {
+              setGetMineral(true);
+            } else {
+              router.push('/main/minerale');
+            }
           }
+        }
 
       } else if (!passedAllCorrect) {
-          setNotWinKviz(false)
-          sessionStorage.setItem('answers', encodeURIComponent(JSON.stringify(answers)))
-          router.push(`/main/minerale/${mineralId}/test/result`)
+        setNotWinKviz(false);
+        sessionStorage.setItem('answers', encodeURIComponent(JSON.stringify(answers)));
+        router.push(`/main/minerale/${mineralId}/test/result`);
       }
     } catch (error) {
-      console.error(error);
-      return
+      console.error('Ошибка в closeModal:', error);
     }
-  }
+  };
 
 
 
@@ -387,7 +363,7 @@ const page = ({ params }: { params: { id: string } }) => {
       }
 
       await dispatch(fetchAddNewCollectionMinerale({id: currentUser.id, mineral: newCollcetionMineral[0]})).unwrap()
-      console.log('минерал добавлен в коллекцию')
+
       return newCollcetionMineral
 
     } catch (error: Error | unknown) {
@@ -411,8 +387,6 @@ const page = ({ params }: { params: { id: string } }) => {
       for (const item of mineral) {
         await dispatch(fetchChangeNewCollectionMineralReceived({idUser: user.id, idMineral: item.id})).unwrap()
         await dispatch(getUsers())
-
-        console.log(`Статус минерала обновлен ${item.id}`)
       }
 
       

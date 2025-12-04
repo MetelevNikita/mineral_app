@@ -125,7 +125,13 @@ const userProfile = currentUser[0].profile || {}
 
             isUpdate && (
 
-            <ModalResult imgTop={modalIcon} onClickLink={() => {setIsUpdate(false)}} text={'Аккаунт обновлен'} textBtn={'Продолжить'} colorBackground={{}} colorTop={{}} />
+            <ModalResult
+                imgTop={modalIcon}
+                onClickLink={() => {setIsUpdate(false)}}
+                text={'Аккаунт обновлен'}
+                textBtn={'Продолжить'}
+                colorBackground={{background: 'linear-gradient(262deg, #7D22C9 3.49%, #FFBC41 121.77%)'}}
+                colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}} />
             )
 
         }
@@ -153,13 +159,7 @@ const userProfile = currentUser[0].profile || {}
             <Col className='d-flex justify-content-center align-items-center mb-2'>
 
                 <div className={styles.avatar_container}>
-
-                    {/* {
-                        (previweAvatar) ? <div className={styles.avatar_box}><Image width={100} height={50} className={styles.preview_image} src={previweAvatar} alt={'avatar'}/></div> : (!currentUser[0].profile || currentUser[0].profile?.avatar == '') ? <div className={styles.avatar_box}><Image src={emptyAvatar} width={100} height={50} alt={'empty_avatar'}/></div> : <div className={styles.avatar_box}><Image className={styles.avatar} src={currentUser[0].profile.avatar} width={80} height={30} alt={'empty_avatar'}/></div>
-                    } */}
-
                     <Avatar src={currentUser[0].profile?.avatar || null} previewSrc={previweAvatar} alt={'avatar'} />
-                   
                 </div>
 
 
