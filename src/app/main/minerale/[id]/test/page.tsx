@@ -105,6 +105,10 @@ const page = ({ params }: { params: { id: string } }) => {
   const [notWinKviz, setNotWinKviz] = useState<boolean>(false)
   const [kvizDone, setKvizDone] = useState<boolean>(false)
 
+  // 
+
+  const [newStatusFixer, setNewStatusFixer] = useState<boolean>(false)
+
 
   // 
 
@@ -349,6 +353,11 @@ const page = ({ params }: { params: { id: string } }) => {
             if (newCollectionMineralData.length >= 1) {
               setGetMineral(true);
             } else {
+              //
+
+              setNewStatusFixer(true)
+
+              // 
               router.push(`/main/status/${newStatus}`);
             }
           } else {
@@ -511,7 +520,13 @@ const page = ({ params }: { params: { id: string } }) => {
                 await updateCollectionMineral()
                 await getChangeCollectionRecevied(currentUser, collectionMineral)
                 setGetMineral(false)
-                router.push(`/main/minerale`)
+
+                  if (newStatusFixer) {
+                    router.push(`/main/status/${newStatusText}`)
+                  } else {
+                    router.push(`/main/minerale`)
+                  }
+
 
               }} text={'Открыт новый минерал'} textBtn={'Получить'} colorBackground={{background: 'linear-gradient(125deg, #7D22C9 0.49%, #FFBF00 73.51%, #FFBC41 99.11%)'}} colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}/>
           
