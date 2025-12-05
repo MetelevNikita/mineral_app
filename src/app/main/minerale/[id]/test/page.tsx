@@ -511,7 +511,7 @@ const page = ({ params }: { params: { id: string } }) => {
                 await updateCollectionMineral()
                 await getChangeCollectionRecevied(currentUser, collectionMineral)
                 setGetMineral(false)
-                router.push(`/main/status/${newStatusText}`)
+                // router.push(`/main/status/${newStatusText}`)
 
               }} text={'Открыт новый минерал'} textBtn={'Получить'} colorBackground={{background: 'linear-gradient(125deg, #7D22C9 0.49%, #FFBF00 73.51%, #FFBC41 99.11%)'}} colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}/>
           
