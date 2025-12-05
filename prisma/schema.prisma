@@ -141,7 +141,7 @@ model Answer {
 model Statuses {
   id Int @id @default(autoincrement())
   title String
-  icon String
+  icon String?
   price String?
   total Int @default(0)
 
