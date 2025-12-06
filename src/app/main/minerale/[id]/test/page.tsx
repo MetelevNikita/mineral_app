@@ -384,11 +384,9 @@ const page = ({ params }: { params: { id: string } }) => {
   const updateCollectionMineral = async (): Promise<CollectionMineralType[] | []> => {
     try {
 
-
       let newCollcetionMineral: CollectionMineralType[] | [] = collectionMineral.filter((item: any) => {
         return item.title === currentMineral.title
       }) ?? []
-
 
 
       if (newCollcetionMineral.length < 1) {
@@ -396,8 +394,10 @@ const page = ({ params }: { params: { id: string } }) => {
         return []
       }
 
-      await dispatch(fetchAddNewCollectionMinerale({id: currentUser.id, mineral: newCollcetionMineral[0]})).unwrap()
-
+      await dispatch(fetchAddNewCollectionMinerale(
+        {id: currentUser.id,
+          mineral: newCollcetionMineral[0]
+        })).unwrap()
       return newCollcetionMineral
 
     } catch (error: Error | unknown) {
@@ -415,23 +415,35 @@ const page = ({ params }: { params: { id: string } }) => {
   }
 
 
-  const getChangeCollectionRecevied = async (user: UserType , mineral: CollectionMineralType[]) => {
-    try {
-
-      for (const item of mineral) {
-        await dispatch(fetchChangeNewCollectionMineralReceived({idUser: user.id, idMineral: item.id})).unwrap()
-        await dispatch(getUsers())
-      }
-
-      
-      setGetMineral(false)
-
-
-    
-    } catch (error) {
-      console.log(`Ошибка получения коллекционного минерала`, error)
+const getChangeCollectionRecevied = async (user: UserType, mineral: CollectionMineralType[]) => {
+  try {
+    for (const item of mineral) {
+      await dispatch(fetchChangeNewCollectionMineralReceived({ 
+        idUser: user.id, 
+        idMineral: item.id 
+      })).unwrap();
+      await dispatch(getUsers());
     }
+    
+    // после обновления коллекции проверяем статус
+    const updatedUser = await dispatch(getUsers()).unwrap();
+    const currentUser = updatedUser.filter((item: UserType) => item.id == parseInt(userId))[0];
+    
+    setGetMineral(false);
+    
+    // проверяем, есть ли новый статус
+    if (newStatusText) {
+      console.log('Переход на новый статус:', newStatusText);
+      router.push(`/main/status/${newStatusText}`);
+    } else {
+      console.log('Переход к минералам');
+      router.push('/main/minerale');
+    }
+    
+  } catch (error) {
+    console.log(`Ошибка получения коллекционного минерала`, error);
   }
+};
   
 
 
@@ -519,15 +531,6 @@ const page = ({ params }: { params: { id: string } }) => {
               <ModalResult imgTop={statusStar} onClickLink={async () => {
                 await updateCollectionMineral()
                 await getChangeCollectionRecevied(currentUser, collectionMineral)
-                setGetMineral(false)
-
-                  if (newStatusFixer) {
-                    router.push(`/main/status/${newStatusText}`)
-                  } else {
-                    router.push(`/main/minerale`)
-                  }
-
-
               }} text={'Открыт новый минерал'} textBtn={'Получить'} colorBackground={{background: 'linear-gradient(125deg, #7D22C9 0.49%, #FFBF00 73.51%, #FFBC41 99.11%)'}} colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}/>
           
             
