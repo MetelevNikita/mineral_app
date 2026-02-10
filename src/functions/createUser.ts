@@ -29,7 +29,7 @@ export const createUser = async (user: any) => {
         }
 
 
-        const responce = await fetch('/api/users', {
+        const responce = await fetch('/api/registration', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

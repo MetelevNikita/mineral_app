@@ -1,20 +1,16 @@
 'use client'
 
-import { FC, useEffect, useState, useRef } from 'react'
+import { FC, useState, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
+import Countdown from 'react-countdown';
 
 // funtions
 
-import { sendRandomCode } from '@/functions/emailRandomCode'
 import { repeatEmailCode } from '@/functions/repeatEmailCode'
 
 import Image from 'next/image'
 import Link from 'next/link'
-
-// img
-
-import modalIcon from '@/../public/ModalResult/Done.svg'
-import modalIconError from '@/../public/ModalResult/error.svg'
 
 // style
 
@@ -27,73 +23,139 @@ import { Container, Row, Col } from 'react-bootstrap'
 // components
 
 import MyButton from '@/components/ui/MyButton/MyButton'
-import ModalResult from '@/components/modals/ModalResult/ModalResult'
 
 // image
 
 import backIcon from '@/../public/ResponceCode/Back.svg'
 
-const page: FC = () => {
 
-    const [isAuth, setIsAuth] = useState<boolean>(false)
+const page = () => {
+
+
+    const router = useRouter()
+
     const [error, setError] = useState<boolean>(false)
     const [errorText, setErrorText] = useState<string>('')
     const [errorFiled, setErrorFiled] = useState<boolean>(false)
+    const [correctField, setCorrectField] = useState<boolean>(false)
+    const [repeatValidCode, setRepeatValidCode] = useState<boolean>(false)
+
+    // 
+
     const inputsRef = useRef<any>([])
 
 
+    async function userWasCreated (name: string, email: string, password: string) {
+        try {
 
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setTime((prev: any): string => {
-
-                if (!prev) return '00'
-                
-                let second = (prev <= 10) ? `0${prev - 1}` : `${prev - 1}`
-
-                if (second === '00') {
-                    clearInterval(interval)
-                    return '00'
-                }
-                
-                return second
-                
+            const responce = await fetch('/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    password: password
+                })
             })
-        }, 1000)
-    }, [])
+
+            if (!responce.ok) {
+                throw new Error(`Ошибка создания пользователя ${responce.status} ${responce.statusText}`)
+            }
+
+            const data = await responce.json()
+            console.log(data)
+            
+        } catch (error: Error | unknown) {
+            if (error instanceof Error) {
+                console.error(error.message)
+                return error.message
+            }
+
+            console.error(error)
+            return error
+        }
+    }
+
 
 
 
     const length = 6
     const arr = [1,2,3,4,5,6]
 
-    const [time, setTime] = useState<string>('60')
     const [code, setCode] = useState<string[]>([])
     const [repeatCode, setRepeatCode] = useState<any>()
+    const [timeOut, setTimeOut] = useState<boolean>(false)
 
     // 
 
     let newCode: number | string = ''
-    const email = Cookies.get('email')
- 
+    const user = Cookies.get('userData')
 
+
+    if (!user) {
+        return alert('Ошибка получения данных')
+    }
+
+    const userParse = JSON.parse(user)
+
+
+
+
+    const handlerPasteInput = (e: any) => {
+
+
+        let newArrVal = [] as any
+
+
+        e.preventDefault()
+        const pastedText = e.clipboardData.getData('text')
+            .split('')
+            .filter((item: string | number, index: number) => index <= 5);
+
+
+
+        pastedText.forEach((val: string | number, index: number) => {
+            inputsRef.current[index].value = val
+            newArrVal.push(val)
+        })
+
+
+        console.log(newArrVal)
+        setCode(newArrVal)
+    }
 
 
     const handleInput = (value: string, index: number) => {
-  
-        if (value.length  >  1) {
-            value = value.slice(0, 1)
-        }
+
 
         const updateCode = [...code]
         updateCode[index] = value
         setCode(updateCode)
 
-        if (value && index < length - 1) {
-            inputsRef.current[index + 1]?.focus()
-        }
 
+        if (value && index < length - 1) {
+            inputsRef.current[index+1]?.focus()
+        } else if (!value && index > 0) {
+            inputsRef.current[index-1]?.focus()
+        } 
+
+    
+    }
+
+    const handleDelete = (e: any, index: number) => {
+        if (e.key === 'Backspace' && !e.target?.value) {
+            e.preventDefault()
+
+            if (index >= 0) {
+                const prevIndex = index - 1;
+                inputsRef.current[prevIndex].value = ''
+                inputsRef.current[prevIndex]?.focus()
+                handleInput('', prevIndex)
+
+            }
+        }
     }
 
     // 
@@ -105,6 +167,14 @@ const page: FC = () => {
 
     const sendVarCode = () => {
 
+        const user = Cookies.get('userData')
+        if (!user) return 
+        
+        const {name, email, password} = userParse
+        console.log(email, name, password)
+
+        console.log('отправляю')
+
         const cookieCode = Cookies.get('code')
 
         if (code.length < 6) {
@@ -115,7 +185,7 @@ const page: FC = () => {
         }
 
 
-        if (time === '00') {
+        if (timeOut) {
 
             if (code.join('') !== repeatCode.toString()) {
                 setErrorText('Неверный код')
@@ -124,9 +194,17 @@ const page: FC = () => {
                 return
             } else {
                 if (code.join('') === repeatCode.toString()) {
-                    setIsAuth(true)
-                    Cookies.remove('code')
-                    Cookies.remove('email')
+                    setCorrectField(true)
+
+                    setTimeout(async () => {
+                        console.log('Код введен верно')
+                        await userWasCreated(name, email, password)
+                        Cookies.remove('code')
+                        Cookies.remove('userData')
+                        router.push('/auth/login')
+                    }, 2000)
+
+
                 }
             }
 
@@ -134,9 +212,14 @@ const page: FC = () => {
 
 
         if (code.join('') === cookieCode) {
-            setIsAuth(true)
-            Cookies.remove('code')
-            Cookies.remove('email')
+            setCorrectField(true)
+            setTimeout(async () => {
+                console.log('Код введен верно')
+                await userWasCreated(name, email, password)
+                Cookies.remove('code')
+                Cookies.remove('userData')
+                router.push('/auth/login')
+            }, 2000)
         } else {
             setErrorText('Неверный код')
             setError(true)
@@ -148,54 +231,41 @@ const page: FC = () => {
 
     const repeatCodeHandler = async () => {
         try {
+
+
+            console.log(inputsRef.current)
+
+            inputsRef.current.forEach((item: any) => {
+                return item.value = ''
+            })
+            
+
             newCode = generateRandomCode() as number
             setRepeatCode(newCode)
-            const sendRepeat = await repeatEmailCode(email as string, newCode.toString())
-
-            console.log(sendRepeat)
+            const sendRepeat = await repeatEmailCode(userParse.email as string, newCode.toString())
 
             if (sendRepeat.message === 'Сообщение не отправлено - проверьте настройки VPN или отключите его') {
                 setErrorText('Сообщение не отправлено - проверьте настройки VPN или отключите его')
                 setError(true)
             } else {
                 console.log('sendRepeat', sendRepeat)
+                setRepeatValidCode(true)
                 setError(false)
             }
 
         } catch (error) {
-            
+            console.error(error)
         }
     }
+
+
+    console.log(code)
 
 
 
   return (
 
     <Container>
-
-
-        <Row>
-          <Col>
-        
-            {
-              (isAuth) &&
-              <ModalResult
-                imgTop={modalIcon}
-                onClickLink={() => {
-                  setIsAuth(false)
-                  window.location.href = '/auth/login'
-                }}
-                text={'Вы успешно зарегестрировались'}
-                textBtn={'Перейти'}
-                colorBackground={{background: 'linear-gradient(262deg, #7D22C9 3.49%, #FFBC41 121.77%)'}}
-                colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}                  
-              />
-            }
-
-          </Col>
-        </Row>
-
-
 
         <Row className='mb-5'>
             <Col className='d-flex justify-content-center align-items-center'>
@@ -214,7 +284,7 @@ const page: FC = () => {
             <Col className='d-flex flex-column justify-content-center align-items-center'>
 
                 <div className={styles.title}>Введите код</div>
-                <div className={styles.subtitle}>Для завершения регистрации на вашу почту пришел кд, введите его</div>
+                <div className={styles.subtitle}>Для завершения регистрации необходимо вести код который бьыл выслан на почту которую вы указалали при регистрации, введите его</div>
 
             </Col>
         </Row>
@@ -228,7 +298,7 @@ const page: FC = () => {
                     arr.map((item: number, index: number) => {
                         return (
                             <input
-                                className={(error) ? styles.input_error : styles.input} key={index} 
+                                className={(error) ? styles.input_error : (correctField) ? styles.input_correct : styles.input} key={index} 
                                 type="text"
                                 min={0}
                                 max={9}
@@ -240,9 +310,18 @@ const page: FC = () => {
                                 ref={(el) => {
                                     inputsRef.current[index] = el
                                 }}
+                                onPaste={(e) => {
+                                    handlerPasteInput(e)
+                                }}
                                 onChange={(e) => {
                                     handleInput(e.target.value, index)
                                 }}
+
+                                onKeyDown={(e: any) => {
+                                    handleDelete(e, index)
+                                }}
+                                
+
                             />
                         )
                     })
@@ -274,11 +353,19 @@ const page: FC = () => {
         </Row>
 
 
-
-
         <Row className='mb-5'>
             <Col className='d-flex flex-column justify-content-start align-items-center'>
-                <div className={styles.repeat}>Повторная отправка 00:{time}</div>
+
+                <Countdown zeroPadTime={2} date={Date.now() + 59000} renderer={({ formatted: {minutes, seconds}, completed}) => {
+                    if (timeOut) {
+                        console.log(completed)
+                        return <div className={styles.repeat}>Время вышло</div>;
+                    }
+                    return <div className={styles.repeat}>Оставшееся время: {minutes}:{seconds}</div>;
+                }} onComplete={() => {
+                    setTimeOut(true)
+                }}/>
+            
             </Col>
         </Row>
 
@@ -286,9 +373,17 @@ const page: FC = () => {
         <Row className='mb-5'>
             <Col className='d-flex flex-column justify-content-start align-items-center'>
 
-            {(time == '00') && <MyButton text={'отправить повторно'} btn={styles.btn} onClick={async () => {
+            {(timeOut) && <MyButton text={'отправить повторно'} btn={styles.btn} onClick={async () => {
                 await repeatCodeHandler()
             }} type={'button'} />}
+
+
+            {
+                (repeatValidCode) && 
+                <Col className='d-flex flex-column justify-content-start align-items-center'>
+                    <div className={styles.repeat_text}>Новый код отправлен на почту</div>
+                </Col>
+            }
 
             </Col>
         </Row>

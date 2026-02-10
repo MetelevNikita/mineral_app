@@ -3,6 +3,7 @@ import { PrismaClient } from "@/../generated/prisma/client.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { cookies } from 'next/headers'
+import { em } from "motion/react-client";
 
 // 
 
@@ -14,6 +15,8 @@ export const POST = async (req: Request) => {
     try {
 
         const {email, password, rememberMe} = await req.json()
+
+        console.log(email, password)
 
         if(!email || !password) {
             return NextResponse.json({
@@ -42,7 +45,7 @@ export const POST = async (req: Request) => {
         if (authUser.blocked) {
             console.log('BLOCKED')
             return NextResponse.json({
-                message: "Your account is blocked",
+                message: "Аккаунт заблокирован обратитесь к администратору приложения",
             })
         }
 

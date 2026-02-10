@@ -64,3 +64,14 @@
   padding-bottom: 10px;
   
 }
+
+.answer_block_user_answer {
+  margin-top: 10px;
+}
+
+.answer_block_correct_answer {
+  color: green;
+}
+
+/*  */
+

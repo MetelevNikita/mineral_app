@@ -11091,7 +11091,7 @@ export namespace Prisma {
   export type StatusesGroupByOutputType = {
     id: number
     title: string
-    icon: string | null
+    icon: string
     price: string | null
     total: number
     createAt: Date
@@ -11165,7 +11165,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string
-      icon: string | null
+      icon: string
       price: string | null
       total: number
       createAt: Date
@@ -14903,7 +14903,7 @@ export namespace Prisma {
     NOT?: StatusesWhereInput | StatusesWhereInput[]
     id?: IntFilter<"Statuses"> | number
     title?: StringFilter<"Statuses"> | string
-    icon?: StringNullableFilter<"Statuses"> | string | null
+    icon?: StringFilter<"Statuses"> | string
     price?: StringNullableFilter<"Statuses"> | string | null
     total?: IntFilter<"Statuses"> | number
     createAt?: DateTimeFilter<"Statuses"> | Date | string
@@ -14913,7 +14913,7 @@ export namespace Prisma {
   export type StatusesOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
-    icon?: SortOrderInput | SortOrder
+    icon?: SortOrder
     price?: SortOrderInput | SortOrder
     total?: SortOrder
     createAt?: SortOrder
@@ -14926,7 +14926,7 @@ export namespace Prisma {
     OR?: StatusesWhereInput[]
     NOT?: StatusesWhereInput | StatusesWhereInput[]
     title?: StringFilter<"Statuses"> | string
-    icon?: StringNullableFilter<"Statuses"> | string | null
+    icon?: StringFilter<"Statuses"> | string
     price?: StringNullableFilter<"Statuses"> | string | null
     total?: IntFilter<"Statuses"> | number
     createAt?: DateTimeFilter<"Statuses"> | Date | string
@@ -14936,7 +14936,7 @@ export namespace Prisma {
   export type StatusesOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
-    icon?: SortOrderInput | SortOrder
+    icon?: SortOrder
     price?: SortOrderInput | SortOrder
     total?: SortOrder
     createAt?: SortOrder
@@ -14954,7 +14954,7 @@ export namespace Prisma {
     NOT?: StatusesScalarWhereWithAggregatesInput | StatusesScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Statuses"> | number
     title?: StringWithAggregatesFilter<"Statuses"> | string
-    icon?: StringNullableWithAggregatesFilter<"Statuses"> | string | null
+    icon?: StringWithAggregatesFilter<"Statuses"> | string
     price?: StringNullableWithAggregatesFilter<"Statuses"> | string | null
     total?: IntWithAggregatesFilter<"Statuses"> | number
     createAt?: DateTimeWithAggregatesFilter<"Statuses"> | Date | string
@@ -15661,7 +15661,7 @@ export namespace Prisma {
 
   export type StatusesCreateInput = {
     title: string
-    icon?: string | null
+    icon: string
     price?: string | null
     total?: number
     createAt?: Date | string
@@ -15671,7 +15671,7 @@ export namespace Prisma {
   export type StatusesUncheckedCreateInput = {
     id?: number
     title: string
-    icon?: string | null
+    icon: string
     price?: string | null
     total?: number
     createAt?: Date | string
@@ -15680,7 +15680,7 @@ export namespace Prisma {
 
   export type StatusesUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: StringFieldUpdateOperationsInput | string
     price?: NullableStringFieldUpdateOperationsInput | string | null
     total?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15690,7 +15690,7 @@ export namespace Prisma {
   export type StatusesUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: StringFieldUpdateOperationsInput | string
     price?: NullableStringFieldUpdateOperationsInput | string | null
     total?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15700,7 +15700,7 @@ export namespace Prisma {
   export type StatusesCreateManyInput = {
     id?: number
     title: string
-    icon?: string | null
+    icon: string
     price?: string | null
     total?: number
     createAt?: Date | string
@@ -15709,7 +15709,7 @@ export namespace Prisma {
 
   export type StatusesUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: StringFieldUpdateOperationsInput | string
     price?: NullableStringFieldUpdateOperationsInput | string | null
     total?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15719,7 +15719,7 @@ export namespace Prisma {
   export type StatusesUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: StringFieldUpdateOperationsInput | string
     price?: NullableStringFieldUpdateOperationsInput | string | null
     total?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string

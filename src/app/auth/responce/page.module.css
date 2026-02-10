@@ -30,7 +30,7 @@
     /*  */
 
     color: rgba(0, 0, 0, 0.70);
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 125%; /* 20px */
@@ -63,6 +63,8 @@
 }
 
 
+
+
 .input_error {
     width: 56px;
     height: 65px;
@@ -80,6 +82,26 @@
     margin-right: 3px;
 }
 
+
+
+.input_correct {
+    width: 56px;
+    height: 65px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    border: 1px solid #49e646;
+    color: #49e646;
+
+    /*  */
+
+    font-size: 27px;
+
+    text-align: center;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+
 /*  */
 
 .repeat {
@@ -87,6 +109,15 @@
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
+    line-height: 125%; /* 20px */
+}
+
+.repeat_text {
+    margin-top: 10px;
+    color: rgba(0, 0, 0, 0.70);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
     line-height: 125%; /* 20px */
 }
 

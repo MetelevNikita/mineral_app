@@ -154,7 +154,7 @@ const page: FC = () => {
             <Col className='d-flex justify-content-center align-items-center mb-3'>
 
             <div className={styles.camera_info}>
-              Для того что бы перейти на страницу с квизомом, сканируйте QR код.
+              Для того чтобы перейти в карточку минерала, сканируйте QR-код
             </div>
             
             </Col>

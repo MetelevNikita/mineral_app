@@ -126,3 +126,16 @@
     color: #E64646;
     text-align: center;
 }
+
+
+.correct_message {
+        width: 353px;
+    height: max-content;
+
+    /*  */
+
+    font-size: 14px;
+    font-weight: 400;
+    color: #5ee646;
+    text-align: center;
+}

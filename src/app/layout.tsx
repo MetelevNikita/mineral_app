@@ -59,11 +59,10 @@ export default function RootLayout({
 
 
     <html lang="en">
+        <head>
+          <link rel="manifest" href="/manifest.json" />
+        </head>
         <body className={`${OpenSans.className}, ${InterFont.className}`}>
-          <head>
-            <link rel="manifest" href="/manifest.json" />
-          </head>
-
           <Container>
             <ReduxProvider>
                 {children}

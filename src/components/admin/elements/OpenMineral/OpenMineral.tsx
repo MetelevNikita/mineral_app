@@ -80,6 +80,9 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
   }, [])
 
 
+  console.log('new Form', newForm)
+
+
   const changeMineralHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -92,6 +95,7 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
         }
 
         if (newForm.image !== null) {
+          console.log('image', newForm.image[0])
           formData.append('image',  newForm.image[0])
         }
 
@@ -104,19 +108,23 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
         }
 
 
+        console.log('formData', ...formData)
+
+
         const res = await pathcMineral(formData, menuActive.id)
+        console.log('res', res)
 
-        if (res.data === 'success') {
-          alert(res.message)
-        } else {
-          alert(res.message)
-        }
+        // if (res.data === 'success') {
+        //   alert(res.message)
+        // } else {
+        //   alert(res.message)
+        // }
 
-        setMenuActive({
-          id: menuActive.id,
-          label: 'Минералы',
-          value: 'minerals'
-        })
+        // setMenuActive({
+        //   id: menuActive.id,
+        //   label: 'Минералы',
+        //   value: 'minerals'
+        // })
     
 
 
@@ -235,7 +243,7 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
                   value: 'change_geokviz'
                 })
               }} type={'button'} />
-              <MyButton text={'Сохранить'} btn={styles.btn} onClick={() => {}} type={'submit'} />
+              <MyButton text={'Сохранить'} btn={styles.btn} onClick={() => {console.log('Изменения приняты')}} type={'submit'} />
             </div>
 
         </form>

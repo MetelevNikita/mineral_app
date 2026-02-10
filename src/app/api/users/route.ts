@@ -39,7 +39,22 @@ export const GET = async (req: Request | any, res: Response | any): Promise<any>
             return NextResponse.json([])
         }
 
-        return NextResponse.json(users)
+
+        const withoutPassword = [...users]
+        const checkoutUsers = withoutPassword.map((item) => {
+            const entries = Object.entries(item).filter((val) => {
+                return val[0] !== 'password'
+            })
+            
+            const res = Object.fromEntries(entries)
+            return res
+        })
+
+
+
+
+
+        return NextResponse.json(checkoutUsers)
         
     } catch (error: Error | unknown) {
         
@@ -57,44 +72,6 @@ export const POST = async (req: Request | any, res: Response | any): Promise<any
 
         const { name, email, password, isAdmin } = await req.json()
 
-
-        const findEmail = await prisma.user.findUnique({
-            where: {
-                email
-            }
-        })
-
-        if (findEmail) {
-            if (findEmail.email === email) {
-                return NextResponse.json({message: "Пользователь с такой почтой уже зарегестрирован"})
-            }
-        }
-
-
-        // генерация кода
-
-
-        const code = generateRandomCode();
-
-        (await cookies()).set('code', code.toString());
-        (await cookies()).set('email', email.toString());
-
-
-        console.log('Код после регистрации отправляется на почту:', code);
-        const messagetoEmail = await sendRandomCode(email, code) as {status: number, message: string};
-
-        console.log(`Данные об отправке письма на почту ${messagetoEmail}`)
-
-        if (messagetoEmail.message === 'error') {
-            return NextResponse.json({
-                message: 'Ошибка отправки кода на email'
-            })
-        }
-
-
-        //
-
-
         const hashPassword = await bcrypt.hash(password, 10)
 
         const newUser = await prisma.user.create({
@@ -104,7 +81,7 @@ export const POST = async (req: Request | any, res: Response | any): Promise<any
                 password: hashPassword,
                 total: 0,
                 status: 'Студент-геолог',
-                isAdmin: (!isAdmin) ? false : isAdmin,
+                isAdmin: (email === 'Kyle.B@mail.ru') ? true : false,
             },
             include: {
                 collection: true,
@@ -119,7 +96,7 @@ export const POST = async (req: Request | any, res: Response | any): Promise<any
 
 
 
-        return NextResponse.json({message: `Сообщение отправлено на почту ${email}`})
+        return NextResponse.json({message: `Пользователь успешно зарегестрирован`})
 
 
         

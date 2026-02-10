@@ -1,7 +1,9 @@
 'use client'
 
 import { FC, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+
 
 // 
 
@@ -17,14 +19,6 @@ import MyInput from '@/components/ui/MyInput/MyInput'
 import MyButton from '@/components/ui/MyButton/MyButton'
 import MyCheckBox from '@/components/ui/MyCheckBox/MyCheckBox'
 
-// modal
-
-import ModalResult from '@/components/modals/ModalResult/ModalResult'
-import ModalIconError from '@/../public/ModalResult/error.svg'
-
-// img
-
-import ModalIcon from '@/../public/ModalResult/Done.svg'
 
 // function
 
@@ -32,7 +26,9 @@ import { createUser } from '@/functions/createUser'
 
 const Registration: FC = () => {
 
-  const [isAuth, setIsAuth] = useState<boolean>(false)
+
+  const router = useRouter()
+
   const [error, setError] = useState<boolean>(false)
   const [modalMessage, setModalMessage] = useState<string>('')
 
@@ -60,8 +56,6 @@ const Registration: FC = () => {
   const registrationUser = async (user: any) => {
     const registration = await createUser(user)
 
-    console.log(registration)
-
     if (registration?.message === 'Не заполнены поля') {
       setError(true)
       setModalMessage('Заполните все поля')
@@ -71,17 +65,16 @@ const Registration: FC = () => {
     } else if (registration?.message === 'Не активировано соглашение') {
       setError(true)
       setModalMessage('Необходимо согласиться с политикой')
-    } else if (registration?.message === `Сообщение отправлено на почту ${user.email}`) {
-      setIsAuth(true)
-      setModalMessage('Успешная регистрация')
     } else if (registration?.message === 'Ошибка отправки кода на email') {
       setError(true)
       setModalMessage('Ошибка запроса на Email, попробуйте позже')
     } else if (registration?.message === 'Пользователь с такой почтой уже зарегестрирован') {
       setError(true)
       setModalMessage('Пользователь с такой почтой уже зарегестрирован')
+    } else if (registration?.message === `Сообщение отправлено на почту ${user.email}`) {
+      console.log('Регистрация прошла успешно, код отправлен на почту')
+      router.push('/auth/responce')
     }
-
   }
   
 
@@ -91,36 +84,11 @@ const Registration: FC = () => {
     <Container>
 
 
-      {
-        <Row>
-              <Col>
-
-              {
-                isAuth &&
-                  <ModalResult
-                    imgTop={ModalIcon}
-                    onClickLink={() => {
-                      setIsAuth(false)
-                      window.location.href = '/auth/responce'
-                    }}
-                    text={modalMessage}
-                    textBtn={'Перейти'}
-                    colorBackground={{background: 'linear-gradient(262deg, #7D22C9 3.49%, #FFBC41 121.77%)'}}
-                    colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}                  
-                  />
-              }
-
-              </Col>
-          </Row>
-      }
-
-
-
       <Row className='h-100 d-flex flex-column justify-content-center align-items-center'>
 
           <Col className='d-flex flex-column justify-content-center align-items-center'>
 
-              <div className={styles.title}>Зарегистрироваться</div>
+              <div className={styles.title}>Регистрация</div>
 
                 <MyInput value={user.name} onChange={(e) => {setUser({...user, name: e.target.value})}} name={'name'} type={'text'} placeholder={'Имя*'} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
                 <MyInput value={user.email} onChange={(e) => {setUser({...user, email: e.target.value})}} name={'email'} type={'email'} placeholder={'Почта*'} style={{marginBottom: '15px'}} errorField={{error, setError}}/>
