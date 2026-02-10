@@ -3,7 +3,7 @@
 import { FC, useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname, useSearchParams } from 'next/navigation';
+import {useSearchParams , useRouter} from 'next/navigation';
 
 // styles
 
@@ -11,7 +11,7 @@ import styles from './page.module.css'
 
 // bootstrap
 
-import { Container, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 // components
 
@@ -30,7 +30,9 @@ import modalIcon from '@/../public/ModalResult/Done.svg'
 
 // 
 
-const page = () => {
+const page: FC = () => {
+
+  const router = useRouter()
 
   const [isAuth, setIsAuth] = useState<Boolean>(false)
   const [error, setError] = useState<Boolean>(false)
@@ -76,10 +78,17 @@ const page = () => {
 
 
       const data = await responce.json()
-      console.log(data)
 
       if (data.message === 'Пароль успешно изменен') {
+        
+        console.log('Пароль успешно изменен')
         setIsAuth(true)
+
+        setTimeout(() => {
+          router.push('/auth/login')
+        }, 3000)
+
+
       } else if (data.message === 'Пароли не совпадают') {
         setError(true),
         setErrorText(data.message)
@@ -103,32 +112,9 @@ const page = () => {
   return (
     <>
 
-        <Row>
-          <Col>
-        
-            {
-              (isAuth) &&
-              <ModalResult
-                imgTop={modalIcon}
-                onClickLink={() => {
-                  setIsAuth(false)
-                  window.location.href = '/auth/login'
-                }}
-                text={'Пароль успешно изменен'}
-                textBtn={'На главную'}
-                colorBackground={{background: 'linear-gradient(262deg, #7D22C9 3.49%, #FFBC41 121.77%)'}}
-                colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}                  
-              />
-            }
+        <Row className='d-flex flex-column mb-5'>
 
-          </Col>
-        </Row>
-
-
-
-        <Row className='mb-5'>
-
-            <Col className='d-flex justify-content-center align-items-center mb-5'>
+            <Col md={12} className='d-flex justify-content-center align-items-center mb-5'>
 
                 <div className={styles.button_container}>
 
@@ -138,7 +124,7 @@ const page = () => {
 
             </Col>
 
-            <Col className='d-flex flex-column justify-content-center align-items-center'>
+            <Col md={12} className='d-flex flex-column justify-content-center align-items-center'>
 
               <div className={styles.title}>Вход</div>
               <div className={styles.subtitle}>Введите новый пароль</div>
@@ -151,6 +137,8 @@ const page = () => {
               <MyButton text={'Сохранить'} btn={styles.btn} onClick={() => {changePasswordHandler()}} type={'button'} />
 
             </Col>
+
+
         </Row>
 
 
@@ -162,6 +150,17 @@ const page = () => {
                     </Col>
                 </Row>
             )
+        }
+
+
+        {
+          (isAuth) && (
+                <Row className='mb-5'>
+                    <Col className='d-flex flex-column justify-content-center align-items-center'>
+                        <div className={styles.correct_message}>Пароль успешно сброшен, вы будете перенаправлены на главную страницу</div>
+                    </Col>
+                </Row>
+          )
         }
     </>
   )

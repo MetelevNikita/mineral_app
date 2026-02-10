@@ -85,7 +85,7 @@ const page = ({ params }: { params: { id: string } }) => {
   const [answers, setAnswers] = useState<any>([])
   const [questionId, setQuestioId]= useState<number>(0)
   const [buttonText, setButtonText] = useState<string>('Тест начался')
-  const [questionNumber, setQuestionNumber] = useState<number>(1)
+  const [questionNumber, setQuestionNumber] = useState<number>(0)
   const [price, setPrice] = useState<number>(0)
   const [newStatusText, setNewStatusText] = useState<string>('')
   const [getMineral, setGetMineral] = useState<boolean>(false)
@@ -127,10 +127,6 @@ const page = ({ params }: { params: { id: string } }) => {
     })()
   }, [])
 
-
-  console.log('STATUSES ', statuses)
-
-
   // redux
 
   const currentUser = useAppSelector((state) => state.user.user).filter((item) => item.id == parseInt(userId))[0];
@@ -139,7 +135,6 @@ const page = ({ params }: { params: { id: string } }) => {
   const dispatch = useAppDispatch()
 
   // get Id Mineral
-
 
   useEffect(() => {
     const fetchId = async () => {
@@ -204,9 +199,7 @@ const page = ({ params }: { params: { id: string } }) => {
     return (
       <Row>
         <Col className='d-flex justify-content-center align-items-center mb-3'>
-
             <div className={styles.empty_title}>Вопросы не созданы</div>
-
         </Col>
       </Row>
       
@@ -218,8 +211,25 @@ const page = ({ params }: { params: { id: string } }) => {
 
   const handleSubmit = (question: string, item: any, user: any) => {
 
-      setAnswers([...answers, {question: question, ...item}]);    // добавляем ответ в массив
+      if (currentMineral.question === null) {
+        console.error('Вопросы не найдены')
+        return
+      }
+
+
+      const questionData =  currentMineral.question[questionId] as any
+      const currentAnswer = questionData.answers.find((answer: any) => {
+        return answer.correct === true
+      })
+
+      console.log(currentAnswer)
+
+    
+
+
+      setAnswers([...answers, {question: question, correctAnswer: currentAnswer,  ...item}]);    // добавляем ответ в массив
       setQuestionNumber(questionNumber + 1)  // добавляем номер вопроса
+
 
       // проверяем ответы
 
@@ -263,10 +273,7 @@ const page = ({ params }: { params: { id: string } }) => {
   //
 
 
-  const getNewStatusIfThresholdCrossed = (
-    previousTotal: number, 
-    newTotal: number
-  ): string | null => {
+  const getNewStatusIfThresholdCrossed = (previousTotal: number, newTotal: number): string | null => {
     // Проходим по всем порогам от низшего к высшему
     for (const threshold of statuses) {
       // Если newTotal достиг или превысил порог, И previousTotal был меньше этого порога

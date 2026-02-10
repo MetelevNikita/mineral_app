@@ -47,15 +47,7 @@ const RightSide: FC<RightSideProps> = ({ contextMenu, contextMenuActive, submitA
 
   const { menu, setMenu } = contextMenu
   const { menuActive, setMenuActive } = contextMenuActive
-
-  
   const [ mineral, setMineral ] = useState<any>(null)
-
-
-  console.log('menuActive', menuActive)
-
-
-  
 
 
 

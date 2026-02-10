@@ -71,6 +71,9 @@ const page = (params: {params: {id: string}}) => {
   const currentMinaral = useAppSelector((state) => state.minerals.minerals).find((item) => item.id === parseInt(mineralId))
 
 
+  console.log(storageData)
+
+
   if (!currentMinaral) {
     return (
       <Loading text={'Загрузка...'} />
@@ -135,9 +138,10 @@ const page = (params: {params: {id: string}}) => {
               {
                 (storageData.length < 1 || !storageData) ? <Loading text={'Загрузка'} /> : storageData.map((item: any, index: number): React.ReactNode => {
                   if (item.correct === true) {
-                    return <ResultAnswers key={index+1} imageQuestion={done} answersTitle={`Вопрос ${index + 1}`} content={''} colorBG={'#EDF8EE'} style={{color: '#0F891E !important'}} />
+                    console.log(item)
+                    return <ResultAnswers key={index+1} imageQuestion={done} answersTitle={`Вопрос ${index + 1}`} content={''} colorBG={'#EDF8EE'} style={{color: '#0F891E !important'}} correct={item.correct} answer={item.text} userAnswer={item.text}/>
                   } else {
-                    return <ResultAnswers key={index+1} imageQuestion={error} answersTitle={`Вопрос ${index + 1}`} content={item.question} colorBG={'#FEE'} style={{color: '#E64646', border: `1px solid #FFDEDE`, borderRadius: '30px'}} imageErrorArrow={arrow}/>
+                    return <ResultAnswers key={index+1} imageQuestion={error} answersTitle={`Вопрос ${index + 1}`} content={item.question} colorBG={'#FEE'} style={{color: '#E64646', border: `1px solid #FFDEDE`, borderRadius: '30px'}} imageErrorArrow={arrow} correct={item.correct} answer={item.correctAnswer.text} userAnswer={item.text}/>
                   }
                 })
               }

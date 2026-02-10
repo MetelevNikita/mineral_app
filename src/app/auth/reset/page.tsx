@@ -22,22 +22,15 @@ import MyButton from '@/components/ui/MyButton/MyButton'
 
 import backIcon from '@/../public/ResponceCode/Back.svg'
 
-interface Props {
-
-}
 
 
-
-
-const page: FC<Props> = () => {
+const page: FC = () => {
 
 
   const [isAuth, setIsAuth] = useState<boolean>(false)
   const [email, setEmail] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
   const [errorText, setErrorText] = useState<string>('')
-
-  console.log(email)
 
   //
   
@@ -101,7 +94,7 @@ const page: FC<Props> = () => {
   return (
     <>
 
-      <Row>
+      <Row className='d-flex flex-column'>
 
         <Col className='d-flex justify-content-center align-items-center mb-5'>
 

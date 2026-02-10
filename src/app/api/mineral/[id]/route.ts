@@ -229,12 +229,7 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
 
 
         const { id } = await context.params
-        console.log(id)
-
         const formData = await req.formData()
-        console.log(formData)
-
-
 
         const title = formData.get('title') as string | null;
         const description = formData.get('description') as string | null
@@ -289,15 +284,25 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
 
             // delete file
 
-            fs.unlinkSync(path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath, currentImageName))
+            if (fs.existsSync(path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath, currentImageName))) {
+                fs.unlinkSync(path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath, currentImageName))
+                console.log(`Файл ${currentImageName} удален`)
+            }
 
-            console.log(`Файл ${currentImageName} удален`)
+            console.warn('Файл для удаления не найден')
 
             // download file
 
+            if (!fs.existsSync(uploadFolder)) {
+                console.log('Папка создана!!! ', endFolderPath)
+                fs.mkdirSync(uploadFolder, {recursive: true})
+            }
+
             const buffer = await image.arrayBuffer()
             const imageBuffer = Buffer.from(buffer)
-            fs.writeFileSync(uploadFolder + '/' + image.name, imageBuffer)
+            const fileUploaded = fs.writeFileSync(uploadFolder + '/' + image.name, imageBuffer)
+
+            console.log('res to upload file ', fileUploaded)
 
             // url to DB
 
@@ -315,24 +320,30 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
 
             try {
 
-
-                
                 console.log(video.name)
                 const currentVideoName = path.parse(currentMineral.video).base
 
                 // delete file
 
-                fs.unlinkSync(path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath, currentVideoName))
+                if (fs.existsSync(path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath, currentVideoName))) {
+                    fs.unlinkSync(path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath, currentVideoName))
+                    console.log(`Файл ${currentVideoName} удален`)
+                }
 
-                console.log(`Файл ${currentVideoName} удален`)
+                console.log(`Файл не найден`)
 
                 // download file
 
                 const buffer = await video.arrayBuffer()
                 const videoBuffer = Buffer.from(buffer)
 
-                const uploadPath = path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath, video.name);
-                const writeStream = fs.createWriteStream(uploadPath);
+                const uploadPath = path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath);
+
+                if (!fs.existsSync(uploadPath)) {
+                    fs.mkdirSync(uploadFolder)
+                }
+
+                const writeStream = fs.createWriteStream(uploadPath + '/' + video.name);
 
                 writeStream.write(videoBuffer, (err) => {
                     if (err) {
@@ -341,6 +352,8 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
                     console.log('Видео успешно загружено');
                 });
 
+
+                console.log('видео успешно загружено')
                 writeStream.end();
                 
                 // url to DB

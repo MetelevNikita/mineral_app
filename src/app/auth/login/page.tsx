@@ -1,6 +1,7 @@
 'use client'
 
 import { FC, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 // 
@@ -16,21 +17,14 @@ import styles from './page.module.css'
 import MyInput from '@/components/ui/MyInput/MyInput'
 import MyButton from '@/components/ui/MyButton/MyButton'
 
-// modal
-
-import ModalResult from '@/components/modals/ModalResult/ModalResult'
-
-// img
-
-import ModalIcon from '@/../public/ModalResult/Done.svg'
-import modelIconError from '@/../public/ModalResult/error.svg'
-
 // functions
 
 import { authUser } from '@/functions/authUser'
 import MyCheckBox from '@/components/ui/MyCheckBox/MyCheckBox'
 
 const Login: FC = () => {
+
+  const router = useRouter()
 
 
   const [isAuth, setIsAuth] = useState<boolean>(false)
@@ -50,18 +44,16 @@ const Login: FC = () => {
   const userIn = async () => {
         const data = await authUser(user)
 
-        console.log(data)
-
         if (data?.message === 'Bad Request' || data?.message === 'Not Found' || data?.message === "Unauthorized") {
           setErrorText('Неверный логин или пароль')
           setError(true)
           setErrorField(true)
-        } else if (data?.message === 'Your account is blocked') {
-          setErrorText('Ваш аккаунт заблокирован администриацией, Напишите нам для уточнения деталей')
+        } else if (data?.message === 'Аккаунт заблокирован обратитесь к администратору приложения') {
+          setErrorText(data?.message)
           setError(true)
           setErrorField(true)
-        } else if (data?.message === 'success') {
-          setIsAuth(true)
+        } else if (data?.message === 'success') {  
+          router.push('/main')
         }
   }
 
@@ -71,35 +63,6 @@ const Login: FC = () => {
     <Container>
 
       <Row className='h-100 d-flex flex-column justify-content-center align-items-center'>
-
-
-
-        {/* MODAL */}
-
-
-          <Row>
-              <Col>
-
-              {
-                isAuth &&
-                  <ModalResult
-                    imgTop={ModalIcon}
-                    onClickLink={() => {
-                      setIsAuth(false)
-                      window.location.href = '/start'
-                    }}
-                    text={'Вы успешно зарегистрированы!'}
-                    subtext={'Войдите в личный кабинет видеогида.'}
-                    textBtn={'Перейти'}
-                    colorBackground={{background: 'linear-gradient(262deg, #7D22C9 3.49%, #FFBC41 121.77%)'}}
-                    colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}                  
-                  />
-              }
-
-              </Col>
-          </Row>
-
-          {/*  */}
 
 
 
