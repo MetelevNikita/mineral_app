@@ -17,16 +17,13 @@ import { Container, Row, Col } from 'react-bootstrap'
 
 import MyButton from '@/components/ui/MyButton/MyButton'
 import Status from '@/components/element/Status/Status'
-import ModalResult from '@/components/modals/ModalResult/ModalResult'
 
 // img
 
-import statusIcon from '@/../public/profile/minerale.svg'
 import statusStar from '@/../public/profile/start.svg'
 
 // types
 
-import { collectionType } from '@/types/type'
 import { UserType } from '@/types/type'
 import { CollectionMineralType } from '@/types/type'
 
@@ -40,21 +37,17 @@ import { getUsers } from '@/functions/reduxAsync/users/getUsers'
 //
 
 import { fetchGetCollectionMineral } from '@/functions/reduxAsync/collectionMineral/fetchGetCollectionMineral'
-import { fetchChangeNewCollectionMineralReceived } from '@/functions/reduxAsync/users/fetchChangeNewCollectionMineralReceived'
 
 
 // components
 
 import Loading from '@/components/element/Loading/Loading'
-import ShareButtonVk from '@/components/ui/ShareButtonVk/ShareButtonVk'
 
 
 const page: FC = () => {
 
 
   const [userId, setUserId] = useState<string>('');
-  const [getMineral, setGetMineral] = useState<boolean>(false)
-  const [isActive, setIsActive] = useState<boolean>(false)
 
   const dispatch = useAppDispatch()
 
@@ -77,7 +70,7 @@ const page: FC = () => {
 
   const currentUser: UserType | null = useAppSelector((state) => state.user.user).find((item: UserType) => item.id === parseInt(userId)) ?? null;
   const collectionMineral: CollectionMineralType[] = useAppSelector((state) => state.collection.collection) ?? []
-  const statuses = useAppSelector((state) => state.status.status).find((item) => item.title == currentUser?.status) ?? 'Студент-геолог'
+  const statuses = useAppSelector((state) => state.status.status).find((item) => item.title == currentUser?.status)
 
 
 
@@ -105,6 +98,7 @@ const page: FC = () => {
 
 
   console.log(currentUserCollection)
+  console.log(statuses)
 
 
 
