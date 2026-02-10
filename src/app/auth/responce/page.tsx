@@ -95,7 +95,7 @@ const page = () => {
 
 
     if (!user) {
-        return alert('Ошибка получения данных')
+        return
     }
 
     const userParse = JSON.parse(user)
