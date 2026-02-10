@@ -83,7 +83,7 @@ const page = () => {
         
         
           <div className={styles.title_admin_container}>
-            <div className={styles.title_admin}>Geoмузей в кармане</div>
+            <div className={styles.title_admin}>Geoмузей в кармане V1.0</div>
           </div>
 
 
