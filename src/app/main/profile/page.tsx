@@ -97,11 +97,6 @@ const page: FC = () => {
   }) ?? []
 
 
-  console.log(currentUserCollection)
-  console.log(statuses)
-
-
-
 
   return (
 

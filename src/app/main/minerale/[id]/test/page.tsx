@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { motion } from "motion/react"
 import { useRouter } from 'next/navigation'
 
@@ -68,28 +68,31 @@ const page = ({ params }: { params: { id: string } }) => {
   const router = useRouter()
 
 
-  // const STATUS_THRESHOLDS = [
-  //   { min: 2600, status: 'Министр природных ресурсов' },
-  //   { min: 2000, status: 'Начальник геолого-съемочной партии' },
-  //   { min: 1400, status: 'Главный геолог' },
-  //   { min: 1000, status: 'Старший геолог' },
-  //   { min: 600,  status: 'Геолог-съёмщик' },
-  //   { min: 200,  status: 'Инженер-геолог' },
-  //   { min: 100,  status: 'Стажер-геолог' },
-  // ] as const;
-
-
 
   const [userId, setUserId] = useState<string>('')
   const [mineralId, setMineralId] = useState<string>('');
+
+  // 
+
   const [answers, setAnswers] = useState<any>([])
-  const [questionId, setQuestioId]= useState<number>(0)
-  const [buttonText, setButtonText] = useState<string>('Тест начался')
-  const [questionNumber, setQuestionNumber] = useState<number>(0)
-  const [price, setPrice] = useState<number>(0)
-  const [newStatusText, setNewStatusText] = useState<string>('')
-  const [getMineral, setGetMineral] = useState<boolean>(false)
+
+  // 
+
   const [statuses, setStatuses] = useState<any>([])
+  const [newStatus, setNewStatus] = useState<string>('')
+
+  // 
+
+  const [questionId, setQuestioId]= useState<number>(0)
+  const [questionNum, setQuestioNum] = useState<number>(1)
+
+  // 
+
+
+  const [buttonText, setButtonText] = useState<string>('Тест начался')
+  const [price, setPrice] = useState<number | null>(null)
+
+
 
 
 
@@ -104,33 +107,13 @@ const page = ({ params }: { params: { id: string } }) => {
   const [winKviz, setWinKviz] = useState<boolean>(false)
   const [notWinKviz, setNotWinKviz] = useState<boolean>(false)
   const [kvizDone, setKvizDone] = useState<boolean>(false)
+  const [newMineral, setNewMineral] = useState<boolean>(false)
 
-  // 
-
-  const [newStatusFixer, setNewStatusFixer] = useState<boolean>(false)
-
-
-  // 
-
-
-
-  useEffect(() => {
-    (async () => {
-      const res = await getStatus()
-      
-      setStatuses(res.map((item: {title: string, total: number | string}) => {
-        return {
-          min: item.total,
-          status: item.title
-        }
-      }))
-    })()
-  }, [])
 
   // redux
 
-  const currentUser = useAppSelector((state) => state.user.user).filter((item) => item.id == parseInt(userId))[0];
-  const currentMineral = useAppSelector((state) => state.minerals.minerals).filter((item) => item.id === parseInt(mineralId))[0];
+  const currentUser = useAppSelector((state) => state.user.user).find((item) => item.id == parseInt(userId));
+  const currentMineral = useAppSelector((state) => state.minerals.minerals).find((item) => item.id === parseInt(mineralId));
   const collectionMineral = useAppSelector((state) => state.collection.collection)
   const dispatch = useAppDispatch()
 
@@ -144,151 +127,252 @@ const page = ({ params }: { params: { id: string } }) => {
     fetchId();
   }, [params]);
 
-
-  //  get Id User
-
-  useEffect(() => {
-
-      const userId = sessionStorage.getItem('userID')
-
-      if (userId !== null) {
-          setUserId(userId)
-        } else {
-          console.error(`User ID не определен!`)
-        }
-    }, [dispatch])
-
-    // get USER
+  // get user id
 
   useEffect(() => {
-      if (userId || mineralId) {
-          dispatch(getUsers());
-          dispatch(fetchGetAsyncMineral())
-          dispatch(fetchGetCollectionMineral())
-      }
-  }, [userId, dispatch]);
+    const userId = sessionStorage.getItem('userID');
+    if (userId) {
+      setUserId(userId);
+    }
+  }, [])
 
 
   useEffect(() => {
+    dispatch(fetchGetAsyncMineral())
+    dispatch(fetchGetCollectionMineral())
+    dispatch(getUsers())
+  }, [dispatch])
 
-      if (currentUser && currentMineral) {
-          const kvizIsDone = currentUser.mineralPassed.filter((item: any) => {
-        if (item.title === currentMineral.title) {
-          return item
+  useEffect(() => {
+
+    const fetchStatuses = async () => {
+      const res = await getStatus()
+
+      const data = res.map((item: any) => {
+        return {
+          status: item.title,
+          min: item.total
         }
       })
 
-      
-      if (kvizIsDone.length > 0) {
-          setKvizDone(true)
-      }
-
+      setStatuses(data)
     }
 
-  }, [currentUser, currentMineral])  
+
+    fetchStatuses()
+  }, [dispatch])
 
 
+  
+  // Проверям был ли пройден этот геоквиз ранее
 
 
-  if (!currentMineral || !currentUser) {
-    return <Loading text={'Loading...'} />
-  }
+  useEffect(() => {
 
+    if (!currentUser || !currentMineral) return
+    const kvizIsDone = currentUser.mineralPassed.find((mineral: {title: string}) => mineral.title === currentMineral.title)
 
-  if (currentMineral.question === null || currentMineral.question.length < 1) {
-    return (
-      <Row>
-        <Col className='d-flex justify-content-center align-items-center mb-3'>
-            <div className={styles.empty_title}>Вопросы не созданы</div>
-        </Col>
-      </Row>
-      
-    )
-  }
-
-
-
-
-  const handleSubmit = (question: string, item: any, user: any) => {
-
-      if (currentMineral.question === null) {
-        console.error('Вопросы не найдены')
-        return
-      }
-
-
-      const questionData =  currentMineral.question[questionId] as any
-      const currentAnswer = questionData.answers.find((answer: any) => {
-        return answer.correct === true
-      })
-
-
-    
-
-
-      setAnswers([...answers, {question: question, correctAnswer: currentAnswer,  ...item}]);    // добавляем ответ в массив
-      setQuestionNumber(questionNumber + 1)  // добавляем номер вопроса
-
-
-      // проверяем ответы
-
-    if (questionId + 1 < user.question.length) {
-      setQuestioId(questionId + 1);
-      setButtonText(`${questionId + 2} из ${user.question.length}`);
-    } else {
-
-      setButtonText('Показать результат');
-      setAnswerDisabled(true)
-      setResultDisabled(false)
+    if (kvizIsDone) {
+      setKvizDone(true)
     }
-  }
 
 
-  const handleFinalSubmit = (mineral: any) => {
-    const correctAnswer = answers.filter((item: any) => {
-      return item.correct === true;
-    });
 
-    const passed = correctAnswer.length === mineral.question.length;
+  }, [currentUser, currentMineral])
 
-    if (questionId + 1 >= mineral.question.length) {
-      const isPassed = currentUser?.mineralPassed.filter((item: any) => 
-        item.title === mineral.title
-      ).length > 0;
 
-      if (passed) {
-        const pointsToAdd = isPassed ? 10 : 100;
-        setPrice(pointsToAdd); // Отображаем сколько баллов получим
-        setWinKviz(true);
-      } else {
-        setPrice(0);
-        setNotWinKviz(true);
-      }
-    } else {
-      alert('Вы не закончили отвечать на вопросы');
-    }
-  };
+  // 
+
+
+  if (!currentMineral?.question) return
 
   //
 
+  async function checkMineralPassed (): Promise<number>  {
 
-  const getNewStatusIfThresholdCrossed = (previousTotal: number, newTotal: number): string | null => {
-    // Проходим по всем порогам от низшего к высшему
-    for (const threshold of statuses) {
-      // Если newTotal достиг или превысил порог, И previousTotal был меньше этого порога
-      if (newTotal >= threshold.min && previousTotal < threshold.min) {
-        return threshold.status;
+
+    try {
+      
+      if (!currentUser || !currentMineral) return 0
+      const mineralPassed = currentUser.mineralPassed.find((item: {title: string}) => item.title === currentMineral.title)
+
+      // проверяем был ли пройден геоквиз и сохранен ли минерал в массиве "mineralPassed"
+
+      if (!mineralPassed) {
+        console.log(`Геоквиз ${currentMineral.title} пройден вы получаете 100 баллов`)
+        await dispatch(fetchUsersChangePassedMineral({userId, passed: {title: currentMineral.title, isPassed: true}})).unwrap()
+        return 100
+      } else {
+        console.log(`Геоквиз ${currentMineral.title} уже пройден вы получаете 10 баллов`)
+        return 10
+      }
+
+    } catch (error: Error | unknown) {
+
+      if (error instanceof Error) {
+        console.error(`Ошибка получения данных о пройденном геовизе ${error.message}`)
+        return 0
+      }
+
+      console.error(`Ошибка получения данных о пройденном геовизе ${error}`)
+      return 0
+    }
+
+  }
+
+
+  async function checkMineralCollection (currentMineral: any, currentUser: any): Promise<any> {
+    try {
+
+
+      let newCollcetionMineral: CollectionMineralType | any = collectionMineral.find((item: any) => {
+        return item.title === currentMineral.title
+      }) ?? []
+
+      console.log('COLLECTION MINERALE!!!! ', newCollcetionMineral)
+
+
+      if (newCollcetionMineral.length < 1) {
+        console.info('минерал в коллекцию не найден')
+        return {
+          message: `Минерал для добавления в коллекцию не найден`,
+          success: false
+        }
+      }
+
+      // redux
+
+      await dispatch(fetchAddNewCollectionMinerale(
+        {
+          id: currentUser.id,
+          mineral: newCollcetionMineral
+        }
+      )).unwrap()
+      await dispatch(getUsers()).unwrap();
+
+      // 
+
+
+      return {
+        message: `Добавлен новый минера в коллекцию, ${newCollcetionMineral.title}`,
+        success: true
+      }
+
+
+
+      
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        console.error(`Ошибка получения данных о коллекции минералов у пользователя ${error.message}`)
+        return 0
+      }
+
+      console.error(`Ошибка получения данных о коллекции минералов у пользователя ${error}`)
+      return 0
+    }
+  }
+
+
+  async function checkMineralColectionReceived (currentMineral: any, currentUser: any) {
+    try {
+
+      const mineralRecieved = currentUser?.collection.find((item: {title: string, received: boolean}) => item.title === currentMineral.title)
+      console.log(mineralRecieved)
+
+      if (mineralRecieved && mineralRecieved.received === true) {
+        console.log('статус минерала уже обновлен')
+        return {
+          message: 'статус минерала уже обновлен',
+          success: false
+        }
+      }
+
+
+      // redux
+
+      await dispatch(fetchChangeNewCollectionMineralReceived({idUser: currentUser.id, idMineral: currentMineral.id})).unwrap()
+      await dispatch(getUsers()).unwrap();
+
+      // 
+
+      return {
+        message: 'статус минерала уже обновлен',
+        success: true
+      }
+
+      
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        console.error(`Статус минерала не обновлен ${error}`)
+        return {
+          message: `Статус минерала не обновлен ${error.message}`,
+          success: false
+        }
+      }
+
+      console.error(`Статус минерала не обновлен ${error}`)
+      return {
+        message: `Статус минерала не обновлен ${error}`,
+        success: false
       }
     }
-    return null;
+  }
+
+
+  async function checkNewStatusFromUser (currentUser: any) {
+    try {
+      const newTotal = currentUser.total + price
+
+      const newStatus = await newStatusUser(parseInt(newTotal))
+      console.log('НОВЫЙ СТАТУС ', newStatus)
+
+      if (newStatus) {
+        console.log(`Поздравляем! Вы достигли нового статуса: ${newStatus}`)
+        router.push(`/main/status/${newStatus}`);
+      } else {
+        console.log('Новый статус не достигнут')
+        router.push('/main/minerale')
+      }
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        console.error(`Ошибка получения нового статуса пользователя ${error.message}`)
+        return
+      }
+      
+      console.error(`Ошибка получения нового статуса пользователя ${error}`)
+      return
+    }
+  }
+
+
+
+  // STATUS
+
+
+  const getNewStatusIfThresholdCrossed = (previousTotal: number, newTotal: number, currentStatus: string): string | null => {
+      // Находим индекс текущего статуса в массиве
+      const currentStatusIndex = statuses.findIndex((s: any) => s.status === currentStatus);
+      const currentThreshold = statuses[currentStatusIndex]?.min || 0;
+      
+      // Проходим по порогам, которые ВЫШЕ текущего
+      for (let i = currentStatusIndex + 1; i < statuses.length; i++) {
+        const threshold = statuses[i];
+        // Если достигнут порог
+        if (newTotal >= threshold.min) {
+          return threshold.status;
+        }
+      }
+      return null;
   };
 
 
-
-  const newStatusUser = async (newTotal: number) => {
+  async function newStatusUser (newTotal: number) {
     try {
+
+      if (!currentUser) return
+
       const previousTotal = currentUser.total || 0;
-      const newStatus = getNewStatusIfThresholdCrossed(previousTotal as number, newTotal);
+      const newStatus = getNewStatusIfThresholdCrossed(previousTotal as number, newTotal, currentUser.status);
       
       // Если достигнут новый порог
       if (newStatus && newStatus !== currentUser.status) {
@@ -304,269 +388,266 @@ const page = ({ params }: { params: { id: string } }) => {
       return null;
     }
   };
-
-
-  // 
-
-
-
   
-  const closeModal = async (minerale: any, user: any) => {
-    try {
-      const previousTotal = user.total || 0;
-      
-      // проверяем правильность ответов
-      const correctAnswer = answers.filter((item: any) => item.correct === true);
-      const passedAllCorrect = correctAnswer.length === minerale.question.length;
-
-      // проверяем проходили ли мы квиз
-      const alreadyPassed = user.mineralPassed.some((i: any) => i.title === minerale.title);
-
-      // Считаем очки
-      let pointsToAdd = 0;
-      if (passedAllCorrect) {
-        pointsToAdd = alreadyPassed ? 10 : 100;
-
-        const newTotal = previousTotal + pointsToAdd;
-        // Если это первое прохождение и всё верно — фиксируем «пройдено»
-        if (passedAllCorrect && !alreadyPassed) {
-          await dispatch(fetchUsersChangePassedMineral({
-            userId,
-            passed: { title: minerale.title, isPassed: false }
-          })).unwrap();
-        }
-
-        // Если есть очки — фиксируем новый total
-        if (pointsToAdd > 0) {
-          await dispatch(fetchUsersChangeTotal({ userId, total: newTotal })).unwrap();
-        }
-
-        // Обновляем пользователя
-        await dispatch(getUsers()).unwrap();
-
-        // Проверяем, достигнут ли новый порог статуса
-        const newStatus = await newStatusUser(newTotal);
-
-        if (passedAllCorrect) {
-          setWinKviz(false);
-          
-          // Проверяем, есть ли новый минерал в коллекции
-          const newCollectionMineralData = await updateCollectionMineral();
-
-          console.log('НОВЫЙ МИНЕРАЛ в КОЛЛЕКЦИЮ!!!! ', newCollectionMineralData)
-          
-          // Если достигнут новый статус
-          if (newStatus) {
-            setNewStatusText(newStatus);
-            
-            if (newCollectionMineralData.length >= 1) {
-              setGetMineral(true);
-            } else {
-              //
-
-              setNewStatusFixer(true)
-
-              // 
-              router.push(`/main/status/${newStatus}`);
-            }
-          } else {
-            if (newCollectionMineralData.length >= 1) {
-              setGetMineral(true);
-            } else {
-              router.push('/main/minerale');
-            }
-          }
-        }
-
-      } else if (!passedAllCorrect) {
-        setNotWinKviz(false);
-        sessionStorage.setItem('answers', encodeURIComponent(JSON.stringify(answers)));
-        router.push(`/main/minerale/${mineralId}/test/result`);
-      }
-    } catch (error) {
-      console.error('Ошибка в closeModal:', error);
-    }
-  };
-
 
 
   // 
 
 
+  function NextQuestionHandler (questionTitle: string, item: any) {
+    if (!currentMineral?.question) return
 
-  const updateCollectionMineral = async (): Promise<CollectionMineralType[] | []> => {
+
+    const questionData =  currentMineral.question[questionId] as any
+    const currentAnswer = questionData.answers.find((answer: any) => {
+      return answer.correct === true
+    })
+
+
+    setAnswers([...answers, {question: questionTitle, correctAnswer: currentAnswer,  ...item}])
+
+    if (questionId + 1 === currentMineral?.question.length) {
+      setAnswerDisabled(true)
+      setResultDisabled(false)
+      setButtonText('Показать результат')
+    } else {
+      setQuestioId(questionId + 1)
+      setQuestioNum(questionNum + 1)
+    }
+
+  }
+
+
+  async function ResultHandler (currentMineral: any, currentUser: any, answers: any) {
+
+    try {
+      
+        const correctAnswers = answers.filter((item: {correct: boolean}) => item.correct === true)
+
+        if (correctAnswers.length === currentMineral.question.length) {
+
+          // Получаем количество очков, которое нужно добавить пользователю
+
+          const total = await checkMineralPassed()
+          setPrice(total)
+          const newTotal = currentUser ? currentUser.total + total : 0 as number
+          console.log(newTotal)
+
+          // Присваиваем баллы пользователю
+
+          await dispatch(fetchUsersChangeTotal({userId: userId, total: newTotal})).unwrap()
+
+          // Добавляем минерал в коллекцию
+
+          await checkMineralCollection(currentMineral, currentUser)
+          
+          
+          // 
+
+          setWinKviz(true)
+
+        } else {
+          console.log('not win')
+          setNotWinKviz(true)
+        }
+
+
+    } catch (error) {
+      
+    }
+
+  }
+
+  console.log(statuses)
+
+
+
+  async function CloseWinModal (currentUser: any, price: any) {
+
     try {
 
-      let newCollcetionMineral: CollectionMineralType[] | [] = collectionMineral.filter((item: any) => {
-        return item.title === currentMineral.title
-      }) ?? []
+      setWinKviz(false)
 
-      if (newCollcetionMineral.length < 1) {
-        console.log('минерал в коллекцию не найден')
-        return []
+      // Изменяем статус минерала в коллекции на "получен"
+
+      const newCollectionMineral = await checkMineralColectionReceived(currentMineral, currentUser)
+
+      if (newCollectionMineral.success) {
+          setNewMineral(true)
+          return
       }
 
-      const updateMineralUser = await dispatch(fetchAddNewCollectionMinerale(
-        {id: currentUser.id,
-          mineral: newCollcetionMineral[0]
-        })).unwrap()
+      // Получаем новый статус пользователя, если он достигнут
+
+      await checkNewStatusFromUser(currentUser)
+
+      // 
+
+      
+    } catch (error: Error | unknown) {
+      
+      if (error instanceof Error) {
+        console.error(`Ошибка закрытия ${error.message}`)
+        return false
+      }
+
+        console.error(`Ошибка закрытия ${error}`)
+        return false
+    }
+  }
 
 
-      console.log('Минерал добавлен пользователю: ', updateMineralUser)
-
-
-      return newCollcetionMineral
+  async function CloseNotWinModal (answers: any) {
+    try {
+      setNotWinKviz(false)
+      sessionStorage.setItem('answers', encodeURIComponent(JSON.stringify(answers)));
+      router.push(`/main/minerale/${mineralId}/test/result`)
 
     } catch (error: Error | unknown) {
+        if (error instanceof Error) {
+          console.error(`Ошибка закрытия модального окна проигрыша ${error.message}`)
+          return error.message
+        }
 
-      if (error instanceof Error) {
-        console.error(`Ошибка добавления в коллекцию ${error.message ?? error}`);
-        throw new Error(`Ошибка добавления в коллекции ${error.message ?? error}`);
-      }
-
-      throw new Error(
-        `Ошибка добавления в коллекцию ${error}`
-      )
-
+        console.error(`Ошибка закрытия модального окна проигрыша ${error}`)
+        return error
+      
     }
   }
 
-
-  const getChangeCollectionRecevied = async (user: UserType, mineral: CollectionMineralType[]) => {
-
-
-    console.log('USER ', user)
-    console.log()
-
-
+  async function CloseNewMineralModal (currentUser: any) {
     try {
-      for (const item of mineral) {
-        const newCollection = await dispatch(fetchChangeNewCollectionMineralReceived({ 
-          idUser: user.id, 
-          idMineral: item.id 
-        })).unwrap();
 
-        console.log('NEW COLLECTION ', newCollection)
-        await dispatch(getUsers());
-      }
+      await checkNewStatusFromUser(currentUser)
+      setNewMineral(false)
       
-      // после обновления коллекции проверяем статус
-      const updatedUser = await dispatch(getUsers()).unwrap();
-      const currentUser = updatedUser.find((item: UserType) => item.id == parseInt(userId));
-      
-      setGetMineral(false);
-      
-      // проверяем, есть ли новый статус
-      if (newStatusText) {
-        console.log('Переход на новый статус:', newStatusText);
-        router.push(`/main/status/${newStatusText}`);
-      } else {
-        console.log('Переход к минералам');
-        router.push('/main/minerale');
-      }
-      
-    } catch (error) {
-      console.log(`Ошибка получения коллекционного минерала`, error);
+    } catch (error: Error | unknown) {
+      console.log(error)
     }
-  };
-  
-
-
-
-
-  if (currentMineral === null || currentUser === null) {
-    return <Loading text={'Loading...'} />
   }
 
+
+
+    if (!currentMineral && !currentUser) {
+      return <Loading text={'Загрузка'} />
+    }
+
+
+    if (currentMineral.question === null || currentMineral.question.length < 1) {
+    return (
+      <Row>
+        <Col className='d-flex justify-content-center align-items-center mb-3'>
+            <div className={styles.empty_title}>Вопросы не созданы</div>
+        </Col>
+      </Row>
+      
+    )
+  }
+  
   
   return (
 
-    
 
   <>
-      {
-        (kvizDone) && (
-          <Row>
-            <Col>
-                <ModalText title={`Квиз ${currentMineral.title} пройден`} text={'Данный квиз вами пройден. за повторное прохождение квиза будет начисленно только 10 баллов'} btnText={'продолжить'} onClickClose={() => {setKvizDone(false)}} onClickBtn={() => {setKvizDone(false)}} />
-            </Col>
-          </Row>
 
-        )
-      }
+  {/* MODALS */}
 
+  {
+    (kvizDone) && (
+      <Row>
+        <Col>
 
-      {
-        (winKviz) && (
+          <ModalText
+            title={`Квиз ${currentMineral.title} пройден`}
+            text={'За последующее прохождение вам будет начисленно 10 баллов'}
+            btnText={'Продолжить'}
+            onClickBtn={() => {setKvizDone(false)}}
+            onClickClose={() => {setKvizDone(false)}}
+          />
+        </Col>
+      </Row>
+    )
+  }
 
-            <Row>
-                <Col className='d-flex align-items-center'>
+  {
+    (winKviz) && (
 
-                  <ModalResult 
-                    imgTop={IconWin}
-                    onClickLink={() => {closeModal(currentMineral, currentUser)}}
-                    imgClose={IconClose}
-                    onClickClose={() => {window.location.href = '/main/profile'}}
-                    text={`Вы получаете ${price} баллов`}
-                    textBtn={'Подробнее'}
-                    colorBackground={{background: 'linear-gradient(125deg, #7D22C9 0.49%, #FFBF00 73.51%, #FFBC41 99.11%)'}}
-                    colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}} 
-                    />
-                
-                </Col>
-            </Row>
+        <Row>
+          <Col className='d-flex align-items-center'>
 
-        )
-      }
+            <ModalResult 
+              imgTop={IconWin}
+              onClickLink={async () => {
 
+                await CloseWinModal(currentUser, price)
 
-      {
-
-        (notWinKviz) && (
-
-           <Row>
-                <Col className='d-flex align-items-cente'>
-
-                  <ModalResult 
-                    imgTop={IconNotWin}
-                    onClickLink={() => {
-                      closeModal(currentMineral, currentUser)
-                    }}
-                    imgClose={IconClose}
-                    onClickClose={() => {window.location.href = `/main/minerale/`}}
-                    text={`Геоквиз не пройден`}
-                    textBtn={'Подробнее'}
-                    colorBackground={{background: 'linear-gradient(262deg, #C92225 3.49%, #FF8041 121.77%)'}}
-                    colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}} 
-                    />
-                
-                </Col>
-            </Row>
-
-        )
-      }
-
-
-
-      {
-        (getMineral) && (
-          <Row>
-            <Col>
-
-              <ModalResult imgTop={statusStar} onClickLink={async () => {
-                console.log('Обновлыем коллекцию')
-                await updateCollectionMineral()
-                console.log('Изменяем стус поля getChangeCollectionRecevied')
-                await getChangeCollectionRecevied(currentUser, collectionMineral)
-              }} text={'Открыт новый минерал'} textBtn={'Получить'} colorBackground={{background: 'linear-gradient(125deg, #7D22C9 0.49%, #FFBF00 73.51%, #FFBC41 99.11%)'}} colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}/>
+              }}
+              imgClose={IconClose}
+              onClickClose={() => {
+                router.push('/main/profile')
+              }}
+              text={`Вы получаете ${price} баллов`}
+              textBtn={'Подробнее'}
+              colorBackground={{background: 'linear-gradient(125deg, #7D22C9 0.49%, #FFBF00 73.51%, #FFBC41 99.11%)'}}
+              colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}} 
+              />
           
-            
-            </Col>
-          </Row>
+          </Col>
+      </Row>
 
-        )
-      }
-    
+    )
+  }
+
+  {
+    (notWinKviz) && (
+      <Row>
+          <Col className='d-flex align-items-cente'>
+
+            <ModalResult 
+              imgTop={IconNotWin}
+              onClickLink={async () => {
+                await CloseNotWinModal(answers)
+              }}
+              imgClose={IconClose}
+              onClickClose={() => {router.push(`/main/minerale/`)}}
+              text={`Геоквиз не пройден`}
+              textBtn={'Подробнее'}
+              colorBackground={{background: 'linear-gradient(262deg, #C92225 3.49%, #FF8041 121.77%)'}}
+              colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}} 
+              />
+          
+          </Col>
+      </Row>
+    )
+  }
+
+
+  {
+    (newMineral) && (
+      <Row>
+        <Col>
+
+          <ModalResult
+            imgTop={statusStar}
+            onClickLink={async () => {
+              await CloseNewMineralModal(currentUser)
+            }}
+            text={'Открыт новый минерал'}
+            textBtn={'Получить'}
+            colorBackground={{background: 'linear-gradient(125deg, #7D22C9 0.49%, #FFBF00 73.51%, #FFBC41 99.11%)'}}
+            colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}}
+          />
+      
+        
+        </Col>
+      </Row>
+
+    )
+    }
+
+
+
+  {/*  */}
   
     <Container className='mb-5'>
 
@@ -587,8 +668,8 @@ const page = ({ params }: { params: { id: string } }) => {
 
                   <div className={styles.question_top_title}>{currentMineral.title}</div>
 
-                  <div className={styles.question_number}>Вопрос {questionNumber}</div>
-                  <progress className={styles.question_progress} value={questionNumber} max={currentMineral?.question.length}></progress>
+                  <div className={styles.question_number}>Вопрос {questionNum}</div>
+                  <progress className={styles.question_progress} value={questionNum} max={4}></progress>
 
                   <div className={styles.question_top_question}>{currentMineral.question[questionId].title}</div>
 
@@ -599,6 +680,7 @@ const page = ({ params }: { params: { id: string } }) => {
           </Col>
         </Row>
 
+    
 
 
 
@@ -607,16 +689,18 @@ const page = ({ params }: { params: { id: string } }) => {
           
             {
 
-              (currentMineral.question[questionId].answers) && currentMineral.question[questionId].answers.map((item: any, index: number) => {
+                (currentMineral.question[questionId].answers) && currentMineral.question[questionId].answers.map((item: any, index: number) => {
+
+                if (!currentMineral.question) return
+
+                const questionTitle = currentMineral.question[questionId].title
 
                 if (!currentMineral.question) {
                   return
                 }
 
-                const questionTitle = currentMineral.question[questionId].title as string
-
                 return (
-                  <AnswerBlock disabled={answerDisabled} onClick={() => {handleSubmit(questionTitle, item, currentMineral)}} key={index+1} num={index + 1} text={item.text} />
+                  <AnswerBlock disabled={answerDisabled} onClick={(e) => {NextQuestionHandler(questionTitle, item)}} key={index} num={index + 1} text={item.text} />
                 )
 
               })
@@ -630,7 +714,8 @@ const page = ({ params }: { params: { id: string } }) => {
         <Row className='mb-5'>
           <Col className='d-flex flex-column justify-content-center align-items-center mb-3'>
 
-            <motion.div animate={answerDisabled ? {scale: [1,1.2,1]} : {scale: [1]}} transition={{duration: 0.4}}><MyButton style={answerDisabled ? {background: '#FFBC41', color: 'white', border: 'none'} : {}} text={buttonText} btn={styles.btn} onClick={() => {handleFinalSubmit(currentMineral)}} type={'button'} disabled={resultDisabled}/></motion.div>
+            
+            <motion.div animate={answerDisabled ? {scale: [1,1.2,1]} : {scale: [1]}} transition={{duration: 0.4}}><MyButton style={answerDisabled ? {background: '#FFBC41', color: 'white', border: 'none'} : {}} text={buttonText} btn={styles.btn} onClick={() => {ResultHandler(currentMineral, currentUser, answers)}} type={'button'} disabled={resultDisabled}/></motion.div>
           
           </Col>
         </Row>

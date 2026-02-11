@@ -7,13 +7,13 @@ import {CollectionMineralType} from '@/types/type'
 
 export const fetchAddNewCollectionMinerale = createAsyncThunk(
   'name/fetchAddNewCollectionMinerale',
-  async ({id, mineral} : {id: string | number, mineral: CollectionMineralType | []}) => {
+  async ({id, mineral} : {id: string | number, mineral: CollectionMineralType | any}) => {
     try {
 
       const responce = await fetch(`/api/users/${id}`, {
         method: 'PATCH',
         headers: {
-          'Accept': 'application/json'
+          'Content-type': 'application/json'
         },
         body: JSON.stringify({mineral})
       })
