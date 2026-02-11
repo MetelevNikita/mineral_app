@@ -198,7 +198,7 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                     message: "Статус первого посещения обновлен"
                 })
                 
-        }  else if (data.mineral) {
+        } else if (data.mineral) {
 
             const updateCollection = await prisma.user.update({
                 where: {
@@ -246,8 +246,13 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                                 }
                             }
                         }
+                    },
+                    include: {
+                        collection: true
                     }
                 })
+
+                console.log('PRISMA FROM COLLECTION ', updateCollection)
 
                 if (!updateCollection) {
                     return NextResponse.json({
