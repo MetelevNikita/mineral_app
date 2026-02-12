@@ -211,9 +211,7 @@ export const PATCH = async (req: Request, context: {params: any}) => {
 
                 data: {
                     collection: {
-                            create: [
-                                data.mineral
-                            ]
+                            create: data.mineral
                     }
                 }
                 
