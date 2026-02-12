@@ -231,7 +231,6 @@ const page = ({ params }: { params: { id: string } }) => {
 
       console.log('COLLECTION MINERALE!!!! ', newCollcetionMineral)
       const mineralWithoutId = {...newCollcetionMineral}
-
       delete mineralWithoutId.id
 
 
