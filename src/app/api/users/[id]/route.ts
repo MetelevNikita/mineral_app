@@ -98,6 +98,10 @@ export const PATCH = async (req: Request, context: {params: any}) => {
         const data = await req.json()
 
 
+        console.log('DATA FROM PATCH!!!!! ', data)
+        console.log(data)
+
+
         if (data.total) {
             const { total } = data
 
