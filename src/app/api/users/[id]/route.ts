@@ -204,49 +204,44 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                 console.log('ЗАПУСКАЕМ ДОБАВЛЕНИЕ в КОЛЛЕКЦИЮ', data.mineral)
 
                 try {
-
                     
-                    const updateCollection = await prisma.user.update({
-                        where: {
-                            id: parseInt(id)
-                        },
+                    // const updateCollection = await prisma.user.update({
+                    //     where: {
+                    //         id: parseInt(id)
+                    //     },
+                    //     data: {
+                    //         collection: {
+                    //             create: data.mineral
+                    //         }
+                    //     },
+                    //     include: {
+                    //         collection: true // чтобы увидеть результат
+                    //     }
+                    // })
+
+
+                    const updateCollection = await prisma.collection.create({
                         data: {
-                            collection: {
-                                create: data.mineral
-                            }
-                        },
-                        include: {
-                            collection: true // чтобы увидеть результат
+                            ...data.mineral,
+                            userId: parseInt(id) // просто передаем ID пользователя
                         }
                     })
                     
-                    console.log('КОЛЛЕКЦИЯ ОБНОВЛЕНА:', updateCollection.collection.length)
+                    console.log('КОЛЛЕКЦИЯ ОБНОВЛЕНА:', updateCollection)
                     
                     return NextResponse.json({
                         message: "Обновление статуса в коллекции минералов",
-                        collection: updateCollection.collection
+                        collection: updateCollection
                     })
 
                 } catch (error: any) {
                     console.error('ОШИБКА ПРИ ДОБАВЛЕНИИ В КОЛЛЕКЦИЮ:', error)
-                    
-                    // Проверяем специфичные для Prisma ошибки
-                    if (error.code === 'P2025') {
-                        return NextResponse.json({
-                            message: "Пользователь не найден"
-                        }, { status: 404 })
-                    }
-                    
+        
                     if (error.code === 'P2002') {
                         return NextResponse.json({
                             message: "Запись с таким минералом уже существует"
                         }, { status: 409 })
                     }
-                    
-                    return NextResponse.json({
-                        message: "Ошибка обновления статуса минерала в коллекции",
-                        error: error.message
-                    }, { status: 500 })
                 }
 
 
