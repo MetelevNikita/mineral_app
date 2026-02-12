@@ -205,33 +205,25 @@ export const PATCH = async (req: Request, context: {params: any}) => {
 
                 try {
                     
-                    // const updateCollection = await prisma.user.update({
-                    //     where: {
-                    //         id: parseInt(id)
-                    //     },
-                    //     data: {
-                    //         collection: {
-                    //             create: data.mineral
-                    //         }
-                    //     },
-                    //     include: {
-                    //         collection: true // чтобы увидеть результат
-                    //     }
-                    // })
-
-
-                    const updateCollection = await prisma.collection.create({
+                    const updateCollection = await prisma.user.update({
+                        where: {
+                            id: parseInt(id)
+                        },
                         data: {
-                            ...data.mineral,
-                            userId: parseInt(id) // просто передаем ID пользователя
+                            collection: {
+                                create: data.mineral
+                            }
+                        },
+                        include: {
+                            collection: true // чтобы увидеть результат
                         }
                     })
                     
-                    console.log('КОЛЛЕКЦИЯ ОБНОВЛЕНА:', updateCollection)
+                    console.log('КОЛЛЕКЦИЯ ОБНОВЛЕНА:', updateCollection.collection.length)
                     
                     return NextResponse.json({
                         message: "Обновление статуса в коллекции минералов",
-                        collection: updateCollection
+                        collection: updateCollection.collection
                     })
 
                 } catch (error: any) {
@@ -242,6 +234,7 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                             message: "Запись с таким минералом уже существует"
                         }, { status: 409 })
                     }
+
                 }
 
 
