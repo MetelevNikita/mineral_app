@@ -218,6 +218,7 @@ export const PATCH = async (req: Request, context: {params: any}) => {
             })
             console.log(updateCollection, "КОЛЛЕКЦИЯ ОБНОВЛКНА!!!!")
             if (!updateCollection) {
+                console.log('ERROR ', updateCollection)
                 return NextResponse.json({
                     message: "Ошибка обновления статуса минерала в коллекции"
                 })
