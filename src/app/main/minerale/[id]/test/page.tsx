@@ -230,9 +230,12 @@ const page = ({ params }: { params: { id: string } }) => {
       }) ?? []
 
       console.log('COLLECTION MINERALE!!!! ', newCollcetionMineral)
+      const mineralWithoutId = {...newCollcetionMineral}
+
+      delete mineralWithoutId.id
 
 
-      if (!newCollcetionMineral) {
+      if (!mineralWithoutId) {
         console.info('минерал в коллекцию не найден')
         return {
           message: `Минерал для добавления в коллекцию не найден`,
@@ -245,7 +248,7 @@ const page = ({ params }: { params: { id: string } }) => {
       await dispatch(fetchAddNewCollectionMinerale(
         {
           id: currentUser.id,
-          mineral: newCollcetionMineral
+          mineral: mineralWithoutId
         }
       )).unwrap()
       await dispatch(getUsers()).unwrap();
@@ -253,11 +256,11 @@ const page = ({ params }: { params: { id: string } }) => {
       //
       
       
-      console.log('НОВЫЙ МИНЕРАЛ В КОЛЛЕКЦИЮ ДОБАВЛЕН!!!! ', newCollcetionMineral)
+      console.log('НОВЫЙ МИНЕРАЛ В КОЛЛЕКЦИЮ ДОБАВЛЕН!!!! ', mineralWithoutId)
 
 
       return {
-        message: `Добавлен новый минера в коллекцию, ${newCollcetionMineral.title}`,
+        message: `Добавлен новый минера в коллекцию, ${mineralWithoutId.title}`,
         success: true
       }
 
