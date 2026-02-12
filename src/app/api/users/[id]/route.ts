@@ -177,8 +177,6 @@ export const PATCH = async (req: Request, context: {params: any}) => {
 
                 const { visible } = data
 
-                console.log(visible)
-
                 const newVisible = await prisma.user.update({
                     where: {
                         id: parseInt(id)
@@ -200,6 +198,8 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                 
         } else if (data.mineral) {
 
+            console.log('ЗАПУСКАЕМ ДОБАВЛЕНИЕ в КОЛЛЕЦИЮ')
+
             const updateCollection = await prisma.user.update({
                 where: {
                     id: parseInt(id)
@@ -214,9 +214,9 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                 }
                 
             })
-            console.log(updateCollection, "updateStatus")
+            console.log(updateCollection, "КОЛЛЕКЦИЯ ОБНОВЛКНА!!!!")
             if (!updateCollection) {
-                NextResponse.json({
+                return NextResponse.json({
                     message: "Ошибка обновления статуса минерала в коллекции"
                 })
             }
@@ -285,6 +285,12 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                 return NextResponse.json({
                     message: "Статус блокировки обновлен"
                 })
+        } else {
+            console.log('Не указано поле для обновления')
+            return NextResponse.json({
+                message: "Не указано поле для обновления",
+                receivedData: data
+            }, { status: 400 })
         }
            
         
