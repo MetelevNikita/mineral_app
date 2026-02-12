@@ -250,7 +250,10 @@ const page = ({ params }: { params: { id: string } }) => {
       )).unwrap()
       await dispatch(getUsers()).unwrap();
 
-      // 
+      //
+      
+      
+      console.log('НОВЫЙ МИНЕРАЛ В КОЛЛЕКЦИЮ ДОБАВЛЕН!!!! ', newCollcetionMineral)
 
 
       return {
@@ -290,13 +293,15 @@ const page = ({ params }: { params: { id: string } }) => {
 
       // redux
 
-      await dispatch(fetchChangeNewCollectionMineralReceived({idUser: currentUser.id, idMineral: currentMineral.id})).unwrap()
+      const recievedMineral = await dispatch(fetchChangeNewCollectionMineralReceived({idUser: currentUser.id, idMineral: currentMineral.id})).unwrap()
       await dispatch(getUsers()).unwrap();
+
+      console.log('ОБНОВЛЯЕМ СТАТУС МИНЕРАЛА ', recievedMineral)
 
       // 
 
       return {
-        message: 'статус минерала уже обновлен',
+        message: 'статус минерала обновлен',
         success: true
       }
 
@@ -458,7 +463,7 @@ const page = ({ params }: { params: { id: string } }) => {
 
   }
 
-  console.log(statuses)
+
 
 
 
@@ -471,6 +476,8 @@ const page = ({ params }: { params: { id: string } }) => {
       // Изменяем статус минерала в коллекции на "получен"
 
       const newCollectionMineral = await checkMineralColectionReceived(currentMineral, currentUser)
+
+      console.log('NEW MINERAL RECIEVED ', newCollectionMineral)
 
       if (newCollectionMineral.success) {
           setNewMineral(true)
