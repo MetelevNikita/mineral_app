@@ -232,7 +232,7 @@ const page = ({ params }: { params: { id: string } }) => {
       console.log('COLLECTION MINERALE!!!! ', newCollcetionMineral)
 
 
-      if (newCollcetionMineral.length < 1) {
+      if (!newCollcetionMineral) {
         console.info('минерал в коллекцию не найден')
         return {
           message: `Минерал для добавления в коллекцию не найден`,
