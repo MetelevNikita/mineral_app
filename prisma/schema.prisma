@@ -57,9 +57,9 @@ model Collection {
   title String
   image String
   received Boolean @default(false)
-  @@unique([userId, title])
+
   createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  updateAt DateTime @default(now())
   
   userId Int
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
