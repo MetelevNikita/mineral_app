@@ -204,6 +204,8 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                 console.log('ЗАПУСКАЕМ ДОБАВЛЕНИЕ в КОЛЛЕКЦИЮ', data.mineral)
 
                 try {
+
+                    
                     const updateCollection = await prisma.user.update({
                         where: {
                             id: parseInt(id)

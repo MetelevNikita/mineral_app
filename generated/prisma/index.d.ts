@@ -14536,6 +14536,7 @@ export namespace Prisma {
 
   export type CollectionWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    userId_title?: CollectionUserIdTitleCompoundUniqueInput
     AND?: CollectionWhereInput | CollectionWhereInput[]
     OR?: CollectionWhereInput[]
     NOT?: CollectionWhereInput | CollectionWhereInput[]
@@ -14546,7 +14547,7 @@ export namespace Prisma {
     updateAt?: DateTimeFilter<"Collection"> | Date | string
     userId?: IntFilter<"Collection"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "userId_title">
 
   export type CollectionOrderByWithAggregationInput = {
     id?: SortOrder
@@ -16139,6 +16140,11 @@ export namespace Prisma {
   export type ProfileSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+  }
+
+  export type CollectionUserIdTitleCompoundUniqueInput = {
+    userId: number
+    title: string
   }
 
   export type CollectionCountOrderByAggregateInput = {
