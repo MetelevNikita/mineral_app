@@ -200,32 +200,53 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                     message: "Статус первого посещения обновлен"
                 })
                 
-        } else if (data.mineral) {
+        }  else if (data.mineral) {
+                console.log('ЗАПУСКАЕМ ДОБАВЛЕНИЕ в КОЛЛЕКЦИЮ', data.mineral)
 
-            console.log('ЗАПУСКАЕМ ДОБАВЛЕНИЕ в КОЛЛЕЦИЮ')
+                try {
+                    const updateCollection = await prisma.user.update({
+                        where: {
+                            id: parseInt(id)
+                        },
+                        data: {
+                            collection: {
+                                create: data.mineral
+                            }
+                        },
+                        include: {
+                            collection: true // чтобы увидеть результат
+                        }
+                    })
+                    
+                    console.log('КОЛЛЕКЦИЯ ОБНОВЛЕНА:', updateCollection.collection.length)
+                    
+                    return NextResponse.json({
+                        message: "Обновление статуса в коллекции минералов",
+                        collection: updateCollection.collection
+                    })
 
-            const updateCollection = await prisma.user.update({
-                where: {
-                    id: parseInt(id)
-                },
-
-                data: {
-                    collection: {
-                            create: data.mineral
+                } catch (error: any) {
+                    console.error('ОШИБКА ПРИ ДОБАВЛЕНИИ В КОЛЛЕКЦИЮ:', error)
+                    
+                    // Проверяем специфичные для Prisma ошибки
+                    if (error.code === 'P2025') {
+                        return NextResponse.json({
+                            message: "Пользователь не найден"
+                        }, { status: 404 })
                     }
+                    
+                    if (error.code === 'P2002') {
+                        return NextResponse.json({
+                            message: "Запись с таким минералом уже существует"
+                        }, { status: 409 })
+                    }
+                    
+                    return NextResponse.json({
+                        message: "Ошибка обновления статуса минерала в коллекции",
+                        error: error.message
+                    }, { status: 500 })
                 }
-                
-            })
-            console.log(updateCollection, "КОЛЛЕКЦИЯ ОБНОВЛКНА!!!!")
-            if (!updateCollection) {
-                console.log('ERROR ', updateCollection)
-                return NextResponse.json({
-                    message: "Ошибка обновления статуса минерала в коллекции"
-                })
-            }
-            return NextResponse.json({
-                message: "Обновление статуса в коллекции минералов",
-            })
+
 
         } else if (data.received) {
 
@@ -299,11 +320,25 @@ export const PATCH = async (req: Request, context: {params: any}) => {
         
 
 
-    } catch (error: Error | unknown) {
-
-        if (error instanceof Error) {
-            return NextResponse.json({error : error.message})
+    } catch (error: any) {
+        console.error('ОШИБКА ПРИ ДОБАВЛЕНИИ В КОЛЛЕКЦИЮ:', error)
+        
+        // Проверяем специфичные для Prisma ошибки
+        if (error.code === 'P2025') {
+            return NextResponse.json({
+                message: "Пользователь не найден"
+            }, { status: 404 })
         }
-        return NextResponse.json(error) 
+        
+        if (error.code === 'P2002') {
+            return NextResponse.json({
+                message: "Запись с таким минералом уже существует"
+            }, { status: 409 })
+        }
+        
+        return NextResponse.json({
+            message: "Ошибка обновления статуса минерала в коллекции",
+            error: error.message
+        }, { status: 500 })
     }
 }
