@@ -19,7 +19,7 @@ const prisma = new PrismaClient()
 
 
 
-export const GET = async (): Promise<NextResponse<StatusesType[] | [] | {error: string}>> => {
+export const GET = async (): Promise<NextResponse<StatusesType[] | any | {error: string}>> => {
   try {
 
     const statuses = await prisma.statuses.findMany()
@@ -60,13 +60,7 @@ export const POST = async (req: Request) => {
 
     //
 
-
-    console.log('TOTAL ', total)
-
-
     const newFile = await uploadNewFile(icon, 'status')
-
-
 
     const newStatus = await prisma.statuses.create({
       data: {
