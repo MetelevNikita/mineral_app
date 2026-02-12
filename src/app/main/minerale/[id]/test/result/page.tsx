@@ -49,7 +49,7 @@ const page = (params: {params: {id: string}}) => {
 
   }, [params])
 
-  console.log('DATA ', storageData)
+
 
   const router = useRouter()
 
@@ -88,7 +88,6 @@ const page = (params: {params: {id: string}}) => {
     }
   })
 
-  console.log('Correct answers ', correctAnswers)
 
 
   return (
@@ -141,11 +140,7 @@ const page = (params: {params: {id: string}}) => {
               {
                 (storageData.length < 1 || !storageData) ? <Loading text={'Загрузка'} /> : storageData.map((item: any, index: number): React.ReactNode => {
 
-                  console.log(item)
-
-
                   if (item.correct === true) {
-                    console.log(item)
                     return <ResultAnswers key={index+1} imageQuestion={done} answersTitle={`Вопрос ${index + 1}`} content={''} colorBG={'#EDF8EE'} style={{color: '#0F891E !important'}} correct={item.correct} answer={item.text} userAnswer={item.text}/>
                   } else {
                     return <ResultAnswers key={index+1} imageQuestion={error} answersTitle={`Вопрос ${index + 1}`} content={item.question} colorBG={'#FEE'} style={{color: '#E64646', border: `1px solid #FFDEDE`, borderRadius: '30px'}} imageErrorArrow={arrow} correct={item.correct} answer={item.correctAnswer.text} userAnswer={item.text}/>
