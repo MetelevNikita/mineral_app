@@ -204,6 +204,30 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                 console.log('ЗАПУСКАЕМ ДОБАВЛЕНИЕ в КОЛЛЕКЦИЮ', data.mineral)
 
                 try {
+
+                    const existingCollectionItem = await prisma.collection.findFirst({
+                        where: {
+                            userId: parseInt(id),
+                            title: data.mineral.title
+                        }
+                    });
+
+
+
+
+                    if (existingCollectionItem) {
+
+                        console.log('МИНЕРАЛ В КОЛЛЕКЦИИ НАЙДЕН!!!! ', existingCollectionItem)
+
+                        return NextResponse.json({
+                            message: "Минерал уже пристуствует в коллекции",
+                            collection: existingCollectionItem
+                        })
+                    }
+
+
+                    console.log('МИНЕРАЛ В КОЛЛЕКЦИИ НЕ НАЙДЕН!!!! ', existingCollectionItem)
+
                     
                     const updateCollection = await prisma.user.update({
                         where: {
