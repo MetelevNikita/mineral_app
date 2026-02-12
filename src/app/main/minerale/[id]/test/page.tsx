@@ -295,7 +295,7 @@ const page = ({ params }: { params: { id: string } }) => {
 
       // redux
 
-      const recievedMineral = await dispatch(fetchChangeNewCollectionMineralReceived({idUser: currentUser.id, idMineral: currentMineral.id})).unwrap()
+      const recievedMineral = await dispatch(fetchChangeNewCollectionMineralReceived({idUser: currentUser.id, idMineral: mineralRecieved.id})).unwrap()
       await dispatch(getUsers()).unwrap();
 
       console.log('ОБНОВЛЯЕМ СТАТУС МИНЕРАЛА ', recievedMineral)
