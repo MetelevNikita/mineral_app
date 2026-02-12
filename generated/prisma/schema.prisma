@@ -47,16 +47,17 @@ model Profile {
 // COLLECTION
 
 model Collection {
-  id       Int     @id @default(autoincrement())
+  id       Int      @id @default(autoincrement())
   title    String
   image    String
-  received Boolean @default(false)
-
+  received Boolean  @default(false)
   createAt DateTime @default(now())
-  updateAt DateTime @default(now())
+  updateAt DateTime @updatedAt
 
   userId Int
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, title])
 }
 
 model CollectionMineral {
