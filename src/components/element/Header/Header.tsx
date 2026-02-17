@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'motion/react'
+import { useTopMenuContext } from '@/app/main/layout'
 
 //
 
@@ -32,6 +33,13 @@ const Header: FC = () => {
 
 const [id, setId] = useState<string>('')
 const [isOn, setIsOn] = useState<boolean>(false)
+
+// 
+
+const {topMenuOn, setTopMenuOn} = useTopMenuContext()
+
+
+console.log('Топ меню ', topMenuOn)
 
 
 const dispatch = useAppDispatch()
@@ -107,9 +115,9 @@ if (!currentUser) {
 
                     <Col className='d-flex justify-content-start align-items-center'>
 
-                        <Image src={(isOn) ? menuClose : menuOpen} width={30} height={30} onClick={() => {
+                        <Image src={(topMenuOn) ? menuClose : menuOpen} width={30} height={30} onClick={() => {
                             setTimeout(() => {
-                                setIsOn(!isOn)
+                                setTopMenuOn(!topMenuOn)
                             }, 1000)
                             
                             }} alt='menu_icon'/>
@@ -155,7 +163,8 @@ if (!currentUser) {
                     <AnimatePresence>
 
                     {
-                        isOn && (
+                        topMenuOn && (
+                            
                             <motion.div initial={{opacity: 1, y: -1000}} animate={{opacity: 1, y: 60}} exit={{opacity: 1, y: -1000}} transition={{duration: 1}} className={styles.menu_container}>
                                 {
                                     menuArr.map((item) => (
@@ -169,6 +178,8 @@ if (!currentUser) {
                                     ))
                                 }
                             </motion.div>
+
+
                         )
                     }
                     </AnimatePresence>
@@ -191,7 +202,7 @@ if (!currentUser) {
 
                         <Col className='d-flex justify-content-start align-items-center' xs={2}>
 
-                            <Image src={(isOn) ? menuClose : menuOpen} width={30} height={30} onClick={() => setIsOn(!isOn)} alt='menu_icon'/>
+                            <Image src={(topMenuOn) ? menuClose : menuOpen} width={30} height={30} onClick={() => setTopMenuOn(!topMenuOn)} alt='menu_icon'/>
 
                         </Col>
 
@@ -253,12 +264,12 @@ if (!currentUser) {
                         <AnimatePresence>
 
                         {
-                            isOn && (
+                            topMenuOn && (
                                 <motion.div initial={{opacity: 1, y: -1000}} animate={{opacity: 1, y: 60}} exit={{opacity: 1, y: -1000}} transition={{duration: 1, delayChildren: 1}} className={styles.menu_container}>
                                     {
                                         menuArr.map((item) => (
                                             <div key={item.id} className={styles.menu_item_container}>
-                                            <Link key={item.id} href={item.link} style={{textDecoration: 'none'}} onClick={() => {setIsOn(false)}}>
+                                            <Link key={item.id} href={item.link} style={{textDecoration: 'none'}} onClick={() => {setTopMenuOn(false)}}>
                                                 <div  className={styles.menu_item}>{item.title}</div>
                                             </Link>
 
