@@ -487,7 +487,6 @@ const page = ({ params }: { params: { id: string } }) => {
       }
 
       // Получаем новый статус пользователя, если он достигнут
-
       await checkNewStatusFromUser(currentUser)
 
       // 

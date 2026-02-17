@@ -14,6 +14,7 @@
     "jsx": "preserve",
     "incremental": true,
     "noEmitOnError": false,
+    "types": ["next", "next/types/global", "react", "react-dom"],
     "plugins": [
       {
         "name": "next"

@@ -55,6 +55,10 @@ const MyInput: FC<MyInputProps> = ({ title, name, type, placeholder, style, requ
                   src={icon_eye} alt={'eye_icon'}
                   onMouseDown={() => {setShowPassword('text')}}
                   onMouseUp={() => {setShowPassword('password')}}
+                  onContextMenu={(e) => {
+                    e.preventDefault()
+                    return false
+                  }}
 
                   // mobile
 
