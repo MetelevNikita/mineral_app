@@ -478,7 +478,6 @@ const page = ({ params }: { params: { id: string } }) => {
       // Изменяем статус минерала в коллекции на "получен"
 
       const newCollectionMineral = await checkMineralColectionReceived(currentMineral, currentUser)
-
       console.log('NEW MINERAL RECIEVED ', newCollectionMineral)
 
       if (newCollectionMineral.success) {
