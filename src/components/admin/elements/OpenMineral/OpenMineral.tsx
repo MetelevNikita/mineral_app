@@ -114,17 +114,17 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
         const res = await pathcMineral(formData, menuActive.id)
         console.log('res', res)
 
-        // if (res.data === 'success') {
-        //   alert(res.message)
-        // } else {
-        //   alert(res.message)
-        // }
+        if (res.data === 'success') {
+          alert(res.message)
+        } else {
+          alert(res.message)
+        }
 
-        // setMenuActive({
-        //   id: menuActive.id,
-        //   label: 'Минералы',
-        //   value: 'minerals'
-        // })
+        setMenuActive({
+          id: menuActive.id,
+          label: 'Минералы',
+          value: 'minerals'
+        })
     
 
 
