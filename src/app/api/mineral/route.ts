@@ -81,34 +81,45 @@ export const POST = async (req: Request, res: Response) => {
 
         // 
 
-        const filename = image.name
-        const buffer = await image.arrayBuffer();
-        const fileBuffer = Buffer.from(buffer);
-        fsPromices.writeFile(currentWriteFolder + '/' + filename, fileBuffer)
+        const filename = image.name ?? ''
+        const videoName = video.name ?? ''
 
+        if (image instanceof File) {
 
-        // video
-        const videoName = video.name
-        const vBuffer = await video.arrayBuffer()
-        const videoBuffer = Buffer.from(vBuffer)
+            const buffer = await image.arrayBuffer();
+            const fileBuffer = Buffer.from(buffer);
+            fsPromices.writeFile(currentWriteFolder + '/' + filename, fileBuffer)
 
-        // 
-
-        const uploadPath = path.join(currentWriteFolder, videoName);
-        const writeStream = fs.createWriteStream(uploadPath);
-
-
-        writeStream.write(videoBuffer, (err) => {
-            if (err) {
-                console.error('Ошибка записи файла:', err);
-            }
-            console.log('Видео успешно загружено');
-        });
-
-        writeStream.end();
+        }
 
 
 
+        if (video instanceof File) {
+
+            // video
+
+            const vBuffer = await video.arrayBuffer()
+            const videoBuffer = Buffer.from(vBuffer)
+
+            // 
+
+            const uploadPath = path.join(currentWriteFolder, videoName);
+            const writeStream = fs.createWriteStream(uploadPath);
+
+
+            writeStream.write(videoBuffer, (err) => {
+                if (err) {
+                    console.error('Ошибка записи файла:', err);
+                }
+                console.log('Видео успешно загружено');
+            });
+
+            writeStream.end();
+
+        }
+
+
+        
 
 
         const newMineral = await prisma.mineral.create({
@@ -137,7 +148,7 @@ export const POST = async (req: Request, res: Response) => {
         
     } catch (error: Error | unknown) {
         if (error instanceof Error) {
-            return NextResponse.json({error: error.message})
+            return NextResponse.json({error: `ОШИБКА!!! ${error.message}`})
         }
         return NextResponse.json({error: error})  
     }

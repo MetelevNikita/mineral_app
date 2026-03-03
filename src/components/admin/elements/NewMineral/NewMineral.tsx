@@ -56,12 +56,12 @@ const NewMineral: FC<NewMineralProps> = ({ contextMenu, contextMenuActive, submi
   })
 
 
+  console.log(newForm)
+
+
   const [mineral, setMineral] = useState<any>(null)
   const {menuActive, setMenuActive} = contextMenuActive;
   
-
-  console.log(menuActive)
-
 
   const newMineral = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -82,6 +82,7 @@ const NewMineral: FC<NewMineralProps> = ({ contextMenu, contextMenuActive, submi
 
 
     const res = await postMineral(formData)
+    console.log(res)
 
 
     if (res.data === 'sucees') {
