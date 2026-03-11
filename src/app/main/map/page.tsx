@@ -205,6 +205,8 @@ const page: FC = () => {
     }
   })
 
+  console.log(currentIcon)
+
 
 
   return (

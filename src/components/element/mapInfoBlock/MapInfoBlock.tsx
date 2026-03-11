@@ -67,12 +67,12 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
 
   const minerals = useAppSelector(state => state.minerals.minerals)
   const mineralFromSection = minerals.map((item: any) => {
-    if (item.title == "Мусковит" || "Лабрадор") {
+    if (item.title == "Мусковит" || item.title == "Лабрадор") {
       return {
         ...item,
         section: 'A'
       }
-    } else if (item.title == "Гадолинит" || "Cидерит") {
+    } else if (item.title == "Гадолинит" || item.title == "Cидерит") {
       return {
         ...item,
         section: 'K'
@@ -82,7 +82,7 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
         ...item,
         section: 'B'
       }
-    } else if (item.title == "Гипс" || "Флюрит") {
+    } else if (item.title == "Гипс" || item.title == "Флюрит") {
       return {
         ...item,
         section: 'C'
@@ -92,32 +92,32 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
         ...item,
         section: 'F'
       }
-    } else if (item.title == "Киноварь" || "Гематит" || "Касситерит" || "О минералах") {
+    } else if (item.title == "Киноварь" || item.title == "Гематит" || item.title == "Касситерит" || item.title == "О минералах") {
       return {
         ...item,
         section: 'E'
       }
-    } else if (item.title == "Нефть" || "Уголь" || "Горные породы" || "Флюрит" || "Боксит" || "Псиломелан" || "Платина") {
+    } else if (item.title == "Нефть" || item.title == "Уголь" || item.title == "Горные породы" || item.title == "Флюрит" || item.title == "Боксит" || item.title == "Псиломелан" || item.title == "Платина") {
       return {
         ...item,
         section: 'G'
       }
-    } else if (item.title == "Апатит" || "Гипс" || "Галит" || "Кальцит" || "Графит" || "Псиломелан") {
+    } else if (item.title == "Апатит" || item.title == "Гипс" || item.title == "Галит" || item.title == "Кальцит" || item.title == "Графит" || item.title == "Псиломелан") {
       return {
         ...item,
         section: 'Q'
       }
-    } else if (item.title == "Апатит" || "Кальцит" || "Касситерит" || "Алмаз" || "Лопарит") {
+    } else if (item.title == "Апатит" || item.title == "Кальцит" || item.title == "Касситерит" || item.title == "Алмаз" || item.title == "Лопарит") {
       return {
         ...item,
         section: 'W'
       }
-    } else if (item.title == "О Минералах" || "Псевдоморфозы" || "Кварц" || "Кальцит" || "Цвет" || "Твердость") {
+    } else if (item.title == "О Минералах" || item.title == "Псевдоморфозы" || item.title == "Кварц" || item.title == "Кальцит" || item.title == "Цвет" || item.title == "Твердость") {
       return {
         ...item,
         section: 'P'
       }
-    } else if (item.title == "Лопарит" || "Малахит" || "Яшма" || "Мусковит" || "Горные породы") {
+    } else if (item.title == "Лопарит" || item.title == "Малахит" || item.title == "Яшма" || item.title == "Мусковит" || item.title == "Горные породы") {
       return {
         ...item,
         section: 'L'
@@ -128,6 +128,9 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
   })
 
 
+  console.log(mineralFromSection)
+
+
   const router = useRouter()
 
   // 
@@ -136,12 +139,12 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
   const {currentIcon, setCurrentIcon} = close
 
   const currentSectionData = mineralFromSection.filter((item) => {
-
-
       if (item.section === section) {
           return item
       }
   })
+
+  console.log(currentSectionData)
 
 
 
