@@ -4,13 +4,12 @@ import { createContext, useState, useContext } from 'react'
 
 // 
 
-import { Container, Col, Row } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 
 // components
 
 import Header from "@/components/element/Header/Header";
 import Footer from "@/components/element/Footer/Footer";
-import { m } from 'motion/react';
 
 
 const menuContext = createContext({

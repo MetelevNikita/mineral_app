@@ -52,7 +52,7 @@ const page: FC = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const userID = sessionStorage.getItem('userID')
+    const userID = localStorage.getItem('userID')
 
     if (userID !== null) {
       setUserId(userID)
