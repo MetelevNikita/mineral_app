@@ -18,8 +18,6 @@ export const GET = async () => {
 
     const allCollcetions = await prisma.collectionMineral.findMany()
 
-    console.log(allCollcetions)
-
     if (!allCollcetions || allCollcetions.length < 1) {
       return NextResponse.json([])
     }

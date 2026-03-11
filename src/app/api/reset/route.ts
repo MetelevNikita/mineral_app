@@ -46,7 +46,7 @@ export const POST = async (req: Request): Promise<NextResponse<{status: number, 
     // 
 
     const { email } = body;
-    console.log(email)
+
 
     const findUser = await prisma.user.findUnique({
       where: {
@@ -54,7 +54,6 @@ export const POST = async (req: Request): Promise<NextResponse<{status: number, 
       }
     })
 
-    console.log(findUser)
 
     if (!findUser) {
       return NextResponse.json({
@@ -63,13 +62,12 @@ export const POST = async (req: Request): Promise<NextResponse<{status: number, 
       })
     }
 
-      console.log(process.env.SECRET_KEY)
 
 
       const token = jwt.sign({uid: findUser.id, purpose: 'reset'}, process.env.SECRET_KEY as string, {expiresIn: '1h'})
 
       const link = `${process.env.URL}/auth/reset/${token}?&email=${findUser.email}`
-      console.log(link)
+
 
       const info = await transporter.sendMail({
         from: 'Propaganda1108@gmail.com',
@@ -78,7 +76,6 @@ export const POST = async (req: Request): Promise<NextResponse<{status: number, 
         text: `ссылка для сброса пароля\n\nссылка - ${link}`
       })
 
-      console.log(info)
 
       if (!info) {
         return NextResponse.json({
@@ -114,12 +111,6 @@ export const PATCH = async (req: Request) => {
     const body = await req.json();
     const {email, password, repeatPassword} = body;
 
-    console.log(email, password, repeatPassword)
-
-
-    console.log(password == repeatPassword)
-
-
     if (password !== repeatPassword) {
       return NextResponse.json({
         status: 400,
@@ -142,9 +133,6 @@ export const PATCH = async (req: Request) => {
     }
 
     const hashPassword = await bcrypt.hash(password, 10)
-
-    console.log('Новый пароль ' + password + ' ' + hashPassword)
-
 
     const updatePassword = await prisma.user.update({
       where: {

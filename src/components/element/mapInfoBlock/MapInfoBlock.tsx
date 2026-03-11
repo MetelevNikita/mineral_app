@@ -110,7 +110,7 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
   })
 
 
-  console.log(currentReduxMneralId)
+  console.log('current mineral ', currentMineral)
 
 
   return (
@@ -147,7 +147,7 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
 
                   <div className={styles.bottom}>
 
-                     <MyButton text={(currentMineral) ? 'Перейти' : 'Закрыть'} btn={styles.btn} type={'button'} onClick={() => {(currentMineral) ? window.location.href = `/main/minerale/${currentReduxMneralId}` : setCurrentIcon(null)}} />
+                     <MyButton text={(currentMineral) ? 'Перейти' : 'Закрыть'} btn={styles.btn} type={'button'} onClick={() => {(currentMineral) ? window.location.href = `/main/minerale/${currentMineral.title}` : setCurrentIcon(null)}} />
 
                   </div>
 

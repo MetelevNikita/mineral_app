@@ -1,8 +1,8 @@
-export const deleteMineral = async (id: number | string): Promise<{message: string, data: string, status: number}> => {
+export const deleteMineral = async (title: number | string): Promise<{message: string, data: string, status: number}> => {
 
   try {
 
-    const responce = await fetch(`/api/mineral/${id}`, {
+    const responce = await fetch(`/api/mineral/${title}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'

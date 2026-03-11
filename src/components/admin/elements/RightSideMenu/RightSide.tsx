@@ -34,7 +34,7 @@ interface RightSideProps {
     setMenu: any
   },
   contextMenuActive: {
-    menuActive: {id: number, label: string, value: string},
+    menuActive: {title: string, label: string, value: string},
     setMenuActive: any
   },
   submitActive: any
@@ -53,7 +53,7 @@ const RightSide: FC<RightSideProps> = ({ contextMenu, contextMenuActive, submitA
 
   useEffect(() => {
     const getCurrentMineral = async () => {
-      const currentMineral = await getSingleMineral(menuActive.id)
+      const currentMineral = await getSingleMineral(menuActive.title)
       if (currentMineral) {
         setMineral(currentMineral)
       }
@@ -78,7 +78,7 @@ const RightSide: FC<RightSideProps> = ({ contextMenu, contextMenuActive, submitA
       case 'contacts':
         return <Contacts />
       case 'collection':
-        return <Collection />
+        return <Collection contextMenuActive={contextMenuActive}/>
       case 'status':
         return <Status contextMenu={contextMenu} contextMenuActive={contextMenuActive}/>
               case 'edit_status':

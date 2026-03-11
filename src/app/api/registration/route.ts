@@ -28,8 +28,6 @@ export const POST = async (req: Request, res: Response) => {
 
     const {name, email, password} = await req.json()
 
-    console.log(name, email, password)
-
     // Проверяем пользователя на почту
 
     const emailIsValid = await prisma.user.findFirst({

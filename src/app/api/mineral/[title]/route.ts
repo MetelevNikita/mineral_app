@@ -3,6 +3,7 @@ import { PrismaClient } from "../../../../../generated/prisma";
 import fs from 'fs'
 import path from 'path'
 import { transliterate } from 'transliteration'
+import { error } from "console";
 
 
 
@@ -14,16 +15,14 @@ const prisma = new PrismaClient()
 
 
 
-export const GET = async (res: Response, context: {params: {id: any}}) => {
+export const GET = async (res: Response, context: {params: {title: any}}) => {
     try {
 
-        const { id } = await context.params
-        console.log(id)
-
+        const { title } = await context.params
 
         const getSingleMinerale = await prisma.mineral.findFirst({
             where: {
-                id: parseInt(id)
+                title: title
             },
 
             include: {
@@ -54,19 +53,14 @@ export const GET = async (res: Response, context: {params: {id: any}}) => {
 }
 
 
-export const DELETE = async (res: Response, context: {params: {id: any}}) => {
+export const DELETE = async (res: Response, context: {params: {title: any}}) => {
     try {
 
-
-        console.log('delete')
-
-        const { id }= await context.params
-
-        console.log(id)
+        const { title }= await context.params
 
         const findMineral = await prisma.mineral.findFirst({
             where: {
-                id: parseInt(id)
+                title: title
             },
             include: {
                 question: {
@@ -82,13 +76,9 @@ export const DELETE = async (res: Response, context: {params: {id: any}}) => {
             return NextResponse.json({message: `Не найден минерал для удаления`})
         }
 
-
-        console.log(findMineral)
-
-
         const deleteMineral = await prisma.mineral.deleteMany({
             where: {
-                id: parseInt(id)
+                title: title
             }
         })
 
@@ -116,30 +106,23 @@ export const DELETE = async (res: Response, context: {params: {id: any}}) => {
 }
 
 
-export const POST = async (req: Request, context: {params: {id: any}}) => {
+export const POST = async (req: Request, context: {params: {title: any}}) => {
     try {
-
-
-        console.log('СОЗДАНИЕ GEOKVIZ!!!! ')
 
 
         const formData = await req.formData()
 
-
-        const {id} = await context.params
-        console.log(id)
-
+        const {title} = await context.params
 
         const allQuestions = formData.get('questions') as string
         const arr = JSON.parse(allQuestions)
-        console.log(arr)
 
 
         // 
 
         const getMineral = await prisma.mineral.findFirst({
             where: {
-                id: parseInt(id)
+                title: title
             },
             include: {
                 question: {
@@ -150,9 +133,10 @@ export const POST = async (req: Request, context: {params: {id: any}}) => {
             }
         })
 
+
         if (!getMineral) {
             return NextResponse.json({
-                message: `Минерал для обновления с id ${id} не найден`
+                message: `Минерал ${title} для обновления не найден`
             })
         }
 
@@ -163,31 +147,29 @@ export const POST = async (req: Request, context: {params: {id: any}}) => {
             await prisma.answer.deleteMany({
                 where: {
                     question: {
-                        mineralId: parseInt(id)
+                        mineralId: getMineral.id
                     }
                 }
             })
             
             await prisma.question.deleteMany({
                 where: {
-                    mineralId: parseInt(id)
+                    mineralId: getMineral.id
                 }
             })
 
 
-            console.log('старые данные удалены')
+            console.log(`Cтарые данные геоквиза ${getMineral.title} удалены`)
         }
 
-
-            console.log('новые данные')
-
+            console.log(`Новые данные по геоквизу ${getMineral.title}`)
 
 
         // 
 
         const createQuestion = await prisma.mineral.update({
             where: {
-                id: parseInt(id)
+                id: getMineral.id
             },
             data: {
                 question: {
@@ -209,7 +191,11 @@ export const POST = async (req: Request, context: {params: {id: any}}) => {
             }
         })
 
-        console.log(createQuestion)
+        if (!createQuestion) {
+            return NextResponse.json({
+                error: 'Ошибка создания геоквиза'
+            })
+        }
 
         return NextResponse.json({message: 'Геоквиз создан или изменен'})
         
@@ -224,14 +210,14 @@ export const POST = async (req: Request, context: {params: {id: any}}) => {
 }
 
 
-export const PATCH = async (req: Request, context: {params: {id: any}}) => {
+export const PATCH = async (req: Request, context: {params: {title: any}}) => {
     try {
 
 
-        const { id } = await context.params
+        const { title } = await context.params
         const formData = await req.formData()
 
-        const title = formData.get('title') as string | null;
+        const titleMineral = formData.get('title') as string | null;
         const description = formData.get('description') as string | null
         const video = formData.get('video') as File | null
         const image = formData.get('image') as File | null
@@ -241,14 +227,14 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
 
         const currentMineral = await prisma.mineral.findFirst({
             where: {
-                id: parseInt(id)
+                title: title
             }
         })
 
 
         if (!currentMineral) {
             return NextResponse.json({
-                message: `Минерал под таким ${id} не найден`,
+                message: `Минерал ${title} не найден`,
             })
         }
 
@@ -259,18 +245,15 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
         const updateData: any = {}
 
 
-        if (title !== null) {
-            console.log('Updating title:', title)
-            updateData.title = title
+        if (titleMineral !== null) {
+            updateData.title = titleMineral
         }
 
         if (description !== null) {
-            console.log('Updating description')
             updateData.description = description
         }
 
         if (isPassed !== null) {
-            console.log('Updating isPassed:', isPassed)
             updateData.isPassed = isPassed === 'true'
         }
 
@@ -278,23 +261,18 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
         if (image !== null) {
 
             try {
-                
-            console.log(image.name)
             const currentImageName = path.parse(currentMineral.image).base
 
             // delete file
 
             if (fs.existsSync(path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath, currentImageName))) {
                 fs.unlinkSync(path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath, currentImageName))
-                console.log(`Файл ${currentImageName} удален`)
             }
 
-            console.warn('Файл для удаления не найден')
 
             // download file
 
             if (!fs.existsSync(uploadFolder)) {
-                console.log('Папка создана!!! ', endFolderPath)
                 fs.mkdirSync(uploadFolder, {recursive: true})
             }
 
@@ -302,7 +280,6 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
             const imageBuffer = Buffer.from(buffer)
             const fileUploaded = fs.writeFileSync(uploadFolder + '/' + image.name, imageBuffer)
 
-            console.log('res to upload file ', fileUploaded)
 
             // url to DB
 
@@ -320,17 +297,14 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
 
             try {
 
-                console.log(video.name)
                 const currentVideoName = path.parse(currentMineral.video).base
 
                 // delete file
 
                 if (fs.existsSync(path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath, currentVideoName))) {
                     fs.unlinkSync(path.join(process.cwd(), 'src', 'app', 'uploads', 'mineral', endFolderPath, currentVideoName))
-                    console.log(`Файл ${currentVideoName} удален`)
                 }
 
-                console.log(`Файл не найден`)
 
                 // download file
 
@@ -352,8 +326,6 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
                     console.log('Видео успешно загружено');
                 });
 
-
-                console.log('видео успешно загружено')
                 writeStream.end();
                 
                 // url to DB
@@ -376,13 +348,10 @@ export const PATCH = async (req: Request, context: {params: {id: any}}) => {
             }, { status: 400 })
         }
 
-        console.log('Final update data:', updateData)
-
-
 
 
         const updateMineral = await prisma.mineral.update({
-            where: { id: parseInt(id) },
+            where: { id: currentMineral.id },
             data: updateData
         })
 

@@ -16,7 +16,6 @@ const deleteImage = async (filename: string) => {
   try {
 
     const uploadDir = path.join(process.cwd(), 'src', 'app', 'uploads', 'mineralMap')
-    console.log(uploadDir)
 
     if (!fs.existsSync(uploadDir)) {
       throw new Error('Папка не существует')
@@ -51,10 +50,7 @@ export const DELETE = async (req: Request, context: {params: {id: string}}) => {
       })
     }
 
-    console.log(getMineralMap)
-
     const imageName = getMineralMap?.image?.split('/').slice(-1).join('') as string
-    console.log(imageName)
 
     await prisma.mineralMap.delete({
       where: {

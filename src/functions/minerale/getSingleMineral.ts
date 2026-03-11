@@ -1,8 +1,8 @@
-export const getSingleMineral = async (id: number | string) => {
+export const getSingleMineral = async (title: string) => {
 
     try {
 
-        const response = await fetch(`/api/mineral/${id}`, {
+        const response = await fetch(`/api/mineral/${title}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

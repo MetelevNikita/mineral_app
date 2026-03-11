@@ -37,8 +37,6 @@ export const POST = async (req: Request) => {
 
         })
 
-        console.log(data)
-
         return NextResponse.json({
             data: {
                 message: "Message sent successfully"

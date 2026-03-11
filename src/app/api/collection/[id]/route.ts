@@ -20,16 +20,13 @@ export const DELETE = async (request: Request, context: {params: {id: string}}) 
 
 
     const { id } = await context.params
-    console.log(id)
-
-
     const getCollectionMineral = await prisma.collectionMineral.findFirst({
       where: {
         id: Number(id)
       }
     })
 
-    console.log('Найденный минерал в коллекции', getCollectionMineral)
+    console.log('Найден минерал в коллекции', getCollectionMineral)
 
 
     // 
@@ -75,7 +72,6 @@ export const PATCH = async (request: Request, context: {params: {id: string}}) =
 
 
     const formData = await request.formData()
-    console.log(formData)
 
     const title = formData.get('title')
     const image = formData.get('image')
