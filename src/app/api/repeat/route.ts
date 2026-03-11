@@ -14,8 +14,6 @@ export const POST = async (req: Request) => {
 
         const { email, code } = await req.json()
 
-        console.log(email, code)
-
         if (!email || !code) {
             return NextResponse.json({
                 message: "Поля не заполнены",
@@ -26,8 +24,7 @@ export const POST = async (req: Request) => {
 
 
         const data = await sendRandomCode(email, code)
-        console.log(data)
-
+    
         if (data.message == 'error') {
             return NextResponse.json({
                 status: 400,

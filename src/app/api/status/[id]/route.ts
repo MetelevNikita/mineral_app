@@ -22,16 +22,11 @@ export const DELETE = async (req: Request, context: {params: {id: string}}) => {
 
   try {
     const { id } = await context.params
-
-    console.log(id)
-
     const getStatus = await prisma.statuses.findFirst({
       where: {
         id: parseInt(id)
       }
     })
-
-    console.log(getStatus)
 
     if (!getStatus) {
       return NextResponse.json({
@@ -44,8 +39,8 @@ export const DELETE = async (req: Request, context: {params: {id: string}}) => {
     // 
 
 
-    const deleteFileIcon = await deleteCurrentFile(getStatus.icon, 'status')
-    console.log(deleteFileIcon)
+    const deleteFileIcon = await deleteCurrentFile(getStatus.icon as string, 'status')
+
 
 
 
@@ -63,7 +58,7 @@ export const DELETE = async (req: Request, context: {params: {id: string}}) => {
     }
 
 
-    const filePath = path.join(process.cwd(), 'public', getStatus.icon)
+    const filePath = path.join(process.cwd(), 'public', getStatus.icon as string)
 
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath)
@@ -99,11 +94,9 @@ export const PATCH = async (req: Request, context: {params: {id: string}}) => {
   try {
 
     const { id } = await context.params
-    console.log(id)
 
 
     const formData = await req.formData()
-    console.log(formData)
 
     const title = formData.get('title')
     const icon = formData.get('icon')
@@ -138,13 +131,10 @@ export const PATCH = async (req: Request, context: {params: {id: string}}) => {
     if (icon) {
 
       const res = await uploadNewFile(icon as File | any, 'status')
-      console.log(res)
 
       changeObj['icon'] = res
 
-      const deleteFile = await deleteCurrentFile(currentStatus.icon, 'status')
-      console.log("ФАЙЛ УДАЛЕН!!!! ", deleteFile)
-
+      const deleteFile = await deleteCurrentFile(currentStatus.icon as string, 'status')
 
     }
 
@@ -157,11 +147,6 @@ export const PATCH = async (req: Request, context: {params: {id: string}}) => {
     }
 
 
-
-    console.log(changeObj)
-
-    console.log('START UPDATE!!!!!!!!')
-
     const updateStatus = await prisma.statuses.update({
       where: {
         id: parseInt(id)
@@ -169,8 +154,6 @@ export const PATCH = async (req: Request, context: {params: {id: string}}) => {
       data: changeObj
     })
 
-
-    console.log(updateStatus)
 
     if (!updateStatus) {
       return NextResponse.json({

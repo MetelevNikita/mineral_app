@@ -24,20 +24,21 @@ import { getSingleMineral } from '@/functions/minerale/getSingleMineral'
 
 
 interface PageProps {
-  params: { id: string };
+  params: { title: string };
 }
 
-const page = ({ params }: { params: { id: string } }) => {
+const page = ({ params }: { params: { title: string } }) => {
 
-const [id, setId] = useState<string | null>(null);
+const [titleMineral, setTitleMineral] = useState<string | null>(null);
 const [currentMinerale, setCurrentMinerale] = useState<any>([])
+
 
 
 
   useEffect(() => {
     const fetchId = async () => {
       const result = await params;
-      setId(result.id);
+      setTitleMineral(result.title);
     };
     fetchId();
   }, [params]);
@@ -46,10 +47,10 @@ const [currentMinerale, setCurrentMinerale] = useState<any>([])
 
   useEffect(() => {
 
-    if (id !== null) {
+    if (titleMineral !== null) {
 
     const getCurrentMineral = async () => {
-        const data = await getSingleMineral(id)
+        const data = await getSingleMineral(titleMineral)
         setCurrentMinerale(data)
     }
 
@@ -57,7 +58,7 @@ const [currentMinerale, setCurrentMinerale] = useState<any>([])
 
     }
 
-  }, [id])
+  }, [titleMineral])
 
 
   if (!currentMinerale.video) {
@@ -91,9 +92,6 @@ const parseDescription = currentMinerale.description.split('\n').map((line: stri
   });
   
 
-
-  
-
   const urlNew = currentMinerale.video
 
 
@@ -116,7 +114,7 @@ const parseDescription = currentMinerale.description.split('\n').map((line: stri
             <Row className=''>
               <Col className='d-flex justify-content-center align-items-center mb-2'>
 
-                <Link href={`${id}/test/`}><MyButton text={'Пройти геоквиз'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>
+                <Link href={`${titleMineral}/test/`}><MyButton text={'Пройти геоквиз'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>
               
               </Col>
             </Row>

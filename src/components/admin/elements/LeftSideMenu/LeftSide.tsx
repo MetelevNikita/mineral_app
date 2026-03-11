@@ -16,7 +16,7 @@ interface LeftSideProps {
     setMenu: any
   },
   contextMenuActive?: {
-    menuActive: {id: number, label: string, value: string} | null,
+    menuActive: {title: string, label: string, value: string} | null,
     setMenuActive: any
   } 
 }

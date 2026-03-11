@@ -67,9 +67,6 @@ export const PATCH  = async (req: Request) => {
 
     // 
 
-    console.log('ВАЙ ИЗ ФАЙЛА ', way)
-
-
 
     const newOBject: any = {}
 
@@ -123,9 +120,6 @@ export const PATCH  = async (req: Request) => {
 
 
     if (!getContacts) {
-
-        console.log('Создаем')
-
         const createContacts = await prisma.contacts.create({
           data: newOBject
         })
@@ -138,8 +132,6 @@ export const PATCH  = async (req: Request) => {
     })
 
     } else {
-        console.log('Обновляем')
-
         const createContacts = await prisma.contacts.update({
           where: {
             id: 1

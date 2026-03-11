@@ -31,9 +31,13 @@ import error from '@/../public/AnswersElement/error.svg'
 import arrow from '@/../public/AnswersElement/open_answers.svg'
 
 
-const page = (params: {params: {id: string}}) => {
+const page = (params: {params: {title: string}}) => {
+
+  const router = useRouter()
+  const dispatch = useAppDispatch()
 
   const [storageData ,setStorageData] = useState<any>(null)
+  const [mineralTitle, setMineralTitle] = useState<string>('')
 
 
 
@@ -50,17 +54,10 @@ const page = (params: {params: {id: string}}) => {
   }, [params])
 
 
-
-  const router = useRouter()
-
-  const dispatch = useAppDispatch()
-  const [mineralId, setMineralId] = useState<string>('')
-
-
   useEffect(() => {
     const fetchMineralId = async () => {
-      const {id} = await params.params
-      setMineralId(id)
+      const { title } = await params.params
+      setMineralTitle(decodeURIComponent(title))
 
       // getAllMinaral
 
@@ -70,7 +67,7 @@ const page = (params: {params: {id: string}}) => {
   }, [params])
 
 
-  const currentMinaral = useAppSelector((state) => state.minerals.minerals).find((item) => item.id === parseInt(mineralId))
+  const currentMinaral = useAppSelector((state) => state.minerals.minerals).find((item) => item.title == mineralTitle)
 
 
 
@@ -183,7 +180,7 @@ const page = (params: {params: {id: string}}) => {
               
 
             <MyButton text={'Начать с начала'} btn={styles.btn} onClick={() => {
-              router.push(`/main/minerale/${mineralId}/test`)
+              router.push(`/main/minerale/${mineralTitle}/test`)
             }} type={'button'} />
 
             <MyButton text={'Главная'} btn={styles.btn} onClick={() => {

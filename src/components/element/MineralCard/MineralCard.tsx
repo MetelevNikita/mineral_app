@@ -1,20 +1,13 @@
 import { FC } from 'react'
 import Image, { StaticImageData } from 'next/image'
-import Link from 'next/link'
 import { motion } from "motion/react"
 
 // style
 
 import styles from './MineralCard.module.css'
 
-// components
 
-import MyButton from '@/components/ui/MyButton/MyButton'
-import Menuelement from '@/components/ui/MenuElement/Menuelement'
 
-//  img
-
-import arrowIcon from '@/../public/button/arrowIcon.svg'
 
 interface MineralCardProps {
     image: string | StaticImageData
@@ -26,7 +19,7 @@ interface MineralCardProps {
 
 const MineralCard: FC<MineralCardProps> = ({id, image, title }) => {
   return (
-    <motion.div className={styles.card_container} whileHover={{scale: 0.95}} whileTap={{scale: 1.05}} onClick={() => {window.location.href = `minerale/${id}`}}>
+    <motion.div className={styles.card_container} whileHover={{scale: 0.95}} whileTap={{scale: 1.05}} onClick={() => {window.location.href = `minerale/${title}`}}>
 
         <div className={styles.card_image_wrapper}>
             <Image className={styles.card_image} src={image} alt={title} width={130} height={150}/>
@@ -38,11 +31,6 @@ const MineralCard: FC<MineralCardProps> = ({id, image, title }) => {
         </div>
 
 
-        {/* <div className={styles.card_btn_wrapper}>
-            <Link href={`minerale/${id}`}><MyButton text={'Посмотреть'} btn={styles.card_btn} onClick={() => {}} type={'button'} imgActive={true}/></Link>
-        </div> */}
-
-      
     </motion.div>
   )
 }

@@ -55,7 +55,6 @@ const page: FC = () => {
     }
 
     const data = await responce.json()
-    console.log(data)
 
     if (data.message === 'Пользователь с такой почтой не найден') {
       setError(true),

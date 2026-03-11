@@ -57,12 +57,12 @@ import { getStatus } from '@/functions/status/getStatus'
 // types
 
 import { CollectionMineralType } from '@/types/type'
-import { UserType } from '@/types/type'
 
 
 
 
-const page = ({ params }: { params: { id: string } }) => {
+const page = ({ params }: { params: { title: string } }) => {
+
 
 
   const router = useRouter()
@@ -70,7 +70,7 @@ const page = ({ params }: { params: { id: string } }) => {
 
 
   const [userId, setUserId] = useState<string>('')
-  const [mineralId, setMineralId] = useState<string>('');
+  const [mineralTitle, setMineralTitle] = useState<string>('');
 
   // 
 
@@ -113,19 +113,24 @@ const page = ({ params }: { params: { id: string } }) => {
   // redux
 
   const currentUser = useAppSelector((state) => state.user.user).find((item) => item.id == parseInt(userId));
-  const currentMineral = useAppSelector((state) => state.minerals.minerals).find((item) => item.id === parseInt(mineralId));
+  const currentMineral = useAppSelector((state) => state.minerals.minerals).find((item) => item.title == mineralTitle);
   const collectionMineral = useAppSelector((state) => state.collection.collection)
   const dispatch = useAppDispatch()
+
+
 
   // get Id Mineral
 
   useEffect(() => {
     const fetchId = async () => {
       const result = await params;
-      setMineralId(result.id);
+      setMineralTitle(decodeURIComponent(result.title));
     };
     fetchId();
   }, [params]);
+
+
+
 
   // get user id
 
@@ -142,6 +147,7 @@ const page = ({ params }: { params: { id: string } }) => {
     dispatch(fetchGetCollectionMineral())
     dispatch(getUsers())
   }, [dispatch])
+
 
   useEffect(() => {
 
@@ -170,7 +176,7 @@ const page = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
 
     if (!currentUser || !currentMineral) return
-    const kvizIsDone = currentUser.mineralPassed.find((mineral: {title: string}) => mineral.title === currentMineral.title)
+    const kvizIsDone = currentUser.mineralPassed.find((mineral: {title: string}) => mineral.title == currentMineral.title)
 
     if (kvizIsDone) {
       setKvizDone(true)
@@ -226,7 +232,7 @@ const page = ({ params }: { params: { id: string } }) => {
 
 
       let newCollcetionMineral: CollectionMineralType | any = collectionMineral.find((item: any) => {
-        return item.title === currentMineral.title
+        return item.title == currentMineral.title
       }) ?? []
 
       console.log('COLLECTION MINERALE!!!! ', newCollcetionMineral)
@@ -281,7 +287,10 @@ const page = ({ params }: { params: { id: string } }) => {
   async function checkMineralColectionReceived (currentMineral: any, currentUser: any) {
     try {
 
-      const mineralRecieved = currentUser?.collection.find((item: {title: string, received: boolean}) => item.title === currentMineral.title)
+      console.log('USER ', currentUser)
+      console.log('MINERAL ', currentMineral)
+
+      const mineralRecieved = currentUser?.collection.find((item: {title: string, received: boolean}) => item.title == currentMineral.title)
       console.log(mineralRecieved)
 
       if (mineralRecieved && mineralRecieved.received === true) {
@@ -508,7 +517,7 @@ const page = ({ params }: { params: { id: string } }) => {
     try {
       setNotWinKviz(false)
       sessionStorage.setItem('answers', encodeURIComponent(JSON.stringify(answers)));
-      router.push(`/main/minerale/${mineralId}/test/result`)
+      router.push(`/main/minerale/${mineralTitle}/test/result`)
 
     } catch (error: Error | unknown) {
         if (error instanceof Error) {

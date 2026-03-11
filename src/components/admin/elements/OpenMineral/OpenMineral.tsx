@@ -70,9 +70,11 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
 
 
 
+
+
   useEffect(() => {
     const getCurrentMienral = async () => {
-      const data = await getSingleMineral(menuActive.id)
+      const data = await getSingleMineral(menuActive.title)
       setMineral(data)
     }
 
@@ -80,7 +82,6 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
   }, [])
 
 
-  console.log('new Form', newForm)
 
 
   const changeMineralHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -95,7 +96,6 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
         }
 
         if (newForm.image !== null) {
-          console.log('image', newForm.image[0])
           formData.append('image',  newForm.image[0])
         }
 
@@ -107,12 +107,7 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
           formData.append('description', newForm.description)
         }
 
-
-        console.log('formData', ...formData)
-
-
-        const res = await pathcMineral(formData, menuActive.id)
-        console.log('res', res)
+        const res = await pathcMineral(formData, menuActive.title)
 
         if (res.data === 'success') {
           alert(res.message)
@@ -121,7 +116,7 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
         }
 
         setMenuActive({
-          id: menuActive.id,
+          title: menuActive.title,
           label: 'Минералы',
           value: 'minerals'
         })
@@ -144,9 +139,9 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
   }
 
 
-  const deleteMineralHandler = async (id: any) => {
+  const deleteMineralHandler = async (title: string) => {
     try {
-      const res = await deleteMineral(id)
+      const res = await deleteMineral(title)
 
       if (res.data === 'success') {
         alert(res.message)
@@ -167,6 +162,9 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
   }
 
 
+  console.log('OPEN MINERALE')
+
+
 
 
 
@@ -184,9 +182,6 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
       )
 
   }
-
-  console.log(menuActive)
-
 
 
   return (
@@ -206,7 +201,7 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
             text={'Удалить'}
             btn={styles.mineral_delete_btn}
             onClick={() => {
-              deleteMineralHandler(menuActive.id)
+              deleteMineralHandler(menuActive.title)
             }}
             type={'button'}
             />
@@ -238,7 +233,7 @@ const OpenMineral: FC<OpenMineralProps> = ({ contextMenu, contextMenuActive, sub
               <MyButton text={'Редактировать Геоквиз'} btn={styles.btn} onClick={() => {
                 confirm('Вы уверены в переходе если вы не сохранили изменения по миенралу они не будут применены') && 
                 setMenuActive({
-                  id: menuActive.id,
+                  title: menuActive.title,
                   label: 'Изменить геоквиз',
                   value: 'change_geokviz'
                 })

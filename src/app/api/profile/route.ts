@@ -34,7 +34,6 @@ export const PUT = async (req: Request) => {
 
 
       let file: any = formData.get('avatar');
-      console.log('Received file:', file);
 
 
 
@@ -49,7 +48,7 @@ export const PUT = async (req: Request) => {
       const fileBuffer = Buffer.from(buffer);
 
       const sharpImage = await sharp(fileBuffer).resize(320, 240).jpeg({ mozjpeg: true, quality: 80 }).toBuffer();
-      console.log(sharpImage)
+
 
       // Создаем директорию, если она не существует
       const uploadDir = path.join(process.cwd(), 'src', 'app', 'uploads', 'avatar');
@@ -58,7 +57,6 @@ export const PUT = async (req: Request) => {
       }
 
       fs.writeFileSync(uploadPath, sharpImage);
-      console.log(`File uploaded successfully to ${filename} в формате JPEG!!!!!`);
       avatarPath = `/api/uploads/avatar/${filename}`;  // Сохраняем путь к файлу
     }
 

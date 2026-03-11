@@ -60,7 +60,7 @@ const page: FC = () => {
       value: 'status'
     }
   ])
-  const [menuActive, setMenuActive] = useState<{id: number, label: string, value: string}>({id: 1, label: 'Минералы', value: 'minerals'})
+  const [menuActive, setMenuActive] = useState<{title: string, label: string, value: string}>({title: '', label: 'Минералы', value: 'minerals'})
 
   // modals
 

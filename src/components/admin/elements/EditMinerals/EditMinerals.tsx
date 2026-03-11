@@ -53,6 +53,7 @@ const EditMinerals: FC<EditMineralsProps> = ({ contextMenu, contextMenuActive })
   useEffect(() => {
     const minerals = async () => {
       const data = await getMineral()
+      console.log('data ', data)
       setMinerals(data)
     }
 
@@ -63,16 +64,18 @@ const EditMinerals: FC<EditMineralsProps> = ({ contextMenu, contextMenuActive })
   const searchMineralData = (searchText === null) ? minerals : minerals.filter((mineral: any) => mineral.title.toLowerCase().includes(searchText.toLowerCase()))
 
 
-  const handleOpenMineral = (id: string) => {
+  const handleOpenMineral = (title: string) => {
     try {
 
-      console.log('ID этого минерала ', id)
-      setMenuActive({id: id, label: 'Изменить минерал', value: 'change_mineral'})
+      setMenuActive({title: title, label: 'Изменить минерал', value: 'change_mineral'})
       
     } catch (error) {
-      console.log(error)
+      console.error(`Ошибка открытия ${title} минерала`)
     }
   }
+
+
+  console.log('EDIT MINERALE')
 
   // 
 
@@ -119,7 +122,7 @@ const EditMinerals: FC<EditMineralsProps> = ({ contextMenu, contextMenuActive })
               {
                 (!minerals || minerals.length === 0) ? <div>Список минералов пуст</div> : searchMineralData.map((mineral: any, index: number): React.ReactNode => {
                   return (
-                    <MineralComponent key={index+1} title={mineral.title} id={mineral.id} open={handleOpenMineral}/>
+                    <MineralComponent key={index+1} title={mineral.title} id={mineral.id} open={() => {handleOpenMineral(mineral.title)}}/>
                   )
                 })
               }

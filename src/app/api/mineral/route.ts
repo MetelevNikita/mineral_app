@@ -110,6 +110,7 @@ export const POST = async (req: Request, res: Response) => {
             writeStream.write(videoBuffer, (err) => {
                 if (err) {
                     console.error('Ошибка записи файла:', err);
+                    return err
                 }
                 console.log('Видео успешно загружено');
             });
@@ -135,8 +136,6 @@ export const POST = async (req: Request, res: Response) => {
             }
         })
 
-
-        console.log(newMineral)
 
 
         if (!newMineral) {

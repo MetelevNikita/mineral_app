@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 // styles
 
@@ -24,9 +25,26 @@ import { deleteCollection } from '@/functions/collection/deleteCollection'
 // icon
 
 import deleteIcon from '@/../public/admin/UI/delete_icon.svg'
+import { label } from 'motion/react-client'
 
-const Collectin: FC = () => {
 
+// 
+
+interface CollectionProps {
+  contextMenuActive: {
+    menuActive: {id: number, label: string, value: string} | any,
+    setMenuActive: any
+  },
+}
+
+// 
+
+const Collectin: FC<CollectionProps> = ({ contextMenuActive }) => {
+
+
+  const router = useRouter()
+
+  const { menuActive, setMenuActive } = contextMenuActive
 
 
   const [collection, setCollection] = useState<any>([])
@@ -45,7 +63,7 @@ const Collectin: FC = () => {
     })()
   }, [update])
 
-  // 
+  //
 
 
   const handleAddMineral = async (e: any) => {
@@ -63,15 +81,23 @@ const Collectin: FC = () => {
     newFormData.append('image', newCollectionMineral.image[0])
 
     const res = await postCollection(newFormData) as any
-    console.log(res)
+
 
     if (res.data === 'sucess') {
       alert(res.message)
+      setUpdate(true)
+      setNewCollectionMineral({
+        title: '',
+        image: ''
+      })
     } else {
       alert(res.message)
     }
 
-    window.location.reload()
+
+
+
+
 
   }
 

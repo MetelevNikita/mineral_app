@@ -41,6 +41,9 @@ interface OpenGeokvizProps {
 const OpenGeokviz: FC<OpenGeokvizProps> = ({ contextMenu, contextMenuActive, submitActive, infoActive }) => {
 
 
+  console.log('EDIT GEOKVIZ')
+
+
   const [questionBlock, setQuestionBlock] = useState<any>()
   const [titleBtn, setTitleBtn] = useState<string>('')
   const {menuActive, setMenuActive} = contextMenuActive ?? {}
@@ -148,7 +151,8 @@ const OpenGeokviz: FC<OpenGeokvizProps> = ({ contextMenu, contextMenuActive, sub
 
 
     const getCurrentMienral = async () => {
-      const data = await getSingleMineral(menuActive.id)
+      const data = await getSingleMineral(menuActive.title)
+      console.log(data)
       console.log(data.question)
 
 
@@ -172,12 +176,15 @@ const OpenGeokviz: FC<OpenGeokvizProps> = ({ contextMenu, contextMenuActive, sub
   const createGeokvizHandler = async (e: any) => {
     try {
 
+
+      console.log('GEOKVIZ ', menuActive.title)
+
       e.preventDefault()
 
       const formData = new FormData()
       formData.append('questions', JSON.stringify(questionBlock))
 
-      const res = await createQuestions(formData, menuActive.id)
+      const res = await createQuestions(formData, menuActive.title)
       if (res.data === 'success') {
         alert(res.message)
       } else {

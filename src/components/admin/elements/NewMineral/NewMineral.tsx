@@ -82,9 +82,7 @@ const NewMineral: FC<NewMineralProps> = ({ contextMenu, contextMenuActive, submi
 
 
     const res = await postMineral(formData)
-    console.log(res)
-
-
+   
     if (res.data === 'sucees') {
       alert(res.message)
       setMenuActive({
@@ -102,6 +100,9 @@ const NewMineral: FC<NewMineralProps> = ({ contextMenu, contextMenuActive, submi
     }
 
   }
+
+
+  console.log('NEW MINERALE')
 
 
 

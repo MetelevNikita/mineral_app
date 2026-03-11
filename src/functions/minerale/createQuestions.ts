@@ -1,7 +1,7 @@
-export const createQuestions = async (geokviz: FormData, id: string | number): Promise<{message: string, data: string, status: number}> => {
+export const createQuestions = async (geokviz: FormData, title: string): Promise<{message: string, data: string, status: number}> => {
   try {
 
-      const responce = await fetch(`/api/mineral/${id}`, {
+      const responce = await fetch(`/api/mineral/${title}`, {
         method: 'POST',
         body: geokviz
       })

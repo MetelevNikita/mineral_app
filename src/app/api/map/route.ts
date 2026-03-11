@@ -19,8 +19,6 @@ const saveImageToUpload = async (image: File, folderName: string) => {
 
       const name = image.name.split(".").slice(0, -1).join(".") +  "_" + Date.now() + "." + image.name.split(".").slice(-1)[0]
 
-      console.log(name)
-
       // 
       const uploadDir = path.join(process.cwd(), "src", "app", "uploads", folderName)
 
@@ -66,7 +64,6 @@ export const GET = async () => {
       })
     }
 
-    console.log('done')
 
     return NextResponse.json(
       mineralMap
@@ -116,7 +113,7 @@ export const POST = async (req: Request) => {
     // 
 
     const urlImage = await saveImageToUpload(image, "mineralMap")
-    console.log(urlImage)
+
 
     const newMineralMap = await prisma.mineralMap.create({
       data: {

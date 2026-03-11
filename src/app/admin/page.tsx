@@ -75,21 +75,11 @@ const page = () => {
   return (
 
 
-
-
-
         <Row className='h-100 d-flex flex-column justify-content-center align-items-center'>
 
-        
-        
           <div className={styles.title_admin_container}>
             <div className={styles.title_admin}>Geoмузей в кармане V1.0</div>
           </div>
-
-
-
-
-
 
               <Col md={4} className='d-flex flex-column justify-content-center align-items-center'>
                   <div className={styles.auth_admin_container}>
