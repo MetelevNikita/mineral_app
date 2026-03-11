@@ -38,7 +38,7 @@
 
   /*  */
 
-  width: 72px;
+  width: 172px;
   height: 22px;
   flex-shrink: 0;
 
@@ -46,9 +46,12 @@
 
   color: #FFF;
   font-family: "Open Sans";
-  font-size: 15px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 700;
   line-height: 125%; /* 18.75px */
   text-transform: uppercase;
+
+  display: flex;
+  align-items: center;
 }
