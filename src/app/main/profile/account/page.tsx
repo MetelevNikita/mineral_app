@@ -229,7 +229,7 @@ const page: FC = () => {
                     onClick={() => {
                         deleteUser(userId || '')
                         confirm("Пользователь успешно удален. Вы будете перенаправлены на страницу входа.");
-                        sessionStorage.removeItem('userID'); 
+                        localStorage.removeItem('userID'); 
                         window.location.href = '/auth/login'; 
                     }}>
                     <Image src={deleteAccount} width={18} height={20} alt={'empty_avatar'}/>

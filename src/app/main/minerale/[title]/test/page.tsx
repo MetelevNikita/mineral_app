@@ -135,7 +135,7 @@ const page = ({ params }: { params: { title: string } }) => {
   // get user id
 
   useEffect(() => {
-    const userId = sessionStorage.getItem('userID');
+    const userId = localStorage.getItem('userID');
     if (userId) {
       setUserId(userId);
     }
@@ -624,7 +624,6 @@ const page = ({ params }: { params: { title: string } }) => {
               onClickLink={async () => {
                 await CloseNotWinModal(answers)
               }}
-              imgClose={IconClose}
               onClickClose={() => {router.push(`/main/minerale/`)}}
               text={`Геоквиз не пройден`}
               textBtn={'Подробнее'}
