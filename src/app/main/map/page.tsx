@@ -57,7 +57,7 @@ const page: FC = () => {
   const mapBlockArr: mapBlockArrType[] = [
     {
       id: 1,
-      section: 'section A',
+      section: 'A',
       img: mapIcon,
       coordinate: {
         top: 0,
@@ -67,7 +67,7 @@ const page: FC = () => {
 
     {
       id: 2,
-      section: 'section K',
+      section: 'K',
       img: mapIcon,
       coordinate: {
         top: 0,
@@ -77,7 +77,7 @@ const page: FC = () => {
 
     {
       id: 3,
-      section: 'section B',
+      section: 'B',
       img: mapIcon,
       coordinate: {
         top: 0,
@@ -87,7 +87,7 @@ const page: FC = () => {
 
     {
       id: 4,
-      section: 'section C',
+      section: 'C',
       img: mapIcon,
       coordinate: {
         top: 0,
@@ -98,7 +98,7 @@ const page: FC = () => {
 
     {
       id: 5,
-      section: 'section E',
+      section: 'E',
       img: mapIcon,
       coordinate: {
         top: 90,
@@ -108,7 +108,7 @@ const page: FC = () => {
 
     {
       id: 6,
-      section: 'section F',
+      section: 'F',
       img: mapIcon,
       coordinate: {
         top: 90,
@@ -118,7 +118,7 @@ const page: FC = () => {
 
     {
       id: 7,
-      section: 'section G',
+      section: 'G',
       img: mapIcon,
       coordinate: {
         top: 90,
@@ -129,7 +129,7 @@ const page: FC = () => {
 
     {
       id: 8,
-      section: 'section Q',
+      section: 'Q',
       img: mapIcon,
       coordinate: {
         top: 170,
@@ -140,7 +140,7 @@ const page: FC = () => {
 
     {
       id: 9,
-      section: 'section Y',
+      section: 'Y',
       img: mapIcon,
       coordinate: {
         top: 170,
@@ -150,11 +150,39 @@ const page: FC = () => {
 
     {
       id: 10,
-      section: 'section W',
+      section: 'W',
       img: mapIcon,
       coordinate: {
         top: 170,
         left: 165
+      }
+    },
+    {
+      id: 11,
+      section: 'P',
+      img: mapIcon,
+      coordinate: {
+        top: 370,
+        left: 165
+      }
+    },
+    {
+      id: 12,
+      section: 'L',
+      img: mapIcon,
+      coordinate: {
+        top: 370,
+        left: 215
+      }
+    },
+
+    {
+      id: 13,
+      section: 'M',
+      img: mapIcon,
+      coordinate: {
+        top: 350,
+        left: 265
       }
     },
   ]

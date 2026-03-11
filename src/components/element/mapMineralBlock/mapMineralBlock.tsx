@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { motion } from "motion/react"
 
 // styles
 
@@ -22,7 +23,7 @@ const MapMineralBlock: FC<MapMineralBlockProps> = ({id, title, icon, onClick }) 
 
   return (
 
-    <div className={styles.mapMineralBlock_container} onClick={onClick}>
+    <motion.div whileHover={{scale: 1.05, backgroundColor: '#ffbc41', border: 0}} className={styles.mapMineralBlock_container} onClick={onClick}>
 
       <div className={styles.mapMineralBlock_image_contianer}>
             <Image src={icon} width={37} height={37} alt='icon_mineral'/>
@@ -30,7 +31,7 @@ const MapMineralBlock: FC<MapMineralBlockProps> = ({id, title, icon, onClick }) 
 
         <span className={styles.mapMineralBlock_title}>{title}</span>
   
-    </div>
+    </motion.div>
   )
 }
 

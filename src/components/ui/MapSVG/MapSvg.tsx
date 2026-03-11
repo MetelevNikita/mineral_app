@@ -72,6 +72,9 @@ const MapSvg: FC<MapSvgProps> = ({ iconArr, current }) => {
 
     {
       (iconArr.length > 1) && iconArr.map((item: mapBlockArrType, index: number): React.ReactNode => {
+
+        const time = index / 5
+
         return (
  
            <foreignObject key={index + 1} x={item.coordinate?.left} y={item.coordinate?.top} width={45} height={45} onClick={() => {
@@ -80,7 +83,7 @@ const MapSvg: FC<MapSvgProps> = ({ iconArr, current }) => {
               setCurrentIcon(item)
             }, 300)
             }}>
-              <motion.div whileTap={{scale: 0.9}} onClick={(e) => {console.log(e.target)}}>
+              <motion.div initial={{scale: 0}} animate={{scale: 1}} transition={{duration: 0.5+time}} whileTap={{scale: 0.9}} onClick={(e) => {}}>
                 <Image src={item.img} alt={'icon'}/>
               </motion.div>
             </foreignObject>

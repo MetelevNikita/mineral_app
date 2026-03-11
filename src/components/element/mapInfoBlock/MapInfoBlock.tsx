@@ -1,6 +1,6 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { StaticImageData } from 'next/image'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 
 // style
@@ -22,66 +22,24 @@ import galit from '@/../public/mineral_icon/Galit.svg'
 import kinovar from '@/../public/mineral_icon/kinovar.svg'
 import yashma from '@/../public/mineral_icon/Yashma.svg'
 
+// redux 
+
+import { useAppDispatch, useAppSelector } from '@/types/hooks'
+import { fetchGetAsyncMineral } from '@/functions/reduxAsync/mineral/fetchGetAsyncMineral'
+
 
 // type
 
 import { mineralMapDataType } from '@/types/type'
-import MapMineralCurrent from '../mapMineralCurrent/MapMineralCurrent'
-
-
 
 // 
 
 
-const mineralData: mineralMapDataType[] = [
-      {
-        id: 1,
-        section: 'A',
-        title: 'Кальцит',
-        description: 'Кальцит – один из самых распространённых в природе минералов. Он составляет примерно 4% массы земнойкоры и встречается во всехтипах горных пород.',
-        img: kalchit
-      },
 
-      {
-        id: 2,
-        section: 'A',
-        title: 'Графит',
-        description: 'Для того, чтобы получить из графита алмаз нужно создать специальные условия,аналогичные тем, что существуютв очень глубоко недрах Земли: высокое давление и температурувыше 1500 градусов.',
-        img: grafit
-      },
 
-      {
-        id: 3,
-        section: 'B',
-        title: 'Флюорит',
-        description: 'Флюорит – минерал, которыйвас удивит! Он отец флюоресценции – явления, при котором объект начинает светиться от ультрафиолета – невидимогодля человеческого глаза света.',
-        img: fliuorit
-      },
 
-      {
-        id: 4,
-        section: 'B',
-        title: 'Галит',
-        description: 'Это минерал, который вы используете чаще всего – безнего еда была бы невкусной. Догадались? Это поваренная соль или галит',
-        img: galit
-      },
 
-      {
-        id: 4,
-        section: 'A',
-        title: 'Киноварь',
-        description: 'Красивая и опасная! Киноварь – минерал императоров, основа красок и источник ртути!',
-        img: kinovar
-      },
 
-      {
-        id: 4,
-        title: 'Яшма',
-        section: 'B',
-        description: 'Яшма – пестрая и плотнаягорная порода, которая состоитиз кремнезема – кремния и кислорода. Но почему она такая разнообразная по оттенками и узорам? Из-за огромного количества примесей – иногдаэто почти 15%.',
-        img: yashma
-      }
-]
 
 
 
@@ -98,19 +56,97 @@ interface MapInfoBlockProps {
 const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, close  }) => {
 
 
+
+  const dispatch = useAppDispatch()
+
+
+  useEffect(() => {
+    dispatch(fetchGetAsyncMineral())
+  }, [])
+
+
+  const minerals = useAppSelector(state => state.minerals.minerals)
+  const mineralFromSection = minerals.map((item: any) => {
+    if (item.title == "Мусковит" || "Лабрадор") {
+      return {
+        ...item,
+        section: 'A'
+      }
+    } else if (item.title == "Гадолинит" || "Cидерит") {
+      return {
+        ...item,
+        section: 'K'
+      }
+    } else if (item.title == "Бастнезит") {
+      return {
+        ...item,
+        section: 'B'
+      }
+    } else if (item.title == "Гипс" || "Флюрит") {
+      return {
+        ...item,
+        section: 'C'
+      }
+    } else if (item.title == "Мусковит") {
+      return {
+        ...item,
+        section: 'F'
+      }
+    } else if (item.title == "Киноварь" || "Гематит" || "Касситерит" || "О минералах") {
+      return {
+        ...item,
+        section: 'E'
+      }
+    } else if (item.title == "Нефть" || "Уголь" || "Горные породы" || "Флюрит" || "Боксит" || "Псиломелан" || "Платина") {
+      return {
+        ...item,
+        section: 'G'
+      }
+    } else if (item.title == "Апатит" || "Гипс" || "Галит" || "Кальцит" || "Графит" || "Псиломелан") {
+      return {
+        ...item,
+        section: 'Q'
+      }
+    } else if (item.title == "Апатит" || "Кальцит" || "Касситерит" || "Алмаз" || "Лопарит") {
+      return {
+        ...item,
+        section: 'W'
+      }
+    } else if (item.title == "О Минералах" || "Псевдоморфозы" || "Кварц" || "Кальцит" || "Цвет" || "Твердость") {
+      return {
+        ...item,
+        section: 'P'
+      }
+    } else if (item.title == "Лопарит" || "Малахит" || "Яшма" || "Мусковит" || "Горные породы") {
+      return {
+        ...item,
+        section: 'L'
+      }
+    } else {
+      return item
+    }
+  })
+
+
+  const router = useRouter()
+
+  // 
+
   const [currentMineral, setCurrentMineral] = useState<any | null>(null)
-  const [currentReduxMneralId, setCurrentReduxMneralId] = useState<number | null>(null)
   const {currentIcon, setCurrentIcon} = close
 
-  const currentSectionData = mineralData.filter((item) => {
-      const numSection = section.split(' ')[1]
-      if (item.section === numSection) {
+  const currentSectionData = mineralFromSection.filter((item) => {
+
+
+      if (item.section === section) {
           return item
       }
   })
 
 
-  console.log('current mineral ', currentMineral)
+
+
+
 
 
   return (
@@ -126,19 +162,19 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
                   <div className={styles.mineral_button_wrapper}>
                       {
 
-                        (currentMineral) ?
-
-                        (
-                        <MapMineralCurrent id={{currentReduxMneralId, setCurrentReduxMneralId}} title={currentMineral.title} description={currentMineral.description} image={currentMineral.img} />
-                        )
-                        
-                        :
-                        
-                        (
+                      
                           currentSectionData.map((item, index) => {
-                            return <MapMineralBlock id={item.id} onClick={() => {setCurrentMineral(item)}} key={index+1} title={item.title} icon={item.img}/>
+                            return <MapMineralBlock
+                              id={item.id}
+                              onClick={() => {
+                                router.push(`/main/minerale/${item.title}`)
+                              }}
+                              key={index+1}
+                              title={item.title}
+                              icon={item.image}
+                            />
                           })
-                        )
+                        
                         
                       }
                       
