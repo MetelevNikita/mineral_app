@@ -4,6 +4,7 @@ import { FC, ReactNode, useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'motion/react'
+import { useRouter } from 'next/navigation'
 
 // styles
 
@@ -46,6 +47,7 @@ import Loading from '@/components/element/Loading/Loading'
 
 const page: FC = () => {
 
+  const router = useRouter()
 
   const [userId, setUserId] = useState<string>('');
 
@@ -166,7 +168,7 @@ const page: FC = () => {
 
                             return (
                               <div key={index+1} className={styles.collection_item_container}>
-                                      <motion.div className={styles.collection_item_image_box} style={{filter: 'grayscale(100%)'}} animate={ item?.received ? {scale: [1, 1.2, 1], filter: ['grayscale(100%)', 'grayscale(0)']} : { filter: item?.received ? 'grayscale(0)' : 'grayscale(100%)' }} transition={{duration: 2}}>
+                                      <motion.div onClick={() => {router.push(`/main/minerale/${item.title}`)}} className={styles.collection_item_image_box} style={{filter: 'grayscale(100%)'}} animate={ item?.received ? {scale: [1, 1.2, 1], filter: ['grayscale(100%)', 'grayscale(0)']} : { filter: item?.received ? 'grayscale(0)' : 'grayscale(100%)' }} transition={{duration: 1}}>
                                         <Image src={item?.image} width={60} height={45} alt={'collection_img'}/>
                                         <span className={styles.collection_item_title}>{item.title}</span>
                                         </motion.div>

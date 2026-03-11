@@ -25,7 +25,6 @@ import ModalResult from '@/components/modals/ModalResult/ModalResult'
 
 // image
 
-import emptyAvatar from '@/../public/account/emptyAvatar.svg'
 import editAvatar from '@/../public/account/edit_avatar_icon.svg'
 import deleteAccount from '@/../public/account/deleteAccount.svg'
 
@@ -37,7 +36,7 @@ import { getUsers } from '@/functions/reduxAsync/users/getUsers'
 
 // types
 
-import { UserType, ProfileType } from '@/types/type'
+import { UserType } from '@/types/type'
 
 // functions
 
@@ -81,12 +80,13 @@ const page: FC = () => {
 
     const currentUser = useAppSelector(state => state.user.user).filter((user: UserType) => user.id === parseInt(userId));
 
-
-
-
     useEffect(() => {
         if (!profile.avatar) return;
         const objectUrl = URL.createObjectURL(profile.avatar);
+
+        console.log(objectUrl)
+
+
         setPreviewAvatar(objectUrl);
         return () => URL.revokeObjectURL(objectUrl);
 
@@ -106,17 +106,10 @@ const page: FC = () => {
         );
     }
 
-
-
-const userProfile = currentUser[0].profile || {}
-
-
-
+    const userProfile = currentUser[0].profile || {}
 
 
   return (
-
-
     <Container>
 
 

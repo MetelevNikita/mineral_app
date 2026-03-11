@@ -56,7 +56,6 @@ const Avatar: FC<AvatarProps> = ({ src, previewSrc, alt }) => {
         width: '100%',
         height: '100%',
         objectFit: 'cover' as const,
-        transform: `rotate(${rotation}deg)`,
         transition: 'transform 0.3s ease'
       }
     }

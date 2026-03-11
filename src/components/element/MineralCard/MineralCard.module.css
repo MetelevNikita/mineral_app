@@ -34,6 +34,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
 
 .card_image {
@@ -45,6 +46,10 @@
 
 .card_title_wrapper {
     width: 130px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card_title {
