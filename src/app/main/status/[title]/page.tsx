@@ -119,9 +119,7 @@ const page: FC<{ params: { title: string } }> =  ({ params }) => {
 
         <div className={styles.btn_wrapper}>
 
-          <Link href={'/main/minerale'}><MyButton text={'Продолжить'} btn={styles.btn} onClick={() => {
-            console.log('Button clicked');
-          }} type={'button'} /></Link>
+          <Link href={'/main/minerale'}><MyButton text={'Продолжить'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>
 
 
         </div>
