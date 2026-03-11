@@ -48,7 +48,7 @@ const page: FC = () => {
   useEffect(() => {
 
 
-    const userId = sessionStorage.getItem('userID')
+    const userId = localStorage.getItem('userID')
     if (userId !== null) {
       setUserId(userId)
     }

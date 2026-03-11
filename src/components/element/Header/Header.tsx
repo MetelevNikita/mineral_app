@@ -39,13 +39,10 @@ const [isOn, setIsOn] = useState<boolean>(false)
 const {topMenuOn, setTopMenuOn} = useTopMenuContext()
 
 
-console.log('Топ меню ', topMenuOn)
-
-
 const dispatch = useAppDispatch()
 
 useEffect(() => {
-    const userId = sessionStorage.getItem('userID')
+    const userId = localStorage.getItem('userID')
 
     if (userId !== null) {
         setId(userId)

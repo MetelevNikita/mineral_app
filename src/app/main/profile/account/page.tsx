@@ -1,9 +1,8 @@
 'use client'
 
-import { FC, ReactNode, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Suspense } from 'react'
 
 // styles
 
@@ -70,7 +69,7 @@ const page: FC = () => {
     const dispatch = useAppDispatch()
     
     useEffect(() => {
-    const userID = sessionStorage.getItem('userID')
+    const userID = localStorage.getItem('userID')
 
     if (userID !== null) {
         setUserId(userID)

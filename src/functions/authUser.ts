@@ -23,7 +23,7 @@ export const authUser = async (user: any) => {
     }
 
     const data = await responce.json()
-    sessionStorage.setItem('userID', data.userId)
+    localStorage.setItem('userID', data.userId)
     return {message: data.message, auth: true}
 
         
