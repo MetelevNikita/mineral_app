@@ -25,28 +25,8 @@ const Avatar: FC<AvatarProps> = ({ src, previewSrc, alt }) => {
     if (!imageUrl) return
 
     const img = new window.Image()
-
-    img.onload = () => {
-      const width = img.naturalWidth
-      const height = img.naturalHeight
-
-
-      console.log(width)
-      console.log(height)
-      
-      // Определяем ориентацию по соотношению сторон
-      const isVertical = width < height
-      console.log(isVertical)
-      
-      // Для вертикальных фото поворачиваем на 90 градусов
-      if (isVertical) {
-        setRotation(0)
-      } else {
-        setRotation(0)
-      }
-    }
-
     img.src = imageUrl
+    
   }, [src, previewSrc])
 
 

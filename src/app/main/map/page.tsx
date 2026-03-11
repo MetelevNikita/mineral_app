@@ -188,9 +188,6 @@ const page: FC = () => {
   ]
 
 
-
-
-
   const [currentIcon, setCurrentIcon] = useState<mapBlockArrType | null>(null)
 
 
@@ -204,10 +201,6 @@ const page: FC = () => {
         return item
     }
   })
-
-  console.log(currentIcon)
-
-
 
   return (
 

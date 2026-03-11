@@ -84,9 +84,6 @@ const page: FC = () => {
         if (!profile.avatar) return;
         const objectUrl = URL.createObjectURL(profile.avatar);
 
-        console.log(objectUrl)
-
-
         setPreviewAvatar(objectUrl);
         return () => URL.revokeObjectURL(objectUrl);
 
@@ -201,10 +198,12 @@ const page: FC = () => {
 
                  <Col className='d-flex justify-content-center align-items-center'>
                     <MyButton text={'Сохранить'} btn={styles.btn} onClick={async () => {
-                    await updateProfile(profile)
+                    const update = await updateProfile(profile)
+                    if (!update.success) {
+                        alert(update.message)
+                        return
+                    }
                     setIsUpdate(true)
-
-
                     }} type={'button'} />
                     <Link href={'/main/profile'} style={{textDecoration: 'none'}}><MyButton text={'Назад'} btn={styles.btn} onClick={() => {''}} type={'button'}/></Link>
                 </Col>

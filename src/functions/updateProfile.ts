@@ -3,8 +3,13 @@ export const updateProfile = async (data: any) => {
     try {
 
 
-        const id = sessionStorage.getItem('userID')
-        if (!id) return
+        const id = localStorage.getItem('userID')
+        if (!id) {
+            return {
+                success: false,
+                message: `Не найден id пользователя`
+            }
+        }
 
         const formData = new FormData()
         formData.append('userId', id)
@@ -29,12 +34,18 @@ export const updateProfile = async (data: any) => {
 
 
         const res = await responce.json();
-        return res
+        return {
+            success: true,
+            message: `Данные пользователя обновлены`
+        }
 
 
         
     } catch (error) {
-        console.error('Error updating profile:', error);
-        throw error;
+        console.error('Ошибка обновления пользователя ', error);
+        return {
+            success: true,
+            message: `Ошибка обновления пользователя ${error}`
+        }
     }
 }
