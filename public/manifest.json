@@ -2,6 +2,7 @@
   "name": "Геоквиз",
   "short_name": "Геоквиз",
   "description": "Цифровой видеогид",
+  "scope": "/",
   "start_url": "/",
   "id": "/",
   "lang": "ru",
