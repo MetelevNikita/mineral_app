@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server'
 import { NextRequest } from 'next/server'
 
+// 
+
+
+import { withPWA } from 'next-pwa-pack'
+
 
 
 // var token
@@ -13,7 +18,7 @@ import {verifyToken} from './lib/varifyToken'
 
 
 
-export function middleware (request: NextRequest) {
+function middleware (request: NextRequest) {
     const url = request.nextUrl
     const pathname = url.pathname 
 
@@ -136,7 +141,11 @@ export function middleware (request: NextRequest) {
 
 
 
-
+export default withPWA(middleware, {
+  revalidationSecret: process.env.REVALIDATION_SECRET!,
+  sseEndpoint: "/api/pwa/cache-events",
+  webhookPath: "/api/pwa/revalidate",
+});
 
 
 
