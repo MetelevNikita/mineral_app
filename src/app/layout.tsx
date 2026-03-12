@@ -1,5 +1,5 @@
 
-import type { Metadata, Viewport } from "next";
+import { PWAProvider } from "next-pwa-pack";
 import './globals.css'
 
 // fonts
@@ -11,9 +11,7 @@ import { Open_Sans, Inter } from "next/font/google";
 import { Container } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// components
 
-import InstalPrompts from "./InstalPrompts"
 
 // fonts
 
@@ -36,8 +34,8 @@ import ReduxProvider from "@/Redux/Provider";
 // 
 
 export const metadata = {
-  title: "GEOKVIZ APP START WEB",
-  description: "NEW APP from GEOKVIZ",
+  title: 'Геоквиз',
+  description: "Цифровой видеогид",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -46,7 +44,7 @@ export const metadata = {
   },
   icons: {
     apple: "/apple-touch-icon.png",
-    icon: "/icon.png",
+    icon: "/icons/icon-32x32.png",
   }
 };
 
@@ -63,11 +61,13 @@ export default function RootLayout({
           <link rel="manifest" href="/manifest.json" />
         </head>
         <body className={`${OpenSans.className}, ${InterFont.className}`}>
-          <Container>
-            <ReduxProvider>
-                {children}
-            </ReduxProvider>
-          </Container>
+          <PWAProvider>
+              <Container>
+                <ReduxProvider>
+                    {children}
+                </ReduxProvider>
+              </Container>
+          </PWAProvider>
       </body>
       
     </html>

@@ -1,27 +1,38 @@
 {
-  "name": "GEOKVIZ APP",
-  "short_name": "GEOKVIZ APP",
-  "theme_color": "#8936FF",
-  "background_color": "#333333",
+  "name": "Геоквиз",
+  "short_name": "Геоквиз",
+  "description": "Цифровой видеогид",
   "start_url": "/",
-  "id": "geokvizApp",
+  "id": "/",
+  "lang": "ru",
   "display": "standalone",
-  "description": "....",
-  "scope": "/",
+  "background_color": "#000000",
+  "theme_color": "#8936FF",
   "orientation": "portrait",
   "icons": [
     {
-      "purpose": "maskable",
-      "sizes": "192x192",
-      "src": "/icon.png",
+      "src": "/icons/icon-16x16.png",
+      "sizes": "16x16",
       "type": "image/png"
     },
     {
-      "purpose": "any",
-      "sizes": "512x512",
-      "src": "/icon-512x512.png",
+      "src": "/icons/icon-32x32.png",
+      "sizes": "32x32",
       "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ]
-
+  ],
+  "scope": "/",
+  "prefer_related_applications": false
 }
