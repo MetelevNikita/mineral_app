@@ -37,6 +37,7 @@ export const metadata = {
   title: 'Геоквиз',
   description: "Цифровой видеогид",
   manifest: "/manifest.json",
+
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
