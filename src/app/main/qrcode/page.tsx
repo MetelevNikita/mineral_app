@@ -3,6 +3,7 @@
 
 import { FC, useEffect, useState, useRef } from 'react'
 import { Container, Col, Row } from 'react-bootstrap'
+import { useRouter } from 'next/navigation';
 import jsQR from "jsqr";
 
 // components
@@ -19,15 +20,13 @@ import styles from './page.module.css'
 
 const page: FC = () => {
 
-
-  const [modal, setModal] = useState(false)
-  const [qrCode, setQrCode] = useState<string | null>(null)
+  const router = useRouter()
   const cameraRef = useRef<HTMLVideoElement | null>(null)
 
 
   useEffect(() => {
 
-    const startScan = async () => {
+        const startScan = async () => {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
           throw new Error('getUserMedia is not supported');
         }
@@ -63,8 +62,7 @@ const page: FC = () => {
 
                   if (qrcode) {
                     if (qrcode.data) {
-                      setQrCode(qrcode.data)
-                      setModal(true)
+                      router.push(qrcode.data)
                     } else {
                       requestAnimationFrame(scan)
                       return
@@ -84,59 +82,9 @@ const page: FC = () => {
     }, [])
 
 
-
-
-
-    const separateQrCodeData = (data: string): any => {
-      try {
-
-
-        if (!data) {
-          return []
-        }
-
-
-        const obj = {
-          link: '',
-          title: ''
-        }
-        
-        for (const item of data.split(' ')) {
-          if (!item.includes('https://')) {
-            obj.title += `${item} `
-          } else {
-            obj.link = item
-          }    
-        }
-        
-        return obj
-
-      } catch (error) {
-        console.error('Error splitting data:', error)
-        return []
-      }
-    }
-
-    const newText = separateQrCodeData(qrCode as string)
-
-
   return (
 
     <Container>
-
-
-      {
-        modal && (
-          <ModalText title={'QR code отсканирован'} text={`Вы хотите перейти на страницу с квизом - ${newText.title}`} btnText={'Перейти'}
-          onClickClose={() => {
-            setModal(false)
-          }} onClickBtn={() => {
-            window.location.href = newText.link
-          }} />
-        )
-      }
-
-
 
         <Row>
             <Col className='d-flex justify-content-center align-items-center mb-3'>

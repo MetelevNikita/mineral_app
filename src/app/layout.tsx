@@ -62,7 +62,7 @@ export default function RootLayout({
           <link rel="manifest" href="/manifest.json" />
         </head>
         <body className={`${OpenSans.className}, ${InterFont.className}`}>
-          <PWAProvider>
+          <PWAProvider devMode>
               <Container>
                 <ReduxProvider>
                     {children}

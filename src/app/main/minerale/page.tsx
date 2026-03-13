@@ -36,6 +36,8 @@ import { fetchUsersChangeFirstVisible } from '@/functions/reduxAsync/users/fetch
 
 const page: FC = () => {
 
+
+
   const [userId, setUserId] = useState<string | null>(null)
   const [modalVisible, setModalVisible] = useState<boolean>(false)
 
@@ -60,11 +62,16 @@ const page: FC = () => {
   }, [dispatch])
 
 
+    console.log(userId)
+
+
     const currentUsers = users.filter((item: any) => {
     if (item.id == userId) {
       return item
     }
   })[0]
+
+  console.log(currentUsers)
 
 
 
@@ -116,6 +123,8 @@ const page: FC = () => {
                       
                       await dispatch(fetchUsersChangeFirstVisible({userId, visible: true}))
                       await dispatch(getUsers())
+
+                      console.log('CLOSE')
                   }}
                   onClickBtn={async () => {
                     
@@ -123,6 +132,7 @@ const page: FC = () => {
 
                     await dispatch(fetchUsersChangeFirstVisible({userId, visible: true}))
                     await dispatch(getUsers())
+                    console.log('CLOSE')
 
                   }} />
               )
