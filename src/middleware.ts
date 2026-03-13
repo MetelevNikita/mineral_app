@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server'
 import { withPWA } from 'next-pwa-pack'
 import { verifyToken } from './lib/varifyToken'
 
-function middleware(request: NextRequest) {
+export default function middleware(request: NextRequest) {
     const url = request.nextUrl
     const pathname = url.pathname 
 
@@ -13,14 +13,6 @@ function middleware(request: NextRequest) {
         return NextResponse.next()
     }
 
-    // ===== СПЕЦИАЛЬНО ДЛЯ PWA =====
-    // Пропускаем SSE соединение и webhook без проверки токена
-    // Это критически важно для работы PWA
-    if (pathname === '/api/pwa/cache-events' || 
-        pathname === '/api/pwa/revalidate') {
-        console.log('✅ PWA endpoint - пропускаем без проверки:', pathname)
-        return NextResponse.next()
-    }
 
     const publicWeb = ['/auth/login', '/auth/registration', '/admin']
     const publicApi = ['/api/auth', '/api/registration', '/api/repeat', '/api/reset', '/api/users']
@@ -121,13 +113,6 @@ function middleware(request: NextRequest) {
     console.log('ℹ️ Маршрут по умолчанию, пропускаем:', pathname)
     return NextResponse.next()
 }
-
-// Оборачиваем middleware в PWA функционал
-export default withPWA(middleware, {
-  revalidationSecret: process.env.REVALIDATION_SECRET!,
-  sseEndpoint: "/api/pwa/cache-events",
-  webhookPath: "/api/pwa/revalidate",
-})
 
 // Конфигурация matcher
 export const config = {

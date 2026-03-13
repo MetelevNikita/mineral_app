@@ -5,8 +5,7 @@ const TTL = 10 * 60 * 1000; // 10 minutes
 const OFFLINE_URL = "/offline.html";
 
 let cacheDisabled = false;
-// Array of routes/patterns that are not cached
-const CACHE_EXCLUDE = []; // ["/api/", "/admin", "/some-dynamic-route"]
+const CACHE_EXCLUDE = ["/api/", "/admin", "/some-dynamic-route"]
 
 function shouldCache(request) {
   return !CACHE_EXCLUDE.some((path) => request.url.includes(path));
@@ -57,40 +56,6 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return;
   if (cacheDisabled || !shouldCache(request)) {
     return;
-  }
-
-  // HTML pages
-  if (isHTML(request)) {
-    event.respondWith(
-      caches.open(CACHE_NAME).then(async (cache) => {
-        const cached = await cache.match(request);
-        const cachedTime = await cache.match(request.url + ":ts");
-        let age = 0;
-        if (cached && cachedTime) {
-          age = Date.now() - (await cachedTime.json()).ts;
-          if (age < TTL) {
-            // Cache is fresh — return it
-            return cached;
-          }
-        }
-        // Cache is stale or missing — try fetch
-        try {
-          const response = await fetch(request);
-          cache.put(request, response.clone());
-          cache.put(
-            request.url + ":ts",
-            new Response(JSON.stringify({ ts: Date.now() }))
-          );
-          return response;
-        } catch (err) {
-          // If there is any cache — return it!
-          if (cached) return cached;
-          // If there is no cache — offline.html
-          const fallback = await caches.match(OFFLINE_URL);
-          return fallback || new Response("Offline", { status: 503 });
-        }
-      })
-    );
   }
 
   // Static assets
