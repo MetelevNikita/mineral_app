@@ -100,14 +100,26 @@ const page: FC = () => {
                   ?
                   (
                     <motion.div
-                      initial={{filter: 'grayscale(100%)', scale: 0.9}}
-                      animate={{filter: 'grayscale(0%)', scale: 1}}
-                      transition={{duration: 0.4, scale: { type: "spring", visualDuration: 0.6, bounce: 0.5 }}}><AchievementsBlock 
+                      initial={{ scale: 1, filter: 'grayscale(100%)', rotate: 0}}
+                      animate={{scale: [1, 1.1, 1], filter: 'grayscale(0%)', rotate: [0, -4, 4, -1, 1, 0]}}
+                      transition={{
+                          duration: 0.8,
+                          scale: {visualDuration: 0.6, bounce: 0.2, delay: 0.1 },
+                          filter: { duration: 0.8, delay: 0.1 },
+                          rotate: { 
+                            duration: 0.6, 
+                            delay: 0.1, // Тряска начинается после появления
+                            ease: "easeInOut"
+                          }
+                        }}
+                    >
+                      <AchievementsBlock 
                         img={status.icon}
                         title={status.title}
                         num={index + 1}
                         activeAchievements={{filter: 'grayscale(0%)'}}
-                    /></motion.div>
+                      />
+                  </motion.div>
                   )
                   :
                   (

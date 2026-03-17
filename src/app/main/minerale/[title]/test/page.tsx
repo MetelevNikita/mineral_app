@@ -85,6 +85,7 @@ const page = ({ params }: { params: { title: string } }) => {
 
   const [questionId, setQuestioId]= useState<number>(0)
   const [questionNum, setQuestioNum] = useState<number>(1)
+  let [progressBar, setProgressBar] = useState<number>(0)
 
   // 
 
@@ -359,7 +360,6 @@ const page = ({ params }: { params: { title: string } }) => {
       return
     }
   }
-
 
 
   // STATUS
@@ -684,7 +684,7 @@ const page = ({ params }: { params: { title: string } }) => {
                   <div className={styles.question_top_title}>{currentMineral.title}</div>
 
                   <div className={styles.question_number}>Вопрос {questionNum}</div>
-                  <progress className={styles.question_progress} value={questionNum} max={4}></progress>
+                  <progress className={styles.question_progress} value={progressBar} max={4}></progress>
 
                   <div className={styles.question_top_question}>{currentMineral.question[questionId].title}</div>
 
@@ -715,7 +715,10 @@ const page = ({ params }: { params: { title: string } }) => {
                 }
 
                 return (
-                  <AnswerBlock disabled={answerDisabled} onClick={(e) => {NextQuestionHandler(questionTitle, item)}} key={index} num={index + 1} text={item.text} />
+                  <AnswerBlock disabled={answerDisabled} onClick={(e) => {
+                    setProgressBar(progressBar +=1)
+                    NextQuestionHandler(questionTitle, item)
+                  }} key={index} num={index + 1} text={item.text} />
                 )
 
               })
