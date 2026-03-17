@@ -61,9 +61,9 @@ const page: FC = () => {
                       console.log(qrcode.data)
                       setActive(true)
 
-                      // setTimeout(() => {
-                      //   router.push(qrcode.data)
-                      // }, 2000)
+                      setTimeout(() => {
+                        router.push(qrcode.data)
+                      }, 2000)
                     
                     } else {
                       requestAnimationFrame(scan)
