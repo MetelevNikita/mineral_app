@@ -70,7 +70,7 @@ const page: FC = () => {
 
   return (
 
-    <Container>
+    <Container className='mb-5'>
         <Row className='d-flex justify-content-center align-items-center mb-3'>
             <Col md={6} >
                 <div className={styles.title}>Путь достижений</div>
@@ -138,7 +138,7 @@ const page: FC = () => {
 
         {/*  */}
 
-        <Row className='d-flex justify-content-center align-items-center mb-3'>
+        <Row className='d-flex justify-content-center align-items-center mb-5'>
           <Col md={6} className='d-flex justify-content-center align-items-center'>
             <MyButton text={'Назад'} btn={styles.btn} onClick={() => {router.push('/main/profile')}} type={'button'} />
           </Col>
