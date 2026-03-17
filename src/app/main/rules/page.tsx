@@ -46,11 +46,9 @@ const rulesArr = [
   return (
 
     <Container>
-        <Row>
-            <Col className='d-flex justify-content-center align-items-center mb-4'>
-
+        <Row className='d-flex justify-content-center align-items-center mb-3'>
+            <Col md={6}>
                 <div className={styles.title}>Правила музея</div>
-
             </Col>
         </Row>
 

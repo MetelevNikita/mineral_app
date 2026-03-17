@@ -5,11 +5,11 @@ import fs from 'fs'
 import fsPromices from 'fs/promises'
 import path from 'path'
 import { transliterate } from 'transliteration'
-import sharp from "sharp";
 
 // 
 
 const prisma = new PrismaClient()
+
 
 
 

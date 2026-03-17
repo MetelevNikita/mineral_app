@@ -6,11 +6,6 @@ import { Container, Col, Row } from 'react-bootstrap'
 import { useRouter } from 'next/navigation';
 import jsQR from "jsqr";
 
-// components
-
-import ModalText from '@/components/modals/ModalText/ModalText';
-
-
 
 
 // css
@@ -22,6 +17,7 @@ const page: FC = () => {
 
   const router = useRouter()
   const cameraRef = useRef<HTMLVideoElement | null>(null)
+  const [active, setActive] = useState<boolean>(false)
 
 
   useEffect(() => {
@@ -62,7 +58,13 @@ const page: FC = () => {
 
                   if (qrcode) {
                     if (qrcode.data) {
-                      router.push(qrcode.data)
+                      console.log(qrcode.data)
+                      setActive(true)
+
+                      // setTimeout(() => {
+                      //   router.push(qrcode.data)
+                      // }, 2000)
+                    
                     } else {
                       requestAnimationFrame(scan)
                       return
@@ -86,11 +88,9 @@ const page: FC = () => {
 
     <Container>
 
-        <Row>
-            <Col className='d-flex justify-content-center align-items-center mb-3'>
-
-                <div className={styles.title}>QR code</div>
-
+      <Row className='d-flex justify-content-center align-items-center mb-3'>
+            <Col md={6}>
+                <div className={styles.title}>Qr код</div>
             </Col>
         </Row>
 
@@ -99,7 +99,7 @@ const page: FC = () => {
 
           <div>
 
-            <Col className='d-flex justify-content-center align-items-center mb-3'>
+            <Col md={6} className='d-flex justify-content-center align-items-center mb-3'>
 
             <div className={styles.camera_info}>
               Для того чтобы перейти в карточку минерала, сканируйте QR-код
@@ -107,7 +107,7 @@ const page: FC = () => {
             
             </Col>
             
-            <div className={styles.camera_container}>
+            <div className={(active)? styles.camera_container_active : styles.camera_container}>
               <video ref={cameraRef} autoPlay playsInline className={styles.camera}>
                 
               </video>

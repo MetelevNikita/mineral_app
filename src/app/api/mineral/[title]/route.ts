@@ -3,15 +3,13 @@ import { PrismaClient } from "../../../../../generated/prisma";
 import fs from 'fs'
 import path from 'path'
 import { transliterate } from 'transliteration'
-import { error } from "console";
 
 
-
-// 
 
 const prisma = new PrismaClient()
 
 
+// 
 
 
 

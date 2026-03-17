@@ -37,15 +37,30 @@
 }
 
 
+.camera_container {
+  position: relative; /* Важно для absolute позиционирования псевдоэлемента */
+}
+
+
+
 .camera_container::before {
   content: ""; /* Создание псевдоэлемента */
   position: absolute; /* Абсолютное позиционирование относительно контейнера */
-  top: 30%; /* Отступ сверху (регулируйте по необходимости) */
+  top: 25%; /* Отступ сверху (регулируйте по необходимости) */
   left: 25%; /* Отступ слева (регулируйте по необходимости) */
   width: 50%; /* Ширина рамки */
-  height: 40%; /* Высота рамки */
-  border: 4px solid #ffffff; /* Зеленая рамка */
-  border-style: double;
-  box-sizing: border-box; /* Учитываем рамку в расчетах */
+  height: 50%; /* Высота рамки */
+  outline: 4px solid white; /* outline не влияет на размеры */
+
+  box-sizing: border-box;
+  pointer-events: none; /* Чтобы рамка не мешала взаимодействовать с видео */
+}
+
+.camera_container_active::before {
+  content: "";
+  position: absolute;
+
+  
+  box-sizing: border-box;
   pointer-events: none; /* Чтобы рамка не мешала взаимодействовать с видео */
 }

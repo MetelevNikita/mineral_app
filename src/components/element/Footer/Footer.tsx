@@ -80,7 +80,7 @@ const footerArrMenu = [
 
   return (
 
-    <Container className='fixed-bottom' style={{overscrollBehavior: 'none', WebkitOverflowScrolling: 'touch'}}>
+    <Container className='fixed-bottom' style={{overscrollBehavior: 'none', WebkitOverflowScrolling: 'touch'}} fluid>
         <Row className='d-flex justify-content-center align-items-center'>
 
 

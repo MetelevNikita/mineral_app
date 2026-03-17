@@ -143,11 +143,9 @@ const page: FC = () => {
         </Row>
 
 
-        <Row>
-            <Col className='d-flex justify-content-center align-items-center mb-3'>
-
+        <Row className='d-flex justify-content-center align-items-center mb-3'>
+            <Col md={6}>
                 <div className={styles.title}>Минералы</div>
-
             </Col>
         </Row>
 
