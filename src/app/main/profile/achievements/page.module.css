@@ -1,0 +1,31 @@
+.title {
+    width: 100%;
+    color: #000;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 125%; /* 31.25px */
+}
+
+/*  */
+
+
+
+
+
+/*  */
+
+.btn {
+    display: flex;
+    width: 350px;
+    height: 56px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    margin-bottom: 10px;
+    color: black;
+    border: 1px solid black;
+}
+
+

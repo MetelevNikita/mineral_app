@@ -5,6 +5,12 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true, // Skip TypeScript errors during build
   },
+  experimental: {
+    middlewareClientMaxBodySize: 100 * 1024 * 1024,
+    serverActions: {
+      bodySizeLimit: '100mb',
+    },
+  },
   images: {
     domains: ['localhost'],
     // или для Next.js 13+:

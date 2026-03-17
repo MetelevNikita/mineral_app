@@ -51,42 +51,15 @@ const page: FC = () => {
   return (
 
     <Container>
-      <Row className='d-flex flex-column mt-3 mb-5'>
+      <Row className='d-flex flex-column justify-content-center align-items-center mt-3 mb-5'>
 
-
-      {(menuButtonArr && menuButtonArr.length > 0) && menuButtonArr.map((item, index) => {
-        return (
-          <Col className='d-flex justify-content-center align-items-center mb-3' key={item.id}>
-            <MainMenuElement delay={index * 0.2} text={item.text} image={item.image} link={item.link} />
-          </Col>
-        )
-      })}
-
-      {/* <Col className='d-flex justify-content-center align-items-center mb-3'>
-
-          <HorizontalBlock path={'/main/minerale'} imgSrc={imgBuild} imgWidth={139} imgHeight={116} text={'Пройти видеогид по минералам'} btnText={'Начать'} onClick={() => {}} />
-
-      </Col>
-
-
-        <Col md={12}  className='d-flex justify-content-center align-items-center mb-3'>
-
-
-              <div className={styles.vertical_box}><VerticalBlock path={'/main/rules'} imgSrc={imgGromofon} imgWidth={132} imgHeight={100} text={'Правила музея'} onClick={() => {}} /></div>
-
-
-
-              <div className={styles.vertical_box}><VerticalBlock path={'/main/review'} imgSrc={imgHand} imgWidth={139} imgHeight={96} text={'Оставить отзыв'} onClick={() => {}} /></div>
-
-
-        </Col>
-
-
-        <Col className='d-flex justify-content-center align-items-center mb-5'>
-
-            <HorizontalBlock path='/main/welcome' imgSrc={imgMinerale} imgWidth={139} imgHeight={110} text={'Приветственное видео музея'} btnText={'Смотреть'} onClick={() => {}} />
-
-        </Col> */}
+          {(menuButtonArr && menuButtonArr.length > 0) && menuButtonArr.map((item, index) => {
+            return (
+              <Col md={6} className='mb-3' key={item.id}>
+                <MainMenuElement delay={index * 0.2} text={item.text} image={item.image} link={item.link} />
+              </Col>
+            )
+          })}
 
       </Row>
     </Container>

@@ -205,11 +205,9 @@ const page: FC = () => {
   return (
 
     <Container style={{height: '100vh'}}>
-        <Row>
-            <Col className='d-flex justify-content-center align-items-center mb-4'>
-
+        <Row className='d-flex justify-content-center align-items-center mb-3'>
+            <Col md={6}>
                 <div className={styles.title}>Карта</div>
-
             </Col>
         </Row>
 

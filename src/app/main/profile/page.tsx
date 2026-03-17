@@ -18,10 +18,12 @@ import { Container, Row, Col } from 'react-bootstrap'
 
 import MyButton from '@/components/ui/MyButton/MyButton'
 import Status from '@/components/element/Status/Status'
+import ShareButtonVk from '@/components/ui/ShareButtonVk/ShareButtonVk'
 
 // img
 
 import statusStar from '@/../public/profile/start.svg'
+import statusVKBg from '@/../public/ModalStatus/modal_status_bg.svg'
 
 // types
 
@@ -104,20 +106,46 @@ const page: FC = () => {
 
     <Container>
 
-        <Row>
-            <Col className='d-flex justify-content-center align-items-center mb-3'>
-
+        <Row className='d-flex justify-content-center align-items-center mb-3'>
+            <Col md={6}>
                 <div className={styles.title}>Профиль</div>
-
             </Col>
         </Row>
 
 
-        <Row className='mb-3'>
+        <Row className='d-flex justify-content-center align-items-center mb-3'>
 
-            <Col className='d-flex justify-content-center align-items-center mb-1'>
+            <Col md={3} xs={6} className='d-flex justify-content-center align-items-center mb-1'>
 
-                <Status title={statuses.title} img={statuses.icon} onClick={() => {}} />
+                  <Status
+                    title={`Поздравляем Вы ${statuses.title}`}
+                    img={statuses.icon}
+                    button={ShareButtonVk}
+                    bgColor={{
+                        background: 'linear-gradient(111deg, #7D22C9 10.06%, #007AFF 114.82%)'
+                      }}
+                    topColor={{
+                        backgroundColor: `linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)`,
+                        backdropFilter: 'blur(20.799999237060547px)',
+                      }}
+                  />
+
+            </Col>
+
+            <Col md={3} xs={6} className='d-flex justify-content-center align-items-center mb-1'>
+
+                  <Status
+                    title={'Открой свой путь достижений'}
+                    img={statuses.icon}
+                    onClick={() => {router.push('profile/achievements')} }
+                    bgColor={{
+                        background: 'linear-gradient(111deg, #E1CE7D 10.06%, #957755 114.82%)',
+                      }}
+                    topColor={{
+                        background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)',
+                        backdropFilter: 'blur(20.799999237060547px)',
+                      }}
+                    />
 
             </Col>
 
@@ -127,36 +155,32 @@ const page: FC = () => {
 
         <Row className='d-flex flex-row justify-content-center mb-3'>
 
+          <Col md={(statuses.price !== '') ? 3 : 6} xs={(statuses.price !== '') ? 6 : 12}>
 
-                <div className={styles.total_container} style={(statuses.price !== '') ? {width: '170px'} : {width: '354px'}}>
+                <div className={styles.total_container}>
                   <Image src={statusStar} width={45} height={44} alt={''}/>
                   <div className={styles.total_title}>{currentUser?.total}</div>
                 </div>
+          
+          </Col>
 
-
-
-              {
-
-                statuses.price !== '' && (
-
-                      <div className={styles.price_container} style={{width: '170px'}}>
+          {
+            statuses.price !== '' && (
+                  <Col md={3} xs={6}>
+                      <div className={styles.price_container}>
                           <div className={styles.price_title}>10%</div>
                           <div className={styles.price_subtitle}>Скидка</div>
                       </div>
-
-                )
-                
-              }
-
-
- 
+                  </Col>
+            )
+          }
 
         </Row>
 
 
-        <Row>
+        <Row className='d-flex flex-row justify-content-center mb-3'>
 
-            <Col className='d-flex justify-content-center align-items-center mb-3'>
+            <Col md={6} xs={12} className='d-flex justify-content-center align-items-center mb-3'>
 
                 <div className={styles.collection_container}>
                     <div className={styles.collection_title}>Ваша коллекция</div>
@@ -182,6 +206,9 @@ const page: FC = () => {
 
             </Col>
         </Row>
+
+
+
 
 
         <Row className='mb-5'>
