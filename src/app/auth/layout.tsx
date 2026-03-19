@@ -22,22 +22,16 @@ const partnersArr: partnersArrType[] = [
         id: 1,
         title: 'logoOne',
         img: logoOne,
-        url: ''
+        url: 'https://www.sgm.ru/'
     },
 
     {
         id: 2,
         title: 'logoTwo',
         img: logoTwo,
-        url: ''
+        url: 'https://fondpotanin.ru/'
     },
 
-    {
-        id: 3,
-        title: 'logoThree',
-        img: logoThree,
-        url: ''
-    },
 ]
 
 

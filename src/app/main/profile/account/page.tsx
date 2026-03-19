@@ -1,6 +1,7 @@
 'use client'
 
 import { FC, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -50,6 +51,9 @@ import modalIcon from '@/../public/ModalResult/Done.svg'
 // 
 
 const page: FC = () => {
+
+
+    const router = useRouter()
 
 
     const [userId, setUserId] = useState<string>('');
@@ -116,7 +120,13 @@ const page: FC = () => {
 
             <ModalResult
                 imgTop={modalIcon}
-                onClickLink={() => {setIsUpdate(false)}}
+                onClickLink={() => {
+
+                    setIsUpdate(false)
+                    router.push('/main/profile')
+                    router.refresh()
+                    
+                }}
                 text={'Аккаунт обновлен'}
                 textBtn={'Продолжить'}
                 colorBackground={{background: 'linear-gradient(262deg, #7D22C9 3.49%, #FFBC41 121.77%)'}}
@@ -143,8 +153,6 @@ const page: FC = () => {
 
 
         <Row className='mb-3'>
-
-
             <Col className='d-flex justify-content-center align-items-center mb-2'>
 
                 <div className={styles.avatar_container}>
@@ -175,26 +183,25 @@ const page: FC = () => {
                     </div>
 
             </Col>
-
         </Row>
 
         <Row className='mb-2'>
             <Col className='d-flex flex-column justify-content-center align-items-center '>
 
 
-                <MyInput value={profile.age} onChange={(e) => {setProfile({...profile, age: e.target.value})}} image={editAvatar} name={'age'} title={'Возраст'} type={'text'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.age : 'Ваш возраст'} style={{marginBottom: '15px'}}/>
+                <MyInput value={profile.age} onChange={(e) => {setProfile({...profile, age: e.target.value})}} image={editAvatar} name={'age'} type={'text'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.age : 'Возраст'} style={{marginBottom: '15px'}}/>
 
 
-                <MyInput value={profile.profession} onChange={(e) => {setProfile({...profile, profession: e.target.value})}} image={editAvatar} name={'profession'} title={'Студент или работаете'} type={'text'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.profession : 'Текст'} style={{marginBottom: '15px'}} />
+                {/* <MyInput value={profile.profession} onChange={(e) => {setProfile({...profile, profession: e.target.value})}} image={editAvatar} name={'profession'} title={'Студент или работаете'} type={'text'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.profession : 'Текст'} style={{marginBottom: '15px'}} /> */}
 
 
-                <MyInput value={profile.bio} onChange={(e) => {setProfile({...profile, bio: e.target.value})}} image={editAvatar} name={'bio'} title={'Учебное заведение или место работы'} type={'text'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.bio : 'Ваше место учебы или работы'} style={{marginBottom: '15px'}} />
+                <MyInput value={profile.bio} onChange={(e) => {setProfile({...profile, bio: e.target.value})}} image={editAvatar} name={'bio'} type={'text'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.bio : 'Учебное заведение или место работы'} style={{marginBottom: '15px'}} />
 
 
-                <MyInput value={profile.phone} onChange={(e) => {setProfile({...profile, phone: e.target.value})}} image={editAvatar} name={'phone'} title={'Телефон*'} type={'tel'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.phone : 'Ваш номер телефона'} style={{marginBottom: '15px'}} />
+                <MyInput value={profile.phone} onChange={(e) => {setProfile({...profile, phone: e.target.value})}} image={editAvatar} name={'phone'} type={'tel'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.phone : 'Номер телефона'} style={{marginBottom: '15px'}} />
 
                     
-                <MyInput value={profile.telegram} onChange={(e) => {setProfile({...profile, telegram: e.target.value})}} image={editAvatar} name={'telegram'} title={'Телеграм'} type={'tel'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.telegram : 'Ваш аккаунт телеграмма'} style={{marginBottom: '15px'}} />
+                <MyInput value={profile.telegram} onChange={(e) => {setProfile({...profile, telegram: e.target.value})}} image={editAvatar} name={'telegram'} type={'tel'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.telegram : 'Аккаунт телеграмма'} style={{marginBottom: '15px'}} />
 
                  <Col className='d-flex justify-content-center align-items-center'>
                     <MyButton text={'Сохранить'} btn={styles.btn} onClick={async () => {
@@ -211,10 +218,6 @@ const page: FC = () => {
         
             </Col>
         </Row>
-
-
-
-
 
 
         <Row className='mt-4 mb-4'>

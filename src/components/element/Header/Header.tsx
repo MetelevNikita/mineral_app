@@ -76,7 +76,7 @@ const menuArr = [
 
     {
         id: 4,
-        title: 'О проекте',
+        title: 'Обратная связь',
         link: '/main/review'
     },
 
