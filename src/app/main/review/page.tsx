@@ -120,7 +120,7 @@ const page: FC = () => {
 
                     <div className={styles.review_container_title}>Дорогие посетители!</div>
 
-                    <div className={styles.review_container_text}>Мы искренне ценим каждого гостянашего музея и стремимся сделать ваше посещение максимально комфортным и интересным. Ваше мнение — это ключ к нашему развитию и совершенствованию.</div>
+                    <div className={styles.review_container_text}>Мы искренне ценим каждого гостя нашего музея и стремимся сделать ваше посещение максимально комфортным и интересным. Ваше мнение — это ключ к нашему развитию и совершенствованию.</div>
 
                 </div>
 
@@ -165,7 +165,7 @@ const page: FC = () => {
                     <MyTextArea name={'message'} title={'Отзыв*'} placeholder={'Сообщение'} style={{marginBottom: '10px'}} rows={5} required={true} value={messageEmail.message} onChange={(e) => {setMessageEmail({...messageEmail, message: e.target.value})}}/>
 
 
-                    <MyButton text={'Отправть'} btn={styles.btn} onClick={async () => {
+                    <MyButton text={'Отправить'} btn={styles.btn} onClick={async () => {
                         const res = await sendReviewEmail(messageEmail)
                         if (res?.message === 'success') {
                             setIsAuth(true)

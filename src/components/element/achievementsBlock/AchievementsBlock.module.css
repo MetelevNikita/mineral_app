@@ -8,14 +8,12 @@
   /*  */
 
   border-radius: 20px;
-  background: linear-gradient(111deg, #F2E3A2 10.06%, #D6B573 54.88%, #F2E3A2 85.61%, #C89E5C 114.82%);
-
-
 
 }
 
 .achievements_block_wrapper {
   display: flex;
+  align-items: center;
   padding: 20px;
 }
 
@@ -34,7 +32,7 @@
 }
 
 .achievements_block_text_num {
-  color: #554B43;
+
   font-family: "Open Sans";
   font-size: 14px;
   font-style: normal;
@@ -44,7 +42,6 @@
 
 .achievements_block_text_title {
   margin-top: 5px;
-  color: #554B43;
   font-family: "Open Sans";
   font-size: 14px;
   font-style: normal;

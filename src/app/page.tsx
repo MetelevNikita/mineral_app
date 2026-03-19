@@ -44,13 +44,6 @@ const partnersArr: partnersArrType[] = [
 
     {
         id: 2,
-        title: 'logoThree',
-        img: logoThree,
-        url: ''
-    },
-
-    {
-        id: 3,
         title: 'logoTwo',
         img: logoTwo,
         url: ''
