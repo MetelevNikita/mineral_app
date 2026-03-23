@@ -24,7 +24,7 @@ import { fetchGetMineralMap } from '@/functions/reduxAsync/map/fetchGetMineralMa
 
 // types
 
-import type { mapBlockArrType, MineralMapType } from '@/types/type' 
+import type { mapBlockArrType } from '@/types/type' 
 
 // img
 

@@ -3,7 +3,6 @@
 import { FC, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { motion } from "motion/react"
 
 // css
@@ -28,27 +27,12 @@ import { fetchGetStatus } from '@/functions/reduxAsync/status/fetchGetStatus'
 
 import Loading from '@/components/element/Loading/Loading'
 
-interface ModalStatusProps {
-  statusText: string,
-  statusImg: string,
-  onClick: () => void
-
-  // 
-
-  bgButtonColor: string,
-  bgButtonTop: string
-}
-
-
 
 
 const page: FC<{ params: { title: string } }> =  ({ params }) => {
 
-  const router = useRouter()
-
   const dispatch = useAppDispatch()
 
-  const [currentStatus, setCurrentStatus] = useState<any>(null)
   const [decodedTitle, setDecodedTitle] = useState('')
 
   useEffect(() => {

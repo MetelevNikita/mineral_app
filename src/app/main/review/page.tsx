@@ -2,7 +2,7 @@
 
 import { FC, ReactNode, useState } from 'react'
 import Link from 'next/link'
-import {motion, AnimatePresence} from 'motion/react'
+import { AnimatePresence } from 'motion/react'
 
 // styles
 

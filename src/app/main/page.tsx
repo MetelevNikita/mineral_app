@@ -2,10 +2,6 @@
 
 import { FC } from 'react'
 
-// css
-
-import styles from './page.module.css'
-
 // 
 
 import { Container, Row, Col } from 'react-bootstrap'
