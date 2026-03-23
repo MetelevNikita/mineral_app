@@ -37,7 +37,7 @@ const Status: FC<StatusProps> = ({ title, img, onClick, button, bgColor, topColo
 
             <div className={styles.top_content}>
                 <div className={styles.image_container}>
-                    <Image src={img} width={137} height={120} alt={'status_icon'} />
+                    <Image src={img} width={120} height={120} alt={'status_icon'} />
                 </div>
                 <div className={styles.top_title}>{title}</div>
             </div>
