@@ -23,7 +23,7 @@ import ShareButtonVk from '@/components/ui/ShareButtonVk/ShareButtonVk'
 // img
 
 import statusStar from '@/../public/profile/start.svg'
-import statusVKBg from '@/../public/ModalStatus/modal_status_bg.svg'
+
 
 // types
 
@@ -122,12 +122,13 @@ const page: FC = () => {
                     img={statuses.icon}
                     button={ShareButtonVk}
                     bgColor={{
-                        background: 'linear-gradient(111deg, #7D22C9 10.06%, #007AFF 114.82%)'
+                        background: 'linear-gradient(111deg, #E1CE7D 10.06%, #957755 114.82%)',
                       }}
                     topColor={{
-                        backgroundColor: `linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)`,
+                        background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)',
                         backdropFilter: 'blur(20.799999237060547px)',
                       }}
+
                   />
 
             </Col>
@@ -139,12 +140,13 @@ const page: FC = () => {
                     img={statuses.icon}
                     onClick={() => {router.push('profile/achievements')} }
                     bgColor={{
-                        background: 'linear-gradient(111deg, #E1CE7D 10.06%, #957755 114.82%)',
+                        background: 'linear-gradient(111deg, #7D22C9 10.06%, #007AFF 114.82%)'
                       }}
                     topColor={{
-                        background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)',
+                        backgroundColor: `linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)`,
                         backdropFilter: 'blur(20.799999237060547px)',
                       }}
+                    
                     />
 
             </Col>

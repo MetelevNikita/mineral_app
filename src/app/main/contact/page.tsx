@@ -16,10 +16,6 @@ import { Container, Row, Col } from 'react-bootstrap'
 import MyAcardeon from '@/components/ui/MyAcardeon/MyAcardeon'
 import MyButton from '@/components/ui/MyButton/MyButton'
 
-// img
-
-import map from '@/../public/contacts/map.png'
-
 // types
 
 import { contactsArrType } from '@/types/type'

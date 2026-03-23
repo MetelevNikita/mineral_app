@@ -19,7 +19,7 @@ const AchievementsBlock: FC<AchievementsBlockProps> = ({ img, title, num, active
       <div className={styles.achievements_block_wrapper}>
 
           <div className={styles.achievements_block_image_wrapper}>
-            <Image className={styles.achievements_block_image} src={img} alt='' width={50} height={50}/>
+            <Image className={styles.achievements_block_image} src={img} alt='' width={90} height={70}/>
           </div>
 
           <div className={styles.achievements_block_text_wrapper}>

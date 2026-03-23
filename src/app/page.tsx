@@ -19,7 +19,6 @@ import styles from './page.module.css'
 import logo_icon from '@/../public/bg/open_minerale.png'
 import logoOne from '@/../public/logo_open/logo 1.svg'
 import logoTwo from '@/../public/logo_open/logo_dark_ru 1.svg'
-import logoThree from '@/../public/logo_open/zjqm1geowap7jnxgsnh4mhoodtx38w4x 1.svg'
 
 
 // components
@@ -39,14 +38,14 @@ const partnersArr: partnersArrType[] = [
         id: 1,
         title: 'logoOne',
         img: logoOne,
-        url: ''
+        url: 'https://www.sgm.ru/'
     },
 
     {
         id: 2,
         title: 'logoTwo',
         img: logoTwo,
-        url: ''
+        url: 'https://fondpotanin.ru/'
     },
 
 

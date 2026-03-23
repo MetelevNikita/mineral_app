@@ -1,6 +1,6 @@
 "use client"
 
-import { FC, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 // 
@@ -23,9 +23,6 @@ import VideoBlock from '@/components/element/VideoBlock/VideoBlock'
 import { getSingleMineral } from '@/functions/minerale/getSingleMineral'
 
 
-interface PageProps {
-  params: { title: string };
-}
 
 const page = ({ params }: { params: { title: string } }) => {
 

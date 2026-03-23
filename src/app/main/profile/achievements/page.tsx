@@ -2,7 +2,7 @@
 
 import { FC, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { motion, animate } from "motion/react"
+import { motion } from "motion/react"
 
 
 //
@@ -24,7 +24,6 @@ import { fetchGetStatus } from '@/functions/reduxAsync/status/fetchGetStatus'
 import MyButton from '@/components/ui/MyButton/MyButton'
 import AchievementsBlock from '@/components/element/achievementsBlock/AchievementsBlock'
 import Loading from '@/components/element/Loading/Loading'
-import { stat } from 'fs'
 
 const page: FC = () => {
 

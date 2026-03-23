@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 
 // styles
 
@@ -19,7 +19,7 @@ import Link from 'next/link'
 // video
 
 
-const page = () => {
+const page: FC = () => {
 
 const [muteVideo, onMuteVideo] = useState<boolean>(true)
 
