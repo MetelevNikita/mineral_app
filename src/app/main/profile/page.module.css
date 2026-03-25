@@ -126,11 +126,7 @@
 }
 
 .collection_item_wrapper {
-
-    width: 90%;
-
-
-
+    width: 100%;
 }
 
 .collection_item_box {
@@ -138,7 +134,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 15;
+        gap: 20;
 }
 
 .collection_item_container {
@@ -166,7 +162,7 @@
     font-size: 9px;
     font-style: normal;
     font-weight: 600;
-    line-height: 125%; /* 12.5px */
+
     text-align: center;
 }
 
