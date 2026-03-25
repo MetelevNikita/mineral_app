@@ -186,14 +186,15 @@ const page: FC = () => {
 
                 <div className={styles.collection_container}>
                     <div className={styles.collection_title}>Ваша коллекция</div>
-                    <div className={styles.collection_item_box}>
+                    <div className={styles.collection_item_wrapper}>
+                      <div className={styles.collection_item_box}>
 
 
                         {
                           currentUserCollection.map((item: CollectionMineralType, index: number): ReactNode => {
 
                             return (
-                              <div key={index+1} className={styles.collection_item_container}>
+                              <div key={index+1}>
                                       <motion.div onClick={() => {router.push(`/main/minerale/${item.title}`)}} className={styles.collection_item_image_box} style={{filter: 'grayscale(100%)'}} animate={ item?.received ? {scale: [1, 1.2, 1], filter: ['grayscale(100%)', 'grayscale(0)']} : { filter: item?.received ? 'grayscale(0)' : 'grayscale(100%)' }} transition={{duration: 1}}>
                                         <Image src={item?.image} width={60} height={45} alt={'collection_img'}/>
                                         <span className={styles.collection_item_title}>{item.title}</span>
@@ -203,6 +204,7 @@ const page: FC = () => {
                           })
                         }
 
+                    </div>
                     </div>
                 </div>
 
