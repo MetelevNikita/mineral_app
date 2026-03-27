@@ -149,14 +149,14 @@ const page: FC = () => {
             </Col>
         </Row>
 
-        <Row className='mb-5'>
-          <Col className='d-flex flex-wrap justify-content-start gap-4 mb-5'>
+        <Row className='d-flex justify-content-md-start justify-content-center mb-5'>
+
+
 
           {minerals.map((item: any, index: number): React.ReactNode => {
-            return <MineralCard key={index+1} image={item.image} title={item.title} id={item.id} />
+            return <Col md={2} xs={5} key={index+1} className='d-flex justify-content-center'><MineralCard image={item.image} title={item.title} id={item.id} /></Col>
           })}
-          
-          </Col>
+
         </Row>
     </Container>
 
