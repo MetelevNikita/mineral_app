@@ -106,9 +106,9 @@ const menuArr = [
 
 if (!currentUser) {
     return (
-        <Container className='mt-3 mb-4 fixed-top'>
+        <Container className=' d-flex flex-row justify-content-center mt-3 mb-4 fixed-top'>
 
-                <Row className='d-flex flex-row justify-content-center align-items-center'>
+                <Row className='d-flex flex-row justify-content-between align-items-center'>
 
                     <Col className='d-flex justify-content-start align-items-center'>
 
@@ -192,12 +192,10 @@ if (!currentUser) {
   return (
     
     <Container fluid>
-        <Row className='d-flex justify-content-between align-items-center'>
 
+                        <Row className='d-flex flex-row justify-content-around align-items-center mt-2'>
 
-                        <Row className='d-flex flex-row justify-content-around align-items-center m-3'>
-
-                            <Col className='d-flex justify-content-start align-items-center p-0' md={2} xs={2}>
+                            <Col  className='d-flex justify-content-start align-items-center p-0' md={2} xs={2}>
 
                                 <Image src={(topMenuOn) ? menuClose : menuOpen} width={30} height={30} onClick={() => setTopMenuOn(!topMenuOn)} alt='menu_icon'/>
 
@@ -281,8 +279,6 @@ if (!currentUser) {
                             </Col>
 
                         </Row>
-
-        </Row>
     </Container>
 
   )

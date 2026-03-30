@@ -195,13 +195,13 @@ const page: FC = () => {
                 {/* <MyInput value={profile.profession} onChange={(e) => {setProfile({...profile, profession: e.target.value})}} image={editAvatar} name={'profession'} title={'Студент или работаете'} type={'text'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.profession : 'Текст'} style={{marginBottom: '15px'}} /> */}
 
 
-                <MyInput value={profile.bio} onChange={(e) => {setProfile({...profile, bio: e.target.value})}} image={editAvatar} name={'bio'} type={'text'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.bio : 'Учебное заведение или место работы'} style={{marginBottom: '15px'}} />
+                <MyInput value={profile.bio} onChange={(e) => {setProfile({...profile, bio: e.target.value})}} image={editAvatar} name={'bio'} type={'text'} placeholder={(currentUser[0].profile && currentUser[0].profile.bio.length > 1) ? currentUser[0].profile.bio : 'Учебное заведение или место работы'} style={{marginBottom: '15px'}} />
 
 
-                <MyInput value={profile.phone} onChange={(e) => {setProfile({...profile, phone: e.target.value})}} image={editAvatar} name={'phone'} type={'tel'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.phone : 'Номер телефона'} style={{marginBottom: '15px'}} />
+                <MyInput value={profile.phone} onChange={(e) => {setProfile({...profile, phone: e.target.value})}} image={editAvatar} name={'phone'} type={'tel'} placeholder={(currentUser[0].profile && currentUser[0].profile.phone.length > 1) ? currentUser[0].profile.phone : 'Номер телефона'} style={{marginBottom: '15px'}} />
 
                     
-                <MyInput value={profile.telegram} onChange={(e) => {setProfile({...profile, telegram: e.target.value})}} image={editAvatar} name={'telegram'} type={'tel'} placeholder={(currentUser[0].profile) ? currentUser[0].profile.telegram : 'Аккаунт телеграмма'} style={{marginBottom: '15px'}} />
+                <MyInput value={profile.telegram} onChange={(e) => {setProfile({...profile, telegram: e.target.value})}} image={editAvatar} name={'telegram'} type={'tel'} placeholder={(currentUser[0].profile && currentUser[0].profile.length > 1) ? currentUser[0].profile.telegram : 'Аккаунт телеграмма'} style={{marginBottom: '15px'}} />
 
                  <Col className='d-flex justify-content-center align-items-center'>
                     <MyButton text={'Сохранить'} btn={styles.btn} onClick={async () => {
