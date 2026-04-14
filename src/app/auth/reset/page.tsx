@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useState } from 'react'
+import { FC, Suspense, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -21,6 +21,7 @@ import MyButton from '@/components/ui/MyButton/MyButton'
 // img
 
 import backIcon from '@/../public/ResponceCode/Back.svg'
+import Loading from '@/components/element/Loading/Loading'
 
 
 
@@ -91,7 +92,6 @@ const page: FC = () => {
 
 
   return (
-    <>
 
       <Row className='d-flex flex-column'>
 
@@ -143,7 +143,6 @@ const page: FC = () => {
 
         </Col>
       </Row>
-    </>
   )
 }
 

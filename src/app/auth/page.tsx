@@ -1,7 +1,7 @@
 'use client'
 
 
-import { FC, useEffect } from 'react'
+import { FC, Suspense, useEffect } from 'react'
 import { Container} from 'react-bootstrap'
 import { useRouter } from 'next/router'
 
@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 const page: FC = () => {
 
   return (
+
 
     <Container>
 

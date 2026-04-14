@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useState, useRef } from 'react'
+import { FC, useState, useRef, Suspense } from 'react'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 import Countdown from 'react-countdown';
@@ -27,6 +27,7 @@ import MyButton from '@/components/ui/MyButton/MyButton'
 // image
 
 import backIcon from '@/../public/ResponceCode/Back.svg'
+import Loading from '@/components/element/Loading/Loading';
 
 
 const page = () => {
@@ -252,7 +253,7 @@ const page = () => {
 
 
   return (
-
+    <Suspense fallback={<Loading text={'Загрузка'} />}>
     <Container>
 
         <Row className='mb-5'>
@@ -388,6 +389,7 @@ const page = () => {
             )
         }
     </Container>
+    </Suspense>
  
   )
 }

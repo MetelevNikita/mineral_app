@@ -1,4 +1,5 @@
 import Script from 'next/script'
+import { Suspense } from 'react'
 import { PWAProvider } from "next-pwa-pack";
 import './globals.css'
 
@@ -110,7 +111,9 @@ export default function RootLayout({
               </div>
             </noscript>
 
-            <YandexMetrikaHit counterId={Number(YM_ID)} />
+            <Suspense fallback={null}>
+              <YandexMetrikaHit counterId={Number(YM_ID)} />
+            </Suspense>
           </>
         )}
 

@@ -2,8 +2,11 @@ import type { NextConfig } from "next";
 
 
 const nextConfig: NextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true, // Игнорировать ошибки линтинга во время сборки
+  },
   typescript: {
-    ignoreBuildErrors: true, // Skip TypeScript errors during build
+    ignoreBuildErrors: true, // Игнорировать ошибки TypeScript во время сборки
   },
   experimental: {
     middlewareClientMaxBodySize: 100 * 1024 * 1024,

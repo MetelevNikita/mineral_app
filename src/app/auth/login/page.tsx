@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useState } from 'react'
+import { FC, Suspense, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
@@ -21,6 +21,7 @@ import MyButton from '@/components/ui/MyButton/MyButton'
 
 import { authUser } from '@/functions/authUser'
 import MyCheckBox from '@/components/ui/MyCheckBox/MyCheckBox'
+import Loading from '@/components/element/Loading/Loading'
 
 const Login: FC = () => {
 
@@ -59,7 +60,6 @@ const Login: FC = () => {
 
 
   return (
-
     <Container>
 
       <Row className='h-100 d-flex flex-column justify-content-center align-items-center'>
