@@ -15,8 +15,6 @@ const nextConfig: NextConfig = {
     },
   },
   images: {
-    domains: ['localhost'],
-    // или для Next.js 13+:
     remotePatterns: [
       {
         protocol: 'http',
