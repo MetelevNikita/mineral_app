@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useEffect, useState } from 'react'
+import { FC, Suspense, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from "motion/react"
 
 
@@ -30,6 +30,7 @@ import type { mapBlockArrType } from '@/types/type'
 
 import mapIcon from '@/../public/map/map_icon.svg'
 import mapIconActive from '@/../public/map/map_icon_active.svg'
+import Loading from '@/components/element/Loading/Loading'
 
 
 
@@ -203,7 +204,7 @@ const page: FC = () => {
   })
 
   return (
-
+    <Suspense fallback={<Loading text={'Загрузка'} />}>
     <Container style={{height: '100vh'}}>
         <Row className='d-flex justify-content-center align-items-center mb-3'>
             <Col md={6}>
@@ -242,6 +243,7 @@ const page: FC = () => {
         </Row>
 
     </Container>
+    </Suspense>
 
   )
 }

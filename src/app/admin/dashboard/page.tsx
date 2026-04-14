@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useState } from 'react'
+import { FC, Suspense, useState } from 'react'
 
 // 
 
@@ -13,14 +13,14 @@ import LeftSide from '@/components/admin/elements/LeftSideMenu/LeftSide'
 
 // modals
 
-import ModalInfo from '@/components/admin/ui/modalInfo/modalInfo'
-import ModalSubmit from '@/components/admin/ui/modalSubmit/modalSubmit'
+
 
 // modal icons
 
 import { BsXCircle } from "react-icons/bs";
 import { BsCheckCircle } from "react-icons/bs";
 import { BsExclamationCircle } from "react-icons/bs";
+import Loading from '@/components/element/Loading/Loading'
 
 
 
@@ -79,7 +79,7 @@ const page: FC = () => {
 
 
   return (
-
+    <Suspense fallback={<Loading text={'Загрузка'} />}>
     <Container fluid className='vh-100' style={{marginTop: '20px', marginBottom: '20px'}}>
 
 
@@ -106,6 +106,7 @@ const page: FC = () => {
 
     </Row>
     </Container>
+    </Suspense>
 
 
   )
