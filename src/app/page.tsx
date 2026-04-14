@@ -19,7 +19,7 @@ import styles from './page.module.css'
 import logo_icon from '@/../public/bg/open_minerale.png'
 import logoOne from '@/../public/logo_open/logo 1.png'
 import logoTwo from '@/../public/logo_open/logo 2.png'
-import logoThree from '@/../public/logo_open/logo 3.png'
+import logoThree from '@/../public/logo_open/Group 37189.png'
 
 
 // components
