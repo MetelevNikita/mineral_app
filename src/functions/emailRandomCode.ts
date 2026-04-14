@@ -1,9 +1,12 @@
 
 import nodemailer from 'nodemailer'
 
- const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
+
+// mail
+
+
+const transporter = nodemailer.createTransport({
+    host: 'smtp.yandex.ru',
     port: 465,
     secure: true,
     auth: {
@@ -21,16 +24,20 @@ import nodemailer from 'nodemailer'
 })
 
 
+
 export const sendRandomCode = async (email: string, code: number): Promise<{status: number, message: string}> => {
 
     try {
 
-       const info = await transporter.sendMail({
-            from: 'Propaganda1108@gmail.com',
+        const info = await transporter.sendMail({
+            from: 'geokviz@sgm.ru',
             to: email,
             subject: 'Код подтверждения',
             text: `
-            Ваш код подтверждения: ${code}
+            Здравствуйте\n
+            Для завершения регистрации на нашем сайте, пожалуйста, введите следующий код подтверждения: ${code}
+
+            Если вы не запрашивали код подтверждения, игнорируйте это письмо.
             `
         })
 

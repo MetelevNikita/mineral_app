@@ -245,7 +245,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/nikitametelev/Documents/nextjs/mineral_app/generated/prisma",
+      "value": "/Users/nikitametelev/Documents/NEXTJS/mineral_app/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -263,7 +263,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/nikitametelev/Documents/nextjs/mineral_app/prisma/schema.prisma",
+    "sourceFilePath": "/Users/nikitametelev/Documents/NEXTJS/mineral_app/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

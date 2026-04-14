@@ -17,9 +17,6 @@ export const POST = async (req: Request, res: Response) => {
     const url = new URL(req.url)
     const {code, deviceId, state, codeVerifier, title, message} = await req.json()
 
-    console.log('code_varifier ' + codeVerifier)
-    console.log('device id ' + deviceId)
-
     if  (!code || !codeVerifier) {
       return NextResponse.json(
         { error: 'Missing required parameters: code and code_verifier are required' },
@@ -59,7 +56,6 @@ export const POST = async (req: Request, res: Response) => {
     }
 
     const acceesToken = JSON.parse(dataToken).access_token;
-    console.log(acceesToken)
   
 
     
@@ -73,20 +69,14 @@ export const POST = async (req: Request, res: Response) => {
     }
 
     const dataURL = await responceURLPhoto.json();
-    console.log(dataURL)
-    console.log(dataURL.response.upload_url);
 
 
 
     // upload image
 
     const statusesDir = fs.readdirSync(path.join(process.cwd(), 'public', 'vk_statuses'));
-    console.log(statusesDir)
-    console.log(title)
-
     const currentStatusesImage = statusesDir.find((file) => file.toLocaleLowerCase() == `${title.toLocaleLowerCase()}.png`) as string
-    console.log(currentStatusesImage)
-    
+
 
     const imageBuffer = fs.readFileSync(path.join(process.cwd(), 'public', 'vk_statuses', currentStatusesImage));
     const imageBlob = new Blob([imageBuffer], { type: 'image/png' });
@@ -109,9 +99,6 @@ export const POST = async (req: Request, res: Response) => {
     }
 
     const uploadDataResponce = await savePhotoFromServer.json()
-    console.log(uploadDataResponce)
-
-
 
     // save photo
 

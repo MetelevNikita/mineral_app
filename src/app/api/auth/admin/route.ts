@@ -39,9 +39,6 @@ export const POST = async (req: Request): Promise<{message: string, status: numb
       })
     }
 
-
-    console.log(user)
-
     if (!bcryptjs.compareSync(password, user.password)) {
         return NextResponse.json({
           status: 400,

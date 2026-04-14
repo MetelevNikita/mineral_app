@@ -17,8 +17,9 @@ import styles from './page.module.css'
 // img
 
 import logo_icon from '@/../public/bg/open_minerale.png'
-import logoOne from '@/../public/logo_open/logo 1.svg'
-import logoTwo from '@/../public/logo_open/logo_dark_ru 1.svg'
+import logoOne from '@/../public/logo_open/logo 1.png'
+import logoTwo from '@/../public/logo_open/logo 2.png'
+import logoThree from '@/../public/logo_open/logo 3.png'
 
 
 // components
@@ -47,6 +48,12 @@ const partnersArr: partnersArrType[] = [
         img: logoTwo,
         url: 'https://fondpotanin.ru/'
     },
+    {
+        id: 2,
+        title: 'logoThree',
+        img: logoThree,
+        url: 'https://polyus.com/ru/'
+    }
 
 
 ]

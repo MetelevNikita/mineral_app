@@ -65,7 +65,6 @@ const page = () => {
             }
 
             const data = await responce.json()
-            console.log(data)
             
         } catch (error: Error | unknown) {
             if (error instanceof Error) {
@@ -121,8 +120,6 @@ const page = () => {
             newArrVal.push(val)
         })
 
-
-        console.log(newArrVal)
         setCode(newArrVal)
     }
 
@@ -171,9 +168,8 @@ const page = () => {
         if (!user) return 
         
         const {name, email, password} = userParse
-        console.log(email, name, password)
 
-        console.log('отправляю')
+        console.log('Отправляем код')
 
         const cookieCode = Cookies.get('code')
 
@@ -231,10 +227,6 @@ const page = () => {
 
     const repeatCodeHandler = async () => {
         try {
-
-
-            console.log(inputsRef.current)
-
             inputsRef.current.forEach((item: any) => {
                 return item.value = ''
             })
@@ -248,7 +240,6 @@ const page = () => {
                 setErrorText('Сообщение не отправлено - проверьте настройки VPN или отключите его')
                 setError(true)
             } else {
-                console.log('sendRepeat', sendRepeat)
                 setRepeatValidCode(true)
                 setError(false)
             }
@@ -257,9 +248,6 @@ const page = () => {
             console.error(error)
         }
     }
-
-
-    console.log(code)
 
 
 

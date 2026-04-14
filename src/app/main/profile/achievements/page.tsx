@@ -56,6 +56,9 @@ const page: FC = () => {
   const statuses = useAppSelector(state => state.status.status)
 
 
+  console.log(statuses)
+
+
 
   if (!user) {
     return <Loading text={'Загрузка...'} />

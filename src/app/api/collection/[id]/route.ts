@@ -68,9 +68,6 @@ export const PATCH = async (request: Request, context: {params: {id: string}}) =
   try {
 
     const { id } = await context.params
-    console.log(id)
-
-
     const formData = await request.formData()
 
     const title = formData.get('title')
