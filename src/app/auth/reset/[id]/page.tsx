@@ -18,14 +18,9 @@ import { Row, Col } from 'react-bootstrap';
 import MyInput from '@/components/ui/MyInput/MyInput';
 import MyButton from '@/components/ui/MyButton/MyButton';
 
-// modal
-
-import ModalResult from '@/components/modals/ModalResult/ModalResult';
-
 // img
 
 import backIcon from '@/../public/ResponceCode/Back.svg'
-import modalIcon from '@/../public/ModalResult/Done.svg'
 
 
 // 

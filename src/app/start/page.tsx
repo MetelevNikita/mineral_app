@@ -17,9 +17,9 @@ import styles from './page.module.css'
 // img
 
 import logo_icon from '@/../public/bg/start_minerale.png'
-import logoOne from '@/../public/logo_open/logo 1.svg'
-import logoTwo from '@/../public/logo_open/logo_dark_ru 1.svg'
-import logoThree from '@/../public/logo_open/zjqm1geowap7jnxgsnh4mhoodtx38w4x 1.svg'
+import logoOne from '@/../public/logo_open/logo 1.png'
+import logoTwo from '@/../public/logo_open/logo 2.png'
+import logoThree from '@/../public/logo_open/logo 3.png'
 
 
 // components
