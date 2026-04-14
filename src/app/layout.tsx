@@ -1,4 +1,5 @@
 import Script from 'next/script'
+import { PWAProvider } from "next-pwa-pack";
 import './globals.css'
 
 // fonts
@@ -68,12 +69,13 @@ export default function RootLayout({
           <link rel="manifest" href="/manifest.json" />
         </head>
         <body className={`${OpenSans.className}, ${InterFont.className}`}>
-
-              <Container>
-                <ReduxProvider>
-                    {children}
-                </ReduxProvider>
-              </Container>
+              <PWAProvider>
+                <Container>
+                  <ReduxProvider>
+                      {children}
+                  </ReduxProvider>
+                </Container>
+              </PWAProvider>
 
 
         {YM_ID && (
