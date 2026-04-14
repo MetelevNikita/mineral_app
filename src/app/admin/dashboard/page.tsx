@@ -79,7 +79,6 @@ const page: FC = () => {
 
 
   return (
-    <Suspense fallback={<Loading text={'Загрузка'} />}>
     <Container fluid className='vh-100' style={{marginTop: '20px', marginBottom: '20px'}}>
 
 
@@ -106,9 +105,6 @@ const page: FC = () => {
 
     </Row>
     </Container>
-    </Suspense>
-
-
   )
 }
 

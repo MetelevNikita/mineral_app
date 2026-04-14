@@ -475,9 +475,6 @@ const page = ({ params }: { params: { title: string } }) => {
   }
 
 
-
-
-
   async function CloseWinModal (currentUser: any, price: any) {
 
     try {
@@ -733,7 +730,16 @@ const page = ({ params }: { params: { title: string } }) => {
           <Col className='d-flex flex-column justify-content-center align-items-center mb-3'>
 
             
-            <motion.div animate={answerDisabled ? {scale: [1,1.2,1]} : {scale: [1]}} transition={{duration: 0.4}}><MyButton style={answerDisabled ? {background: '#FFBC41', color: 'white', border: 'none'} : {}} text={buttonText} btn={styles.btn} onClick={() => {ResultHandler(currentMineral, currentUser, answers)}} type={'button'} disabled={resultDisabled}/></motion.div>
+            <motion.div
+              animate={answerDisabled ? {scale: [1,1.2,1]} : {scale: [1]}}
+              transition={{duration: 0.4}}>
+                <MyButton style={answerDisabled ? {background: '#FFBC41', color: 'white', border: 'none'} : {}}
+                text={buttonText}
+                btn={styles.btn}
+                onClick={() => {ResultHandler(currentMineral, currentUser, answers)}}
+                type={'button'}
+                disabled={resultDisabled}/>
+            </motion.div>
           
           </Col>
         </Row>

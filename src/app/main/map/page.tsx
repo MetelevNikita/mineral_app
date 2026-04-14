@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, Suspense, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from "motion/react"
 
 
@@ -204,7 +204,6 @@ const page: FC = () => {
   })
 
   return (
-    <Suspense fallback={<Loading text={'Загрузка'} />}>
     <Container style={{height: '100vh'}}>
         <Row className='d-flex justify-content-center align-items-center mb-3'>
             <Col md={6}>
@@ -243,7 +242,6 @@ const page: FC = () => {
         </Row>
 
     </Container>
-    </Suspense>
 
   )
 }
