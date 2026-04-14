@@ -39,6 +39,8 @@ import ReduxProvider from "@/Redux/Provider";
 
 const YM_ID = process.env.NEXT_PUBLIC_YM_ID
 
+console.log(YM_ID)
+
 // 
 
 export const metadata = {

@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useState, useRef, Suspense } from 'react'
+import { FC, useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 import Countdown from 'react-countdown';
@@ -253,7 +253,6 @@ const page = () => {
 
 
   return (
-    <Suspense fallback={<Loading text={'Загрузка'} />}>
     <Container>
 
         <Row className='mb-5'>
@@ -389,7 +388,6 @@ const page = () => {
             )
         }
     </Container>
-    </Suspense>
  
   )
 }

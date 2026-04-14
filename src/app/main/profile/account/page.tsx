@@ -201,7 +201,7 @@ const page: FC = () => {
                 <MyInput value={profile.phone} onChange={(e) => {setProfile({...profile, phone: e.target.value})}} image={editAvatar} name={'phone'} type={'tel'} placeholder={(currentUser[0].profile && currentUser[0].profile.phone.length > 1) ? currentUser[0].profile.phone : 'Номер телефона'} style={{marginBottom: '15px'}} />
 
                     
-                <MyInput value={profile.telegram} onChange={(e) => {setProfile({...profile, telegram: e.target.value})}} image={editAvatar} name={'telegram'} type={'tel'} placeholder={(currentUser[0].profile && currentUser[0].profile.length > 1) ? currentUser[0].profile.telegram : 'Аккаунт телеграмма'} style={{marginBottom: '15px'}} />
+                <MyInput value={profile.telegram} onChange={(e) => {setProfile({...profile, telegram: e.target.value})}} image={editAvatar} name={'telegram'} type={'tel'} placeholder={(currentUser[0].profile && currentUser[0].profile.length > 1) ? currentUser[0].profile.telegram : 'Аккаунт соцсети'} style={{marginBottom: '15px'}} />
 
                  <Col className='d-flex justify-content-center align-items-center'>
                     <MyButton text={'Сохранить'} btn={styles.btn} onClick={async () => {

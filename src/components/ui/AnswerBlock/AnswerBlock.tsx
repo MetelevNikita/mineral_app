@@ -22,7 +22,7 @@ const AnswerBlock: FC<AnswerBlockProps> = ({ num, text, onClick, disabled }) => 
 
   return (
 
-        <motion.button className={styles.answer_container} whileHover={{backgroundColor: '#7D22C9', color: '#fff'}} whileTap={{scale: 1.10}} onClick={onClick} disabled={disabled}>
+        <motion.button className={styles.answer_container} whileTap={{scale: 1.10}} onClick={onClick} disabled={disabled}>
             <div className={styles.answer_num}>{num}</div>
             <div className={styles.answer_text}>{text}</div>
         </motion.button>
