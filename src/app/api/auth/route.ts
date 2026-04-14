@@ -15,9 +15,6 @@ export const POST = async (req: Request) => {
     try {
 
         const {email, password, rememberMe} = await req.json()
-
-        console.log(email, password)
-
         if(!email || !password) {
             return NextResponse.json({
                 message: "Email or password is empty"

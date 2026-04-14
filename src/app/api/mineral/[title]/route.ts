@@ -156,12 +156,7 @@ export const POST = async (req: Request, context: {params: {title: any}}) => {
                 }
             })
 
-
-            console.log(`Cтарые данные геоквиза ${getMineral.title} удалены`)
         }
-
-            console.log(`Новые данные по геоквизу ${getMineral.title}`)
-
 
         // 
 

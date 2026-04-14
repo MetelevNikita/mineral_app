@@ -4,9 +4,9 @@ import Link from "next/link"
 
 // img
 
-import logoOne from '@/../public/logo_partners/logo_1.svg'
-import logoTwo from '@/../public/logo_partners/logo_2.svg'
-import logoThree from '@/../public/logo_partners/logo_3.svg'
+import logoOne from '@/../public/logo_partners/logo 1.png'
+import logoTwo from '@/../public/logo_partners/logo 2.png'
+import logoThree from '@/../public/logo_partners/logo 3.png'
 
 // type
 
@@ -32,6 +32,13 @@ const partnersArr: partnersArrType[] = [
         url: 'https://fondpotanin.ru/'
     },
 
+    {
+        id: 3,
+        title: 'logoThree',
+        img: logoThree,
+        url: 'https://polyus.com/ru/'
+    }
+
 ]
 
 
@@ -39,17 +46,24 @@ const partnersArr: partnersArrType[] = [
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
 
-        <Container className="vh-100 d-flex flex-column justify-content-around align-items-center">
-            <Row className="mb-3 mt-3">
+        <Container className="vh-100 d-flex flex-column justify-content-center align-items-center">
+            <Row className="d-flex justify-content-center mb-3 mt-3">
                 {
                     partnersArr.map((item: partnersArrType, index: number): React.ReactNode => {
-                        return <Col key={index+1} className="d-flex justify-content-center align-items-center"><Link href={item.url}><Image src={item.img} alt={item.title} /></Link></Col>
+                        return (
+                                    <Col key={index+1}>
+
+                                            <Link href={item.url} style={{width: '120px'}}>
+                                                <Image width={120} height={91} src={item.img} alt={item.title} />
+                                            </Link>
+
+                                    </Col>
+                                )
                     })
                 }
             </Row>
 
             {children}
-
 
             <Row className="mt-4 mb-4">
 

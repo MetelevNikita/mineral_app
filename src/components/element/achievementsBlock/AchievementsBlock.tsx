@@ -24,7 +24,7 @@ const AchievementsBlock: FC<AchievementsBlockProps> = ({ img, title, num, active
 
           <div className={styles.achievements_block_text_wrapper}>
 
-            <div className={styles.achievements_block_text_num}>{num.toString()} достижение:</div>
+            <div className={styles.achievements_block_text_num}>Достижение:</div>
             <div className={styles.achievements_block_text_title}>{title}</div>
 
           </div>

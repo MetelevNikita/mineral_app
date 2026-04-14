@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import { NextRequest } from 'next/server'
-import { withPWA } from 'next-pwa-pack'
 import { verifyToken } from './lib/varifyToken'
 
 export default function middleware(request: NextRequest) {

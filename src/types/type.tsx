@@ -4,7 +4,7 @@ import { StaticImageData } from "next/image"
 export type partnersArrType = {
     id: number,
     title: string,
-    img: string,
+    img: StaticImageData,
     url: string
 }
 
