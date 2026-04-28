@@ -6,8 +6,6 @@ import bcrypt from "bcryptjs";
 
 import { sendRandomCode } from "@/functions/emailRandomCode";
 import { cookies } from "next/headers";
-import { error } from "console";
-import { em } from "motion/react-client";
 
 // 
 

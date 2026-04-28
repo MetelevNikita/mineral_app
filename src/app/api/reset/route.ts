@@ -13,9 +13,8 @@ import nodemailer from 'nodemailer'
 
 // transporter
 
- const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
+const transporter = nodemailer.createTransport({
+    host: 'smtp.yandex.ru',
     port: 465,
     secure: true,
     auth: {
@@ -70,9 +69,9 @@ export const POST = async (req: Request): Promise<NextResponse<{status: number, 
 
 
       const info = await transporter.sendMail({
-        from: 'Propaganda1108@gmail.com',
+        from: 'geokviz@sgm.ru',
         to: email,
-        subject: 'Восстановление пароля',
+        subject: 'Сброс пароля ',
         text: `ссылка для сброса пароля\n\nссылка - ${link}`
       })
 
