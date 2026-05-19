@@ -128,9 +128,6 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
   })
 
 
-  console.log(mineralFromSection)
-
-
   const router = useRouter()
 
   // 
@@ -143,11 +140,6 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
           return item
       }
   })
-
-  console.log(currentSectionData)
-
-
-
 
 
 

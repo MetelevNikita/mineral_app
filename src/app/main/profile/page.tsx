@@ -155,7 +155,7 @@ const page: FC = () => {
 
 
 
-        <Row className='d-flex flex-row justify-content-center mb-3'>
+        {/* <Row className='d-flex flex-row justify-content-center mb-3'>
 
           <Col md={(statuses.price !== '') ? 3 : 6} xs={(statuses.price !== '') ? 6 : 12}>
 
@@ -176,6 +176,21 @@ const page: FC = () => {
                   </Col>
             )
           }
+
+        </Row> */}
+
+
+                <Row className='d-flex flex-row justify-content-center mb-3'>
+
+          <Col md={6} xs={12}>
+
+                <div className={styles.total_container}>
+                  <Image src={statusStar} width={45} height={44} alt={''}/>
+                  <div className={styles.total_title}>{currentUser?.total}</div>
+                </div>
+          
+          </Col>
+
 
         </Row>
 
