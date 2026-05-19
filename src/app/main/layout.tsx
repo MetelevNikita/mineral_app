@@ -50,11 +50,12 @@ export default function authLayout({children}: {children: React.ReactNode}) {
     return (
         <menuContext.Provider value={{menuActive, setMenuActive}}>
             <topMenuContext.Provider value={{topMenuOn, setTopMenuOn}}>
-                    <Container style={{padding: 0}}>
+                    <Container style={{padding: 0, minHeight: '100vh'}}>
                         <Header />
-                            <Row className='mt-3'>
-                                {children}
-                            </Row>
+
+                                <main className="mt-3 flex-grow-1 pb-5">
+                                    <Row className='g-0'>{children}</Row>
+                                </main>
                         <Footer />
                     </Container>
             </topMenuContext.Provider>

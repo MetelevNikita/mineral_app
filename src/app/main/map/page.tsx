@@ -127,7 +127,6 @@ const page: FC = () => {
       }
     },
 
-
     {
       id: 8,
       section: 'Q',
@@ -137,7 +136,6 @@ const page: FC = () => {
         left: 55
       }
     },
-
 
     {
       id: 9,
@@ -158,6 +156,7 @@ const page: FC = () => {
         left: 165
       }
     },
+
     {
       id: 11,
       section: 'P',
@@ -167,25 +166,63 @@ const page: FC = () => {
         left: 165
       }
     },
+
+
+
     {
       id: 12,
-      section: 'L',
+      section: 'N',
       img: mapIcon,
       coordinate: {
-        top: 370,
-        left: 215
+        top: 270,
+        left: 230
       }
     },
 
     {
       id: 13,
-      section: 'M',
+      section: 'X',
       img: mapIcon,
       coordinate: {
         top: 350,
-        left: 265
+        left: 230
       }
     },
+
+    {
+      id: 14,
+      section: 'Z',
+      img: mapIcon,
+      coordinate: {
+        top: 430,
+        left: 230
+      }
+    },
+
+    {
+      id: 15,
+      section: 'Q',
+      img: mapIcon,
+      coordinate: {
+        top: 270,
+        left: 272
+      }
+    },
+
+
+    {
+      id: 16,
+      section: 'R',
+      img: mapIcon,
+      coordinate: {
+        top: 450,
+        left: 270
+      }
+    },
+
+    
+
+
   ]
 
 
@@ -220,7 +257,11 @@ const page: FC = () => {
                   <div className={styles.map_background}>
 
                         <div className={styles.map_image_container}>
-                            <MapSvg current={{currentIcon, setCurrentIcon}} iconArr={mapFilteredArr}></MapSvg>
+                            <motion.div
+                              whileHover={{scale: 1.05}}
+                            >
+                                <MapSvg current={{currentIcon, setCurrentIcon}} iconArr={mapFilteredArr}></MapSvg>
+                            </motion.div>
                         </div>
 
                   </div>
@@ -231,7 +272,14 @@ const page: FC = () => {
 
             {
               (currentIcon !== null) && (
-                <motion.div initial={{opacity: 0, y: 0, x:0}} animate={{opacity: 1, y: -250, x: 0}} exit={{opacity: 0, y: -200, x: 0}}><MapInfoBlock id={currentIcon.id} close={{currentIcon, setCurrentIcon}} image={currentIcon.img} section={currentIcon.section} onClick={() => {setCurrentIcon(null)}}/></motion.div>
+                <motion.div
+                  initial={{opacity: 0, y: 0, x:0}}
+                  animate={{opacity: 1, y: -250, x: 0}}
+                  exit={{opacity: 0, y: -250, x: 0}}
+                >
+                  <MapInfoBlock id={currentIcon.id} close={{currentIcon, setCurrentIcon}} image={currentIcon.img} section={currentIcon.section} onClick={() => {setCurrentIcon(null)}}/>
+                  
+                </motion.div>
               )
             }
 

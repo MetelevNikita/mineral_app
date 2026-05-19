@@ -83,7 +83,12 @@ const MapSvg: FC<MapSvgProps> = ({ iconArr, current }) => {
               setCurrentIcon(item)
             }, 300)
             }}>
-              <motion.div initial={{scale: 0}} animate={{scale: 1}} transition={{duration: 0.2, delay: 0.1 + time}} whileTap={{scale: 0.9}} onClick={(e) => {}}>
+              <motion.div
+                style={{display: 'felx', alignItems: 'center', justifyContent: 'center'}}
+                initial={{scale: 0}}
+                animate={{scale: 1}}
+                transition={{duration: 0.2, delay: 0.1 + time}}
+                whileTap={{scale: 0.9}} onClick={(e) => {}}>
                 <Image src={item.img} alt={'icon'}/>
               </motion.div>
             </foreignObject>

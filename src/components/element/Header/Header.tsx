@@ -91,9 +91,14 @@ const menuArr = [
         title: 'Личные данные',
         link: '/main/profile/account'
     },
-
     {
         id: 7,
+        title: 'Команда',
+        link: '/main/team'
+    },
+
+    {
+        id: 8,
         title: 'Контакты',
         link: '/main/contact'
     },
