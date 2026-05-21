@@ -2,7 +2,7 @@ export const authUser = async (user: any) => {
     try {
         
 
-    const {email, password, check} = user
+    const {email, password, rememberMe} = user
 
 
     const responce = await fetch('/api/auth', {
@@ -12,7 +12,8 @@ export const authUser = async (user: any) => {
         },
         body: JSON.stringify({
             email,
-            password
+            password,
+            rememberMe,
         })
  
     })

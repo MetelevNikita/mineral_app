@@ -47,24 +47,39 @@ export const POST = async (req: Request) => {
         }
 
 
-        const token = jwt.sign({id: authUser.id, email: authUser.email}, process.env.SECRET_KEY as string, {expiresIn: '1h'})
+        const tokenMaxAge = rememberMe ? 60 * 60 * 24 * 7 : 60 * 60
+        const token = jwt.sign(
+            {id: authUser.id, email: authUser.email},
+            process.env.SECRET_KEY as string,
+            {expiresIn: tokenMaxAge}
+        )
   
         
-
         if (rememberMe) {
             (await cookies()).set('accessToken', token, {
                 sameSite: 'lax',
-                maxAge: 60 * 60 * 24 * 7,
+                maxAge: tokenMaxAge,
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                path: '/'
             })
         } else {
             (await cookies()).set('accessToken', token, {
                 sameSite: 'lax',
+                maxAge: tokenMaxAge,
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                path: '/'
             })
         }
 
          
         (await cookies()).set('admin', String(authUser.isAdmin), {
             sameSite: 'lax',
+            maxAge: 60 * 60 * 24 * 7,
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            path: '/'
         })
 
 

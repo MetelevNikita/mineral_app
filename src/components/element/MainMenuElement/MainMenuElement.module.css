@@ -40,7 +40,7 @@
 .main_menu_element_img_wrapper {
 
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: flex-end;
 
   height: 119px;

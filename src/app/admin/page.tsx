@@ -37,14 +37,10 @@ const page = () => {
     })
 
 
-    console.log(authAdminData)
-
-
     const authAdminHandler = async (data: {email: string, password: string}) => {
     try {
 
       const result = await authAdmin(data)
-      console.log(result)
 
       if (result.data === 'success') {
         confirm('Админ усепно авторизован! Пройти в панель?') && (
