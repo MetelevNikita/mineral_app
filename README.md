@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# mineral_app
+
+Next.js-приложение для работы с минералами, тестами, профилями пользователей, коллекциями, картой и админ-панелью.
+
+Документация для передачи проекта разработчикам/DevOps на деплой находится в [DEPLOYMENT.md](./DEPLOYMENT.md).
 
 ## Getting Started
 
@@ -54,5 +58,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 mkdir -p  /Volumes/T7/mineralData/reels; for video in ./*.{mp4,avi,mov,mkv}; do [ -f "$video" ] && ffmpeg -i "$video" -vf "scale=518:324:force_original_aspect_ratio=decrease,pad=518:324:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -fs 10M -preset medium -c:a aac -b:a 128k -movflags +faststart -y " /Volumes/T7/mineralData/reels/$(basename ${video%.*})_converted.mp4"; done
-
 

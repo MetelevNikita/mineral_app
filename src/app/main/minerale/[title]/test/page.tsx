@@ -422,6 +422,8 @@ const page = ({ params }: { params: { title: string } }) => {
 
     setAnswers([...answers, {question: questionTitle, correctAnswer: currentAnswer,  ...item}])
 
+    setButtonText('Следующий вопрос')
+
     if (questionId + 1 === currentMineral?.question.length) {
       setAnswerDisabled(true)
       setResultDisabled(false)

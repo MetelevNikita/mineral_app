@@ -26,7 +26,7 @@ const page: FC = () => {
 
         <Row className='d-flex justify-content-center align-items-center mb-3'>
             <Col md={6}>
-                <div className={styles.title}>Отзыв</div>
+                <div className={styles.title}>Команда</div>
             </Col>
         </Row>
 
