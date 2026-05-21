@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { NextRequest } from 'next/server'
 import { verifyToken } from './lib/varifyToken'
 
-export default function middleware(request: NextRequest) {
+export default async function middleware(request: NextRequest) {
     const url = request.nextUrl
     const pathname = url.pathname 
 
@@ -14,14 +14,16 @@ export default function middleware(request: NextRequest) {
 
 
     const publicWeb = ['/auth/login', '/auth/registration', '/admin']
-    const publicApi = ['/api/auth', '/api/registration', '/api/repeat', '/api/reset', '/api/users']
+    const publicApi = ['/api/auth', '/api/registration', '/api/repeat', '/api/reset']
     const publicAdmin = ['/admin']
 
     // Обработка API маршрутов
     if (pathname.startsWith('/api')) {
         console.log('📡 API маршрут:', pathname)
         
-        const isPublicApi = publicApi.some(apiPath => pathname.startsWith(apiPath))
+        const isPublicApi = publicApi.some(apiPath => (
+            pathname === apiPath || pathname.startsWith(`${apiPath}/`)
+        )) || (pathname === '/api/users' && request.method === 'POST')
         
         if (isPublicApi) {
             console.log('🔓 Публичный API маршрут - доступ разрешен')
@@ -40,7 +42,7 @@ export default function middleware(request: NextRequest) {
             )
         }
         
-        const verifyAccessToken = verifyToken(accessToken)
+        const verifyAccessToken = await verifyToken(accessToken)
         if (!verifyAccessToken.valid) {
             console.log('❌ Токен не валидный')
             return NextResponse.json(
@@ -71,7 +73,7 @@ export default function middleware(request: NextRequest) {
             return NextResponse.redirect(new URL('/auth/login', request.url))
         }
 
-        const verifyAccessToken = verifyToken(accessToken)
+        const verifyAccessToken = await verifyToken(accessToken)
 
         if (!verifyAccessToken.valid) {
             console.log('❌ Токен не валидный, редирект на логин')
@@ -98,7 +100,7 @@ export default function middleware(request: NextRequest) {
             return NextResponse.redirect(new URL('/admin', request.url))
         }
         
-        const verifyAdminToken = verifyToken(adminToken)
+        const verifyAdminToken = await verifyToken(adminToken)
         if (!verifyAdminToken.valid) {
             console.log('❌ Admin токен не валидный, редирект на вход')
             return NextResponse.redirect(new URL('/admin', request.url))
