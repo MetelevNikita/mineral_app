@@ -27,13 +27,13 @@ const titleWord = title.slice(0,1).toLocaleUpperCase() + title.slice(1)
 
 
   return (
-    <div className={styles.acarderon_container}>
+    <motion.div className={styles.acarderon_container} onClick={() => {setIsOn(prev => !prev)}} whileTap={{scale: 1.1}}>
 
         <div className={styles.acarderon_top}>
             <div className={styles.acarderon_top_text}>{titleWord}</div>
             
             <motion.div animate={isOn ? {rotate: 90} : {rotate: 0}}>
-                <Image onClick={() => {setIsOn(prev => !prev)}} src={arrIcon} width={48} height={48} alt='arrow_icon'/>
+                <Image  src={arrIcon} width={48} height={48} alt='arrow_icon'/>
             </motion.div>
         </div>
 
@@ -50,7 +50,7 @@ const titleWord = title.slice(0,1).toLocaleUpperCase() + title.slice(1)
         </AnimatePresence>
     
       
-    </div>
+    </motion.div>
   )
 }
 

@@ -272,7 +272,7 @@ const page = () => {
             <Col className='d-flex flex-column justify-content-center align-items-center'>
 
                 <div className={styles.title}>Введите код</div>
-                <div className={styles.subtitle}>Для завершения регистрации необходимо вести код который был выслан на почту которую вы указалали при регистрации, введите его</div>
+                <div className={styles.subtitle}>Для завершения регистрации необходимо ввести код, который был выслан на почту, которую вы указали при регистрации, введите его</div>
 
             </Col>
         </Row>
@@ -359,7 +359,7 @@ const page = () => {
         <Row className='mb-5'>
             <Col className='d-flex flex-column justify-content-start align-items-center'>
 
-            {(timeOut) && <MyButton text={'отправить повторно'} btn={styles.btn} onClick={async () => {
+            {(timeOut) && <MyButton text={'Отправить'} btn={styles.btn} onClick={async () => {
                 await repeatCodeHandler()
             }} type={'button'} />}
 
