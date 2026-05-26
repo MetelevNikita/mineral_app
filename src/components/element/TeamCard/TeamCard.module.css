@@ -61,3 +61,18 @@
     text-align: center;
     margin-top: 5px;
 }
+
+
+.team_card_link {
+  color: #8025C7;
+  font-family: "Open Sans";
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 125%; /* 13.75px */
+
+    /*  */
+
+    text-align: center;
+    margin-top: 5px;
+}

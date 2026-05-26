@@ -272,7 +272,7 @@ const page = () => {
             <Col className='d-flex flex-column justify-content-center align-items-center'>
 
                 <div className={styles.title}>Введите код</div>
-                <div className={styles.subtitle}>Для завершения регистрации необходимо вести код который бьыл выслан на почту которую вы указалали при регистрации, введите его</div>
+                <div className={styles.subtitle}>Для завершения регистрации необходимо вести код который был выслан на почту которую вы указалали при регистрации, введите его</div>
 
             </Col>
         </Row>
@@ -282,7 +282,6 @@ const page = () => {
             <Col className='d-flex flex-row justify-content-center align-items-center'>
 
                 {
-
                     arr.map((item: number, index: number) => {
                         return (
                             <input
@@ -312,8 +311,7 @@ const page = () => {
 
                             />
                         )
-                    })
-                    
+                    })  
                 }
 
             </Col>
@@ -344,7 +342,7 @@ const page = () => {
         <Row className='mb-5'>
             <Col className='d-flex flex-column justify-content-start align-items-center'>
 
-                <Countdown zeroPadTime={2} date={Date.now() + 59000} renderer={({ formatted: {minutes, seconds}, completed}) => {
+                <Countdown zeroPadTime={2} date={Date.now() + 2 * 60 * 1000} renderer={({ formatted: {minutes, seconds}, completed}) => {
                     if (timeOut) {
                         console.log(completed)
                         return <div className={styles.repeat}>Время вышло</div>;

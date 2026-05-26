@@ -26,7 +26,7 @@ const page: FC = () => {
 
         <Row className='d-flex justify-content-center align-items-center mb-3'>
             <Col md={6}>
-                <div className={styles.title}>Команда</div>
+                <div className={styles.title}>Команда Проекта</div>
             </Col>
         </Row>
 
@@ -37,7 +37,7 @@ const page: FC = () => {
 
         {
           (teamBase.length > 1) && (
-            teamBase.map((item: {image: string, name: string, info: string}, index: number): React.ReactNode => {
+            teamBase.map((item: {image: string, name: string, info: string, link: string | null}, index: number): React.ReactNode => {
               return (
                 <Col xs={6} md={2} key={index} className='d-flex justify-content-center mt-2 mb-2'>
 
@@ -47,7 +47,7 @@ const page: FC = () => {
                         animate={{opacity: 1, y: 0}}
                         transition={{delay: index*0.5, duration: 0.5}}
                       >
-                        <TeamCard image={item.image} name={item.name} info={item.info} />
+                        <TeamCard image={item.image} name={item.name} info={item.info} link={item.link}/>
                       </motion.div>
 
                 </Col>
