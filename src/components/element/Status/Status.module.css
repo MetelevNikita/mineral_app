@@ -61,9 +61,9 @@
 .top_title {
     margin-top: 10px;
     height: max-content;
-    width: 158px;
+    max-width: 158px;
     color: #FFF;
-    font-size: clamp(12px, 5vw, 16px);
+    font-size: clamp(10px, 4vw, 14px);
     font-style: normal;
     font-weight: 700;
     line-height: 126%; /* 25.2px */
@@ -94,13 +94,14 @@
 
 .top_text {
 
-        width: 168px;
+    width: 168px;
     color: #FFF;
     text-align: center;
     font-family: "Open Sans";
-    font-size: 14px;
+    font-size: clamp(8px, 3vw, 14px);
     font-style: normal;
     font-weight: 400;
     line-height: 122%; /* 12.2px */
+    padding: 10px;
 
 }

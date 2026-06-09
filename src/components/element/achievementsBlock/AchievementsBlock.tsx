@@ -10,9 +10,10 @@ interface AchievementsBlockProps {
   title: string
   num: string | number
   activeAchievements: CSSProperties
+  total: string | number
 }
 
-const AchievementsBlock: FC<AchievementsBlockProps> = ({ img, title, num, activeAchievements }) => {
+const AchievementsBlock: FC<AchievementsBlockProps> = ({ img, title, num, activeAchievements, total }) => {
   return (
     <div className={styles.achievements_block_container} style={activeAchievements}>
 
@@ -27,6 +28,10 @@ const AchievementsBlock: FC<AchievementsBlockProps> = ({ img, title, num, active
             <div className={styles.achievements_block_text_num}>Достижение:</div>
             <div className={styles.achievements_block_text_title}>{title}</div>
 
+          </div>
+
+          <div className={styles.achievements_block_text_total_container}>
+            <div className={styles.achievements_block_text_total}>{total}</div>
           </div>
 
       </div>

@@ -101,12 +101,11 @@ const page: FC<{ params: { title: string } }> =  ({ params }) => {
         </motion.div>
         
 
-        <div className={styles.btn_wrapper}>
+        {/* <div className={styles.btn_wrapper}>
 
           <Link href={'/main/minerale'}><MyButton text={'Продолжить'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>
 
-
-        </div>
+        </div> */}
 
     </div>
   )

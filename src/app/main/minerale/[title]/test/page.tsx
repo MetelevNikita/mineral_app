@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from "motion/react"
 import { useRouter } from 'next/navigation'
 
@@ -58,16 +58,21 @@ import { getStatus } from '@/functions/status/getStatus'
 
 import { CollectionMineralType } from '@/types/type'
 
+type StatusThreshold = {
+  status: string
+  min: number
+}
+
+type KvizScore = {
+  newTotal: number
+}
 
 
 
-const page = ({ params }: { params: { title: string } }) => {
 
-
+const page = ({ params }: { params: Promise<{ title: string }> }) => {
 
   const router = useRouter()
-
-
 
   const [userId, setUserId] = useState<string>('')
   const [mineralTitle, setMineralTitle] = useState<string>('');
@@ -78,8 +83,7 @@ const page = ({ params }: { params: { title: string } }) => {
 
   // 
 
-  const [statuses, setStatuses] = useState<any>([])
-  const [newStatus, setNewStatus] = useState<string>('')
+  const [statuses, setStatuses] = useState<StatusThreshold[]>([])
 
   // 
 
@@ -92,6 +96,7 @@ const page = ({ params }: { params: { title: string } }) => {
 
   const [buttonText, setButtonText] = useState<string>('Тест начался')
   const [price, setPrice] = useState<number | null>(null)
+  const [kvizScore, setKvizScore] = useState<KvizScore | null>(null)
 
 
 
@@ -150,25 +155,29 @@ const page = ({ params }: { params: { title: string } }) => {
   }, [dispatch])
 
 
-  useEffect(() => {
+useEffect(() => {
 
     const fetchStatuses = async () => {
       const res = await getStatus()
 
+      if (!Array.isArray(res)) return
+
       const data = res.map((item: any) => {
         return {
           status: item.title,
-          min: item.total
+          min: Number(item.total)
         }
-      })
+      }).sort((a: StatusThreshold, b: StatusThreshold) => a.min - b.min)
 
       setStatuses(data)
     }
 
-
     fetchStatuses()
+    
   }, [dispatch])
 
+
+  console.log(statuses)
 
   
   // Проверям был ли пройден этот геоквиз ранее
@@ -182,8 +191,6 @@ const page = ({ params }: { params: { title: string } }) => {
     if (kvizIsDone) {
       setKvizDone(true)
     }
-
-
 
   }, [currentUser, currentMineral])
 
@@ -336,11 +343,14 @@ const page = ({ params }: { params: { title: string } }) => {
   }
 
 
-  async function checkNewStatusFromUser (currentUser: any) {
+  async function checkNewStatusFromUser (currentUser: any, score: KvizScore | null) {
     try {
-      const newTotal = currentUser.total + price
+      if (!currentUser || !score) {
+        router.push('/main/minerale')
+        return
+      }
 
-      const newStatus = await newStatusUser(parseInt(newTotal))
+      const newStatus = await newStatusUser(score.newTotal, currentUser.status)
       console.log('НОВЫЙ СТАТУС ', newStatus)
 
       if (newStatus) {
@@ -365,33 +375,25 @@ const page = ({ params }: { params: { title: string } }) => {
   // STATUS
 
 
-  const getNewStatusIfThresholdCrossed = (previousTotal: number, newTotal: number, currentStatus: string): string | null => {
-      // Находим индекс текущего статуса в массиве
-      const currentStatusIndex = statuses.findIndex((s: any) => s.status === currentStatus);
-      const currentThreshold = statuses[currentStatusIndex]?.min || 0;
-      
-      // Проходим по порогам, которые ВЫШЕ текущего
-      for (let i = currentStatusIndex + 1; i < statuses.length; i++) {
-        const threshold = statuses[i];
-        // Если достигнут порог
-        if (newTotal >= threshold.min) {
-          return threshold.status;
-        }
-      }
-      return null;
+  const getNewStatusIfThresholdCrossed = (newTotal: number, currentStatus: string): string | null => {
+      const currentStatusMin = statuses.find((threshold) => threshold.status === currentStatus)?.min ?? 0
+      const crossedStatuses = statuses.filter((threshold) => {
+        return threshold.status !== currentStatus && threshold.min > currentStatusMin && newTotal >= threshold.min
+      })
+
+      return crossedStatuses.at(-1)?.status ?? null
   };
 
 
-  async function newStatusUser (newTotal: number) {
+  async function newStatusUser (newTotal: number, currentStatus: string) {
     try {
 
       if (!currentUser) return
 
-      const previousTotal = currentUser.total || 0;
-      const newStatus = getNewStatusIfThresholdCrossed(previousTotal as number, newTotal, currentUser.status);
+      const newStatus = getNewStatusIfThresholdCrossed(newTotal, currentStatus);
       
       // Если достигнут новый порог
-      if (newStatus && newStatus !== currentUser.status) {
+      if (newStatus && newStatus !== currentStatus) {
         console.log(`Достигнут новый статус: ${newStatus} (${newTotal} баллов)`);
         await dispatch(fetchUsersChangeStatus({ userId, status: newStatus })).unwrap();
         await dispatch(getUsers()).unwrap();
@@ -448,7 +450,9 @@ const page = ({ params }: { params: { title: string } }) => {
 
           const total = await checkMineralPassed()
           setPrice(total)
-          const newTotal = currentUser ? currentUser.total + total : 0 as number
+          const previousTotal = Number(currentUser?.total || 0)
+          const newTotal = previousTotal + total
+          setKvizScore({ newTotal })
           console.log(newTotal)
 
           // Присваиваем баллы пользователю
@@ -477,7 +481,7 @@ const page = ({ params }: { params: { title: string } }) => {
   }
 
 
-  async function CloseWinModal (currentUser: any, price: any) {
+  async function CloseWinModal (currentUser: any, score: KvizScore | null) {
 
     try {
 
@@ -494,7 +498,7 @@ const page = ({ params }: { params: { title: string } }) => {
       }
 
       // Получаем новый статус пользователя, если он достигнут
-      await checkNewStatusFromUser(currentUser)
+      await checkNewStatusFromUser(currentUser, score)
 
       // 
 
@@ -530,10 +534,10 @@ const page = ({ params }: { params: { title: string } }) => {
     }
   }
 
-  async function CloseNewMineralModal (currentUser: any) {
+  async function CloseNewMineralModal (currentUser: any, score: KvizScore | null) {
     try {
 
-      await checkNewStatusFromUser(currentUser)
+      await checkNewStatusFromUser(currentUser, score)
       setNewMineral(false)
       
     } catch (error: Error | unknown) {
@@ -564,7 +568,6 @@ const page = ({ params }: { params: { title: string } }) => {
 
 
   <>
-
   {/* MODALS */}
 
   {
@@ -574,7 +577,7 @@ const page = ({ params }: { params: { title: string } }) => {
 
           <ModalText
             title={`Квиз ${currentMineral.title} пройден`}
-            text={'За последующее прохождение вам будет начисленно 10 баллов'}
+            text={'За последующее прохождение вам будет начислено 10 баллов'}
             btnText={'Продолжить'}
             onClickBtn={() => {setKvizDone(false)}}
             onClickClose={() => {setKvizDone(false)}}
@@ -594,15 +597,15 @@ const page = ({ params }: { params: { title: string } }) => {
               imgTop={IconWin}
               onClickLink={async () => {
 
-                await CloseWinModal(currentUser, price)
+                await CloseWinModal(currentUser, kvizScore)
 
               }}
-              imgClose={IconClose}
+              imgClose={''}
               onClickClose={() => {
                 router.push('/main/profile')
               }}
               text={`Вы получаете ${price} баллов`}
-              textBtn={'Подробнее'}
+              textBtn={'ОК'}
               colorBackground={{background: 'linear-gradient(125deg, #7D22C9 0.49%, #FFBF00 73.51%, #FFBC41 99.11%)'}}
               colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}} 
               />
@@ -625,7 +628,7 @@ const page = ({ params }: { params: { title: string } }) => {
               }}
               onClickClose={() => {router.push(`/main/minerale/`)}}
               text={`Геоквиз не пройден`}
-              textBtn={'Подробнее'}
+              textBtn={'ОК'}
               colorBackground={{background: 'linear-gradient(262deg, #C92225 3.49%, #FF8041 121.77%)'}}
               colorTop={{background: 'linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)'}} 
               />
@@ -644,7 +647,7 @@ const page = ({ params }: { params: { title: string } }) => {
           <ModalResult
             imgTop={statusStar}
             onClickLink={async () => {
-              await CloseNewMineralModal(currentUser)
+              await CloseNewMineralModal(currentUser, kvizScore)
             }}
             text={'Открыт новый минерал'}
             textBtn={'Получить'}

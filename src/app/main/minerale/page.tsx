@@ -61,18 +61,11 @@ const page: FC = () => {
 
   }, [dispatch])
 
-
-    console.log(userId)
-
-
     const currentUsers = users.filter((item: any) => {
     if (item.id == userId) {
       return item
     }
   })[0]
-
-  console.log(currentUsers)
-
 
 
   useEffect(() => {

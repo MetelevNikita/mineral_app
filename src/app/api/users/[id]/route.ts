@@ -97,11 +97,6 @@ export const PATCH = async (req: Request, context: {params: any}) => {
         const { id } = await context.params 
         const data = await req.json()
 
-
-        console.log('DATA FROM PATCH!!!!! ', data)
-        console.log(data)
-
-
         if (data.total) {
             const { total } = data
 
@@ -144,9 +139,6 @@ export const PATCH = async (req: Request, context: {params: any}) => {
                 message: "Ошибка обновления статуса прохождения квиза"
             })
         }
-
-
-        console.log(newMineralPassed, "newMineralPassed")
 
         return NextResponse.json({
             message: "Запись прохождения квиза обновлен"

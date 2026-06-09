@@ -70,7 +70,6 @@ const page: FC = () => {
                   if (qrcode) {
                     if (qrcode.data) {
                       qrFound = true
-                      console.log(qrcode.data)
                       setActive(true)
 
                       setTimeout(() => {

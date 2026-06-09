@@ -75,9 +75,6 @@ const page: FC = () => {
     }, [])
 
 
-    console.log(contactsArr)
-
-
   return (
 
     <Container>

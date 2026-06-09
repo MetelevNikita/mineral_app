@@ -65,7 +65,7 @@ const page: FC = () => {
 
   return (
     
-    <Container>
+    <Container className={'d-flex justify-content-center align-items-center'}>
       <Row>
         <Col className='d-flex flex-column justify-content-center align-items-center'>
       <div className={styles.container}>
@@ -73,8 +73,8 @@ const page: FC = () => {
         <div className={styles.image_background}>
 
 
-                <Row className="mb-4 mt-4 d-flex justify-content-between">
-                  <Col className='d-flex d-flex justify-content-between' style={{width: '400px'}}>
+                <Row className=" d-flex justify-content-between">
+                  <Col className='d-flex d-flex justify-content-between' style={{ width: 'min(92vw, 400px)' }}>
                     {
                         partnersArr.map((item: partnersArrType, index: number): React.ReactNode => {
                             return <Col key={item.id} className="d-flex justify-content-center align-items-center"><Link href={item.url}><Image src={item.img} alt={item.title} /></Link></Col>
@@ -85,11 +85,11 @@ const page: FC = () => {
 
                 <div onDragEnter={() => {}} className={styles.glass_background}>
 
-                  <Col className='d-flex flex-column justify-content-center align-items-center'>
+                  <Col className='d-flex flex-column justify-content-center'>
 
 
                   <motion.div initial={{opacity: 0, scale: 0.5}} animate={{opacity: 1, scale: 1}} transition={{duration: 2}} className={styles.image_box}>
-                  <Image src={logo_icon} width={180} height={220} alt={'logo_icon'}/>
+                  <Image src={logo_icon} width={140} height={220} alt={'logo_icon'}/>
                   </motion.div>
 
                   </Col>
@@ -102,7 +102,7 @@ const page: FC = () => {
                 </Col>
 
 
-                <Col className='d-flex flex-column mt-4'>
+                <Col className='d-flex flex-column'>
 
                       <Link style={{textDecoration: 'none'}} href={'/auth/login'}><MyButton text={'Войти'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>
                       <Link style={{textDecoration: 'none'}} href={'/auth/registration'}><MyButton text={'Регистрация'} btn={styles.btn} onClick={() => {}} type={'button'} /></Link>

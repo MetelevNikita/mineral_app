@@ -26,11 +26,7 @@ export const DELETE = async (request: Request, context: {params: {id: string}}) 
       }
     })
 
-    console.log('Найден минерал в коллекции', getCollectionMineral)
-
-
     // 
-
 
     const deleteIcon = await deleteCurrentFile(getCollectionMineral?.image as string, 'collections')
 

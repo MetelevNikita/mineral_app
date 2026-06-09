@@ -51,7 +51,7 @@ const Status: FC<StatusProps> = ({ title, img, onClick, button, bgColor, topColo
                             (
                             <div className={styles.top_text_container}>
 
-                                <div className={styles.top_text}>Посмотри какие звания ты можешь получить</div>
+                                <div className={styles.top_text}>Посмотрите какие звания вы можете получить</div>
 
                             </div>
 
