@@ -58,12 +58,13 @@
 
 
 .middle_text {
+    max-width: 100%;
     color: #7D22C9;
     font-family: "Open Sans";
-    font-size: 15px;
+    font-size: clamp(8px, 3vw, 14px);
     font-style: normal;
     font-weight: 600;
-    line-height: 105%;
+    line-height: 100%;
 }
 
 

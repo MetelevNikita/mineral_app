@@ -37,10 +37,10 @@ export const teamBase = [
   },
   {
     "id": 6,
-    "name": "Рустем Гайсин",
-    "info": "Оператор-постановщик",
-    "link": "https://vk.ru/iskhakgeo",
-    "image": "/team/RustemGaisin.png"
+    "name": "Артем Шадрин",
+    "info": "Режиссёр монтажа, AI-креатор",
+    "link": null,
+    "image": "/team/ArtemShadrin.png"
   },
   {
     "id": 7,
@@ -72,9 +72,9 @@ export const teamBase = [
   },
   {
     "id": 11,
-    "name": "Артем Шадрин",
-    "info": "Режиссёр монтажа, AI-креатор",
+    "name": "Рустем Гайсин",
+    "info": "Оператор-постановщик",
     "link": null,
-    "image": "/team/ArtemShadrin.png"
+    "image": "/team/RustemGaisin.png"
   },
 ]

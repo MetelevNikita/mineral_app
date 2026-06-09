@@ -56,10 +56,6 @@ const page: FC = () => {
   const statuses = useAppSelector(state => state.status.status)
 
 
-  console.log(statuses)
-
-
-
   if (!user) {
     return <Loading text={'Загрузка...'} />
   }
@@ -103,6 +99,7 @@ const page: FC = () => {
 
         {
           prevStatus.map((status, index) => {
+            console.log(status)
             return (
                     <Col md={6} key={status.id} className='mt-2 mb-2'>
                               <AchievementsBlock 
@@ -110,6 +107,7 @@ const page: FC = () => {
                                 title={status.title}
                                 num={index + 1}
                                 activeAchievements={{background: 'linear-gradient(111deg, #95B38D 10.06%, #90E899 114.82%, #F2E3A2 85.61%)', color: 'white'}}
+                                total={status.total}
                               />
                       </Col>
             )
@@ -118,6 +116,7 @@ const page: FC = () => {
 
         {
           currentStatus.map((status, index) => {
+            console.log(status)
             return (
                     <Col md={6} key={status.id} className='mt-2 mb-2'>
                             <motion.div
@@ -138,6 +137,7 @@ const page: FC = () => {
                                 img={status.icon}
                                 title={status.title}
                                 num={index + 1}
+                                total={status.total}
                                 activeAchievements={{filter: 'grayscale(0%)',   background: 'linear-gradient(111deg, #F2E3A2 10.06%, #D6B573 54.88%, #F2E3A2 85.61%, #C89E5C 114.82%)'}}
                               />
                             </motion.div>
@@ -155,6 +155,7 @@ const page: FC = () => {
                                 title={status.title}
                                 num={index + 1}
                                 activeAchievements={{filter: 'grayscale(100%)',   background: 'linear-gradient(111deg, #F2E3A2 10.06%, #D6B573 54.88%, #F2E3A2 85.61%, #C89E5C 114.82%)'}}
+                                total={status.total}
                               />
                       </Col>
             )

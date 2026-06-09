@@ -110,7 +110,7 @@ const page: FC = () => {
 
 
           <div className={styles.title}>Вход</div>
-          <div className={styles.subtitle}>Введите почту которая была зарегистрирована.На нее будет отправлен ссылка для сброса пароля.</div>
+          <div className={styles.subtitle}>Введите почту, которая была зарегистрирована. На нее будет отправлена ссылка для сброса пароля.</div>
 
   
           <MyInput type={'email'} placeholder={''} style={{marginBottom: '20px'}} value={email} onChange={(e: any) => {setEmail(e.target.value)}} borderColor={(error) ? {borderColor: 'red'} : {borderColor: '#D8DADC'}}/>

@@ -74,7 +74,9 @@ const page: FC = () => {
 
   const currentUser: UserType | null = useAppSelector((state) => state.user.user).find((item: UserType) => item.id === parseInt(userId)) ?? null;
   const collectionMineral: CollectionMineralType[] = useAppSelector((state) => state.collection.collection) ?? []
-  const statuses = useAppSelector((state) => state.status.status).find((item) => item.title == currentUser?.status)
+  const statuses = useAppSelector((state) => state.status.status).find((item) => item.title === currentUser?.status)
+
+
 
 
 
@@ -136,11 +138,11 @@ const page: FC = () => {
             <Col md={3} xs={6} className='d-flex justify-content-center align-items-center mb-1'>
 
                   <Status
-                    title={'Открой свой путь достижений'}
+                    title={'Откройте свой путь достижений'}
                     img={statuses.icon}
                     onClick={() => {router.push('profile/achievements')} }
                     bgColor={{
-                        background: 'linear-gradient(111deg, #7D22C9 10.06%, #007AFF 114.82%)'
+                        background: 'linear-gradient(111deg, #7D22C9 10.06%, #72afef 114.82%)'
                       }}
                     topColor={{
                         backgroundColor: `linear-gradient(169deg, rgba(255, 255, 255, 0.28) -10.03%, rgba(255, 255, 255, 0.28) 96.66%)`,
