@@ -66,110 +66,56 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
 
 
   const minerals = useAppSelector(state => state.minerals.minerals)
-  const mineralFromSection = minerals.map((item: any) => {
-    if (item.title == "Мусковит" || item.title == "Лабрадор" || item.title == "Лазурит") {
-      return {
-        ...item,
-        section: 'A'
-      }
-    } else if (item.title == "Редкоземельные минералы") {
-      return {
-        ...item,
-        section: 'K'
-      }
-    } else if (item.title == "Редкоземельные минералы") {
-      return {
-        ...item,
-        section: 'B'
-      }
-    } else if (item.title == "Гипс" || item.title == "Флюорит") {
-      return {
-        ...item,
-        section: 'C'
-      }
-    } else if (item.title == "Мусковит") {
-      return {
-        ...item,
-        section: 'F'
-      }
-    } else if (item.title == "Касситерит" || item.title == "О минералах") {
-      return {
-        ...item,
-        section: 'E'
-      }
-    } else if (item.title == "Апатит" || item.title == "Флюорит" || item.title == "Галит" || item.title == "Алмаз" || item.title == "Мусковит" || item.title == "Горные породы" || item.title == "Уголь" || item.title == "Нефть") {
-      return {
-        ...item,
-        section: 'G'
-      }
 
-    } else if (item.title == "Редкоземельные минералы" || item.title == "Псиломелан" || item.title == "Платина" || item.title == "Касситерит" || item.title == "Боксит") {
-    return {
-        ...item,
-        section: 'D'
-      }
+  console.log(minerals)
 
-    } else if (item.title == "Киноварь" || item.title == "Алмаз") {
-    return {
-        ...item,
-        section: 'H'
-      }
-    } else if (item.title == "Графит" || item.title == "Апатит" || item.title == "Псиломелан" || item.title == "Галит" || item.title == "Гипс") {
-      return {
-        ...item,
-        section: 'Q'
-      }
-    } else if (item.title == "Боксит" || item.title == "Флюорит" || item.title == "Киноварь") {
-      return {
-        ...item,
-        section: 'Y'
-      }
-    } else if (item.title == "Касситерит" || item.title == "Апатит" || item.title == "Кальцит" || item.title == "Хромит" || item.title == "Алмаз") {
-      return {
-        ...item,
-        section: 'W'
-      }
-    } else if (item.title == "Твердость") {
-      return {
-        ...item,
-        section: 'I'
-      }
-    } else if (item.title == "Лабрадор" || item.title == "Цвет" || item.title == "Кальцит") {
-      return {
-        ...item,
-        section: 'P'
-      }
-    } else if (item.title == "Псевдоморфозы" || item.title == "О минералах") {
-      return {
-        ...item,
-        section: 'J'
-      }
-    } else if (item.title == "Яшма") {
-      return {
-        ...item,
-        section: 'N'
-      }
-    } else if (item.title == "Редкоземельные минералы") {
-      return {
-        ...item,
-        section: 'X'
-      }
-    } else if (item.title == "Горная порода") {
-      return {
-        ...item,
-        section: 'Q'
-      }
-    } else if (item.title == "Галит") {
-      return {
-        ...item,
-        section: 'R'
-      }
-    
-    } else {
-      return item
-    }
-  })
 
+  const sectionByMineralTitle: Record<string, string[]> = {
+    'Мусковит': ['A', 'F', 'G'],
+    'Лабрадор': ['A', 'P'],
+    'Лазурит': ['A'],
+
+    'Редкоземельные минералы': ['K', 'B', 'D', 'X'],
+
+    'Гипс': ['C', 'Q'],
+    'Флюорит': ['C', 'G', 'Y'],
+
+    'Касситерит': ['E', 'D', 'W'],
+    'О минералах': ['E', 'J'],
+
+    'Апатит': ['G', 'Q', 'W'],
+    'Галит': ['G', 'Q', 'R'],
+    'Алмаз': ['G', 'H', 'W'],
+    'Горные породы': ['G'],
+    'Уголь': ['G'],
+    'Нефть': ['G'],
+
+    'Псиломелан': ['D', 'Q'],
+    'Платина': ['D'],
+    'Боксит': ['D', 'Y'],
+
+    'Киноварь': ['H', 'Y'],
+    'Графит': ['Q'],
+
+    'Кальцит': ['P', 'W'],
+    'Хромит': ['W'],
+
+    'Твердость': ['I'],
+    'Цвет': ['P'],
+    'Псевдоморфозы': ['J'],
+    'Яшма': ['N'],
+
+    'Горная порода': ['Q'],
+  }
+
+  const mineralFromSection = minerals.map((item: any) => ({
+    ...item,
+    sections: sectionByMineralTitle[item.title] || [],
+  }))
+
+  const currentSectionData = mineralFromSection.filter((item: any) =>
+    item.sections.includes(section)
+  )
 
   const router = useRouter()
 
@@ -178,11 +124,7 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
   const [currentMineral, setCurrentMineral] = useState<any | null>(null)
   const {currentIcon, setCurrentIcon} = close
 
-  const currentSectionData = mineralFromSection.filter((item) => {
-      if (item.section === section) {
-          return item
-      }
-  })
+
 
 
   console.log(currentSectionData)
