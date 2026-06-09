@@ -72,12 +72,12 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
         ...item,
         section: 'A'
       }
-    } else if (item.title == "Редкоземельные металлы") {
+    } else if (item.title == "Редкоземельные минералы") {
       return {
         ...item,
         section: 'K'
       }
-    } else if (item.title == "Редкоземельные металлы") {
+    } else if (item.title == "Редкоземельные минералы") {
       return {
         ...item,
         section: 'B'
@@ -103,13 +103,13 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
         section: 'G'
       }
 
-    } else if (item.title == "Редкоземельные металлы" || item.title == "Псиломелан" || item.title == "Платина" || item.title == "Касситерит" || item.title == "Боксит") {
+    } else if (item.title == "Редкоземельные минералы" || item.title == "Псиломелан" || item.title == "Платина" || item.title == "Касситерит" || item.title == "Боксит") {
     return {
         ...item,
         section: 'D'
       }
 
-    } else if (item.title == "Редкоземельные металлы" || item.title == "Псиломелан" || item.title == "Платина" || item.title == "Касситерит" || item.title == "Боксит") {
+    } else if (item.title == "Киноварь" || item.title == "Алмаз") {
     return {
         ...item,
         section: 'H'
@@ -149,7 +149,7 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
         ...item,
         section: 'N'
       }
-    } else if (item.title == "Редкоземельные металлы") {
+    } else if (item.title == "Редкоземельные минералы") {
       return {
         ...item,
         section: 'X'
@@ -183,6 +183,9 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
           return item
       }
   })
+
+
+  console.log(currentSectionData)
 
 
 
