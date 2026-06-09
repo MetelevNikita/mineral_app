@@ -48,12 +48,7 @@ const page: FC = () => {
 
   const mineralMap = useAppSelector((state) => state.mapMinerals.map)
 
-  const coordinateMineralApp = mineralMap.map((item: any) => {
-    return {
-      ...item,
-    }
-  })
-
+ 
 
   const mapBlockArr: mapBlockArrType[] = [
     {
@@ -122,13 +117,33 @@ const page: FC = () => {
       section: 'G',
       img: mapIcon,
       coordinate: {
+        top: 135,
+        left: 245
+      }
+    },
+
+    {
+      id: 8,
+      section: 'D',
+      img: mapIcon,
+      coordinate: {
         top: 90,
         left: 235
       }
     },
 
     {
-      id: 8,
+      id: 9,
+      section: 'H',
+      img: mapIcon,
+      coordinate: {
+        top: 190,
+        left: 5
+      }
+    },
+
+    {
+      id: 10,
       section: 'Q',
       img: mapIcon,
       coordinate: {
@@ -138,7 +153,7 @@ const page: FC = () => {
     },
 
     {
-      id: 9,
+      id: 11,
       section: 'Y',
       img: mapIcon,
       coordinate: {
@@ -148,7 +163,7 @@ const page: FC = () => {
     },
 
     {
-      id: 10,
+      id: 12,
       section: 'W',
       img: mapIcon,
       coordinate: {
@@ -156,21 +171,44 @@ const page: FC = () => {
         left: 165
       }
     },
+    {
+      id: 13,
+      section: 'I',
+      img: mapIcon,
+      coordinate: {
+        top: 280,
+        left: 165
+      }
+    },
 
     {
-      id: 11,
+      id: 14,
       section: 'P',
       img: mapIcon,
       coordinate: {
-        top: 370,
+        top: 350,
+        left: 165
+      }
+    },
+    {
+      id: 15,
+      section: 'J',
+      img: mapIcon,
+      coordinate: {
+        top: 400,
         left: 165
       }
     },
 
 
 
+
+    // 
+
+
+
     {
-      id: 12,
+      id: 16,
       section: 'N',
       img: mapIcon,
       coordinate: {
@@ -180,43 +218,41 @@ const page: FC = () => {
     },
 
     {
-      id: 13,
+      id: 17,
       section: 'X',
       img: mapIcon,
       coordinate: {
-        top: 350,
+        top: 370,
         left: 230
       }
     },
 
     {
-      id: 14,
+      id: 18,
       section: 'Z',
       img: mapIcon,
       coordinate: {
-        top: 430,
-        left: 230
+        top: 470,
+        left: 240
       }
     },
 
     {
-      id: 15,
+      id: 19,
       section: 'Q',
       img: mapIcon,
       coordinate: {
-        top: 270,
-        left: 272
+        top: 430,
+        left: 273
       }
     },
-
-
     {
-      id: 16,
+      id: 20,
       section: 'R',
       img: mapIcon,
       coordinate: {
-        top: 450,
-        left: 270
+        top: 60,
+        left: 55
       }
     },
 
@@ -240,6 +276,8 @@ const page: FC = () => {
     }
   })
 
+
+
   return (
     <Container style={{height: '100vh'}}>
         <Row className='d-flex justify-content-center align-items-center mb-3'>
@@ -260,7 +298,10 @@ const page: FC = () => {
                             <motion.div
                               whileHover={{scale: 1.05}}
                             >
-                                <MapSvg current={{currentIcon, setCurrentIcon}} iconArr={mapFilteredArr}></MapSvg>
+                                  <MapSvg
+                                    current={{currentIcon, setCurrentIcon}}
+                                    iconArr={mapFilteredArr}>
+                                  </MapSvg>
                             </motion.div>
                         </div>
 
@@ -277,7 +318,17 @@ const page: FC = () => {
                   animate={{opacity: 1, y: -250, x: 0}}
                   exit={{opacity: 0, y: -250, x: 0}}
                 >
-                  <MapInfoBlock id={currentIcon.id} close={{currentIcon, setCurrentIcon}} image={currentIcon.img} section={currentIcon.section} onClick={() => {setCurrentIcon(null)}}/>
+                  <MapInfoBlock
+                      id={currentIcon.id}
+                      close={{currentIcon, setCurrentIcon}}
+                      image={currentIcon.img}
+                      section={currentIcon.section}
+                      onClick={
+                        () => {
+                          setCurrentIcon(null)
+                        }
+                      }
+                  />
                   
                 </motion.div>
               )

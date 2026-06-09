@@ -67,22 +67,22 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
 
   const minerals = useAppSelector(state => state.minerals.minerals)
   const mineralFromSection = minerals.map((item: any) => {
-    if (item.title == "Мусковит" || item.title == "Лабрадор") {
+    if (item.title == "Мусковит" || item.title == "Лабрадор" || item.title == "Лазурит") {
       return {
         ...item,
         section: 'A'
       }
-    } else if (item.title == "Гадолинит" || item.title == "Cидерит") {
+    } else if (item.title == "Редкоземельные металлы") {
       return {
         ...item,
         section: 'K'
       }
-    } else if (item.title == "Бастнезит") {
+    } else if (item.title == "Редкоземельные металлы") {
       return {
         ...item,
         section: 'B'
       }
-    } else if (item.title == "Гипс" || item.title == "Флюрит") {
+    } else if (item.title == "Гипс" || item.title == "Флюорит") {
       return {
         ...item,
         section: 'C'
@@ -92,36 +92,79 @@ const MapInfoBlock: FC<MapInfoBlockProps> = ({ image, section, onClick, id, clos
         ...item,
         section: 'F'
       }
-    } else if (item.title == "Киноварь" || item.title == "Гематит" || item.title == "Касситерит" || item.title == "О минералах") {
+    } else if (item.title == "Касситерит" || item.title == "О минералах") {
       return {
         ...item,
         section: 'E'
       }
-    } else if (item.title == "Нефть" || item.title == "Уголь" || item.title == "Горные породы" || item.title == "Флюрит" || item.title == "Боксит" || item.title == "Псиломелан" || item.title == "Платина") {
+    } else if (item.title == "Апатит" || item.title == "Флюорит" || item.title == "Галит" || item.title == "Алмаз" || item.title == "Мусковит" || item.title == "Горные породы" || item.title == "Уголь" || item.title == "Нефть") {
       return {
         ...item,
         section: 'G'
       }
-    } else if (item.title == "Апатит" || item.title == "Гипс" || item.title == "Галит" || item.title == "Кальцит" || item.title == "Графит" || item.title == "Псиломелан") {
+
+    } else if (item.title == "Редкоземельные металлы" || item.title == "Псиломелан" || item.title == "Платина" || item.title == "Касситерит" || item.title == "Боксит") {
+    return {
+        ...item,
+        section: 'D'
+      }
+
+    } else if (item.title == "Редкоземельные металлы" || item.title == "Псиломелан" || item.title == "Платина" || item.title == "Касситерит" || item.title == "Боксит") {
+    return {
+        ...item,
+        section: 'H'
+      }
+    } else if (item.title == "Графит" || item.title == "Апатит" || item.title == "Псиломелан" || item.title == "Галит" || item.title == "Гипс") {
       return {
         ...item,
         section: 'Q'
       }
-    } else if (item.title == "Апатит" || item.title == "Кальцит" || item.title == "Касситерит" || item.title == "Алмаз" || item.title == "Лопарит") {
+    } else if (item.title == "Боксит" || item.title == "Флюорит" || item.title == "Киноварь") {
+      return {
+        ...item,
+        section: 'Y'
+      }
+    } else if (item.title == "Касситерит" || item.title == "Апатит" || item.title == "Кальцит" || item.title == "Хромит" || item.title == "Алмаз") {
       return {
         ...item,
         section: 'W'
       }
-    } else if (item.title == "О Минералах" || item.title == "Псевдоморфозы" || item.title == "Кварц" || item.title == "Кальцит" || item.title == "Цвет" || item.title == "Твердость") {
+    } else if (item.title == "Твердость") {
+      return {
+        ...item,
+        section: 'I'
+      }
+    } else if (item.title == "Лабрадор" || item.title == "Цвет" || item.title == "Кальцит") {
       return {
         ...item,
         section: 'P'
       }
-    } else if (item.title == "Лопарит" || item.title == "Малахит" || item.title == "Яшма" || item.title == "Мусковит" || item.title == "Горные породы") {
+    } else if (item.title == "Псевдоморфозы" || item.title == "О минералах") {
       return {
         ...item,
-        section: 'L'
+        section: 'J'
       }
+    } else if (item.title == "Яшма") {
+      return {
+        ...item,
+        section: 'N'
+      }
+    } else if (item.title == "Редкоземельные металлы") {
+      return {
+        ...item,
+        section: 'X'
+      }
+    } else if (item.title == "Горная порода") {
+      return {
+        ...item,
+        section: 'Q'
+      }
+    } else if (item.title == "Галит") {
+      return {
+        ...item,
+        section: 'R'
+      }
+    
     } else {
       return item
     }
