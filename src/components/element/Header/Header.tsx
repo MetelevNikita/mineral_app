@@ -110,34 +110,32 @@ const menuArr = [
 
 if (!currentUser) {
     return (
-        <Container className=' d-flex flex-row justify-content-center mt-3 mb-4 fixed-top'>
+        <Container fluid>
 
-                <Row className='d-flex flex-row justify-content-between align-items-center'>
+                <Row className='d-flex flex-row justify-content-around align-items-center mt-2'>
 
-                    <Col className='d-flex justify-content-start align-items-center'>
+                    <Col className='d-flex justify-content-start align-items-center p-0' md={2} xs={2}>
 
-                        <Image src={(topMenuOn) ? menuClose : menuOpen} width={30} height={30} onClick={() => {
-                            setTimeout(() => {
-                                setTopMenuOn(!topMenuOn)
-                            }, 1000)
-                            
-                            }} alt='menu_icon'/>
+                        <Image src={(topMenuOn) ? menuClose : menuOpen} width={30} height={30} onClick={() => setTopMenuOn(!topMenuOn)} alt='menu_icon'/>
 
                     </Col>
 
 
-                    <Col className='d-flex justify-content-center align-items-center'>
+                    <Col md={6} xs={8} className='d-flex justify-content-start align-items-center p-0'>
 
-                        <Link href={'/main/profile'} style={{textDecoration: 'none', color: '#7D22C9'}}>
+                        <Link href={'/auth/login'} style={{textDecoration: 'none', color: '#7D22C9'}}>
 
                             <div className={styles.middle_container}>
                                 <div className={styles.middle_image_container}>
 
-                                    <Image src={emtyAvatar} width={36} height={38} alt='avatar'/>
+                                    <Image src={emtyAvatar} width={36} height={48} alt='avatar'/>
 
                                 </div>
 
-                                <div className={styles.middle_text}></div>
+                                <div className={styles.middle_text_wrapper}>
+                                    <div className={styles.middle_title}>Статус:</div>
+                                    <div className={styles.middle_text}>Не авторизован</div>
+                                </div>
                             </div>
 
                         </Link>
@@ -146,7 +144,7 @@ if (!currentUser) {
 
                     
 
-                    <Col className='d-flex justify-content-end align-items-center'>
+                    <Col md={4} xs={2} className='d-flex justify-content-end align-items-center p-0'>
 
                         <div className={styles.right_container}>
                             <Image src={headerStar} width={17} height={16} alt='avatar'/>
@@ -159,7 +157,7 @@ if (!currentUser) {
 
 
 
-                <Row className='mb-4'>
+                <Row className='mb-2'>
                     <Col className='d-flex justify-content-start align-items-center'>
                     <AnimatePresence>
 
