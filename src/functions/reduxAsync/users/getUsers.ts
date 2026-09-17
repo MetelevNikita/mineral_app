@@ -20,9 +20,9 @@ export const getUsers = createAsyncThunk(
         
         if (error instanceof Error) {
             console.error('Ошибка получения пользователей:', error.message);
-            return error.message;
+            throw error;
         }
-      return error;
+      throw new Error('Ошибка получения пользователей');
     }
   }
 );

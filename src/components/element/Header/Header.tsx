@@ -46,9 +46,8 @@ useEffect(() => {
 
     if (userId !== null) {
         setId(userId)
+        dispatch(getUsers())
     }
-
-    dispatch(getUsers())
 }, [])
 
 

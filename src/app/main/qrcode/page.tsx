@@ -36,8 +36,8 @@ const page: FC = () => {
           stream = await navigator.mediaDevices.getUserMedia({
             video: {
               facingMode: { ideal: 'environment' },
-              width: { ideal: 1280 },
-              height: { ideal: 720 },
+              width: { ideal: 1920 },
+              height: { ideal: 1080 },
             }
           })
       
@@ -51,7 +51,7 @@ const page: FC = () => {
 
 
           const canvas = document.createElement('canvas')
-          const ctx = canvas.getContext('2d')
+          const ctx = canvas.getContext('2d', { willReadFrequently: true })
           if (!ctx) return
 
           const scan = async () => {
@@ -59,10 +59,16 @@ const page: FC = () => {
 
               if (cameraRef.current && cameraRef.current.videoWidth > 0 && cameraRef.current.videoHeight > 0) {
 
-                  canvas.width = cameraRef.current.videoWidth
-                  canvas.height = cameraRef.current.videoHeight
+                  const scanSize = Math.floor(Math.min(cameraRef.current.videoWidth, cameraRef.current.videoHeight) * 0.75)
+                  const scanX = Math.floor((cameraRef.current.videoWidth - scanSize) / 2)
+                  const scanY = Math.floor((cameraRef.current.videoHeight - scanSize) / 2)
 
-                  ctx.drawImage(cameraRef.current, 0, 0, canvas.width, canvas.height)
+                  if (canvas.width !== scanSize || canvas.height !== scanSize) {
+                    canvas.width = scanSize
+                    canvas.height = scanSize
+                  }
+
+                  ctx.drawImage(cameraRef.current, scanX, scanY, scanSize, scanSize, 0, 0, canvas.width, canvas.height)
                   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
                   const qrcode = jsQR(imageData.data, imageData.width, imageData.height)
         
@@ -74,7 +80,7 @@ const page: FC = () => {
 
                       setTimeout(() => {
                         router.push(qrcode.data)
-                      }, 2000)
+                      }, 1000)
 
                       return
                     
@@ -162,6 +168,5 @@ const page: FC = () => {
 }
 
 export default page
-
 
 
