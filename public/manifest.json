@@ -2,7 +2,7 @@
   "name": "Геоквиз",
   "short_name": "Геоквиз",
   "description": "Цифровой видеогид",
-  "start_url": "/",
+  "start_url": "/main",
   "id": "/",
   "lang": "ru",
   "display": "standalone",
@@ -36,7 +36,6 @@
   "scope": "/",
   "prefer_related_applications": false,
   "launch_handler": {
-    "route_to": "existing-client-navigate", 
-    "navigate_existing_client": "always"
+    "client_mode": "navigate-existing"
   }
 }

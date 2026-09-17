@@ -75,7 +75,11 @@ export const POST = async (req: Request, res: Response) => {
     // upload image
 
     const statusesDir = fs.readdirSync(path.join(process.cwd(), 'public', 'vk_statuses'));
-    const currentStatusesImage = statusesDir.find((file) => file.toLocaleLowerCase() == `${title.toLocaleLowerCase()}.png`) as string
+    const currentStatusesImage = statusesDir.find((file) => file.toLocaleLowerCase().replaceAll('ё', 'е') == `${title.toLocaleLowerCase().replaceAll('ё', 'е')}.png`) as string
+
+    if (!currentStatusesImage) {
+      return NextResponse.json({ error: `Изображение статуса ${title} не найдено` }, { status: 400 });
+    }
 
 
     const imageBuffer = fs.readFileSync(path.join(process.cwd(), 'public', 'vk_statuses', currentStatusesImage));

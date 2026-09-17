@@ -75,6 +75,8 @@ const page: FC = () => {
                       setTimeout(() => {
                         router.push(qrcode.data)
                       }, 2000)
+
+                      return
                     
                     } else {
                       requestAnimationFrame(scan)
@@ -132,10 +134,13 @@ const page: FC = () => {
             
             </Col>
             
-            <div className={(active)? styles.camera_container_active : styles.camera_container}>
-              <video ref={cameraRef} autoPlay muted playsInline className={styles.camera}>
+            <div className={`${styles.camera_container} ${(active) ? styles.camera_container_active : ''}`}>
+              <video ref={cameraRef} autoPlay playsInline muted className={styles.camera}>
                 
               </video>
+              {
+                active && <div className={styles.camera_success} role='status'>QR-код распознан</div>
+              }
             </div>
           
         </div>
@@ -157,7 +162,6 @@ const page: FC = () => {
 }
 
 export default page
-
 
 
 

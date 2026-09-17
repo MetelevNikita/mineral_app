@@ -54,7 +54,9 @@ const Login: FC = () => {
           setError(true)
           setErrorField(true)
         } else if (data?.message === 'success') {  
-          router.push('/main')
+           const nextUrl = new URLSearchParams(window.location.search).get('next')
+          const isMineralQuiz = /^\/main\/minerale\/[^/]+\/test\/?(?:\?.*)?$/.test(nextUrl ?? '')
+          router.push((nextUrl && isMineralQuiz) ? nextUrl : '/main')
         }
   }
 

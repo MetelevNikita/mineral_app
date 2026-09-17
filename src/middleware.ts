@@ -24,8 +24,9 @@ export default async function middleware(request: NextRequest) {
         const isPublicApi = publicApi.some(apiPath => (
             pathname === apiPath || pathname.startsWith(`${apiPath}/`)
         )) || (pathname === '/api/users' && request.method === 'POST')
+        const isPublicMineralApi = request.method === 'GET' && /^\/api\/mineral\/[^/]+\/?$/.test(pathname)
         
-        if (isPublicApi) {
+        if (isPublicApi || isPublicMineralApi) {
             console.log('🔓 Публичный API маршрут - доступ разрешен')
             return NextResponse.next()
         }
@@ -58,8 +59,9 @@ export default async function middleware(request: NextRequest) {
     // Обработка main маршрутов
     if (pathname.startsWith('/main')) {
         const isPublicWeb = publicWeb.includes(pathname)
+        const isPublicMineral = /^\/main\/minerale\/[^/]+\/?$/.test(pathname)
 
-        if (isPublicWeb) {
+        if (isPublicWeb || isPublicMineral) {
             console.log('🔓 Публичный маршрут - доступ разрешен')
             return NextResponse.next()
         }
@@ -67,17 +69,19 @@ export default async function middleware(request: NextRequest) {
         console.log('🔒 Защищенный маршрут /main. Проверяем TOKEN')
 
         const accessToken = request.cookies.get('accessToken')?.value
+        const loginUrl = new URL('/auth/login', request.url)
+        loginUrl.searchParams.set('next', `${pathname}${url.search}`)
 
         if (!accessToken) {
             console.log('❌ Нет токена, редирект на логин')
-            return NextResponse.redirect(new URL('/auth/login', request.url))
+            return NextResponse.redirect(loginUrl)
         }
 
         const verifyAccessToken = await verifyToken(accessToken)
 
         if (!verifyAccessToken.valid) {
             console.log('❌ Токен не валидный, редирект на логин')
-            return NextResponse.redirect(new URL('/auth/login', request.url))
+            return NextResponse.redirect(loginUrl)
         }
 
         console.log('✅ TOKEN найден. Вход разрешен')

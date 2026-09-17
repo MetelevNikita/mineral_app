@@ -1,5 +1,6 @@
 type TokenPayload = {
   exp?: number
+  nbf?: number
   [key: string]: unknown
 }
 
@@ -63,7 +64,9 @@ export async function verifyToken(token: string) {
 
     const decoded = JSON.parse(textDecoder.decode(decodeBase64Url(payload))) as TokenPayload
 
-    if (decoded.exp && decoded.exp <= Math.floor(Date.now() / 1000)) {
+    const currentTime = Math.floor(Date.now() / 1000)
+
+    if (typeof decoded.exp !== 'number' || decoded.exp <= currentTime || (typeof decoded.nbf === 'number' && decoded.nbf > currentTime)) {
       return { valid: false, error: 'Срок действия токена истек' }
     }
 

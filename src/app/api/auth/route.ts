@@ -65,11 +65,10 @@ export const POST = async (req: Request) => {
             })
         } else {
             (await cookies()).set('accessToken', token, {
-                sameSite: 'lax',
-                maxAge: tokenMaxAge,
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                path: '/'
+                sameSite: 'lax',
+                path: '/',
             })
         }
 

@@ -120,7 +120,7 @@ const page: FC = () => {
             <Col md={3} xs={6} className='d-flex justify-content-center align-items-center mb-1'>
 
                   <Status
-                    title={`Поздравляем Вы ${statuses.title}`}
+                    title={statuses.title}
                     img={statuses.icon}
                     button={ShareButtonVk}
                     bgColor={{

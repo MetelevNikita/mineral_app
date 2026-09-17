@@ -1,5 +1,6 @@
 import Script from 'next/script'
 import { Suspense } from 'react'
+import { PWAProvider } from "next-pwa-pack";
 import './globals.css'
 
 // fonts
@@ -32,7 +33,6 @@ const InterFont = Inter({
 // redux
 
 import ReduxProvider from "@/Redux/Provider";
-import ServiceWorkerCleanup from '@/components/ServiceWorkerCleanup/ServiceWorkerCleanup';
 
 // 
 
@@ -70,12 +70,13 @@ export default function RootLayout({
           <link rel="manifest" href="/manifest.json" />
         </head>
         <body className={`${OpenSans.className}, ${InterFont.className}`}>
-              <ServiceWorkerCleanup />
-              <Container>
-                <ReduxProvider>
-                    {children}
-                </ReduxProvider>
-              </Container>
+              <PWAProvider serverRevalidation={{ enabled: false }}>
+                <Container>
+                  <ReduxProvider>
+                      {children}
+                  </ReduxProvider>
+                </Container>
+              </PWAProvider>
 
 
         {YM_ID && (
